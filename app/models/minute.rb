@@ -6,6 +6,8 @@ class Minute < ActiveRecord::Base
 
 	validates_presence_of :date
 
+	has_many :items, :class_name => 'Minutes::Item'
+
 	# Accept the existing minute.
 	# Returns true		if the status was 'draft' before,
 	# and			false 	if the status 'accepted' already.

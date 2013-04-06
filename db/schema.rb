@@ -11,11 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130406181315) do
+ActiveRecord::Schema.define(version: 20130406215943) do
 
   create_table "minutes", force: true do |t|
     t.datetime "date"
     t.string   "status",     default: "draft"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "minutes_items", force: true do |t|
+    t.string   "title"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
