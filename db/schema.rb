@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20130406203158) do
     t.string   "phone"
     t.date     "birthday"
     t.text     "misc"
+    t.string   "remember_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

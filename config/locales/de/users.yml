@@ -1,0 +1,19 @@
+de:
+  users:
+    index: 
+
+
+  activerecord:
+    models: 
+      user: Benutzer
+    attributes:
+      user:
+        firstname: Vorname
+        lastname: Nachname
+        loginname: Benutzername
+        phone: Telefon
+        street: Straße
+        zip: Postleitzahl
+        email: E-Mail
+        birthday: Geburtstag
+        misc: Sonstiges

@@ -3,8 +3,8 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		if User.authenticate(params[:loginname],params[:password])
-			user = User.find_by_loginname(params[:loginname])
+		user = User.authenticate(params[:loginname],params[:password])
+		unless user.nil?
 			login user
 			flash[:success] = "Hello #{user.firstname}!"
 			redirect_back_or root_url

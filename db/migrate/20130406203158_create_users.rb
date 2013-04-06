@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :phone
       t.date :birthday
       t.text :misc
+      t.string :remember_token
 
       t.timestamps
     end

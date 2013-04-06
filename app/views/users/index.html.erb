@@ -3,23 +3,14 @@
 <table>
   <thead>
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th><%=t User.human_attribute_name(:firstname) %></th>
+      <th><%=t User.human_attribute_name(:lastname) %></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
-    <tr>
-      <td><%= link_to 'Show', user %></td>
-      <td><%= link_to 'Edit', edit_user_path(user) %></td>
-      <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-    <% end %>
+    <%= render @users %>
   </tbody>
 </table>
 
 <br />
-
-<%= link_to 'New User', new_user_path %>
