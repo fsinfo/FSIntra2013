@@ -1,10 +1,10 @@
-<h1>Listing minutes</h1>
+<h1><%=t '.headline' %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Status</th>
+      <th><%=t Minute.human_attribute_name :date %></th>
+      <th><%=t Minute.human_attribute_name :status %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -14,11 +14,11 @@
   <tbody>
     <% @minutes.each do |minute| %>
     <tr>
-      <td><%= minute.date %></td>
-      <td><%= minute.status %></td>
-      <td><%= link_to 'Show', minute %></td>
-      <td><%= link_to 'Edit', edit_minute_path(minute) %></td>
-      <td><%= link_to 'Destroy', minute, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= l minute.date, :format => :short %></td>
+      <td><%= minute.translated_status %></td>
+      <td><%= link_to t('actions.show'), minute %></td>
+      <td><%= link_to t('actions.edit'), edit_minute_path(minute) %></td>
+      <td><%= link_to t('actions.destroy'), minute, method: :delete, data: { confirm: t('actions.destroy_confirm') } %></td>
     </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br />
 
-<%= link_to 'New Minute', new_minute_path %>
+<%= link_to t('.new'), new_minute_path %>

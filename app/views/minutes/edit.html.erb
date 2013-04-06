@@ -1,6 +1,6 @@
-<h1>Editing minute</h1>
+<h1><%=t '.headline', :date => l(@minute.date, :format => :short) %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @minute %> |
-<%= link_to 'Back', minutes_path %>
+<%= link_to t('actions.show'), @minute %> |
+<%= link_to t('actions.back'), minutes_path %>

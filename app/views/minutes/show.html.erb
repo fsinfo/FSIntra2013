@@ -1,15 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Date:</strong>
-  <%= @minute.date %>
+  <strong><%=t Minute.human_attribute_name :date %></strong>
+  <%= l @minute.date, :format => :short %>
 </p>
 
 <p>
-  <strong>Status:</strong>
-  <%= @minute.status %>
+  <strong><%=t Minute.human_attribute_name :status %></strong>
+  <%= @minute.translated_status %>
 </p>
 
 
-<%= link_to 'Edit', edit_minute_path(@minute) %> |
-<%= link_to 'Back', minutes_path %>
+<%= link_to t('actions.edit'), edit_minute_path(@minute) %> |
+<%= link_to t('actions.back'), minutes_path %>

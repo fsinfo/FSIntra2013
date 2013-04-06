@@ -1,4 +1,9 @@
+# The restful routes are lazily translated using following the pattern:
+#   resources :$deutschername, :as => "$englishname", :controller => "$englishname"
 Fsintra::Application.routes.draw do
+  resources :protokolle, :as => "minutes", :controller => "minutes"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -14,7 +19,7 @@ Fsintra::Application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  # Example resource route with options:
+  # Example resource route with options:s
   #   resources :products do
   #     member do
   #       get 'short'
