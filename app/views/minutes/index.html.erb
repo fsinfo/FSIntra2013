@@ -1,0 +1,31 @@
+<h1><%=t '.headline' %></h1>
+
+<p id="notice"><%= notice %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%=t Minute.human_attribute_name :date %></th>
+      <th><%=t Minute.human_attribute_name :status %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @minutes.each do |minute| %>
+    <tr>
+      <td><%= l minute.date, :format => :short %></td>
+      <td><%= minute.translated_status %></td>
+      <td><%= link_to t('actions.show'), minute %></td>
+      <td><%= link_to t('actions.edit'), edit_minute_path(minute) %></td>
+      <td><%= link_to t('actions.destroy'), minute, method: :delete, data: { confirm: t('actions.destroy_confirm') } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to t('.new'), new_minute_path %>

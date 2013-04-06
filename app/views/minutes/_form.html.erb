@@ -1,0 +1,21 @@
+<%= form_for(@minute) do |f| %>
+  <% if @minute.errors.any? %>
+    <div id="error_explanation">
+      <h2><%=t 'feedback.form_error', :count => @minute.errors.count %></h2>
+
+      <ul>
+      <% @minute.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.datetime_select :date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

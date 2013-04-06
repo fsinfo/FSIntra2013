@@ -28,4 +28,11 @@ ActiveRecord::Schema.define(version: 20130406203158) do
     t.datetime "updated_at"
   end
 
+  create_table "minutes", force: true do |t|
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "status",     default: "draft"
+  end
+
 end

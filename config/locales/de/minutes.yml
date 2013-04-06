@@ -1,0 +1,24 @@
+# This file contains all i18n strings, 
+# see http://edgeguides.rubyonrails.org/i18n.html
+de:
+  minutes:
+    index:
+      headline: Protokollsystem
+      new: Neues Protokoll anlegen
+    edit:
+      headline: "Protokoll vom %{date} bearbeiten"
+    new:
+      headline: Neues Protokoll anlegen
+    draft: Entwurf
+    published: Veröffentlicht
+
+# --------------
+# --- Models ---
+# --------------
+  activerecord:
+    models:
+      minute: Protokoll
+    attributes:
+      minute:
+        date: Datum
+        status: Status
