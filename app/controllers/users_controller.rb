@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update]
   before_filter :signed_in_user
+  before_filter :correct_user, only: [:edit,:update]
 
   # GET /users
   def index
@@ -34,6 +35,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
+			login @user
       redirect_to @user, notice: 'User was successfully updated.'
     else
       render action: 'edit'
@@ -48,6 +50,10 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit!
+      params.require(:user).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc)
     end
+
+		def correct_user
+			redirect_to(root_path) unless current_user?(@user)
+		end
 end

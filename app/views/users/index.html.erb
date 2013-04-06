@@ -1,10 +1,17 @@
-<h1>Listing users</h1>
+<h1><%=t '.heading' %></h1>
 
 <table>
   <thead>
     <tr>
-      <th><%=t User.human_attribute_name(:firstname) %></th>
-      <th><%=t User.human_attribute_name(:lastname) %></th>
+      <th><%=t User.human_attribute_name :firstname %></th>
+      <th><%=t User.human_attribute_name :lastname %></th>
+      <th><%=t User.human_attribute_name :street %></th>
+      <th><%=t User.human_attribute_name :zip %></th>
+      <th><%=t User.human_attribute_name :city %></th>
+      <th><%=t User.human_attribute_name :email %></th>
+      <th><%=t User.human_attribute_name :phone %></th>
+      <th><%=t User.human_attribute_name :birthday %></th>
+      <th><%=t User.human_attribute_name :misc %></th>
     </tr>
   </thead>
 

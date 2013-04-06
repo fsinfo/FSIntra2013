@@ -13,12 +13,20 @@
 
 ActiveRecord::Schema.define(version: 20130406203158) do
 
+  create_table "minutes", force: true do |t|
+    t.datetime "date"
+    t.string   "status",     default: "draft"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "loginname"
     t.string   "firstname"
     t.string   "lastname"
     t.string   "street"
     t.string   "zip"
+    t.string   "city"
     t.string   "email"
     t.string   "phone"
     t.date     "birthday"
@@ -26,13 +34,6 @@ ActiveRecord::Schema.define(version: 20130406203158) do
     t.string   "remember_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "minutes", force: true do |t|
-    t.datetime "date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "status",     default: "draft"
   end
 
 end

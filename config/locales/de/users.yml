@@ -1,6 +1,7 @@
 de:
   users:
     index: 
+      heading: Adressbuch
 
 
   activerecord:
@@ -14,6 +15,7 @@ de:
         phone: Telefon
         street: Straße
         zip: Postleitzahl
+        city: Ort
         email: E-Mail
         birthday: Geburtstag
         misc: Sonstiges

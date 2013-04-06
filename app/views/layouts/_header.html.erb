@@ -1,6 +1,8 @@
 <div>
 	<% if signed_in? %>
-		<%= link_to 'Logout', logout_url, :method => :delete %>
+		<%= link_to 'Adressbuch', users_path %>
+		<%= link_to 'Profil', user_path(current_user) %>
+		<%= link_to 'Logout', logout_path, :method => :delete %>
 	<% else %>
 		<%= link_to 'Login', login_url %>
 	<% end %>
