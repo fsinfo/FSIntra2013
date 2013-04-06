@@ -25,10 +25,9 @@ class MinutesController < ApplicationController
   # POST /minutes.json
   def create
     @minute = Minute.new(minute_params)
-
     respond_to do |format|
       if @minute.save
-        format.html { redirect_to @minute, notice: 'Minute was successfully created.' }
+        format.html { redirect_to @minute, notice: t('feedback.created', :model => Minute.model_name.human) }
         format.json { render action: 'show', status: :created, location: @minute }
       else
         format.html { render action: 'new' }
@@ -42,7 +41,7 @@ class MinutesController < ApplicationController
   def update
     respond_to do |format|
       if @minute.update(minute_params)
-        format.html { redirect_to @minute, notice: 'Minute was successfully updated.' }
+        format.html { redirect_to @minute, notice: t('feedback.updated', :model => Minute.model_name.human) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -56,7 +55,7 @@ class MinutesController < ApplicationController
   def destroy
     @minute.destroy
     respond_to do |format|
-      format.html { redirect_to minutes_url }
+      format.html { redirect_to minutes_url, notice: t('feedback.destroyed', :model => Minute.model_name.human) }
       format.json { head :no_content }
     end
   end

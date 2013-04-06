@@ -5,6 +5,11 @@ de:
     destroy: Löschen
     back: Zurück
     destroy_confirm: Bist du sicher?
+  feedback:
+    created: '%{model} erfolgreich angelegt.'
+    updated: '%{model} erfolgreich geändert.'
+    destroyed: '%{model} erfolgreich gelöscht.'
+    form_error: 'Es gab %{count} Fehler, das Formular konnte deshalb nicht gespeichert werden.'
 
 # Copied the following translation from:
 # https://github.com/svenfuchs/rails-i18n
