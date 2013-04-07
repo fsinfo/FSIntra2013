@@ -25,12 +25,18 @@ class MinutesController < ApplicationController
   # POST /minutes.json
   def create
     @minute = Minute.new(minute_params)
+
+    count = params[:number_of_items].to_i
+
     respond_to do |format|
-      if @minute.save
-        format.html { redirect_to @minute, notice: t('feedback.created', :model => Minute.model_name.human) }
-        format.json { render action: 'show', status: :created, location: @minute }
+      if count > 0 and @minute.save
+        count.times do
+          @minute.items.create
+        end
+        format.html { redirect_to edit_minute_path(@minute), notice: t('feedback.created', :model => Minute.model_name.human) }
+        format.json { render action: 'edit', status: :created, location: @minute }
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new', notice: 'größerezalh' }
         format.json { render json: @minute.errors, status: :unprocessable_entity }
       end
     end
@@ -39,6 +45,7 @@ class MinutesController < ApplicationController
   # PATCH/PUT /minutes/1
   # PATCH/PUT /minutes/1.json
   def update
+    puts @minute
     respond_to do |format|
       if @minute.update(minute_params)
         format.html { redirect_to @minute, notice: t('feedback.updated', :model => Minute.model_name.human) }
@@ -68,6 +75,6 @@ class MinutesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def minute_params
-      params.require(:minute).permit(:date)
+      params.require(:minute).permit(:date, :items_attributes => [:id, :title, :content])
     end
 end

@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20130406215943) do
   create_table "minutes_items", force: true do |t|
     t.string   "title"
     t.text     "content"
+    t.integer  "minute_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

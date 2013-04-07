@@ -7,6 +7,7 @@ class Minute < ActiveRecord::Base
 	validates_presence_of :date
 
 	has_many :items, :class_name => 'Minutes::Item'
+	accepts_nested_attributes_for :items
 
 	# Accept the existing minute.
 	# Returns true		if the status was 'draft' before,

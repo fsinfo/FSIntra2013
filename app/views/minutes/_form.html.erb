@@ -15,6 +15,18 @@
     <%= f.label :date %><br />
     <%= f.datetime_select :date %>
   </div>
+
+  <%= f.fields_for :items do |fi| %>
+    <div class="field">
+      <%= fi.label :title %><br />
+      <%= fi.text_field :title %>
+    </div>
+    <div class="field">
+      <%= fi.label :content %><br />
+      <%= fi.text_area :content %>
+    </div>
+  <% end %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>
