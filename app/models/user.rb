@@ -8,6 +8,7 @@
 #  lastname       :string(255)
 #  street         :string(255)
 #  zip            :string(255)
+#  city           :string(255)
 #  email          :string(255)
 #  phone          :string(255)
 #  birthday       :date
@@ -21,6 +22,9 @@ require 'net/ldap'
 class User < ActiveRecord::Base
 	before_save :create_remember_token
 
+	has_many :minutes
+	
+
 	def self.authenticate(loginname,password)
 		ldap = Net::LDAP.new(:host => 'ford.fachschaft.cs.uni-kl.de')
 		ldap.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)
@@ -31,6 +35,10 @@ class User < ActiveRecord::Base
 		else 
 			return nil
 		end
+	end
+
+	def displayed_name
+		"#{firstname} #{lastname}"
 	end
 
 	private 

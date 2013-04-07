@@ -11,11 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130406215943) do
+ActiveRecord::Schema.define(version: 20130407005721) do
+
+  create_table "invitees", id: false, force: true do |t|
+    t.integer "minute_id"
+    t.integer "user_id"
+    t.boolean "absent"
+  end
 
   create_table "minutes", force: true do |t|
     t.datetime "date"
     t.string   "status",     default: "draft"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "minutes_items", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "minute_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -32,14 +46,6 @@ ActiveRecord::Schema.define(version: 20130406215943) do
     t.date     "birthday"
     t.text     "misc"
     t.string   "remember_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "minutes_items", force: true do |t|
-    t.string   "title"
-    t.text     "content"
-    t.integer  "minute_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

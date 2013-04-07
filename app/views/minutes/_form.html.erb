@@ -13,9 +13,29 @@
 
   <div class="field">
     <%= f.label :date %><br />
-    <%= f.datetime_select :date %>
+    <%= f.text_field :date %>
   </div>
 
+  <div class="field">
+    <%= f.label :keeper_of_the_minutes %><br />
+    <%= f.text_field :keeper_of_the_minutes %>
+  </div>
+  <div class="field">
+    <%= f.label :chairperson %><br />
+    <%= f.text_field :chairperson %>
+  </div>
+
+  <div class="field">
+    <%= f.label :attendees %><br />
+    <%= text_field_tag :attendees %>
+  </div>
+
+  <div class="field">
+    <%= f.label :absentees %><br />
+    <%= text_field_tag :absentees %>
+  </div>
+
+  <hr />
   <%= f.fields_for :items do |fi| %>
     <div class="field">
       <%= fi.label :title %><br />
@@ -25,9 +45,23 @@
       <%= fi.label :content %><br />
       <%= fi.text_area :content %>
     </div>
+    <hr />
   <% end %>
   
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+
+<script>
+  $(function() {
+    var availableUsers = [ <%= raw User.all.map { |x| "'#{x.displayed_name}'" }.join(",") %> ];
+    $( "#minute_keeper_of_the_minutes" ).autocomplete({
+      source: availableUsers
+    });
+    $( "#minute_chairperson" ).autocomplete({
+      source: availableUsers
+    });
+  });
+  </script>
