@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: Top1
+  content: Lorem ipsum dolor sit amet
+
+two:
+  title: Top2
+  content: Have u seen this?

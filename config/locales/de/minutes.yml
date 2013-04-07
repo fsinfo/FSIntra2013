@@ -17,7 +17,9 @@ de:
 # --------------
   activerecord:
     models:
-      minute: Protokoll
+      minute:
+        one: Protokoll
+        other: Protokolle
     attributes:
       minute:
         date: Datum

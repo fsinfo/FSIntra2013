@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130406203158) do
+ActiveRecord::Schema.define(version: 20130406215943) do
 
   create_table "minutes", force: true do |t|
     t.datetime "date"
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(version: 20130406203158) do
     t.date     "birthday"
     t.text     "misc"
     t.string   "remember_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "minutes_items", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "minute_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
