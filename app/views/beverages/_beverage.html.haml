@@ -1,0 +1,7 @@
+%div
+	= beverage.name
+	= beverage.description
+	= beverage.price
+	= beverage.available
+	= link_to 'Edit', edit_beverage_path(beverage)
+	= link_to 'Delete', beverage_path(beverage), :method => :delete

@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: minutes
+#
+#  id         :integer          not null, primary key
+#  date       :datetime
+#  status     :string(255)      default("draft")
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class Minute < ActiveRecord::Base
 	# Protocols are in one of those statuses
 	# Don't forget to update config/locales/minutes.yml if you change these!

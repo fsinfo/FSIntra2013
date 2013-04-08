@@ -8,6 +8,7 @@
 #  lastname       :string(255)
 #  street         :string(255)
 #  zip            :string(255)
+#  city           :string(255)
 #  email          :string(255)
 #  phone          :string(255)
 #  birthday       :date
@@ -19,6 +20,7 @@
 
 require 'net/ldap'
 class User < ActiveRecord::Base
+	has_many :tabs
 	before_save :create_remember_token
 
 	def self.authenticate(loginname,password)
