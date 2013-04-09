@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130407005721) do
+ActiveRecord::Schema.define(version: 20130409175559) do
 
   create_table "invitees", id: false, force: true do |t|
     t.integer "minute_id"
@@ -26,12 +26,23 @@ ActiveRecord::Schema.define(version: 20130407005721) do
     t.datetime "updated_at"
   end
 
+  create_table "minutes_guests", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "minutes_items", force: true do |t|
     t.string   "title"
     t.text     "content"
     t.integer  "minute_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "minutes_minutes_guests", id: false, force: true do |t|
+    t.integer "guest_id"
+    t.integer "minute_id"
   end
 
   create_table "users", force: true do |t|

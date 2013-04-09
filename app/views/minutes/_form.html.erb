@@ -35,6 +35,11 @@
     <%= text_field_tag :absentees %>
   </div>
 
+  <div class="field">
+    <%= f.label :guests %><br />
+    <%= f.select :guests, ["foo", "bar"] %>
+  </div>
+
   <hr />
   <%= f.fields_for :items do |fi| %>
     <% %>
@@ -64,5 +69,7 @@
     $( "#minute_chairperson" ).autocomplete({
       source: availableUsers
     });
+
+    $("#guests").chosen()
   });
-  </script>
+</script>
