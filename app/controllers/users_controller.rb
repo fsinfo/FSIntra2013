@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
-  before_filter :signed_in_user
-  before_filter :correct_user, only: [:edit,:update]
+  before_action :signed_in_user
+  before_action :correct_user, only: [:edit,:update]
 
   # GET /users
   def index
