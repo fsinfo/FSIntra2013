@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :date %><br />
-    <%= f.text_field :date %>
+    <%= f.date_field :date %>
   </div>
 
   <div class="field">
@@ -37,6 +37,7 @@
 
   <hr />
   <%= f.fields_for :items do |fi| %>
+    <% %>
     <div class="field">
       <%= fi.label :title %><br />
       <%= fi.text_field :title %>
