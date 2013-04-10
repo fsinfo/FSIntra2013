@@ -1,5 +1,6 @@
 class MinutesController < ApplicationController
   before_action :set_minute, only: [:show, :edit, :update, :destroy]
+  #before_action :users_to_ids, only: [:update]
 
   # GET /minutes
   # GET /minutes.json
@@ -45,7 +46,9 @@ class MinutesController < ApplicationController
   # PATCH/PUT /minutes/1
   # PATCH/PUT /minutes/1.json
   def update
+    puts "\n\n\n *** \n\n\n "
     puts @minute
+    puts "\n\n\n *** \n\n\n "
     respond_to do |format|
       if @minute.update(minute_params)
         format.html { redirect_to @minute, notice: t('feedback.updated', :model => Minute.model_name.human) }
@@ -73,8 +76,14 @@ class MinutesController < ApplicationController
       @minute = Minute.find(params[:id])
     end
 
+    # Replace the ids with the right user object (if id is present)
+    def users_to_ids
+      params[:minute][:keeper_of_the_minutes] = User.find_by_id(params[:minute][:keeper_of_the_minutes])
+      params[:minute][:chairperson] = User.find_by_id(params[:minute][:chairperson])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def minute_params
-      params.require(:minute).permit(:date, :items_attributes => [:id, :title, :content])
+      params.require(:minute).permit(:date, :keeper_of_the_minutes_id, :chairperson_id, :items_attributes => [:id, :title, :content])
     end
 end

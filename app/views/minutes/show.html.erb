@@ -10,6 +10,16 @@
   <%= @minute.translated_status %>
 </p>
 
+<p>
+  <strong><%=t Minute.human_attribute_name :keeper_of_the_minutes %></strong>
+  <%= @minute.keeper_of_the_minutes.displayed_name if @minute.keeper_of_the_minutes %>
+</p>
+
+<p>
+  <strong><%=t Minute.human_attribute_name :chairperson %></strong>
+  <%= @minute.chairperson.displayed_name if @minute.chairperson %>
+</p>
+
 
 <%= link_to t('actions.edit'), edit_minute_path(@minute) %> |
 <%= link_to t('actions.back'), minutes_path %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130409175559) do
+ActiveRecord::Schema.define(version: 20130410152417) do
 
   create_table "invitees", id: false, force: true do |t|
     t.integer "minute_id"
@@ -39,9 +39,11 @@ ActiveRecord::Schema.define(version: 20130409175559) do
 
   create_table "minutes", force: true do |t|
     t.datetime "date"
-    t.string   "status",     default: "draft"
+    t.string   "status",                   default: "draft"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "keeper_of_the_minutes_id"
+    t.integer  "chairperson_id"
   end
 
   create_table "minutes_guests", force: true do |t|

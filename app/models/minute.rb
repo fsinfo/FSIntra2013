@@ -19,18 +19,20 @@ class Minute < ActiveRecord::Base
 
 	has_many :items, :class_name => 'Minutes::Item'
 	accepts_nested_attributes_for :items
+	
 	has_and_belongs_to_many :guests, :class_name => 'Minutes::Guest'
 
 	belongs_to :keeper_of_the_minutes, :class_name => 'User'
+	
 	belongs_to :chairperson, :class_name => 'User'
-	has_and_belongs_to_many :attendees,
-													-> { where "absent = 0" },
-													join_table: 'invitees'
-													
-													
+
 	has_and_belongs_to_many :absentees,
-													-> { where "absent = 1" },
-													join_table: 'invitees'
+													-> { where "absent = 0" },
+													join_table: 'invitees',
+													class_name: 'User'
+	accepts_nested_attributes_for :items
+
+													
 
 	# Accept the existing minute.
 	# Returns true		if the status was 'draft' before,
