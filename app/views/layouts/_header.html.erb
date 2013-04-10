@@ -1,10 +1,24 @@
-<div>
-	<% if signed_in? %>
-		<%= link_to 'Adressbuch', users_path %>
-		<%= link_to 'Profil', user_path(current_user) %>
-		<%= link_to 'Logout', logout_path, :method => :delete %>
-	<% else %>
-		<%= link_to 'Login', login_url %>
-	<% end %>
-	<%= link_to 'Portokeule', minutes_path %>
+<div id="top-bar" class="contain-to-grid">
+	<nav class="top-bar">
+		<ul class="title-area">
+			<!-- title -->
+			<li class="name"><h1><a href="/">FSIntranet</a></h1></li>
+			<!-- menu for linearisation -->
+			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+		</ul>
+
+		<section class="top-bar-section">
+			<ul class="right">
+				<li class="active"><a href="#">Aktiv</a></li>
+				<li><%= link_to 'Protokolle', minutes_path %></li>
+				<% if signed_in? %>
+					<li><%= link_to 'Adressbuch', users_path %></li>
+					<li><%= link_to 'Profil', user_path(current_user) %></li>
+					<li><%= link_to 'Logout', logout_path, :method => :delete %></li>
+				<% else %>
+					<li><%= link_to 'Login', login_url %></li>
+				<% end %>
+			</ul>
+		</section>
+	</nav>
 </div>

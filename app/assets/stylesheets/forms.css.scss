@@ -1,0 +1,25 @@
+@import "foundation_and_overrides";
+
+form.inline {
+	label {
+		@include prefix-postfix-base;
+		@include prefix;
+		@include grid-column($columns: 4);
+		@media #{$small} {
+			@include grid-column($columns: 3);
+		}
+	}
+
+	input[type="text"], input[type="password"] {
+		@include grid-column($columns: 8);
+		@media #{$small} {
+			@include grid-column($columns: 9);
+		}
+	}
+
+	.submit {
+		text-align: right;
+		margin-right: 1px;
+	}
+}
+
