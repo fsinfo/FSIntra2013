@@ -1,13 +1,17 @@
 <h1>Login</h1>
 
 <div>
-	<%= form_tag sessions_path do %>
-		<%= label_tag :loginname %>
-		<%= text_field_tag :loginname %>
-
-		<%= label_tag :password %>
-		<%= password_field_tag :password %>
-
-		<%= submit_tag "Login" %>
+	<%= form_tag sessions_path, :class => 'inline' do %>
+		<div class="field">
+			<%= label_tag :loginname %>
+			<%= text_field_tag :loginname %>
+		</div>
+		<div class="field">
+			<%= label_tag :password %>
+			<%= password_field_tag :password %>
+		</div>
+		<div class="submit">
+			<%= submit_tag "Login", :class => 'button right' %>
+		</div>
 	<% end %>
 </div>

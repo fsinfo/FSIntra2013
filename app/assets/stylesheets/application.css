@@ -8,8 +8,18 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
  *= require jquery-ui
- *= require_tree .
- */
  *= require foundation_and_overrides
+ *= require_tree .
+ *= require_self
+ */
+ 
+ body {
+	margin-top: 60px;
+ }
+
+ #top-bar {
+	position: fixed;
+	top: 0;
+	z-index: 2;
+ }
