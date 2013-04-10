@@ -1,7 +1,21 @@
 %div
-	- @users.each do |user|
-		= form_for [user,tab=user.tabs.build] do |f|
-			- @beverages.each do |beverage|
-				= f.fields_for [beverage, tab.beverage_tabs.build] do |b|
-					= b.text_field :count
-			= f.submit
+	= form_tag tally_sheets_path, :method => 'POST' do
+		%table
+			%thead
+				%th
+					Benutzer
+				- @beverages.each do |beverage|
+					%th= beverage.name
+			%tbody
+			- @users.each do |user|
+				%tr
+					%td
+						= fields_for user do |uf|
+							= user.displayed_name
+							= uf.fields_for "#{user.id}",[user,tab=user.tabs.build] do |tf|
+								- @beverages.each do |beverage|
+									%td
+										= tf.fields_for "#{beverage.id}", tab.beverage_tabs.build do |bf|
+											= bf.text_field :count
+											= bf.hidden_field :price, :value => beverage.price
+		= submit_tag 

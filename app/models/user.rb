@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
 
 	scope :fsr
 
+	def debts
+		self.tabs.unpaid.map(&:total_invoice).inject(0,:+)
+	end
+
 	def self.authenticate(loginname,password)
 		ldap = Net::LDAP.new(:host => 'ford.fachschaft.cs.uni-kl.de')
 		ldap.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)

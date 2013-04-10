@@ -2,11 +2,13 @@
 #
 # Table name: minutes
 #
-#  id         :integer          not null, primary key
-#  date       :datetime
-#  status     :string(255)      default("draft")
-#  created_at :datetime
-#  updated_at :datetime
+#  id                       :integer          not null, primary key
+#  date                     :datetime
+#  status                   :string(255)      default("draft")
+#  created_at               :datetime
+#  updated_at               :datetime
+#  keeper_of_the_minutes_id :integer
+#  chairperson_id           :integer
 #
 
 class Minute < ActiveRecord::Base

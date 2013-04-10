@@ -14,4 +14,6 @@
 class Beverage < ActiveRecord::Base
 	has_many :beverage_tabs
 	has_many :tabs, :through => :beverage_tabs
+
+	scope :available, -> { where :available => true }
 end

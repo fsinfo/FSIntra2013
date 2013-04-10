@@ -1,18 +1,23 @@
 class TabsController < ApplicationController
+	before_action :set_tab, only: [:update, :new, :show]
+
 	def index
+		@unpaid_tabs = current_user.tabs.unpaid
+		@paid_tabs = current_user.tabs.paid
 	end
 
 	def create
+		@tab = Tab.new
 	end
 
 	def show
+		@beverage_tabs = @tab.beverage_tabs
 	end
 
 	def update
 	end
 
 	def new
-		@tab.beverages << Beverage.available
 	end
 
 	  private

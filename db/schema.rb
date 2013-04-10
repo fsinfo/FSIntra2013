@@ -11,13 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130410152417) do
-
-  create_table "invitees", id: false, force: true do |t|
-    t.integer "minute_id"
-    t.integer "user_id"
-    t.boolean "absent"
-  end
+ActiveRecord::Schema.define(version: 20130410205254) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "beverage_id"
@@ -37,6 +31,12 @@ ActiveRecord::Schema.define(version: 20130410152417) do
     t.datetime "updated_at"
   end
 
+  create_table "invitees", id: false, force: true do |t|
+    t.integer "minute_id"
+    t.integer "user_id"
+    t.boolean "absent"
+  end
+
   create_table "minutes", force: true do |t|
     t.datetime "date"
     t.string   "status",                   default: "draft"
@@ -48,10 +48,6 @@ ActiveRecord::Schema.define(version: 20130410152417) do
 
   create_table "minutes_guests", force: true do |t|
     t.string   "name"
-  end
-
-  create_table "tabs", force: true do |t|
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,6 +63,13 @@ ActiveRecord::Schema.define(version: 20130410152417) do
   create_table "minutes_minutes_guests", id: false, force: true do |t|
     t.integer "guest_id"
     t.integer "minute_id"
+  end
+
+  create_table "tabs", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "paid"
   end
 
   create_table "user_tabs", id: false, force: true do |t|

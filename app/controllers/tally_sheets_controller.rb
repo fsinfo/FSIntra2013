@@ -4,21 +4,29 @@ class TallySheetsController < ApplicationController
 	end
 
 	def new
-		@users.each do |user|
-			user.tabs << Tab.new
-		end
 	end
 
 	def create
+		# "user" => {user_id => {beverage_id => {"count" => count, "price" => price}}}
+		post = params[:user]
+		@users.each do |user|
+			temp = post[user.id.to_s]
+			tab = user.tabs.create(:paid => false)
+			temp.each do |id,array|
+				tab.beverage_tabs.create(:beverage_id => id, :count => array["count"], :price => array["price"])
+			end
+		end
+		# TODO: better route, send mails
+		redirect_to root_url
 	end
 
 	private
-		# TODO: get only the right users
+		# TODO: get only the right users (active/on list)
 		def get_users
 			@users = User.all
 		end
 
 		def get_beverages
-			@beverages = Beverage.all.where(:available => true)
+			@beverages = Beverage.available
 		end
 end

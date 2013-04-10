@@ -1,0 +1,15 @@
+%table
+	%thead 
+		%th Getränk
+		%th Anzahl
+		%th Kosten
+		%th Gesamt
+	%tbody
+		- @beverage_tabs.each do |bt|
+			%tr
+				%td= bt.beverage.name
+				%td= bt.count
+				%td= bt.price
+				%td= bt.price * bt.count
+
+= link_to 'Zurück', tabs_path

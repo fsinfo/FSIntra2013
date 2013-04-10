@@ -13,6 +13,14 @@
 				<li><%= link_to 'Protokolle', minutes_path %></li>
 				<% if signed_in? %>
 					<li><%= link_to 'Adressbuch', users_path %></li>
+					<li class="has-dropdown">
+						<a href="#">Getränke</a>
+						<ul class="dropdown">
+							<li><%= link_to 'Getränke', beverages_path %></li>
+							<li><%= link_to 'Rechnungen', tabs_path %></li>
+							<li><%= link_to 'Strichliste', new_tally_sheet_path %></li>
+						</ul>
+					</li>
 					<li><%= link_to 'Profil', user_path(current_user) %></li>
 					<li><%= link_to 'Logout', logout_path, :method => :delete %></li>
 				<% else %>
