@@ -7,6 +7,8 @@ de:
       new: Neues Protokoll anlegen
     edit:
       headline: "Protokoll vom %{date} bearbeiten"
+    form:
+      absentee_description: Nicht abwesende FSR-Mitglieder gelten als anwesend.
     new:
       headline: Neues Protokoll anlegen
     draft: Entwurf
@@ -20,7 +22,18 @@ de:
       minute:
         one: Protokoll
         other: Protokolle
+      minutes/item:
+        one: TOP
+        other: TOPs
     attributes:
       minute:
         date: Datum
         status: Status
+        keeper_of_the_minutes: Protokollant
+        chairperson: Sitzungsleitung
+        attendees: Anwesend
+        absentees: Entschuldigt
+        guests: Gäste
+      minutes/item:
+        title: Titel
+        content: Inhalt

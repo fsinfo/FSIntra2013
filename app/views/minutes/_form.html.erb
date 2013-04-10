@@ -11,30 +11,41 @@
     </div>
   <% end %>
 
+  <%# Here we should add a poly fill for browsers
+  that don't support the new html5 date-field (i.e. Firefox) %>
   <div class="field">
     <%= f.label :date %><br />
     <%= f.date_field :date %>
   </div>
-
+  
+  <%# Here could be a dropdown list or similar...
+  The value should be the id of a fsr member (user) %>
   <div class="field">
     <%= f.label :keeper_of_the_minutes %><br />
-    <%= f.text_field :keeper_of_the_minutes %>
+    <%= f.text_field :keeper_of_the_minutes_id, :value => @minute.keeper_of_the_minutes_id %><br />
+    <%= text_field_tag 'name_of_keeper_of_the_minutes' %>
   </div>
+  
+  <%# Here could be a dropdown list or similar...
+  The value should be the id of a fsr member (user) %>
   <div class="field">
     <%= f.label :chairperson %><br />
-    <%= f.text_field :chairperson %>
+    <%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
+    <%= text_field_tag 'name_of_chairperson' %>
   </div>
 
+  <%# Here could be a checkbox list or similar... %>
   <div class="field">
-    <%= f.label :attendees %><br />
-    <%= text_field_tag :attendees %>
-  </div>
-
-  <div class="field">
+    <%=t '.absentee_description' %>
     <%= f.label :absentees %><br />
-    <%= text_field_tag :absentees %>
+    <% User.fsr.each do |u| %>
+      <%= check_box_tag "minute[absentee_ids][]", u.id, @minute.absentee_ids.include?(u.id), id: dom_id(u) %>
+      <%= u.displayed_name %>
+    <% end %>
   </div>
 
+  <%# Here could be a text field with autocomplete.
+  TODO: New persons should be supported! %>
   <div class="field">
     <%= f.label :guests %><br />
     <%= f.select :guests, ["foo", "bar"] %>
@@ -42,7 +53,7 @@
 
   <hr />
   <%= f.fields_for :items do |fi| %>
-    <% %>
+    <h2><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></h2>
     <div class="field">
       <%= fi.label :title %><br />
       <%= fi.text_field :title %>
@@ -59,17 +70,23 @@
   </div>
 <% end %>
 
-
 <script>
   $(function() {
-    var availableUsers = [ <%= raw User.all.map { |x| "'#{x.displayed_name}'" }.join(",") %> ];
-    $( "#minute_keeper_of_the_minutes" ).autocomplete({
-      source: availableUsers
+    // All Users .. see http://api.jqueryui.com/autocomplete/#option-source for why this way
+    var availableUsers = [ <%= raw User.all.map { |x| "{ value: #{x.id}, label: '#{x.displayed_name}' }" }.join(",") %> ];
+    $( "#name_of_keeper_of_the_minutes" ).autocomplete({
+      source: availableUsers,
+      change: function( event, ui ) {
+        $("#name_of_keeper_of_the_minutes").val(ui.item.label)
+        $("#minute_keeper_of_the_minutes_id").val(ui.item.value)
+      }
     });
-    $( "#minute_chairperson" ).autocomplete({
-      source: availableUsers
+    $("#name_of_chairperson").autocomplete({
+      source: availableUsers,
+      change: function( event, ui ) {
+        $("#name_of_chairperson").val(ui.item.label)
+        $("#minute_chairperson_id").val(ui.item.value)
+      }
     });
-
-    $("#guests").chosen()
   });
 </script>

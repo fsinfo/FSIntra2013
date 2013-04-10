@@ -23,7 +23,9 @@ class User < ActiveRecord::Base
 	before_save :create_remember_token
 
 	has_many :minutes
-	
+
+
+	scope :fsr
 
 	def self.authenticate(loginname,password)
 		ldap = Net::LDAP.new(:host => 'ford.fachschaft.cs.uni-kl.de')
