@@ -20,6 +20,7 @@
 
 require 'net/ldap'
 class User < ActiveRecord::Base
+	has_many :tabs
 	before_save :create_remember_token
 
 	has_many :minutes
@@ -29,9 +30,12 @@ class User < ActiveRecord::Base
 		ldap = Net::LDAP.new(:host => 'ford.fachschaft.cs.uni-kl.de')
 		ldap.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)
 		if ldap.bind
+			filter = Net::LDAP::Filter.eq('memberUid', loginname)
+			groups = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).flat_map(&:cn)
+
 			# create a new user if it doesn't exist yet
-			user = User.find_or_create_by_loginname(loginname)
-			return user
+			user = User.find_or_create_by(:loginname => loginname)
+			return user, groups
 		else 
 			return nil
 		end

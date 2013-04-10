@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  beverage_id: 1
+  tab_id: 1
+  count: 1
+  price: 9.99
+
+two:
+  beverage_id: 1
+  tab_id: 1
+  count: 1
+  price: 9.99

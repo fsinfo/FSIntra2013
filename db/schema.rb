@@ -19,6 +19,24 @@ ActiveRecord::Schema.define(version: 20130409175559) do
     t.boolean "absent"
   end
 
+  create_table "beverage_tabs", force: true do |t|
+    t.integer  "beverage_id"
+    t.integer  "tab_id"
+    t.integer  "count"
+    t.decimal  "price",       precision: 8, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "beverages", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "available"
+    t.decimal  "price",       precision: 8, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "minutes", force: true do |t|
     t.datetime "date"
     t.string   "status",     default: "draft"
@@ -28,6 +46,10 @@ ActiveRecord::Schema.define(version: 20130409175559) do
 
   create_table "minutes_guests", force: true do |t|
     t.string   "name"
+  end
+
+  create_table "tabs", force: true do |t|
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -44,6 +66,13 @@ ActiveRecord::Schema.define(version: 20130409175559) do
     t.integer "guest_id"
     t.integer "minute_id"
   end
+
+  create_table "user_tabs", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "tab_id"
+  end
+
+  add_index "user_tabs", ["user_id", "tab_id"], name: "index_user_tabs_on_user_id_and_tab_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "loginname"

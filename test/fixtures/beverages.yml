@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: beverages
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  description :text
+#  available   :boolean
+#  price       :decimal(8, 2)
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  description: MyText
+  available: false
+  price: 9.99
+
+two:
+  name: MyString
+  description: MyText
+  available: false
+  price: 9.99

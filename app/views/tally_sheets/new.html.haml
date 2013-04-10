@@ -1,0 +1,7 @@
+%div
+	- @users.each do |user|
+		= form_for [user,tab=user.tabs.build] do |f|
+			- @beverages.each do |beverage|
+				= f.fields_for [beverage, tab.beverage_tabs.build] do |b|
+					= b.text_field :count
+			= f.submit

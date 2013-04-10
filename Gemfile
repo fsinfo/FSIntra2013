@@ -29,6 +29,8 @@ gem 'jbuilder', '~> 1.0.1'
 
 gem 'net-ldap'
 gem 'annotate'
+gem 'haml'
+gem 'haml-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		user = User.authenticate(params[:loginname],params[:password])
+		user, groups = User.authenticate(params[:loginname],params[:password])
 		unless user.nil?
 			login user
 			flash[:success] = "Hello #{user.firstname}!"

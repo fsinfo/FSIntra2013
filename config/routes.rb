@@ -2,6 +2,7 @@
 #   resources :$deutschername, :as => "$englishname", :controller => "$englishname"
 Fsintra::Application.routes.draw do
   resources :benutzer, except: [:destroy], :as => 'users', :controller => 'users'
+  resources :getraenke, :as => 'beverages', :controller => 'beverages'
   resources :sessions, only: [:new, :create, :destroy]
   get '/login' => 'sessions#new'
   delete '/logout' => 'sessions#destroy'
