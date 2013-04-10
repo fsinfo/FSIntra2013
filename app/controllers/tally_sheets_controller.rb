@@ -11,10 +11,11 @@ class TallySheetsController < ApplicationController
 		post = params[:user]
 		@users.each do |user|
 			temp = post[user.id.to_s]
-			tab = user.tabs.create(:paid => false)
+			tab = user.tabs.build(:paid => false)
 			temp.each do |id,array|
-				tab.beverage_tabs.create(:beverage_id => id, :count => array["count"], :price => array["price"])
+				tab.beverage_tabs.build(:beverage_id => id, :count => array["count"], :price => array["price"])
 			end
+			tab.save if tab.total_invoice > 0
 		end
 		# TODO: better route, send mails
 		redirect_to root_url

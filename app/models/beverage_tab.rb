@@ -14,4 +14,10 @@
 class BeverageTab < ActiveRecord::Base
 	belongs_to :beverage
 	belongs_to :tab
+
+	after_initialize :init
+
+	def init
+		self.count ||= 0
+	end
 end
