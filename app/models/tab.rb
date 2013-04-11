@@ -14,9 +14,13 @@ class Tab < ActiveRecord::Base
 	has_many :beverages, :through => :beverage_tabs
 	belongs_to :user
 
-	scope :paid, -> { where :paid => true }
-	scope :unpaid, -> { where :paid => false }
+	scope :paid, -> { where(paid: true).order('created_at DESC') }
+	scope :unpaid, -> { where(paid: false).order('created_at DESC') }
 	
+	def is_paid
+		self.paid = true
+	end
+
 	def total_invoice
 		total = 0.0
 		self.beverage_tabs.each do |b|

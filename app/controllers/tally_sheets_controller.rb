@@ -1,5 +1,5 @@
 class TallySheetsController < ApplicationController
-	before_action :get_users, :get_beverages
+	before_action :get_users, :get_beverages, :has_permission
 	def index
 	end
 
@@ -13,7 +13,9 @@ class TallySheetsController < ApplicationController
 			temp = post[user.id.to_s]
 			tab = user.tabs.build(:paid => false)
 			temp.each do |id,array|
-				tab.beverage_tabs.build(:beverage_id => id, :count => array["count"], :price => array["price"])
+				unless array["count"].to_i == 0
+					tab.beverage_tabs.build(:beverage_id => id, :count => array["count"], :price => array["price"]) 
+				end
 			end
 			tab.save if tab.total_invoice > 0
 		end
@@ -29,5 +31,11 @@ class TallySheetsController < ApplicationController
 
 		def get_beverages
 			@beverages = Beverage.available
+		end
+
+		def has_permission
+			unless has_group('kuehlschrank')
+				redirect_to root_url, flash => {:error => 'You have no permission'}
+			end
 		end
 end

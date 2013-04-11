@@ -1,0 +1,19 @@
+Offen:
+%table
+	%thead
+		%th Datum
+		%th Betrag
+		%th Benutzer
+		%th Bezahlt
+	%tbody
+		- @tabs.each do |tab|
+			%tr{:id => "tab_row_#{tab.id}"}
+				%td
+					= link_to tab.created_at, tab_path(tab)
+				%td
+					= tab.total_invoice
+				%td
+					= tab.user.displayed_name
+				%td
+					= form_for tab, :class => 'tab_paid', :method => 'PUT', :remote => true do |f|
+						= f.submit

@@ -14,12 +14,17 @@
 				<% if signed_in? %>
 					<li><%= link_to 'Adressbuch', users_path %></li>
 					<li class="has-dropdown">
-						<a href="#">Getränke</a>
-						<ul class="dropdown">
-							<li><%= link_to 'Getränke', beverages_path %></li>
+						<% if has_group('kuehlschrank') %>
+							<a href="#">Kühlschrank</a>
+							<ul class="dropdown">
+								<li><%= link_to 'Eigene Rechnungen', tabs_path %></li>
+								<li><%= link_to 'Getränke', beverages_path %></li>
+								<li><%= link_to 'Strichliste', new_tally_sheet_path %></li>
+								<li><%= link_to 'Offene Rechnungen', offen_tabs_path %></li>
+							</ul>
+						<% else %>
 							<li><%= link_to 'Rechnungen', tabs_path %></li>
-							<li><%= link_to 'Strichliste', new_tally_sheet_path %></li>
-						</ul>
+						<% end %>
 					</li>
 					<li><%= link_to 'Profil', user_path(current_user) %></li>
 					<li><%= link_to 'Logout', logout_path, :method => :delete %></li>

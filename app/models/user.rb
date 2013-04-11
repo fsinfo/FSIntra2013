@@ -16,7 +16,6 @@
 #  remember_token :string(255)
 #  created_at     :datetime
 #  updated_at     :datetime
-#
 
 require 'net/ldap'
 class User < ActiveRecord::Base
