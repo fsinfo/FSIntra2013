@@ -19,7 +19,13 @@ table {
 	font-size: 75%;
 }
 
-.actions a {
-	vertical-align: middle;
-	margin-bottom: 1.5em !important;
+.actions {
+	h1 {
+		display: inline;
+		margin-right: .35em;
+	}
+	a {
+		vertical-align: middle;
+		margin-bottom: 1.75em;
+	}
 }
