@@ -9,17 +9,21 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require jquery-ui
- *= require foundation_and_overrides
- *= require_tree .
+ *= require fontello-embedded
+ *= minutes
+ *= require base
  *= require_self
  */
  
- body {
-	margin-top: 60px;
- }
 
- #top-bar {
+/* Overrides go here */
+
+body {
+	margin-top: 60px;
+}
+
+#top-bar {
 	position: fixed;
 	top: 0;
 	z-index: 2;
- }
+}

@@ -1,23 +1,60 @@
-<h1><%=t '.heading' %></h1>
+<!-- <div class="row">
+	<div class="large-6 small-6 column"></div>
+	<div class="large-6 small-6 column"></div>
+</div> -->
+
+<div class="actions">
+	<h1 style="display: inline; margin-right: .35em;"><%=t '.heading' %></h1>
+	<a href="<%= new_user_path %>" class="button small round secondary">
+		<span class="icon-plus"> Neuen Eintrag Anlegen</span>
+	</a>
+</div>
+
+<!-- <div style="text-align: right;">
+</div> -->
 
 <table>
-  <thead>
-    <tr>
-      <th><%=t User.human_attribute_name :firstname %></th>
-      <th><%=t User.human_attribute_name :lastname %></th>
-      <th><%=t User.human_attribute_name :street %></th>
-      <th><%=t User.human_attribute_name :zip %></th>
-      <th><%=t User.human_attribute_name :city %></th>
-      <th><%=t User.human_attribute_name :email %></th>
-      <th><%=t User.human_attribute_name :phone %></th>
-      <th><%=t User.human_attribute_name :birthday %></th>
-      <th><%=t User.human_attribute_name :misc %></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <%= render @users %>
-  </tbody>
+	<colgroup>
+		<col width="24%">
+		<col width="24%">
+		<col width="24%">
+		<col width="24%">
+		<col width="2%">
+		<col width="2%">
+	</colgroup>
+	<thead>
+		<tr>
+			<th><%=t User.human_attribute_name :firstname %></th>
+			<th><%=t User.human_attribute_name :lastname %></th>
+			<th><%=t User.human_attribute_name :email %></th>
+			<th><%=t User.human_attribute_name :phone %></th>
+			<th>Aktionen</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @users.each do |user| %>
+			<tr> 
+				<td><%= user.firstname %></td>
+				<td><%= user.lastname %></td>
+				<td><%= user.city %></td>
+				<td><%= user.email %></td>
+				<td class="center no-linebreak">
+					<a href="<%= user_path(user) %>"><span class="icon-info-circled">Details</span></a>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
 </table>
 
-<br />
+
+<!-- 
+user.firstname
+user.lastname
+user.street
+user.zip
+user.city
+user.email
+user.phone
+user.birthday
+user.misc
+ -->
