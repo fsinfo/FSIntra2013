@@ -29,3 +29,11 @@ table {
 		margin-bottom: 1.75em;
 	}
 }
+
+.user-details {
+	th { text-align: left; }
+}
+
+#notice {
+	@include alert;
+}

@@ -1,9 +1,60 @@
-<p id="notice"><%= notice %></p>
+<div class="actions">
+	<h1><%= @user.firstname %> <%= @user.lastname %></h1>
+	<a href="<%= users_path %>" class="button small round secondary">
+		<span class="icon-left-fat"> Zurück</span>
+	</a>
+	<% if current_user?(@user) %>
+		<a href="<%= edit_user_path(@user) %>" class="button small round secondary">
+			<span class="icon-pencil"> Bearbeiten</span>
+		</a>
+	<% end %>
+</div>
 
-<%= render @user %>
-
-<br />
-<% if current_user?(@user) %>
-	<%= link_to 'Edit', edit_user_path(@user) %> |
+<% if notice %>
+	<p id="notice"><%= notice %></p>
 <% end %>
-<%= link_to 'Back', users_path %>
+
+<table class="user-details">
+	<colgroup>
+		<col width="15%">
+		<col width="85%">
+	</colgroup>
+	<tbody>
+		<tr>
+			<th>Vorname</th>
+			<td><%= @user.firstname %></td>
+		</tr>
+	<tr>
+		<th>Nachname</th>
+		<td><%= @user.lastname %></td>
+	</tr>
+	<tr>
+		<th>eMail</th>
+		<td><%= @user.email %></td>
+	</tr>
+	<tr>
+		<th>Telefonnummer</th>
+		<td><%= @user.phone %></td>
+	</tr>
+	<tr>
+		<th>Straße</th>
+		<td><%= @user.street %></td>
+	</tr>
+	<tr>
+		<th>Postleitzahl</th>
+		<td><%= @user.zip %></td>
+	</tr>
+	<tr>
+		<th>Stadt</th>
+		<td><%= @user.city %></td>
+	</tr>
+	<tr>
+		<th>Geburtstag</th>
+		<td><%= @user.birthday %></td>
+	</tr>
+	<tr>
+		<th>Sonstiges</th>
+		<td><%= @user.misc %></td>
+	</tr>
+	</tbody>
+</table>

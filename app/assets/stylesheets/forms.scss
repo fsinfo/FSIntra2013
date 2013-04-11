@@ -1,4 +1,3 @@
-
 form.inline {
 	label {
 		@include prefix-postfix-base;
@@ -9,10 +8,17 @@ form.inline {
 		}
 	}
 
-	input[type="text"], input[type="password"] {
+	input[type="text"], input[type="date"], textarea {
 		@include grid-column($columns: 8);
 		@media #{$small} {
 			@include grid-column($columns: 9);
+		}
+	}
+
+	textarea {
+		min-height: 0;
+		&:focus {
+			min-height: 10em;
 		}
 	}
 
