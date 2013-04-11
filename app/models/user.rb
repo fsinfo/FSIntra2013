@@ -1,9 +1,8 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: people
 #
 #  id             :integer          not null, primary key
-#  loginname      :string(255)
 #  firstname      :string(255)
 #  lastname       :string(255)
 #  street         :string(255)
@@ -13,12 +12,15 @@
 #  phone          :string(255)
 #  birthday       :date
 #  misc           :text
+#  loginname      :string(255)
 #  remember_token :string(255)
+#  type           :string(255)
 #  created_at     :datetime
 #  updated_at     :datetime
+#
 
 require 'net/ldap'
-class User < ActiveRecord::Base
+class User < Person
 	has_many :tabs
 	before_save :create_remember_token
 

@@ -12,7 +12,7 @@
 				<li class="active"><a href="#">Aktiv</a></li>
 				<li><%= link_to 'Protokolle', minutes_path %></li>
 				<% if signed_in? %>
-					<li><%= link_to 'Adressbuch', users_path %></li>
+					<li><%= link_to 'Adressbuch', people_path %></li>
 					<li class="has-dropdown">
 						<% if has_group('kuehlschrank') %>
 							<a href="#">Kühlschrank</a>
