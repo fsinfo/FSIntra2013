@@ -1,0 +1,20 @@
+%h1=t '.headline'
+= link_to t('.new'), new_beverage_path
+
+%table
+	%thead 
+		%th=t Beverage.human_attribute_name :name
+		%th=t Beverage.human_attribute_name :description
+		%th=t Beverage.human_attribute_name :price
+		%th=t Beverage.human_attribute_name :available
+		%th
+		%th
+	%tbody
+		- @beverages.each do |beverage|
+			%tr 
+				%td= beverage.name
+				%td= beverage.description
+				%td= number_to_currency(beverage.price)
+				%td= beverage.available
+				%td= link_to t('actions.edit'), edit_beverage_path(beverage)
+				%td= link_to t('actions.destroy'), beverage_path(beverage), :method => :delete

@@ -1,0 +1,24 @@
+de:
+  beverages:
+    index:
+      headline: Getränke
+      new: Neues Getränk anlegen
+    edit:
+      headline: Getränk bearbeiten
+    new:
+      headline: Neues Getränk anlegen
+
+# --------------
+# --- Models ---
+# --------------
+  activerecord:
+    models:
+      beverage:
+        one: Getränk
+        other: Getränke
+    attributes:
+      beverage:
+        name: Name
+        price: Preis
+        description: Beschreibung
+        available: Verfügbar

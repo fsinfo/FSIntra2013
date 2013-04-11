@@ -1,0 +1,30 @@
+de:
+  people:
+    index:
+      headline: Adressbuch
+      new: Neuen Kontakt anlegen
+    edit:
+      headline: Kontakt bearbeiten
+    new:
+      headline: Neuen Kontakt anlegen
+
+# --------------
+# --- Models ---
+# --------------
+  activerecord:
+    models:
+      person:
+        one: Kontakt
+        other: Kontakte
+    attributes:
+      person:
+        firstname: Vorname
+        lastname: Nachname
+        loginname: Benutzername
+        phone: Telefon
+        street: Straße
+        zip: Postleitzahl
+        city: Ort
+        email: E-Mail
+        birthday: Geburtstag
+        misc: Sonstiges

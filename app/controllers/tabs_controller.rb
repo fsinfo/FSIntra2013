@@ -1,13 +1,10 @@
 class TabsController < ApplicationController
 	before_action :set_tab, only: [:update, :new, :show]
+	before_action :has_permission, only: [:update, :unpaid]
 
 	def index
 		@unpaid_tabs = current_user.tabs.unpaid
 		@paid_tabs = current_user.tabs.paid
-	end
-
-	def create
-		@tab = Tab.new
 	end
 
 	def show
@@ -15,9 +12,12 @@ class TabsController < ApplicationController
 	end
 
 	def update
+		@tab.is_paid
+		@tab.save
 	end
 
-	def new
+	def unpaid
+		@tabs = Tab.unpaid
 	end
 
 	  private
@@ -30,5 +30,9 @@ class TabsController < ApplicationController
     def tab_params 
       params.require(:tab)
     end
+
+    def has_permission
+			has_group('kuehlschrank')
+		end
 
 end

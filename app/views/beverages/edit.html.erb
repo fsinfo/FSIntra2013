@@ -1,6 +1,6 @@
-<h1>Editing beverage</h1>
+<h1><%= t '.headline' %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @beverage %> |
-<%= link_to 'Back', beverages_path %>
+<%= link_to t('actions.show'), @beverage %> |
+<%= link_to t('actions.back'), beverages_path %>
