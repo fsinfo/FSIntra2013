@@ -13,16 +13,16 @@
 
   <div class="actions">
     <%= f.label :name %>
-    <%= f.text_field :name %><br />
+    <%= f.text_field :name %>
 
     <%= f.label :description %>
-    <%= f.text_area :description %><br />
+    <%= f.text_area :description %>
 
     <%= f.label :price %>
-    <%= f.text_field :price %><br />
+    <%= f.text_field :price, :value=>number_to_currency(f.object.price) %>
 
     <%= f.label :available %>
-    <%= f.check_box :available %><br />
+    <%= f.check_box :available %>
 
     <%= f.submit %>
   </div>

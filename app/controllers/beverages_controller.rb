@@ -21,6 +21,7 @@ class BeveragesController < ApplicationController
 
   # POST /beverages
   def create
+    # convert_params beverage_params
     @beverage = Beverage.new(beverage_params)
 
     if @beverage.save
@@ -32,6 +33,7 @@ class BeveragesController < ApplicationController
 
   # PATCH/PUT /beverages/1
   def update
+    # convert_params beverage_params
     if @beverage.update(beverage_params)
       redirect_to @beverage, notice: 'Beverage was successfully updated.'
     else
@@ -53,6 +55,8 @@ class BeveragesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def beverage_params
+      params[:beverage][:price].gsub!(/,/,'.')
+      params[:beverage][:price].delete!('€a-zA-Z\s')
       params.require(:beverage).permit(:name, :description, :available, :price)
     end
 end
