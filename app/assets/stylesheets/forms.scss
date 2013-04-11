@@ -8,7 +8,7 @@ form.inline {
 		}
 	}
 
-	input[type="text"], input[type="date"], textarea {
+	input[type="text"], input[type="date"], input[type="password"], textarea {
 		@include grid-column($columns: 8);
 		@media #{$small} {
 			@include grid-column($columns: 9);
