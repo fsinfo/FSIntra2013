@@ -56,7 +56,7 @@ class BeveragesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def beverage_params
       params[:beverage][:price].gsub!(/,/,'.')
-      params[:beverage][:price].delete!('€a-zA-Z\s')
+      params[:beverage][:price].delete!('€\s')
       params.require(:beverage).permit(:name, :description, :available, :price)
     end
 end
