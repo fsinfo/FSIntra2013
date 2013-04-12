@@ -1,8 +1,6 @@
 <div class="actions">
-	<h1 style=""><%=t '.headline' %></h1>
-	<a href="<%= new_person_path %>" class="button small round secondary">
-		<span class="icon-plus"> Neuen Eintrag Anlegen</span>
-	</a>
+	<h1><%=t '.headline' %></h1>
+	<%= link_to content_tag(:span, ' Neuen Eintrag anlegen', :class => "icon-plus"), new_person_path, :class => "button small round secondary" %>
 </div>
 
 <table>
@@ -28,10 +26,10 @@
 			<tr> 
 				<td><%= person.firstname %></td>
 				<td><%= person.lastname %></td>
+				<td><%= person.city %></td>
 				<td><%= person.email %></td>
-				<td><%= person.phone %></td>
 				<td class="center no-linebreak">
-					<a href="<%= person_path(person) %>"><span class="icon-info-circled">Details</span></a>
+					<%= link_to content_tag(:span, 'Details', :class => "icon-info-circled"), person_path(person) %>
 				</td>
 			</tr>
 		<% end %>

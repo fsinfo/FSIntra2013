@@ -26,7 +26,7 @@
 							<li><%= link_to 'Rechnungen', tabs_path %></li>
 						<% end %>
 					</li>
-					<li><%= link_to 'Profil', user_path(current_user) %></li>
+					<li><%= link_to 'Profil', person_path(current_user) %></li>
 					<li><%= link_to 'Logout', logout_path, :method => :delete %></li>
 				<% else %>
 					<li><%= link_to 'Login', login_url %></li>

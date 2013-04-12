@@ -1,6 +1,6 @@
-<h1>Editing person</h1>
+<div class="actions">
+	<h1>Eintrag bearbeiten</h1>
+	<%= link_to content_tag(:span, ' Abbrechen', :class => "icon-cancel-1"), person_path(@person), :class => "button small round secondary" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @person %> |
-<%= link_to 'Back', persons_path %>

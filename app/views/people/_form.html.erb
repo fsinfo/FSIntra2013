@@ -1,36 +1,35 @@
-<%= form_for(@person) do |f| %>
-  <% if @person.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= form_for(@person, :html => {:class => "inline"}) do |f| %>
+	<% if @person.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@person.errors.count, "error") %> prohibited this user from being saved:</h2>
+			<ul>
+				<% @person.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
 
-      <ul>
-      <% @person.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<%= f.label :firstname %>
+	<%= f.text_field :firstname %>
+	<%= f.label :lastname %>
+	<%= f.text_field :lastname %>
+	<%= f.label :street %>
+	<%= f.text_field :street %>
+	<%= f.label :zip %>
+	<%= f.text_field :zip %>
+	<%= f.label :city %>
+	<%= f.text_field :city %>
+	<%= f.label :email %>
+	<%= f.text_field :email %>
+	<%= f.label :phone %>
+	<%= f.text_field :phone %>
+	<%= f.label :birthday %>
+	<%= f.date_field :birthday, :start_year => 1950, :end_year => Date.today.year %>
+	<%= f.label :misc %>
+	<%= f.text_area :misc %>
 
-    <%= f.label :firstname %>
-    <%= f.text_field :firstname %><br />
-    <%= f.label :lastname %>
-    <%= f.text_field :lastname %><br />
-    <%= f.label :street %>
-    <%= f.text_field :street %><br />
-    <%= f.label :zip %>
-    <%= f.text_field :zip %><br />
-    <%= f.label :city %>
-    <%= f.text_field :city %><br />
-    <%= f.label :email %>
-    <%= f.text_field :email %><br />
-    <%= f.label :phone %>
-    <%= f.text_field :phone %><br />
-    <%= f.label :birthday %>
-    <%= f.date_field :birthday, :start_year => 1950, :end_year => Date.today.year %><br />
-    <%= f.label :misc %>
-    <%= f.text_area :misc %><br />
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<div class="submit">
+		<%= f.submit "Eintrag speichern", :class => 'button' %>
+	</div>
 <% end %>
