@@ -18,6 +18,8 @@ class Minute < ActiveRecord::Base
 	validates_inclusion_of :status, :in => STATUSES
 
 	validates_presence_of :date
+	validates_presence_of :keeper_of_the_minutes
+	validates_presence_of :chairperson
 
 	has_many :items, :class_name => 'Minutes::Item'
 	accepts_nested_attributes_for :items

@@ -10,7 +10,15 @@ class MinutesController < ApplicationController
 
   # GET /minutes/1
   # GET /minutes/1.json
+  # GET /minutes/1.pdf
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = MinutePdf.new(@minute view_context)
+        send_data pdf.render, filename: "TODO_Protokollnamenüberlegen.pdf", type: "application/pdf"
+      end
+    end
   end
 
   # GET /minutes/new

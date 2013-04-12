@@ -20,6 +20,11 @@
   <%= @minute.chairperson.displayed_name if @minute.chairperson %>
 </p>
 
+<% @minute.items.each do |i| %>
+  <p>
+  	<strong><%=t Minutes::Item.model_name.human %><%= i.title %></strong>
+  </p>
+<% end %>
 
 <%= link_to t('actions.edit'), edit_minute_path(@minute) %> |
 <%= link_to t('actions.back'), minutes_path %>

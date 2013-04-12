@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.2)
     actionmailer (4.0.0.beta1)
       actionpack (= 4.0.0.beta1)
       mail (~> 2.5.3)
@@ -25,6 +26,7 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.33)
+    afm (0.2.0)
     annotate (2.5.0)
       rake
     arel (4.0.0.beta2)
@@ -47,6 +49,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hashery (2.1.0)
     hike (1.2.1)
     i18n (0.6.4)
     jbuilder (1.0.2)
@@ -63,7 +66,16 @@ GEM
     minitest (4.7.0)
     multi_json (1.7.2)
     net-ldap (0.3.1)
+    pdf-reader (1.3.3)
+      Ascii85 (~> 1.0.0)
+      afm (~> 0.2.0)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     polyglot (0.3.3)
+    prawn (0.12.0)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.2)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -84,6 +96,7 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    ruby-rc4 (0.1.5)
     sass (3.2.7)
     sass-rails (4.0.0.beta1)
       railties (>= 4.0.0.beta, < 5.0)
@@ -107,6 +120,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     turbolinks (1.1.1)
       coffee-rails
     tzinfo (0.3.37)
@@ -127,6 +141,7 @@ DEPENDENCIES
   jbuilder (~> 1.0.1)
   jquery-rails
   net-ldap
+  prawn
   rails (= 4.0.0.beta1)
   sass-rails (~> 4.0.0.beta1)
   sqlite3

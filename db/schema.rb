@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130411150027) do
+ActiveRecord::Schema.define(version: 20130411211949) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "beverage_id"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20130411150027) do
     t.integer  "minute_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "order"
   end
 
   create_table "minutes_minutes_guests", id: false, force: true do |t|
