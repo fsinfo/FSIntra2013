@@ -1,6 +1,7 @@
-<h1><%=t '.headline', :date => l(@minute.date, :format => :short) %></h1>
+<div class="actions">
+	<h1><%=t '.headline', :date => l(@minute.date, :format => :short) %></h1>
+	<%= link_to content_tag(:span, ' Zurück', :class => "icon-left-fat"), minutes_path, :class => "button small round secondary" %>
+	<%= link_to content_tag(:span, ' Anzeigen', :class => "icon-eye-1"), @minute, :class => "button small round secondary" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to t('actions.show'), @minute %> |
-<%= link_to t('actions.back'), minutes_path %>

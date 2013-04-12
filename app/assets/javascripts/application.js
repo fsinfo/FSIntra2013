@@ -15,6 +15,8 @@
 //= require foundation
 //= require jquery-ui
 //= require turbolinks
+//= require redactor_de
+//= require redactor.min
 //= require_tree .
 
 $(document).foundation();

@@ -1,92 +1,105 @@
 <%= form_for(@minute) do |f| %>
-  <% if @minute.errors.any? %>
-    <div id="error_explanation">
-      <h2><%=t 'feedback.form_error', :count => @minute.errors.count %></h2>
+	<% if @minute.errors.any? %>
+		<div id="error_explanation">
+			<h2><%=t 'feedback.form_error', :count => @minute.errors.count %></h2>
 
-      <ul>
-      <% @minute.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+			<ul>
+			<% @minute.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+			</ul>
+		</div>
+	<% end %>
 
-  <%# Here we should add a poly fill for browsers
-  that don't support the new html5 date-field (i.e. Firefox) %>
-  <div class="field">
-    <%= f.label :date %><br />
-    <%= f.date_field :date %>
-  </div>
-  
-  <%# Here could be a dropdown list or similar...
-  The value should be the id of a fsr member (user) %>
-  <div class="field">
-    <%= f.label :keeper_of_the_minutes %><br />
-    <%= f.text_field :keeper_of_the_minutes_id, :value => @minute.keeper_of_the_minutes_id %><br />
-    <%= text_field_tag 'name_of_keeper_of_the_minutes' %>
-  </div>
-  
-  <%# Here could be a dropdown list or similar...
-  The value should be the id of a fsr member (user) %>
-  <div class="field">
-    <%= f.label :chairperson %><br />
-    <%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
-    <%= text_field_tag 'name_of_chairperson' %>
-  </div>
+	<%# Here we should add a poly fill for browsers
+	that don't support the new html5 date-field (i.e. Firefox) %>
+	<div class="inline-field">
+		<%= f.label :date %>
+		<%= f.date_field :date %>
+	</div>
+	
+	<%# Here could be a dropdown list or similar...
+	The value should be the id of a fsr member (user) %>
+	<div class="field">
+		<%= f.label :keeper_of_the_minutes %><br />
+		<%= f.text_field :keeper_of_the_minutes_id, :value => @minute.keeper_of_the_minutes_id %><br />
+		<%= text_field_tag 'name_of_keeper_of_the_minutes' %>
+	</div>
+	
+	<%# Here could be a dropdown list or similar...
+	The value should be the id of a fsr member (user) %>
+	<div class="field">
+		<%= f.label :chairperson %><br />
+		<%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
+		<%= text_field_tag 'name_of_chairperson' %>
+	</div>
 
-  <%# Here could be a checkbox list or similar... %>
-  <div class="field">
-    <%=t '.absentee_description' %>
-    <%= f.label :absentees %><br />
-    <% User.fsr.each do |u| %>
-      <%= check_box_tag "minute[absentee_ids][]", u.id, @minute.absentee_ids.include?(u.id), id: dom_id(u) %>
-      <%= u.displayed_name %>
-    <% end %>
-  </div>
+	<%# Here could be a checkbox list or similar... %>
+	<div class="field">
+		<%=t '.absentee_description' %>
+		<%= f.label :absentees %><br />
+		<% User.fsr.each do |u| %>
+			<%= check_box_tag "minute[absentee_ids][]", u.id, @minute.absentee_ids.include?(u.id), id: dom_id(u) %>
+			<%= u.displayed_name %>
+		<% end %>
+	</div>
 
-  <%# Here could be a text field with autocomplete.
-  TODO: New persons should be supported! %>
-  <div class="field">
-    <%= f.label :guests %><br />
-    <%= f.select :guests, ["foo", "bar"] %>
-  </div>
+	<%# Here could be a text field with autocomplete.
+	TODO: New persons should be supported! %>
+	<div class="field">
+		<%= f.label :guests %><br />
+		<%= f.select :guests, ["foo", "bar"] %>
+	</div>
 
-  <hr />
-  <%= f.fields_for :items do |fi| %>
-    <h2><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></h2>
-    <div class="field">
-      <%= fi.label :title %><br />
-      <%= fi.text_field :title %>
-    </div>
-    <div class="field">
-      <%= fi.label :content %><br />
-      <%= fi.text_area :content %>
-    </div>
-    <hr />
-  <% end %>
-  
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<hr />
+	<%= f.fields_for :items do |fi| %>
+		<fieldset>
+			<legend><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></legend>
+			<div class="inline-field">
+				<%= fi.label :title %>
+				<%= fi.text_field :title %>
+			</div>
+			<div class="redactor-field">
+				<%= fi.text_area :content %>
+			</div>
+		</fieldset>
+	<% end %>
+	
+	<div class="submit">
+		<%= f.submit nil, :class => "button" %>
+	</div>
 <% end %>
 
 <script>
-  $(function() {
-    // All Users .. see http://api.jqueryui.com/autocomplete/#option-source for why this way
-    var availableUsers = [ <%= raw User.all.map { |x| "{ value: #{x.id}, label: '#{x.displayed_name}' }" }.join(",") %> ];
-    $( "#name_of_keeper_of_the_minutes" ).autocomplete({
-      source: availableUsers,
-      change: function( event, ui ) {
-        $("#name_of_keeper_of_the_minutes").val(ui.item.label)
-        $("#minute_keeper_of_the_minutes_id").val(ui.item.value)
-      }
-    });
-    $("#name_of_chairperson").autocomplete({
-      source: availableUsers,
-      change: function( event, ui ) {
-        $("#name_of_chairperson").val(ui.item.label)
-        $("#minute_chairperson_id").val(ui.item.value)
-      }
-    });
-  });
+	$(function() {
+		// All Users .. see http://api.jqueryui.com/autocomplete/#option-source for why this way
+		var availableUsers = [ <%= raw User.all.map { |x| "{ value: #{x.id}, label: '#{x.displayed_name}' }" }.join(",") %> ];
+		$( "#name_of_keeper_of_the_minutes" ).autocomplete({
+			source: availableUsers,
+			change: function( event, ui ) {
+				$("#name_of_keeper_of_the_minutes").val(ui.item.label)
+				$("#minute_keeper_of_the_minutes_id").val(ui.item.value)
+			}
+		});
+		$("#name_of_chairperson").autocomplete({
+			source: availableUsers,
+			change: function( event, ui ) {
+				$("#name_of_chairperson").val(ui.item.label)
+				$("#minute_chairperson_id").val(ui.item.value)
+			}
+		});
+
+		// setting up redactor
+		buttons = [
+			'bold', 'italic', 'underline', 'deleted', '|',
+			'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+			'alignleft', 'aligncenter', 'alignright', 'justify', '|',
+			'html'
+		]
+		$(".redactor-field textarea").redactor({
+			lang: 'de',
+			buttons: buttons,
+			minHeight: 150,
+		});
+	});
 </script>
