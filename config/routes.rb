@@ -1,7 +1,7 @@
 # The restful routes are lazily translated using following the pattern:
 #   resources :$deutschername, :as => "$englishname", :controller => "$englishname"
 Fsintra::Application.routes.draw do
-  resources :benutzer, except: [:destroy], :as => 'users', :controller => 'users' 
+  resources :benutzer, only: [:update], :as => 'users', :controller => 'users' 
   resources :personen, except: [:destroy], :as => 'people', :controller => 'people'
 	resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
 		get 'offen'  => 'tabs#unpaid', :on => :collection
