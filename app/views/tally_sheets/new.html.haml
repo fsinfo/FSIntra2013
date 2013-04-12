@@ -19,3 +19,4 @@
 											= bf.text_field :count
 											= bf.hidden_field :price, :value => beverage.price
 		= submit_tag 
+		= link_to 'PDF', new_tally_sheet_path(:format => 'pdf')
