@@ -24,7 +24,9 @@ class TallySheetsController < ApplicationController
 					tab.beverage_tabs.build(:beverage_id => id, :count => array["count"], :price => array["price"]) 
 				end
 			end
-			tab.save if tab.total_invoice > 0
+			if tab.total_invoice > 0 and tab.save
+				TabMailer.tab_email(user,tab)
+			end
 		end
 		# TODO: better route, send mails
 		redirect_to root_url
@@ -45,4 +47,4 @@ class TallySheetsController < ApplicationController
 				redirect_to root_url, flash => {:error => 'You have no permission'}
 			end
 		end
-end
+	end
