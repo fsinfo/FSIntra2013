@@ -1,12 +1,8 @@
 <div class="actions">
 	<h1><%= @user.firstname %> <%= @user.lastname %></h1>
-	<a href="<%= users_path %>" class="button small round secondary">
-		<span class="icon-left-fat"> Zurück</span>
-	</a>
+	<%= link_to content_tag(:span, ' Zurück', :class => "icon-left-fat"), users_path, :class => "button small round secondary" %>
 	<% if current_user?(@user) %>
-		<a href="<%= edit_user_path(@user) %>" class="button small round secondary">
-			<span class="icon-pencil"> Bearbeiten</span>
-		</a>
+		<%= link_to content_tag(:span, ' Bearbeiten', :class => "icon-pencil"), edit_user_path(@user), :class => "button small round secondary" %>
 	<% end %>
 </div>
 

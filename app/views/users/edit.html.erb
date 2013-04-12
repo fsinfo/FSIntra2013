@@ -1,8 +1,6 @@
 <div class="actions">
 	<h1>Eintrag bearbeiten</h1>
-	<a href="<%= user_path(@user) %>" class="button small round secondary">
-		<span class="icon-cancel-1"> Abbrechen</span>
-	</a>
+	<%= link_to content_tag(:span, ' Abbrechen', :class => "icon-cancel-1"), user_path(@user), :class => "button small round secondary" %>
 </div>
 
 <%= render 'form' %>
