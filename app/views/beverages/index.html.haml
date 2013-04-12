@@ -1,5 +1,6 @@
-%h1=t '.headline'
-= link_to t('.new'), new_beverage_path
+%div{:class => 'actions'}
+	%h1=t '.headline'
+	= link_to content_tag(:span, t('.new'), :class=> "icon-plus"),new_beverage_path, :class => "button small round secondary"
 
 %table
 	%thead 
