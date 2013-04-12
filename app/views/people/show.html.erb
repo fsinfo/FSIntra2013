@@ -1,6 +1,56 @@
-<p id="notice"><%= notice %></p>
+<div class="actions">
+	<h1><%= @person.firstname %> <%= @person.lastname %></h1>
+	<%= link_to content_tag(:span, ' Zurück', :class => "icon-left-fat"), people_path, :class => "button small round secondary" %>
+	<% if current_user?(@person) %>
+		<%= link_to content_tag(:span, ' Bearbeiten', :class => "icon-pencil"), edit_person_path(@person), :class => "button small round secondary" %>
+	<% end %>
+</div>
 
-<%= render @person %>
+<% if notice %>
+	<p id="notice"><%= notice %></p>
+<% end %>
 
-<br />
-<%= link_to 'Back', people_path %>
+<table class="user-details">
+	<colgroup>
+		<col width="15%">
+		<col width="85%">
+	</colgroup>
+	<tbody>
+		<tr>
+			<th>Vorname</th>
+			<td><%= @person.firstname %></td>
+		</tr>
+	<tr>
+		<th>Nachname</th>
+		<td><%= @person.lastname %></td>
+	</tr>
+	<tr>
+		<th>eMail</th>
+		<td><%= @person.email %></td>
+	</tr>
+	<tr>
+		<th>Telefonnummer</th>
+		<td><%= @person.phone %></td>
+	</tr>
+	<tr>
+		<th>Straße</th>
+		<td><%= @person.street %></td>
+	</tr>
+	<tr>
+		<th>Postleitzahl</th>
+		<td><%= @person.zip %></td>
+	</tr>
+	<tr>
+		<th>Stadt</th>
+		<td><%= @person.city %></td>
+	</tr>
+	<tr>
+		<th>Geburtstag</th>
+		<td><%= @person.birthday %></td>
+	</tr>
+	<tr>
+		<th>Sonstiges</th>
+		<td><%= @person.misc %></td>
+	</tr>
+	</tbody>
+</table>
