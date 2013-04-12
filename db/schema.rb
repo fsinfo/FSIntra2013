@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130411211949) do
+ActiveRecord::Schema.define(version: 20130412165508) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "beverage_id"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20130411211949) do
   create_table "invitees", id: false, force: true do |t|
     t.integer "minute_id"
     t.integer "user_id"
-    t.boolean "absent"
+    t.string  "absent"
   end
 
   create_table "minutes", force: true do |t|

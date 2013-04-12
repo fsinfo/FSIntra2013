@@ -31,9 +31,15 @@ class Minute < ActiveRecord::Base
 	belongs_to :chairperson, :class_name => 'User'
 
 	has_and_belongs_to_many :absentees,
-													-> { where "absent = 0" },
+													-> { where "absent = 'With'" },
 													join_table: 'invitees',
 													class_name: 'User'
+	
+  has_and_belongs_to_many :unexcused_absentees,
+  												-> { where "absent = 'Without" },
+  												join_table: 'invitees',
+  												class_name: 'User'
+
 	accepts_nested_attributes_for :items
 
 													
