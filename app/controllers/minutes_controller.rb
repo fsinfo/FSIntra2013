@@ -15,7 +15,7 @@ class MinutesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = MinutePdf.new(@minute view_context)
+        pdf = MinutePdf.new(@minute, view_context)
         send_data pdf.render, filename: "TODO_Protokollnamenüberlegen.pdf", type: "application/pdf"
       end
     end
