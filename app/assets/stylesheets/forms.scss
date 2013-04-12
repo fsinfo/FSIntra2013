@@ -1,4 +1,4 @@
-form.inline {
+@mixin inline-field {
 	label {
 		@include prefix-postfix-base;
 		@include prefix;
@@ -21,10 +21,22 @@ form.inline {
 			min-height: 10em;
 		}
 	}
+}
+
+form {
+	&.inline {
+		@include inline-field;
+	}
+
+	.inline-field {
+		@include inline-field;
+		br { display: none; }
+	}
 
 	.submit {
 		text-align: right;
 		margin-right: 1px;
 	}
-}
 
+	.redactor-field { clear: both; }
+}
