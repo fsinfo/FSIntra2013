@@ -29,9 +29,9 @@
   background-image: -moz-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
   background-image: -o-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
   background-image: linear-gradient(#ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%); 
-  -webkit-border-radius: 5px;
+  /*-webkit-border-radius: 5px;
   -moz-border-radius   : 5px;
-  border-radius        : 5px;
+  border-radius        : 5px;*/
   -moz-background-clip   : padding;
   -webkit-background-clip: padding-box;
   background-clip        : padding-box;
@@ -99,12 +99,18 @@
   z-index: 1010;
 }
 .chzn-container-single .chzn-search input {
-  background: #fff url('chosen-sprite.png') no-repeat 100% -20px;
+  background: #fff;
+  background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+  background: -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
+  background: -moz-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
+  background: -o-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
+  background: linear-gradient(#eeeeee 1%, #ffffff 15%);
+  /*background: #fff url('chosen-sprite.png') no-repeat 100% -20px;
   background: url('chosen-sprite.png') no-repeat 100% -20px, -webkit-gradient(linear, 0 0, 0 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
   background: url('chosen-sprite.png') no-repeat 100% -20px, -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
   background: url('chosen-sprite.png') no-repeat 100% -20px, -moz-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
   background: url('chosen-sprite.png') no-repeat 100% -20px, -o-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
-  background: url('chosen-sprite.png') no-repeat 100% -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url('chosen-sprite.png') no-repeat 100% -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);*/
   margin: 1px 0;
   padding: 4px 20px 4px 5px;
   outline: 0;
@@ -215,7 +221,7 @@
   display: block;
   position: absolute;
   right: 3px;
-  top: 7px;
+  top: 4px;
   width: 12px;
   height: 12px;
   font-size: 1px;
@@ -316,7 +322,7 @@
   -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
   -moz-box-shadow   : 0 0 5px rgba(0,0,0,.3);
   box-shadow        : 0 0 5px rgba(0,0,0,.3);
-  border: 1px solid #5897fb;
+  border: 1px solid red;
 }
 .chzn-container-active .chzn-single-with-drop {
   border: 1px solid #aaa;

@@ -2,16 +2,17 @@
 	label {
 		@include prefix-postfix-base;
 		@include prefix;
-		@include grid-column($columns: 4);
+		float: left;
+		width: 33%;
 		@media #{$small} {
-			@include grid-column($columns: 3);
+			width: 25%;
 		}
 	}
 
 	input[type="text"], input[type="date"], input[type="password"], textarea, select {
-		@include grid-column($columns: 8);
+		width: 67%;
 		@media #{$small} {
-			@include grid-column($columns: 9);
+			width: 75%;
 		}
 	}
 
@@ -39,4 +40,42 @@ form {
 	}
 
 	.redactor-field { clear: both; }
+
+	.chosen-field {
+		clear: both;
+		margin-bottom: emCalc(16px);
+
+		.chzn-container {
+			/* Overriding graceful Chosen defaults. Now it looks like a charm */
+			height: emCalc(37px); // somewhere in foundation this number is calculated -> don't know how
+			font-size: $input-font-size;
+
+			.chzn-single {
+				border-color: $input-border-color;
+				-webkit-box-shadow: none;
+				-moz-box-shadow   : none;
+				box-shadow        : none;
+			}
+
+			a.chzn-single, a.chzn-single span {
+				height: 100%;
+				line-height: emCalc(37px);
+
+				.search-choice-close, div b {
+					margin-top: 4px;
+				}
+			}
+
+			.chzn-search input, .chzn-drop {
+				width: 100% !important;
+			}
+
+			&.chzn-container-active .chzn-single {
+				-webkit-box-shadow: none;
+				-moz-box-shadow   : none;
+				box-shadow        : none;
+				border: 1px solid $input-focus-border-color;
+			}
+		}
+	}
 }

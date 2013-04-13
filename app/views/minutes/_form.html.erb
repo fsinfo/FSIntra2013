@@ -22,18 +22,22 @@
 		<legend>Meta</legend>
 		<%# Here could be a dropdown list or similar...
 		The value should be the id of a fsr member (user) %>
-		<div class="field">
+		<div class="inline-field chosen-field">
 			<%= f.label :keeper_of_the_minutes %><br />
+			<!--
 			<%= f.text_field :keeper_of_the_minutes_id, :value => @minute.keeper_of_the_minutes_id %><br />
 			<%= text_field_tag 'name_of_keeper_of_the_minutes' %>
+			-->
+			<%= f.select :keeper_of_the_minutes_id, User.all.collect {|p| ["%s %s" % [p.firstname, p.lastname], p.id] }, :include_blank => true %>
 		</div>
-		
+
 		<%# Here could be a dropdown list or similar...
 		The value should be the id of a fsr member (user) %>
-		<div class="field">
+		<div class="inline-field chosen-field">
 			<%= f.label :chairperson %><br />
-			<%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
-			<%= text_field_tag 'name_of_chairperson' %>
+			<!--<%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
+			<%= text_field_tag 'name_of_chairperson' %>-->
+			<%= f.select :chairperson_id, User.all.collect {|p| ["%s %s" % [p.firstname, p.lastname], p.id] }, :include_blank => true %>
 		</div>
 	</fieldset>
 
@@ -122,6 +126,6 @@
 		});
 
 		// setting up chosen
-		$("select.chosen").chosen();
+		$(".chosen-field select").chosen({ placeholder_text: "Auswählen", allow_single_deselect: true });
 	});
 </script>
