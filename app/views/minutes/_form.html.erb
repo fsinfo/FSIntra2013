@@ -18,52 +18,71 @@
 		<%= f.date_field :date %>
 	</div>
 	
-	<%# Here could be a dropdown list or similar...
-	The value should be the id of a fsr member (user) %>
-	<div class="field">
-		<%= f.label :keeper_of_the_minutes %><br />
-		<%= f.text_field :keeper_of_the_minutes_id, :value => @minute.keeper_of_the_minutes_id %><br />
-		<%= text_field_tag 'name_of_keeper_of_the_minutes' %>
-	</div>
-	
-	<%# Here could be a dropdown list or similar...
-	The value should be the id of a fsr member (user) %>
-	<div class="field">
-		<%= f.label :chairperson %><br />
-		<%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
-		<%= text_field_tag 'name_of_chairperson' %>
-	</div>
+	<fieldset>
+		<legend>Meta</legend>
+		<%# Here could be a dropdown list or similar...
+		The value should be the id of a fsr member (user) %>
+		<div class="field">
+			<%= f.label :keeper_of_the_minutes %><br />
+			<%= f.text_field :keeper_of_the_minutes_id, :value => @minute.keeper_of_the_minutes_id %><br />
+			<%= text_field_tag 'name_of_keeper_of_the_minutes' %>
+		</div>
+		
+		<%# Here could be a dropdown list or similar...
+		The value should be the id of a fsr member (user) %>
+		<div class="field">
+			<%= f.label :chairperson %><br />
+			<%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
+			<%= text_field_tag 'name_of_chairperson' %>
+		</div>
+	</fieldset>
 
 	<%# Here could be a checkbox list or similar... %>
-	<div class="field">
-		<%=t '.absentee_description' %>
+	<fieldset>
+		<legend>Anwesenheit FSR</legend>
+		<p class="alert-box secondary"><%=t '.absentee_description' %></p>
 		<%= f.label :absentees %><br />
 		<% User.fsr.each do |u| %>
 			<%= check_box_tag "minute[absentee_ids][]", u.id, @minute.absentee_ids.include?(u.id), id: dom_id(u) %>
 			<%= u.displayed_name %>
 		<% end %>
-	</div>
+		<!-- <div class="inline-field">
+			<label>Entschuldigt</label>
+			<select name="minute[absentee_ids][]" data-placeholder="Auswählen..." class="chosen" size="5" multiple>
+				<% User.fsr.each do |u| %>
+					<option value="<%= u.id %>"><%= u.firstname %> <%= u.lastname %></option>
+				<% end %>
+			</select>
+		</div> -->
+	</fieldset>
 
 	<%# Here could be a text field with autocomplete.
 	TODO: New persons should be supported! %>
-	<div class="field">
-		<%= f.label :guests %><br />
+	<fieldset>
+		<legend>Gäste</legend>
+		<!-- <%= f.label :guests %><br /> -->
 		<%= f.select :guests, ["foo", "bar"] %>
-	</div>
+	</fieldset>
 
-	<hr />
-	<%= f.fields_for :items do |fi| %>
-		<fieldset>
-			<legend><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></legend>
-			<div class="inline-field">
-				<%= fi.label :title %>
-				<%= fi.text_field :title %>
-			</div>
-			<div class="redactor-field">
-				<%= fi.text_area :content %>
-			</div>
-		</fieldset>
-	<% end %>
+	<div class="section-container tabs" data-section="tabs">
+		<%= f.fields_for :items do |fi| %>
+			<section>
+				<p class="title" data-section-title>
+					<a href="#"><b><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></b></a>
+				</p>
+				<div class="content" data-section-content>
+					<div class="inline-field">
+						<%= fi.label :title %>
+						<%= fi.text_field :title %>
+					</div>
+					<div class="redactor-field">
+						<%= fi.text_area :content %>
+					</div>
+					<%= fi.hidden_field(:id) %>
+				</div>
+			</section>
+		<% end %>
+	</div>
 	
 	<div class="submit">
 		<%= f.submit nil, :class => "button" %>
@@ -101,5 +120,8 @@
 			buttons: buttons,
 			minHeight: 150,
 		});
+
+		// setting up chosen
+		$("select.chosen").chosen();
 	});
 </script>

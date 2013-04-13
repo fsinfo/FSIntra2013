@@ -8,7 +8,7 @@
 		}
 	}
 
-	input[type="text"], input[type="date"], input[type="password"], textarea {
+	input[type="text"], input[type="date"], input[type="password"], textarea, select {
 		@include grid-column($columns: 8);
 		@media #{$small} {
 			@include grid-column($columns: 9);
