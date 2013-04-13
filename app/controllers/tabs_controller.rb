@@ -14,7 +14,7 @@ class TabsController < ApplicationController
 	def update
 		@tab.is_paid
 		@user = @tab.user
-		TabMailer.paid_email(@user, @tab) if @tab.save
+		TabMailer.paid_email(current_user, @user, @tab) if @tab.save
 	end
 
 	def unpaid

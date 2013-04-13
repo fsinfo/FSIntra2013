@@ -25,7 +25,7 @@ class TallySheetsController < ApplicationController
 				end
 			end
 			if tab.total_invoice > 0 and tab.save
-				TabMailer.tab_email(user,tab)
+				TabMailer.tab_email(current_user,user,tab)
 			end
 		end
 		# TODO: better route, send mails

@@ -1,20 +1,28 @@
 class TabMailer < ActionMailer::Base
-	default from: "from@example.com"
 
-	def paid_email(user, tab)
+	def paid_email(from_user, user, tab)
 		@user = user
 		@tab = tab
+		@from_user = from_user
 		to = "#{@user.displayed_name} <#{@user.email}>"
-		mail(to: to,
-         subject: 'Eine deiner Rechnungen ist als bezahlt markiert')
+		from = "#{from_user.displayed_name} <#{from_user.email}>"
+		mail(
+			from: from,
+			to: to,
+			subject: 'Eine deiner Rechnungen ist als bezahlt markiert'
+			)
 	end
 
-	def tab_email(user, tab)
+	def tab_email(from_user, user, tab)
 		@user = user
+		@from_user = from_user
 		@tab = tab
 		@beverage_tabs = tab.beverage_tabs
 		to = "#{@user.displayed_name} <#{@user.email}>"
-		mail(to: to,
-         subject: 'Es gibt eine neue Getränkeabrechnung')
+		from = "#{from_user.displayed_name} <#{from_user.email}>"
+		mail(
+				from: from,
+				to: to,
+				subject: 'Es gibt eine neue Getränkeabrechnung')
 	end
 end
