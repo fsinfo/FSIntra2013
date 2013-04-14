@@ -1,14 +1,14 @@
 $ ->
-	$('.edit_tab')
+	$('.tab_paid')
 		.bind 'ajax:beforeSend', () ->
-			$(this).find('input').prop('disabled', true)
+			set_loading
 		.bind 'ajax:success', (event, xhr, status) ->
-			id = this.id.split("_").pop()
-			update_dom(id)
+			update_dom($(this).data('id'))
 		.bind 'ajax:error', (event,xhr,status) ->
 			alert('There was an error while processing the ajax request')
-		.bind 'ajax:complete', () ->
-			$(this).find('input').prop('disabled', false)
 
 update_dom = (id) -> 
 	$('#tab_row_'+id).remove()
+
+set_loading = () ->
+	# TODO: loading animation?

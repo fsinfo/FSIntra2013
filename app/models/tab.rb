@@ -10,13 +10,14 @@
 #
 
 class Tab < ActiveRecord::Base
-	has_many :beverage_tabs
+	has_many :beverage_tabs, :dependent => :delete_all
 	has_many :beverages, :through => :beverage_tabs
 	belongs_to :user
 
 	scope :paid, -> { where(paid: true).order('created_at DESC') }
 	scope :unpaid, -> { where(paid: false).order('created_at DESC') }
 	
+	accepts_nested_attributes_for :beverage_tabs
 	def is_paid
 		self.paid = true
 	end

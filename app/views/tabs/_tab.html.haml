@@ -1,0 +1,18 @@
+%table
+	%thead 
+		%th Getränk
+		%th Anzahl
+		%th Kosten
+		%th Gesamt
+	%tbody
+		- tab.beverage_tabs.each do |bt|
+			%tr
+				%td= bt.beverage.name
+				%td= bt.count
+				%td= bt.price
+				%td= bt.price * bt.count
+		%tr 
+			%td Gesamtkosten
+			%td 
+			%td 
+			%td= @tab.total_invoice

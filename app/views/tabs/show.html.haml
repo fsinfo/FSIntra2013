@@ -1,20 +1,3 @@
-%table
-	%thead 
-		%th Getränk
-		%th Anzahl
-		%th Kosten
-		%th Gesamt
-	%tbody
-		- @beverage_tabs.each do |bt|
-			%tr
-				%td= bt.beverage.name
-				%td= bt.count
-				%td= bt.price
-				%td= bt.price * bt.count
-		%tr 
-			%td Gesamtkosten
-			%td 
-			%td 
-			%td= @tab.total_invoice
-
+= render @tab
+= link_to t('actions.edit'), edit_tab_path(@tab) if has_group('kuehlschrank')
 = link_to 'Zurück', tabs_path

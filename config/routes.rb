@@ -5,7 +5,7 @@ Fsintra::Application.routes.draw do
   resources :personen, except: [:destroy], :as => 'people', :controller => 'people'
 	resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
 		get 'offen'  => 'tabs#unpaid', :on => :collection
-		put 'ist_bezahlt' => 'tabs#set_paid', :on => :member
+		put 'ist_bezahlt' => 'tabs#pay', :on => :member
 	end
   resources :strichliste, :as => 'tally_sheets', :controller => 'tally_sheets'
   resources :getraenke, :as => 'beverages', :controller => 'beverages'

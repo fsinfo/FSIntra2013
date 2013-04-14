@@ -1,3 +1,22 @@
-= form_for tab do |f|
-	= f.fields_for :beverage_tabs do |fi|
-		= fi.text_field :count
+= form_for @tab do |f|
+	%table
+		%thead 
+			%th Getränk
+			%th Anzahl
+			%th Kosten
+			%th Gesamt
+		%tbody
+			= f.fields_for :beverage_tabs do |fi|
+				%tr
+					%td= fi.object.beverage.name
+					%td= fi.text_field :count
+					%td= fi.object.price
+					%td= fi.object.count * fi.object.price
+			%tr 
+				%td Gesamtkosten
+				%td 
+				%td 
+				%td= @tab.total_invoice
+
+	= f.submit
+= link_to 'Zurück', tabs_path

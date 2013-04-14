@@ -15,5 +15,4 @@ Offen:
 				%td
 					= tab.user.displayed_name
 				%td
-					= form_for tab, :class => 'tab_paid', :method => 'PUT', :remote => true do |f|
-						= f.submit
+					= link_to 'Hat bezahlt', ist_bezahlt_tab_path(tab),:method => 'PUT', :remote => true, :class => 'tab_paid', :"data-id" => tab.id

@@ -17,6 +17,8 @@ class BeverageTab < ActiveRecord::Base
 
 	after_initialize :init
 
+	accepts_nested_attributes_for :beverage
+
 	def init
 		self.count ||= 0
 	end
