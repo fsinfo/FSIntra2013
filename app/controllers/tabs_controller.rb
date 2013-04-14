@@ -1,5 +1,6 @@
 class TabsController < ApplicationController
 	before_action :set_tab, only: [:update, :new, :show]
+	before_action :signed_in_user
 	before_action :has_permission, only: [:update, :unpaid]
 
 	def index
@@ -15,6 +16,7 @@ class TabsController < ApplicationController
 		@tab.is_paid
 		@user = @tab.user
 		TabMailer.paid_email(current_user, @user, @tab) if @tab.save
+		render :nothing => true
 	end
 
 	def unpaid
