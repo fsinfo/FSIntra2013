@@ -62,8 +62,8 @@
 				<%# status information: percentage of present fsr members, presence of a quorum %>
 				<th class="center">anwesend: <span id="attendance-present">X</span>/<span id="attendance-total">Y</span> = <span id="attendance-percentage">Z</span>%</th>
 				<th class="text-left">
-					<span id="attendance-quorate" class="label success">Beschlussfähig</span>
-					<span id="attendance-nohouse" class="label alert" style="display: none;">Nicht Beschlussfähig</span>
+					<span id="attendance-quorate" class="label success">Beschlussfähig!</span>
+					<span id="attendance-nohouse" class="label alert" style="display: none;">Nicht Beschlussfähig!</span>
 				</th>
 			</tr>
 		</tbody>
@@ -179,6 +179,8 @@
 <% end %>
 
 <script>
+	var critical_mass = 2/3*100; // percentage needed for a quorum
+
 	$(function() {
 		// All Users .. see http://api.jqueryui.com/autocomplete/#option-source for why this way
 		var availableUsers = [ <%= raw User.all.map { |x| "{ value: #{x.id}, label: '#{x.displayed_name}' }" }.join(",") %> ];
@@ -207,20 +209,19 @@
 		$(".redactor-field textarea").redactor({
 			lang: 'de',
 			buttons: buttons,
-			minHeight: 150,
+			minHeight: 350,
 		});
 
 		// setting up chosen
 		$(".chosen-field select").chosen({ placeholder_text: "Auswählen", allow_single_deselect: true });
 
 		// calculating presence of a quorum
-		updateAttandanceStatus();
 		$("#attendance .attendance-checkbox").change(function(evt){
 			updateAttandanceStatus();
 		});
+		updateAttandanceStatus();
 	});
 
-	var critical_mass = 2/3*100; // percentage needed for a quorum
 	function updateAttandanceStatus(){
 		checkboxes = $("#attendance .attendance-checkbox");
 		total = checkboxes.length;
