@@ -80,3 +80,26 @@ form {
 		}
 	}
 }
+
+
+
+	.toggle.fsintra {
+		margin-left: 0;
+		color: $input-font-color;
+		font-size: $input-font-size;
+		border: none;
+		background-color: transparent;
+	}
+
+	.toggle.fsintra .slide-button {
+		// background-color: $input-border-color;
+		background-color: $alert-color;
+		opacity: .75;
+	}
+
+	/* Selected ON toggle */
+	.toggle.fsintra input:first-of-type:checked ~ .slide-button {
+		// background-color: $input-focus-border-color;
+		background-color: $success-color;
+	}
+

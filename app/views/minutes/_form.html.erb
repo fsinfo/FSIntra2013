@@ -18,47 +18,56 @@
 		<%= f.date_field :date %>
 	</div>
 	
-	<fieldset>
-		<legend>Meta</legend>
-		<%# Here could be a dropdown list or similar...
-		The value should be the id of a fsr member (user) %>
-		<div class="inline-field chosen-field">
-			<%= f.label :keeper_of_the_minutes %><br />
-			<!--
-			<%= f.text_field :keeper_of_the_minutes_id, :value => @minute.keeper_of_the_minutes_id %><br />
-			<%= text_field_tag 'name_of_keeper_of_the_minutes' %>
-			-->
-			<%= f.select :keeper_of_the_minutes_id, User.all.collect {|p| ["%s %s" % [p.firstname, p.lastname], p.id] }, :include_blank => true %>
-		</div>
+	<%# The value of the selected option is the id of a fsr member (user) %>
+	<div class="inline-field chosen-field">
+		<%= f.label :keeper_of_the_minutes %><br />
+		<%= f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, :include_blank => true %>
+	</div>
 
-		<%# Here could be a dropdown list or similar...
-		The value should be the id of a fsr member (user) %>
-		<div class="inline-field chosen-field">
-			<%= f.label :chairperson %><br />
-			<!--<%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
-			<%= text_field_tag 'name_of_chairperson' %>-->
-			<%= f.select :chairperson_id, User.all.collect {|p| ["%s %s" % [p.firstname, p.lastname], p.id] }, :include_blank => true %>
-		</div>
-	</fieldset>
+	<%# The value of the selected option is the id of a fsr member (user) %>
+	<div class="inline-field chosen-field">
+		<%= f.label :chairperson %><br />
+		<%= f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
+	</div>
 
-	<%# Here could be a checkbox list or similar... %>
-	<fieldset>
-		<legend>Anwesenheit FSR</legend>
-		<p class="alert-box secondary"><%=t '.absentee_description' %></p>
-		<%= f.label :absentees %><br />
-		<% User.fsr.each do |u| %>
-			<%= check_box_tag "minute[absentee_ids][]", u.id, @minute.absentee_ids.include?(u.id), id: dom_id(u) %>
-			<%= u.displayed_name %>
-		<% end %>
-		<!-- <div class="inline-field">
-			<label>Entschuldigt</label>
-			<select name="minute[absentee_ids][]" data-placeholder="Auswählen..." class="chosen" size="5" multiple>
-				<% User.fsr.each do |u| %>
-					<option value="<%= u.id %>"><%= u.firstname %> <%= u.lastname %></option>
-				<% end %>
-			</select>
-		</div> -->
-	</fieldset>
+	<hr>
+
+	<%# list of all fsr members with a checkbox stating whether the member attended the meeting (checked = absent) %>
+	<table id="attendance">
+		<colgroup>
+			<col width="20%">
+			<col width="90%">
+		</colgroup>
+		<thead>
+			<th>Anwesenheit FSR</th>
+			<th>Name</th>
+		</thead>
+		<tbody>
+			<% User.fsr.each do |u| %>
+				<tr>
+					<td>
+						<label class="checkbox toggle fsintra" onclick="" style="min-width: 250px;">
+							<%= check_box_tag "minute[absentee_ids][]", u.id, not(@minute.absentee_ids.include?(u.id)), id: dom_id(u), class: "attendance-checkbox" %>
+							<p>
+								<span>Anwesend</span>
+								<span>Abwesend</span>
+							</p>
+							<a class="slide-button"></a>
+						</label>
+					</td>
+					<td><%= u.displayed_name %></td>
+				</tr>
+			<% end %>
+			<tr>
+				<%# status information: percentage of present fsr members, presence of a quorum %>
+				<th class="center">anwesend: <span id="attendance-present">X</span>/<span id="attendance-total">Y</span> = <span id="attendance-percentage">Z</span>%</th>
+				<th class="text-left">
+					<span id="attendance-quorate" class="label success">Beschlussfähig</span>
+					<span id="attendance-nohouse" class="label alert" style="display: none;">Nicht Beschlussfähig</span>
+				</th>
+			</tr>
+		</tbody>
+	</table>
 
 	<%# Here could be a text field with autocomplete.
 	TODO: New persons should be supported! %>
@@ -68,7 +77,9 @@
 		<%= f.select :guests, ["foo", "bar"] %>
 	</fieldset>
 
+	<hr>
 	<div class="section-container tabs" data-section="tabs">
+		<%# agenda items: tabular display for each item, a title field and a wysiwyg editor field %>
 		<%= f.fields_for :items do |fi| %>
 			<section>
 				<p class="title" data-section-title>
@@ -86,6 +97,80 @@
 				</div>
 			</section>
 		<% end %>
+
+		<%# wysiwyg help section: shortcut overview %>
+		<section>
+			<p class="title">
+				<a href="#"><span class="icon-help-circled"></span></a>
+			</p>
+			<div class="content" data-section-content>
+				Die folgende Tabelle Listet alle Shortcuts die im Editor zur Verfügung stehen.
+				<table>
+					<thead>
+						<tr>
+							<td></td>
+							<td>OS X</td>
+							<td>Windows</td>						
+						</tr>
+					</thead>
+					<tr>
+						<td>Undo</td>	
+						<td><kbd>Cmd + z</kbd></td>
+						<td><kbd>Ctrl + z</kbd></td>		
+					</tr>
+					<tr>
+						<td>Redo</td>
+						<td><kbd>Cmd + Shift + z</kbd></td>
+						<td><kbd>Ctrl + Shift + z</kbd></td>				
+					</tr>
+					<tr>
+						<td>Increase indent</td>
+						<td><kbd>Tab</kbd></td>
+						<td><kbd>Tab</kbd></td>				
+					</tr>
+					<tr>
+						<td>Decrease indent</td>
+						<td><kbd>Shift + Tab</kbd></td>
+						<td><kbd>Shift + Tab</kbd></td>				
+					</tr>
+					<tr>
+						<td>Clear formatting</td>
+						<td><kbd>Cmd + m</kbd></td>
+						<td><kbd>Ctrl + m</kbd></td>				
+					</tr>
+					<tr>
+						<td>Bold</td>
+						<td><kbd>Cmd + b</kbd></td>
+						<td><kbd>Ctrl + b</kbd></td>				
+					</tr>
+					<tr>
+					     	<td>Italic</td>
+					     	<td><kbd>Cmd + i</kbd></td>
+					     	<td><kbd>Ctrl + i</kbd></td>				
+					</tr>	                            			
+					<tr>
+						<td>Numbered list</td>
+						<td><kbd>Cmd + k</kbd></td>
+						<td><kbd>Ctrl + k</kbd></td>				
+					</tr>
+					<tr>
+						<td>Bulleted list</td>
+						<td><kbd>Cmd + j</kbd></td>
+						<td><kbd>Ctrl + j</kbd></td>				
+					</tr>
+					<tr>
+					     	<td>Superscript</td>
+					     	<td><kbd>Cmd + l</kbd></td>
+					     	<td><kbd>Ctrl + l</kbd></td>				
+					</tr>	                            	
+					<tr>
+						<td>Subscript</td>
+						<td><kbd>Cmd + h</kbd></td>
+						<td><kbd>Ctrl + h</kbd></td>				
+					</tr>
+				</table>
+			</div>
+		</section>
 	</div>
 	
 	<div class="submit">
@@ -127,5 +212,29 @@
 
 		// setting up chosen
 		$(".chosen-field select").chosen({ placeholder_text: "Auswählen", allow_single_deselect: true });
+
+		// calculating presence of a quorum
+		updateAttandanceStatus();
+		$("#attendance .attendance-checkbox").change(function(evt){
+			updateAttandanceStatus();
+		});
 	});
+
+	var critical_mass = 2/3*100; // percentage needed for a quorum
+	function updateAttandanceStatus(){
+		checkboxes = $("#attendance .attendance-checkbox");
+		total = checkboxes.length;
+		present = checkboxes.filter(":checked").length;
+		percentage = present/total*100;
+		$("#attendance-total").text(total);
+		$("#attendance-present").text(present);
+		$("#attendance-percentage").text(percentage.toFixed(1));
+		if (percentage > critical_mass) {
+			$("#attendance-quorate").show();
+			$("#attendance-nohouse").hide();
+		} else {
+			$("#attendance-quorate").hide();
+			$("#attendance-nohouse").show();
+		}
+	}
 </script>
