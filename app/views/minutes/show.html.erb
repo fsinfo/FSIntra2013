@@ -1,30 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="actions">
+	<h1>Protokoll <%= l @minute.date, :format => "%d.%m.%Y" %></h1>
+	<%= link_to content_tag(:span, ' Zurück', :class => "icon-left-fat"), minutes_path, :class => "button small round secondary" %>
+	<%= link_to content_tag(:span, ' Bearbeiten', :class => "icon-pencil"), edit_minute_path(@minute), :class => "button small round secondary" %>
+</div>
 
-<p>
-  <strong><%=t Minute.human_attribute_name :date %></strong>
-  <%= l @minute.date, :format => :short %>
-</p>
-
-<p>
-  <strong><%=t Minute.human_attribute_name :status %></strong>
-  <%= @minute.translated_status %>
-</p>
-
-<p>
-  <strong><%=t Minute.human_attribute_name :keeper_of_the_minutes %></strong>
-  <%= @minute.keeper_of_the_minutes.displayed_name if @minute.keeper_of_the_minutes %>
-</p>
-
-<p>
-  <strong><%=t Minute.human_attribute_name :chairperson %></strong>
-  <%= @minute.chairperson.displayed_name if @minute.chairperson %>
-</p>
-
-<% @minute.items.each do |i| %>
-  <p>
-  	<strong><%=t Minutes::Item.model_name.human %><%= i.title %></strong>
-  </p>
+<% if notice %>
+	<p id="notice"><%= notice %></p>
 <% end %>
 
-<%= link_to t('actions.edit'), edit_minute_path(@minute) %> |
-<%= link_to t('actions.back'), minutes_path %>
+<div class="panel">
+	<div class="row">
+		<div class="large-4 small-4 column text-center">
+			<h6><%= Minute.human_attribute_name :status %></h6>
+			<%= @minute.translated_status %>
+		</div>
+		<div class="large-4 small-4 column text-center">
+			<h6><%= Minute.human_attribute_name :chairperson %></h6>
+			<%= @minute.chairperson.displayed_name if @minute.chairperson %>
+		</div>
+		<div class="large-4 small-4 column text-center">
+			<h6><%= Minute.human_attribute_name :keeper_of_the_minutes %></h6>
+			<%= @minute.keeper_of_the_minutes.displayed_name if @minute.keeper_of_the_minutes %>
+		</div>
+	</div>
+</div>
+
+<% @minute.items.each_with_index do |i, index| %>
+	<div class="panel top">
+		<div class="edit-shortcut">
+			<%= link_to content_tag(:span, nil, :class => "icon-pencil"), edit_minute_path(@minute), :class => "button tiny secondary" %>
+		</div>
+		<h4>
+			<%=t Minutes::Item.model_name.human %> <%= index + 1 %>
+			<span class="subheader"><%= i.title %></span>
+		</h4>
+		<div>
+			<%= i.content.html_safe %>
+		</div>
+	</div>
+<% end %>

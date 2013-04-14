@@ -20,13 +20,14 @@ table {
 }
 
 .actions {
-	h1 {
+	h1, h2, h3, h4, h5, h6 {
 		display: inline;
 		margin-right: .35em;
 	}
 	a {
 		vertical-align: middle;
-		margin-bottom: 1.75em;
+		&.small { margin-bottom: 1.75em; }
+		&.tiny { margin-bottom: 0; }
 	}
 }
 
