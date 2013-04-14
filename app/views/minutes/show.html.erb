@@ -25,6 +25,27 @@
 	</div>
 </div>
 
+<div class="panel">
+	<h6>Anwesend</h6>
+	<ul class="inline-list">
+		<%# TODO: filter, only present Users %>
+		<%# TODO: better display (comma separation or list symbol) %>
+		<% User.all.each do |u| %>
+			<li><%= u.displayed_name %></li>
+		<% end %>
+	</ul>
+	<h6>Abwesend</h6>
+	<ul class="inline-list">
+		<%# TODO: filter, only absent Users %>
+		<%# TODO: better display (comma separation or list symbol) %>
+		<% User.all.each do |u| %>
+			<li><%= u.displayed_name %></li>
+		<% end %>
+	</ul>
+	<h6>Gäste</h6>
+	<%# TODO: display guests %>
+</div>
+
 <% @minute.items.each_with_index do |i, index| %>
 	<div class="panel top">
 		<div class="edit-shortcut">
