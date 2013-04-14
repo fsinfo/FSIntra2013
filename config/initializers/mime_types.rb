@@ -4,3 +4,6 @@
 # Mime::Type.register "text/richtext", :rtf
 # Mime::Type.register_alias "text/html", :iphone
 Mime::Type.register "application/pdf", :pdf
+
+# Add .vcf as mime-type 
+Mime::Type.register "text/vcf", :vcf

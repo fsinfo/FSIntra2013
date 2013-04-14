@@ -10,6 +10,8 @@
 	<p id="notice"><%= notice %></p>
 <% end %>
 
+<div id="qrcode"><%= tag 'embed', :src => person_path(@person, :format => 'svg') %></div>
+
 <table class="user-details">
 	<colgroup>
 		<col width="15%">

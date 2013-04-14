@@ -30,6 +30,7 @@
 				<td><%= person.phone %></td>
 				<td class="center no-linebreak">
 					<%= link_to content_tag(:span, 'Details', :class => "icon-info-circled"), person_path(person) %>
+					<%= link_to content_tag(:span, 'Vcard', :class => "icon-info-circled"), person_path(person, :format => 'vcf')  %>
 				</td>
 			</tr>
 		<% end %>
