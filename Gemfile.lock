@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/fraser/vpim-rails
+  revision: b483db4f8f7ead866bfdb3f0e7563fa1f59c548c
+  specs:
+    vpim-rails (0.667)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -96,6 +102,9 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    rqrcode (0.4.2)
+    rqrcode-rails3 (0.1.6)
+      rqrcode (>= 0.4.2)
     ruby-rc4 (0.1.5)
     sass (3.2.7)
     sass-rails (4.0.0.beta1)
@@ -143,8 +152,10 @@ DEPENDENCIES
   net-ldap
   prawn
   rails (= 4.0.0.beta1)
+  rqrcode-rails3
   sass-rails (~> 4.0.0.beta1)
   sqlite3
   turbolinks
   uglifier (>= 1.0.3)
+  vpim-rails!
   zurb-foundation (~> 4.0.0)

@@ -7,6 +7,13 @@ class PeopleController < ApplicationController
   end
 
   def show
+    respond_to do |format| 
+      format.html
+      format.vcf do 
+        send_data @person.to_vcard, :filename => "#{@person.id} - #{@person.displayed_name}.vcf"
+      end
+      format.svg  { render :qrcode => @person.to_vcard, :level => :h, :unit => 1, :offset => 5 }
+    end
   end
 
   def new
