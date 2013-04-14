@@ -31,8 +31,8 @@
 			<%= link_to content_tag(:span, nil, :class => "icon-pencil"), edit_minute_path(@minute), :class => "button tiny secondary" %>
 		</div>
 		<h4>
-			<%=t Minutes::Item.model_name.human %> <%= index + 1 %>
-			<span class="subheader"><%= i.title %></span>
+			<span class="subheader"><%=t Minutes::Item.model_name.human %> <%= index + 1 %>&nbsp;</span>
+			<span><%= i.title %></span>
 		</h4>
 		<div>
 			<%= i.content.html_safe %>
