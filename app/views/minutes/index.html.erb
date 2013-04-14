@@ -29,7 +29,13 @@
 		<% @minutes.each do |minute| %>
 			<tr>
 				<td><%= l minute.date, :format => :short %></td>
-				<td><%= minute.keeper_of_the_minutes %></td>
+				<td>
+					<% if minute.keeper_of_the_minutes %>
+						<%= minute.keeper_of_the_minutes.displayed_name %>
+					<% else %>
+						<i>[nicht eingetragen]</i>
+					<% end %>
+				</td>
 				<td><%= minute.translated_status %></td>
 				<td class="center no-linebreak">
 					<%= link_to content_tag(:span, t('actions.show'), :class => "icon-doc-text"), minute %>
