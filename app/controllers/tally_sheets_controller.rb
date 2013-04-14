@@ -7,7 +7,7 @@ class TallySheetsController < ApplicationController
 		respond_to do |format|
 			format.html
 			format.pdf do 
-				pdf = TallySheetPdf.new(@users, @beverages, {:page_layout => :landscape})
+				pdf = TallySheetPdf.new(@users, @beverages)
 				send_data pdf.render, filename: "tally_sheet.pdf", type: "application/pdf", disposition: "inline"
 			end
 		end

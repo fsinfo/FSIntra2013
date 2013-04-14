@@ -1,6 +1,6 @@
 class TallySheetPdf < Prawn::Document
-  def initialize(users, beverages, view)
-    super(view)
+  def initialize(users, beverages)
+    super({:page_layout => :landscape, :page_size => "A4"})
     beverages = beverages.map(&:name)
     users = users.map(&:displayed_name)
 
