@@ -15,5 +15,5 @@ Fsintra::Application.routes.draw do
 
   resources :protokolle, :as => "minutes", :controller => "minutes"
 
-  root :to => 'people#index'
+  root :to => 'home#index'
 end

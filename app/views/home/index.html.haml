@@ -1,0 +1,18 @@
+%h1== Hallo, #{current_user.displayed_name}
+.tabs
+	%p Offene rechnungen:
+	-if @unpaid_tabs.any?
+		%table
+			%thead
+				%th Datum
+				%th Betrag
+			%tbody 
+				- @unpaid_tabs.each do |tab|
+					%tr 
+						%td=link_to tab.created_at, tab_path(tab)
+						%td=tab.total_invoice
+				%tr
+					%td Gesamt
+					%td=current_user.debts
+	-else
+		Keine offenen Rechnungen
