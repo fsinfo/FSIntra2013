@@ -42,3 +42,11 @@ table {
 #qrcode embed {
 	height: auto;
 }
+
+.text-success {
+	color: $success-color;
+}
+
+.text-alert {
+	color: $alert-color;
+}
