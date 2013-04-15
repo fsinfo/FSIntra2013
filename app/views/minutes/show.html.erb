@@ -26,7 +26,11 @@
 </div>
 
 <div class="panel">
-	<h6>Anwesend</h6>
+	<h6>Anwesend
+		<%# TODO: check if there is a quorum %>
+		<span class="label success">Beschlussfähig!</span>
+		<span class="label alert">Nicht Beschlussfähig!</span>
+	</h6>
 	<ul class="inline-list">
 		<%# TODO: filter, only present Users %>
 		<%# TODO: better display (comma separation or list symbol) %>
