@@ -1,6 +1,6 @@
 %div{:class => 'actions'}
 	%h1=t '.headline'
-	= link_to content_tag(:span, t('.new'), :class=> "icon-plus"),new_beverage_path, :class => "button small round secondary"
+	= link_to content_tag(:span, ' ' + t('.new'), :class=> "icon-plus"),new_beverage_path, :class => "button small round secondary"
 
 - if notice
 	%p#notice= notice

@@ -1,5 +1,6 @@
-<h1><%= t('.headline') %></h1>
+<div class="actions">
+	<h1><%= t('.headline') %></h1>
+	<%= link_to content_tag(:span, ' Abbrechen', :class => "icon-cancel-1"), beverages_path, :class => "button small round secondary" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to t('actions.back'), beverages_path %>

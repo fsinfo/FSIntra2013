@@ -1,29 +1,41 @@
-<%= form_for(@beverage) do |f| %>
-  <% if @beverage.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@beverage.errors.count, "error") %> prohibited this beverage from being saved:</h2>
+<%= form_for(@beverage, :html => {:class => "inline"}) do |f| %>
+	<% if @beverage.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@beverage.errors.count, "error") %> prohibited this beverage from being saved:</h2>
 
-      <ul>
-      <% @beverage.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+			<ul>
+			<% @beverage.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+			</ul>
+		</div>
+	<% end %>
 
-  <div class="actions">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+	<div class="actions">
+		<%= f.label :name %>
+		<%= f.text_field :name %>
 
-    <%= f.label :description %>
-    <%= f.text_area :description %>
+		<%= f.label :description %>
+		<%= f.text_area :description %>
 
-    <%= f.label :price %>
-    <%= f.text_field :price, :value=>number_to_currency(f.object.price) %>
+		<%= f.label :price %>
+		<%= f.text_field :price, :value=>number_to_currency(f.object.price) %>
 
-    <%= f.label :available %>
-    <%= f.check_box :available %>
-
-    <%= f.submit %>
-  </div>
+		<%= f.label :available %>
+		<div class="toggle-wrapper">
+			<label class="checkbox toggle fsintra" onclick="" style="width: 100%; height: 100%;">
+				<%# TODO: move hidden field yielded by the check_box helper -> must not be the first child %>
+				<%= f.check_box :available %>
+				<p>
+					<span>Ja</span>
+					<span>Nein</span>
+				</p>
+				<a class="slide-button"></a>
+			</label>
+		</div>
+		
+		<div class="submit">
+			<%= f.submit nil, :class => "button" %>
+		</div>
+	</div>
 <% end %>
