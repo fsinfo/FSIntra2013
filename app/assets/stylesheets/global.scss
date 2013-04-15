@@ -38,3 +38,7 @@ table {
 #notice {
 	@include alert;
 }
+
+#qrcode embed {
+	height: auto;
+}

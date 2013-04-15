@@ -18,7 +18,7 @@
 			<th><%=t Person.human_attribute_name :lastname %></th>
 			<th><%=t Person.human_attribute_name :email %></th>
 			<th><%=t Person.human_attribute_name :phone %></th>
-			<th>Aktionen</th>
+			<th colspan="2" class="text-center">Aktionen</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,7 +30,9 @@
 				<td><%= person.phone %></td>
 				<td class="center no-linebreak">
 					<%= link_to content_tag(:span, 'Details', :class => "icon-info-circled"), person_path(person) %>
-					<%= link_to content_tag(:span, 'Vcard', :class => "icon-info-circled"), person_path(person, :format => 'vcf')  %>
+				</td>
+				<td class="center no-linebreak">
+					<%= link_to content_tag(:span, 'vCard', :class => "icon-vcard"), person_path(person, :format => 'vcf')  %>
 				</td>
 			</tr>
 		<% end %>
