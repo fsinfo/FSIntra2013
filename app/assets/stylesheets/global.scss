@@ -50,3 +50,7 @@ table {
 .text-alert {
 	color: $alert-color;
 }
+
+.text-right input[type="text"] { text-align: right; }
+.text-left input[type="text"] { text-align: left; }
+.text-center input[type="text"] { text-align: center; }

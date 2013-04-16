@@ -1,22 +1,31 @@
 = form_for @tab do |f|
 	%table
+		%colgroup
+			%col{:width => "30%"}
+			%col{:width => "30%"}
+			%col{:width => "20%"}
+			%col{:width => "20%"}
 		%thead 
 			%th Getränk
-			%th Anzahl
-			%th Kosten
-			%th Gesamt
+			%th.text-center Anzahl
+			%th.text-center Kosten
+			%th.text-right Gesamt
 		%tbody
 			= f.fields_for :beverage_tabs do |fi|
 				%tr
 					%td= fi.object.beverage.name
-					%td= fi.text_field :count
-					%td= fi.object.price
-					%td= fi.object.count * fi.object.price
+					%td.text-center= fi.text_field :count
+					%td.text-center
+						= "%.2f" % fi.object.price
+						&euro;
+					%td.text-right
+						= "%.2f" % (fi.object.count * fi.object.price)
+						&euro;
 			%tr 
-				%td Gesamtkosten
-				%td 
-				%td 
-				%td= @tab.total_invoice
+				%th.text-left{:colspan => "3"} Gesamtkosten
+				%th.text-right
+					= "%.2f" % @tab.total_invoice
+					&euro;
 
-	= f.submit
-= link_to 'Zurück', tabs_path
+	%div.submit
+		= f.submit nil, :class => "button"

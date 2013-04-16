@@ -3,12 +3,13 @@
 	= link_to content_tag(:span, '&nbsp;&nbsp;&nbsp;&nbsp;Neue Liste drucken'.html_safe, :class => "icon-emo-beer"), new_tally_sheet_path(:format => 'pdf'), :class => "button small round secondary"
 
 %br
-%label.checkbox.toggle.candy.blue{:style => "width: 400px; left: 50%; margin-left: -200px;"}
-	= check_box_tag "high-vis-selector", nil, false
-	%p
-		%span Erhöhter Kontrast
-		%span Normale Ansicht
-	%a.slide-button
+%center
+	%label.checkbox.toggle.candy.blue{:style => "width: 400px;"}
+		= check_box_tag "high-vis-selector", nil, false
+		%p
+			%span Erhöhter Kontrast
+			%span Normale Ansicht
+		%a.slide-button
 %br
 
 %div
