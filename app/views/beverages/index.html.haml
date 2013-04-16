@@ -8,14 +8,14 @@
 %table
 	%colgroup
 		%col{:width => "30%"}
+		%col{:width => "15%"}
 		%col{:width => "8%"}
-		%col{:width => "8%"}
-		%col{:width => "50%"}
+		%col{:width => "43%"}
 		%col{:width => "2%"}
 		%col{:width => "2%"}
 	%thead 
 		%th=t Beverage.human_attribute_name :name
-		%th.text-center=t Beverage.human_attribute_name :price
+		%th.text-center Aktueller Peis
 		%th.text-center Verfügbar?
 		%th=t Beverage.human_attribute_name :description
 		%th.text-center{:colspan => 2} Aktionen
