@@ -1,5 +1,6 @@
 class BeveragesController < ApplicationController
   before_action :set_beverage, only: [:show, :edit, :update]
+  before_action :check_permission
 
   # GET /beverages
   def index
@@ -52,5 +53,9 @@ class BeveragesController < ApplicationController
       params[:beverage][:price].gsub!(/,/,'.')
       params[:beverage][:price].delete!('€\s')
       params.require(:beverage).permit(:name, :description, :available, :price)
+    end
+
+    def check_permission
+      current_user.has_group?('kuehlschrank')
     end
 end
