@@ -13,7 +13,7 @@
 		%tbody
 			= f.fields_for :beverage_tabs do |fi|
 				%tr
-					%td= fi.object.beverage.name
+					%td= fi.object.name
 					%td.text-center= fi.text_field :count
 					%td.text-center
 						= "%.2f" % fi.object.price

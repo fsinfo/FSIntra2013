@@ -48,7 +48,7 @@ module SessionsHelper
 	# LDAP-Gruppen: fsinfo, it, ewoche, ausland, kasse, kai, fete, 
 	#								fsk, pr, hh, sprecher, fsl, kuehlschrank, datenschutz, vlu, pa, stupa, protokolle, fbr, 
 	#								fit, events, homepage, kommunikation, fsr, ausleihe, oe
-	def has_group(group)
+	def has_group?(group)
 		# TODO: remove return true
 		return true
 		session[:groups].include?(group)

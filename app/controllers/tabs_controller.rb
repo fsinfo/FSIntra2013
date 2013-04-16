@@ -48,7 +48,9 @@ class TabsController < ApplicationController
     end
 
     def has_permission
-			has_group('kuehlschrank')
+			unless has_group?('kuehlschrank')
+				redirect_to root_url, flash => {:error => 'You have no permission'}
+			end
 		end
 
 end

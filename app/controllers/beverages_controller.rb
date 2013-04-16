@@ -56,6 +56,6 @@ class BeveragesController < ApplicationController
     end
 
     def check_permission
-      current_user.has_group?('kuehlschrank')
+      has_group?('kuehlschrank')
     end
 end
