@@ -1,5 +1,5 @@
 class BeveragesController < ApplicationController
-  before_action :set_beverage, only: [:show, :edit, :update, :destroy]
+  before_action :set_beverage, only: [:show, :edit, :update]
 
   # GET /beverages
   def index
@@ -39,12 +39,6 @@ class BeveragesController < ApplicationController
     else
       render action: 'edit'
     end
-  end
-
-  # DELETE /beverages/1
-  def destroy
-    @beverage.destroy
-    redirect_to beverages_url, notice: 'Beverage was successfully destroyed.'
   end
 
   private
