@@ -12,7 +12,7 @@
 	%tbody
 		- tab.beverage_tabs.each do |bt|
 			%tr
-				%td= bt.beverage.name
+				%td= bt.name
 				%td.text-center= bt.count
 				%td.text-center
 					= "%.2f" % bt.price

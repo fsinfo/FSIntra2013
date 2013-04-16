@@ -8,7 +8,7 @@ Fsintra::Application.routes.draw do
 		put 'ist_bezahlt' => 'tabs#pay', :on => :member
 	end
   resources :strichliste, :as => 'tally_sheets', :controller => 'tally_sheets'
-  resources :getraenke, :as => 'beverages', :controller => 'beverages'
+  resources :getraenke, :as => 'beverages', :controller => 'beverages', :except => [:destroy]
   resources :sessions, only: [:new, :create, :destroy]
   get '/login' => 'sessions#new'
   delete '/logout' => 'sessions#destroy'
