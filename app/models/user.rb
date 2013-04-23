@@ -26,8 +26,6 @@ class User < Person
 
 	has_many :minutes
 
-	scope :fsr
-
 	def debts
 		self.tabs.unpaid.map(&:total_invoice).inject(0,:+)
 	end
@@ -43,6 +41,37 @@ class User < Person
 			return nil
 		end
 	end
+
+	def has_group?(group)
+		# TODO: remove return true
+		return true
+
+		ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
+		if ldap.bind
+			filter = Net::LDAP::Filter.eq('memberUid', current_user.loginname)
+			groups = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).flat_map(&:cn)
+			return groups.include?(group)
+		else
+			return false
+		end
+	end
+
+	# Returns the loginnames of all members who are in the 'fsr' group in an array
+	def self.fsr
+		ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
+		if ldap.bind
+			filter = Net::LDAP::Filter.eq('cn', 'fsr')
+			loginnames = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter).flat_map(&:memberuid)
+			result = []
+			users = User.where(:loginname => loginnames).find_each do |u|
+				result << u
+			end
+			return result
+		else 
+			return []
+		end
+	end
+
 
 	private 
 		def create_remember_token
