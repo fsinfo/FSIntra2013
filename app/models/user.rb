@@ -26,7 +26,6 @@ class User < Person
 
 	has_many :minutes
 
-
 	scope :fsr
 
 	def debts
@@ -37,12 +36,9 @@ class User < Person
 		ldap = Net::LDAP.new(:host => 'ford.fachschaft.cs.uni-kl.de')
 		ldap.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)
 		if ldap.bind
-			filter = Net::LDAP::Filter.eq('memberUid', loginname)
-			groups = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).flat_map(&:cn)
-
 			# create a new user if it doesn't exist yet
 			user = User.find_or_create_by(:loginname => loginname)
-			return user, groups
+			return user
 		else 
 			return nil
 		end
