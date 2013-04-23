@@ -31,7 +31,6 @@
 									%td
 										= tf.fields_for "#{beverage.id}", tab.beverage_tabs.build do |bf|
 											= bf.text_field :count, :class => "text-center"
-											= bf.hidden_field :price, :value => beverage.price
 		%div.text-right
 			= submit_tag "Fertig! Abrechnung eintragen", :class => "button"
 

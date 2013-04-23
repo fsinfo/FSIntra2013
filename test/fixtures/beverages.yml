@@ -9,6 +9,7 @@
 #  price       :decimal(8, 2)
 #  created_at  :datetime
 #  updated_at  :datetime
+#  capacity    :decimal(8, 2)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

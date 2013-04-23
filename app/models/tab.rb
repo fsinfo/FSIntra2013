@@ -25,7 +25,6 @@ class Tab < ActiveRecord::Base
 	def total_invoice
 		total = 0.0
 		self.beverage_tabs.each do |b|
-			puts b
 			total += b.price * b.count
 		end
 		return total

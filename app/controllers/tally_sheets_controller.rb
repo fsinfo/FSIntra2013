@@ -19,9 +19,11 @@ class TallySheetsController < ApplicationController
 		@users.each do |user|
 			temp = post[user.id.to_s]
 			tab = user.tabs.build(:paid => false)
+			puts temp
 			temp.each do |id,array|
 				unless array["count"].to_i == 0
-					tab.beverage_tabs.build(:beverage_id => id, :count => array["count"], :price => array["price"]) 
+					beverage = Beverage.find(id)
+					tab.beverage_tabs.build(:name => beverage.name, :price => beverage.price, :count => array["count"], :capacity => beverage.capacity) 
 				end
 			end
 			if tab.total_invoice > 0 and tab.save

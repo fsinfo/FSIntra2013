@@ -18,6 +18,7 @@
 		%th.text-center Aktueller Peis
 		%th.text-center Verfügbar?
 		%th=t Beverage.human_attribute_name :description
+		%th.text-center Preis/Liter
 		%th.text-center{:colspan => 2} Aktionen
 	%tbody
 		- @beverages.each do |beverage|
@@ -30,5 +31,6 @@
 					- else
 						%span.icon-cancel-circled.no-linebreak.text-alert &nbsp;Nein
 				%td= beverage.description
+				%td= number_to_currency(beverage.price/beverage.capacity)
 				%td.text-center.no-linebreak= link_to content_tag(:span, t('actions.edit'), :class => "icon-pencil"), edit_beverage_path(beverage)
 				%td.text-center.no-linebreak= link_to content_tag(:span, t('actions.destroy'), :class => "icon-cancel"), beverage_path(beverage), :method => :delete

@@ -13,7 +13,13 @@
 			%tr
 				%th=t Beverage.human_attribute_name :price
 				%td= number_to_currency(beverage.price)
+			%tr
+				%th=t Beverage.human_attribute_name :capacity
+				%td= number_to_human(beverage.capacity, :separator => ',', :significant => false, :precision => 2, :units => {:unit => 'l'})
 			%tr 
+				%th PPL
+				%td= number_to_currency(beverage.price/beverage.capacity)
+			%tr
 				%th=t Beverage.human_attribute_name :available
 				%td= beverage.available
 

@@ -50,9 +50,10 @@ class BeveragesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def beverage_params
+      params[:beverage][:capacity].gsub!(/,/,'.')
       params[:beverage][:price].gsub!(/,/,'.')
       params[:beverage][:price].delete!('€\s')
-      params.require(:beverage).permit(:name, :description, :available, :price)
+      params.require(:beverage).permit(:name, :description, :available, :price, :capacity)
     end
 
     def check_permission

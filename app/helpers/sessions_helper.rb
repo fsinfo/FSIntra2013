@@ -51,6 +51,14 @@ module SessionsHelper
 	def has_group?(group)
 		# TODO: remove return true
 		return true
-		session[:groups].include?(group)
+
+		ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
+		if ldap.bind
+			filter = Net::LDAP::Filter.eq('memberUid', current_user.loginname)
+			groups = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).flat_map(&:cn)
+			return groups.include?(group)
+		else
+			return false
+		end
 	end
 end

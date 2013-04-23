@@ -3,10 +3,9 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		user, groups = User.authenticate(params[:loginname],params[:password])
+		user = User.authenticate(params[:loginname],params[:password])
 		unless user.nil?
 			login user
-			session[:groups] = groups
 			flash[:success] = "Hello #{user.firstname}!"
 			redirect_back_or root_url
 		else
