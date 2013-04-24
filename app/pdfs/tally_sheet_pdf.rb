@@ -18,6 +18,7 @@ class TallySheetPdf < Prawn::Document
     end
 
     table(data, :header => true, :width => bounds.width) do |table|
+      table.row_colors = ['ffffff','ffffff','ffffff','ffffff','C9C9C9']
       table.column_widths = table.width/table.column_length
     end
   end

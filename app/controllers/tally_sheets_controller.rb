@@ -30,14 +30,14 @@ class TallySheetsController < ApplicationController
 				TabMailer.tab_email(current_user,user,tab)
 			end
 		end
-		# TODO: better route, send mails
+		# TODO: better route
 		redirect_to root_url
 	end
 
 	private
 		# TODO: get only the right users (active/on list)
 		def get_users
-			@users = User.all
+			@users = User.all.order('firstname, lastname')
 		end
 
 		def get_beverages
