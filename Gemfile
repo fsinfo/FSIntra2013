@@ -28,6 +28,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.0.1'
 
 gem 'quiet_assets', :group => :development
+gem 'faker', :group => :development
 
 gem 'net-ldap'
 gem 'annotate'
