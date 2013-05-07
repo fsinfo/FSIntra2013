@@ -32,7 +32,7 @@ class TabsController < ApplicationController
 	end
 
 	def unpaid
-		@tabs = Tab.unpaid
+		@tabs = Tab.unpaid.includes(:beverage_tabs, :user)
 	end
 
 	  private

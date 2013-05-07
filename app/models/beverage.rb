@@ -20,4 +20,8 @@ class Beverage < ActiveRecord::Base
 	validates :price, :numericality => {:greater_than => 0}
 
 	scope :available, -> { where :available => true }
+
+	def self.find_cached(id)
+		Rails.cache.fetch("beverage/#{id}", :expires_in => 30) { Beverage.find(id) }
+	end
 end

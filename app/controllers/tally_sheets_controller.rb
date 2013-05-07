@@ -1,7 +1,5 @@
 class TallySheetsController < ApplicationController
-	before_action :get_users, :get_beverages, :has_permission
-	def index
-	end
+	before_action :signed_in_user, :has_permission , :get_users, :get_beverages 
 
 	def new
 		respond_to do |format|
@@ -14,20 +12,29 @@ class TallySheetsController < ApplicationController
 	end
 
 	def create
+		require 'thread'
 		# "user" => {user_id => {beverage_id => {"count" => count, "price" => price}}}
 		post = params[:user]
-		@users.each do |user|
-			temp = post[user.id.to_s]
-			tab = user.tabs.build(:paid => false)
-			puts temp
-			temp.each do |id,array|
-				unless array["count"].to_i == 0
-					beverage = Beverage.find(id)
-					tab.beverage_tabs.build(:name => beverage.name, :price => beverage.price, :count => array["count"], :capacity => beverage.capacity) 
+		mail_queue = Queue.new
+		ActiveRecord::Base.transaction do
+			@users.each do |user|
+				temp = post[user.id.to_s]
+				tab = user.tabs.build(:paid => false)
+				temp.each do |id,array|
+					unless array["count"].to_i == 0
+						beverage = Beverage.find_cached(id)
+						tab.beverage_tabs.build(:name => beverage.name, :price => beverage.price, :count => array["count"], :capacity => beverage.capacity) 
+					end
+				end
+				if tab.save
+					mail_queue << [user,tab]
 				end
 			end
-			if tab.total_invoice > 0 and tab.save
-				TabMailer.tab_email(current_user,user,tab)
+		end
+		Thread.new do
+			while !mail_queue.empty?
+				arr = mail_queue.pop
+				TabMailer.tab_email(current_user,arr[0],arr[1])
 			end
 		end
 		# TODO: better route

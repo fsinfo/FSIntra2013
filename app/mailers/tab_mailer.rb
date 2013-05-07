@@ -19,7 +19,7 @@ class TabMailer < ActionMailer::Base
 		@tab = tab
 		@beverage_tabs = tab.beverage_tabs
 		to = "#{@user.displayed_name} <#{@user.email}>"
-		from = "#{from_user.displayed_name} <#{from_user.email}>"
+		from = "#{@from_user.displayed_name} <#{@from_user.email}>"
 		mail(
 				from: from,
 				to: to,
