@@ -1,0 +1,15 @@
+Hi <%= @user.displayed_name %>,
+
+die neue Getränkerechnung ist hier:
+
+Getränk	Anzahl	Kosten	Gesamt
+<% @beverage_tabs.each do |bt| %>
+<%= bt.name %>	<%= bt.count %>	<%= bt.price %>	<%= bt.price * bt.count %>
+<% end %>
+			
+Gesamtkosten: <%= @tab.total_invoice %>
+
+Bitte bezahle möglichst bald.
+
+Viele Grüße 
+<%= @from_user.displayed_name %>

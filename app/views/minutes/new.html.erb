@@ -1,4 +1,7 @@
-<h1><%=t '.headline' %></h1>
+<div class="actions">
+  <h1><%=t '.headline' %></h1>
+  <%= link_to content_tag(:span, ' Abbrechen', :class => "icon-cancel-1"), minutes_path, :class => "button small round secondary" %>
+</div>
 
 <%= form_for(@minute) do |f| %>
   <% if @minute.errors.any? %>

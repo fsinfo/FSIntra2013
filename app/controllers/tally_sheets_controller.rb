@@ -1,32 +1,50 @@
 class TallySheetsController < ApplicationController
-	before_action :get_users, :get_beverages, :has_permission
-	def index
-	end
+	before_action :signed_in_user, :has_permission , :get_users, :get_beverages 
 
 	def new
+		respond_to do |format|
+			format.html
+			format.pdf do 
+				pdf = TallySheetPdf.new(@users, @beverages)
+				send_data pdf.render, filename: "tally_sheet.pdf", type: "application/pdf", disposition: "inline"
+			end
+		end
 	end
 
 	def create
+		require 'thread'
 		# "user" => {user_id => {beverage_id => {"count" => count, "price" => price}}}
 		post = params[:user]
-		@users.each do |user|
-			temp = post[user.id.to_s]
-			tab = user.tabs.build(:paid => false)
-			temp.each do |id,array|
-				unless array["count"].to_i == 0
-					tab.beverage_tabs.build(:beverage_id => id, :count => array["count"], :price => array["price"]) 
+		mail_queue = Queue.new
+		ActiveRecord::Base.transaction do
+			@users.each do |user|
+				temp = post[user.id.to_s]
+				tab = user.tabs.build(:paid => false)
+				temp.each do |id,array|
+					unless array["count"].to_i == 0
+						beverage = Beverage.find_cached(id)
+						tab.beverage_tabs.build(:name => beverage.name, :price => beverage.price, :count => array["count"], :capacity => beverage.capacity) 
+					end
+				end
+				if tab.save
+					mail_queue << [user,tab]
 				end
 			end
-			tab.save if tab.total_invoice > 0
 		end
-		# TODO: better route, send mails
+		Thread.new do
+			while !mail_queue.empty?
+				arr = mail_queue.pop
+				TabMailer.tab_email(current_user,arr[0],arr[1])
+			end
+		end
+		# TODO: better route
 		redirect_to root_url
 	end
 
 	private
 		# TODO: get only the right users (active/on list)
 		def get_users
-			@users = User.all
+			@users = User.all.order('firstname, lastname')
 		end
 
 		def get_beverages
@@ -34,8 +52,8 @@ class TallySheetsController < ApplicationController
 		end
 
 		def has_permission
-			unless has_group('kuehlschrank')
+			unless has_group?('kuehlschrank')
 				redirect_to root_url, flash => {:error => 'You have no permission'}
 			end
 		end
-end
+	end

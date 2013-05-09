@@ -8,6 +8,7 @@
 #  minute_id  :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  order      :integer
 #
 
 class Minutes::Item < ActiveRecord::Base

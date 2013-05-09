@@ -1,20 +1,36 @@
-%h1=t '.headline'
-= link_to t('.new'), new_beverage_path
+%div{:class => 'actions'}
+	%h1=t '.headline'
+	= link_to content_tag(:span, ' ' + t('.new'), :class=> "icon-plus"),new_beverage_path, :class => "button small round secondary"
+
+- if notice
+	%p#notice= notice
 
 %table
+	%colgroup
+		%col{:width => "30%"}
+		%col{:width => "15%"}
+		%col{:width => "8%"}
+		%col{:width => "43%"}
+		%col{:width => "2%"}
+		%col{:width => "2%"}
 	%thead 
 		%th=t Beverage.human_attribute_name :name
+		%th.text-center Aktueller Peis
+		%th.text-center Verfügbar?
 		%th=t Beverage.human_attribute_name :description
-		%th=t Beverage.human_attribute_name :price
-		%th=t Beverage.human_attribute_name :available
-		%th
-		%th
+		%th.text-center Preis/Liter
+		%th.text-center{:colspan => 2} Aktionen
 	%tbody
 		- @beverages.each do |beverage|
 			%tr 
-				%td= beverage.name
+				%th.text-left= beverage.name
+				%td.text-center= number_to_currency(beverage.price)
+				%td.text-center
+					- if beverage.available
+						%span.icon-ok-circled.no-linebreak.text-success &nbsp;Ja
+					- else
+						%span.icon-cancel-circled.no-linebreak.text-alert &nbsp;Nein
 				%td= beverage.description
-				%td= number_to_currency(beverage.price)
-				%td= beverage.available
-				%td= link_to t('actions.edit'), edit_beverage_path(beverage)
-				%td= link_to t('actions.destroy'), beverage_path(beverage), :method => :delete
+				%td= number_to_currency(beverage.price/beverage.capacity)
+				%td.text-center.no-linebreak= link_to content_tag(:span, t('actions.edit'), :class => "icon-pencil"), edit_beverage_path(beverage)
+				%td.text-center.no-linebreak= link_to content_tag(:span, t('actions.destroy'), :class => "icon-cancel"), beverage_path(beverage), :method => :delete

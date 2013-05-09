@@ -14,7 +14,7 @@
 				<% if signed_in? %>
 					<li><%= link_to 'Adressbuch', people_path %></li>
 					<li class="has-dropdown">
-						<% if has_group('kuehlschrank') %>
+						<% if has_group?('kuehlschrank') %>
 							<a href="#">Kühlschrank</a>
 							<ul class="dropdown">
 								<li><%= link_to 'Eigene Rechnungen', tabs_path %></li>

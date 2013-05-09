@@ -1,0 +1,19 @@
+
+.top {
+	position: relative;
+
+	ul, ol {
+		margin-left: $panel-padding;
+	}
+
+	.edit-shortcut {
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		a {
+			border-top: none;
+			border-right: none;
+		}
+	}
+}

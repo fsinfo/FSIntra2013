@@ -2,17 +2,33 @@
 	label {
 		@include prefix-postfix-base;
 		@include prefix;
-		@include grid-column($columns: 4);
+		float: left;
+		width: 33%;
 		@media #{$small} {
-			@include grid-column($columns: 3);
+			width: 25%;
 		}
 	}
+	.field_with_errors label {
+		@include prefix($alert-color);
+	}
 
-	input[type="text"], input[type="date"], input[type="password"], textarea {
-		@include grid-column($columns: 8);
+	.toggle-wrapper {
+		@include prefix-postfix-base;
+		@include postfix;
+		// border: $input-prefix-border-size $input-prefix-border-type $input-prefix-border-color;
+		background-color: $input-bg-color;
+		border: $input-border-width $input-border-style $input-border-color;
+		box-shadow: $input-box-shadow;
+		-webkit-box-shadow: $input-box-shadow;;
+		-moz-box-shadow: $input-box-shadow;;
+	}
+
+	input[type="text"], input[type="date"], input[type="password"], textarea, select, .toggle-wrapper {
+		width: 67%;
 		@media #{$small} {
-			@include grid-column($columns: 9);
+			width: 75%;
 		}
+		margin-bottom: $form-spacing;
 	}
 
 	textarea {
@@ -24,6 +40,8 @@
 }
 
 form {
+	padding-right: 1px; // makes the width of the content divisible by 2
+
 	&.inline {
 		@include inline-field;
 	}
@@ -39,4 +57,63 @@ form {
 	}
 
 	.redactor-field { clear: both; }
+
+	.chosen-field {
+		clear: both;
+		margin-bottom: emCalc(16px);
+
+		.chzn-container {
+			/* Overriding graceful Chosen defaults. Now it looks like a charm */
+			height: emCalc(37px); // somewhere in foundation this number is calculated -> don't know how
+			font-size: $input-font-size;
+
+			.chzn-single {
+				border-color: $input-border-color;
+				-webkit-box-shadow: none;
+				-moz-box-shadow   : none;
+				box-shadow        : none;
+			}
+
+			a.chzn-single, a.chzn-single span {
+				height: 100%;
+				line-height: emCalc(37px);
+
+				.search-choice-close, div b {
+					margin-top: 4px;
+					cursor: pointer;
+				}
+			}
+
+			.chzn-search input, .chzn-drop {
+				width: 100% !important;
+			}
+
+			&.chzn-container-active .chzn-single {
+				-webkit-box-shadow: none;
+				-moz-box-shadow   : none;
+				box-shadow        : none;
+				border: 1px solid $input-focus-border-color;
+			}
+		}
+	}
+}
+
+.toggle.fsintra {
+	margin-left: 0;
+	color: $input-font-color;
+	font-size: $input-font-size;
+	border: none;
+	background-color: transparent;
+}
+
+.toggle.fsintra .slide-button {
+	// background-color: $input-border-color;
+	background-color: $alert-color;
+	opacity: .75;
+}
+
+/* Selected ON toggle */
+.toggle.fsintra input:first-of-type:checked ~ .slide-button {
+	// background-color: $input-focus-border-color;
+	background-color: $success-color;
 }

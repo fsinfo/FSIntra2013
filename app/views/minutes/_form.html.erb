@@ -18,106 +18,169 @@
 		<%= f.date_field :date %>
 	</div>
 	
-	<%# Here could be a dropdown list or similar...
-	The value should be the id of a fsr member (user) %>
-	<div class="field">
+	<%# The value of the selected option is the id of a fsr member (user) %>
+	<div class="inline-field chosen-field">
 		<%= f.label :keeper_of_the_minutes %><br />
-		<%= f.text_field :keeper_of_the_minutes_id, :value => @minute.keeper_of_the_minutes_id %><br />
-		<%= text_field_tag 'name_of_keeper_of_the_minutes' %>
-	</div>
-	
-	<%# Here could be a dropdown list or similar...
-	The value should be the id of a fsr member (user) %>
-	<div class="field">
-		<%= f.label :chairperson %><br />
-		<%= f.text_field :chairperson_id, :value => @minute.chairperson_id %><br />
-		<%= text_field_tag 'name_of_chairperson' %>
+		<%= f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, :include_blank => true %>
 	</div>
 
-	<%# Here could be a checkbox list or similar... %>
-	<div class="field">
-		<%=t '.absentee_description' %>
-		<%= f.label :absentees %><br />
-		<% User.fsr.each do |u| %>
-			<%= check_box_tag "minute[absentee_ids][]", u.id, @minute.absentee_ids.include?(u.id), id: dom_id(u) %>
-			<%= u.displayed_name %>
-		<% end %>
+	<%# The value of the selected option is the id of a fsr member (user) %>
+	<div class="inline-field chosen-field">
+		<%= f.label :chairperson %><br />
+		<%= f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
 	</div>
+
+	<hr>
+
+	<%# list of all fsr members with a checkbox stating whether the member attended the meeting (checked = absent) %>
+	<table id="attendance">
+		<colgroup>
+			<col width="20%">
+			<col width="90%">
+		</colgroup>
+		<thead>
+			<th>Anwesenheit FSR</th>
+			<th>Name</th>
+		</thead>
+		<tbody>
+			<% User.fsr.each do |u| %>
+				<tr>
+					<td>
+						<label class="checkbox toggle fsintra" onclick="" style="min-width: 250px;">
+							<%= check_box_tag "minute[absentee_ids][]", u.id, not(@minute.absentee_ids.include?(u.id)), id: dom_id(u), class: "attendance-checkbox" %>
+							<p>
+								<span>Anwesend</span>
+								<span>Abwesend</span>
+							</p>
+							<a class="slide-button"></a>
+						</label>
+					</td>
+					<td><%= u.displayed_name %></td>
+				</tr>
+			<% end %>
+			<tr>
+				<%# status information: percentage of present fsr members, presence of a quorum %>
+				<th class="center">anwesend: <span id="attendance-present">X</span>/<span id="attendance-total">Y</span> = <span id="attendance-percentage">Z</span>%</th>
+				<th class="text-left">
+					<span id="attendance-quorate" class="label success">Beschlussfähig!</span>
+					<span id="attendance-nohouse" class="label alert" style="display: none;">Nicht Beschlussfähig!</span>
+				</th>
+			</tr>
+		</tbody>
+	</table>
 
 	<%# Here could be a text field with autocomplete.
 	TODO: New persons should be supported! %>
-	<div class="field">
-		<%= f.label :guests %><br />
-		<%= f.select :guests, ["foo", "bar"] %>
-	</div>
-
-	<hr />
-	<%= f.fields_for :items do |fi| %>
-		<fieldset>
-			<%# Important: Here the i of TOPi is fetched from the form builder %>
-			<legend><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></legend>
-			<%= fi.hidden_field :order, :value => (fi.index + 1).to_s %>
-			<div class="inline-field">
-				<%= fi.label :title %>
-				<%= fi.text_field :title %>
-			</div>
-			<div class="redactor-field">
-				<%= fi.text_area :content %>
-			</div>
-			<div>
-				<%= fi.fields_for :motions, fi.object.motions.build do |fm| %>
-					<strong>(Finanz-)antrag</strong>
-					<%= fm.label :rationale %>
-					<%= fm.text_area :rationale %>
-					<%= fm.label :mover %>
-					<%= fm.text_field :mover %>
-					<%= fm.label :amount %>
-					<%= fm.text_field :amount %>
-					<%= fm.label :pro %>
-					<%= fm.text_field :pro %>
-					<%= fm.label :abs %>
-					<%= fm.text_field :abs %>
-					<%= fm.label :con %>
-					<%= fm.text_field :con %>
-				<% end %>
-			</div>
-		</fieldset>
-	<% end %>
-
-	<%= f.fields_for @minute.build_minute_approve_item do |fma| %>
 	<fieldset>
-		<legend><%=t Minutes::MinuteApproveItem.model_name.human %></legend>
-		<% if Minute.published.count == 0 %>
-			Keine veröffentlichten, noch nicht genehmigten Protokolle
-		<% end %>
-		<ul>
-		<% fma.fields_for :minute_approve_motions do |mam| %>
-			<li>
-		  		<%= mam.label :pro %><%= mam.text_field :pro %>
-		  		<%= mam.label :abs %><%= mam.text_field :abs %>
-		  		<%= mam.label :con %><%= mam.text_field :con %>
-		  </li>
-		<% end %>
-		<% @acceptable_minutes.each do |m| %>
-		  <li>
-		  	Protokoll vom <%= l m.date.to_date, :format => :long %> (<%= m.keeper_of_the_minutes %>)
-		  	<%= fma.fields_for "#{m.id}", fma.object.minute_approve_motions.build do |mapm| %>
-		  		<%= mapm.label :pro %><%= mapm.text_field :pro %>
-		  		<%= mapm.label :abs %><%= mapm.text_field :abs %>
-		  		<%= mapm.label :con %><%= mapm.text_field :con %>
-	  		<% end %>
-		  </li>
-		<% end %>
-		</ul>
+		<legend>Gäste</legend>
+		<!-- <%= f.label :guests %><br /> -->
+		<%= f.select :guests, ["foo", "bar"] %>
 	</fieldset>
-	<% end %>
 
+	<hr>
+	<div class="section-container tabs" data-section="tabs">
+		<%# agenda items: tabular display for each item, a title field and a wysiwyg editor field %>
+		<%= f.fields_for :items do |fi| %>
+			<section>
+				<p class="title" data-section-title>
+					<a href="#"><b><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></b></a>
+				</p>
+				<div class="content" data-section-content>
+					<div class="inline-field">
+						<%= fi.label :title %>
+						<%= fi.text_field :title %>
+					</div>
+					<div class="redactor-field">
+						<%= fi.text_area :content %>
+					</div>
+					<%= fi.hidden_field(:id) %>
+				</div>
+			</section>
+		<% end %>
+
+		<%# wysiwyg help section: shortcut overview %>
+		<section>
+			<p class="title">
+				<a href="#"><span class="icon-help-circled"></span></a>
+			</p>
+			<div class="content" data-section-content>
+				Die folgende Tabelle Listet alle Shortcuts die im Editor zur Verfügung stehen.
+				<table>
+					<thead>
+						<tr>
+							<td></td>
+							<td>OS X</td>
+							<td>Windows</td>						
+						</tr>
+					</thead>
+					<tr>
+						<td>Undo</td>	
+						<td><kbd>Cmd + z</kbd></td>
+						<td><kbd>Ctrl + z</kbd></td>		
+					</tr>
+					<tr>
+						<td>Redo</td>
+						<td><kbd>Cmd + Shift + z</kbd></td>
+						<td><kbd>Ctrl + Shift + z</kbd></td>				
+					</tr>
+					<tr>
+						<td>Increase indent</td>
+						<td><kbd>Tab</kbd></td>
+						<td><kbd>Tab</kbd></td>				
+					</tr>
+					<tr>
+						<td>Decrease indent</td>
+						<td><kbd>Shift + Tab</kbd></td>
+						<td><kbd>Shift + Tab</kbd></td>				
+					</tr>
+					<tr>
+						<td>Clear formatting</td>
+						<td><kbd>Cmd + m</kbd></td>
+						<td><kbd>Ctrl + m</kbd></td>				
+					</tr>
+					<tr>
+						<td>Bold</td>
+						<td><kbd>Cmd + b</kbd></td>
+						<td><kbd>Ctrl + b</kbd></td>				
+					</tr>
+					<tr>
+					     	<td>Italic</td>
+					     	<td><kbd>Cmd + i</kbd></td>
+					     	<td><kbd>Ctrl + i</kbd></td>				
+					</tr>	                            			
+					<tr>
+						<td>Numbered list</td>
+						<td><kbd>Cmd + k</kbd></td>
+						<td><kbd>Ctrl + k</kbd></td>				
+					</tr>
+					<tr>
+						<td>Bulleted list</td>
+						<td><kbd>Cmd + j</kbd></td>
+						<td><kbd>Ctrl + j</kbd></td>				
+					</tr>
+					<tr>
+					     	<td>Superscript</td>
+					     	<td><kbd>Cmd + l</kbd></td>
+					     	<td><kbd>Ctrl + l</kbd></td>				
+					</tr>	                            	
+					<tr>
+						<td>Subscript</td>
+						<td><kbd>Cmd + h</kbd></td>
+						<td><kbd>Ctrl + h</kbd></td>				
+					</tr>
+				</table>
+			</div>
+		</section>
+	</div>
+	
 	<div class="submit">
 		<%= f.submit nil, :class => "button" %>
 	</div>
 <% end %>
 
 <script>
+	var critical_mass = 2/3*100; // percentage needed for a quorum
+
 	$(function() {
 		// All Users .. see http://api.jqueryui.com/autocomplete/#option-source for why this way
 		var availableUsers = [ <%= raw User.all.map { |x| "{ value: #{x.id}, label: '#{x.displayed_name}' }" }.join(",") %> ];
@@ -146,7 +209,33 @@
 		$(".redactor-field textarea").redactor({
 			lang: 'de',
 			buttons: buttons,
-			minHeight: 150,
+			minHeight: 350,
 		});
+
+		// setting up chosen
+		$(".chosen-field select").chosen({ placeholder_text: "Auswählen", allow_single_deselect: true });
+
+		// calculating presence of a quorum
+		$("#attendance .attendance-checkbox").change(function(evt){
+			updateAttandanceStatus();
+		});
+		updateAttandanceStatus();
 	});
+
+	function updateAttandanceStatus(){
+		checkboxes = $("#attendance .attendance-checkbox");
+		total = checkboxes.length;
+		present = checkboxes.filter(":checked").length;
+		percentage = present/total*100;
+		$("#attendance-total").text(total);
+		$("#attendance-present").text(present);
+		$("#attendance-percentage").text(percentage.toFixed(1));
+		if (percentage > critical_mass) {
+			$("#attendance-quorate").show();
+			$("#attendance-nohouse").hide();
+		} else {
+			$("#attendance-quorate").hide();
+			$("#attendance-nohouse").show();
+		}
+	}
 </script>

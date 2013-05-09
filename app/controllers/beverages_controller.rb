@@ -1,5 +1,6 @@
 class BeveragesController < ApplicationController
-  before_action :set_beverage, only: [:show, :edit, :update, :destroy]
+  before_action :set_beverage, only: [:show, :edit, :update]
+  before_action :check_permission
 
   # GET /beverages
   def index
@@ -41,12 +42,6 @@ class BeveragesController < ApplicationController
     end
   end
 
-  # DELETE /beverages/1
-  def destroy
-    @beverage.destroy
-    redirect_to beverages_url, notice: 'Beverage was successfully destroyed.'
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_beverage
@@ -55,8 +50,13 @@ class BeveragesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def beverage_params
+      params[:beverage][:capacity].gsub!(/,/,'.')
       params[:beverage][:price].gsub!(/,/,'.')
       params[:beverage][:price].delete!('€\s')
-      params.require(:beverage).permit(:name, :description, :available, :price)
+      params.require(:beverage).permit(:name, :description, :available, :price, :capacity)
+    end
+
+    def check_permission
+      has_group?('kuehlschrank')
     end
 end

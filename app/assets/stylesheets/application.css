@@ -11,7 +11,8 @@
  *= require jquery-ui
  *= require fontello-embedded
  *= require redactor
- *= minutes
+ *= require chosen
+ *= require toggle-switch
  *= require base
  *= require_self
  */

@@ -19,5 +19,33 @@
 #  updated_at     :datetime
 #
 
+require 'vpim/vcard'
+
 class Person < ActiveRecord::Base
+	def displayed_name
+		"#{firstname} #{lastname}"
+	end
+
+	def to_vcard
+		begin 
+			card = Vpim::Vcard::Maker.make2 do |maker|
+				maker.add_name do |name|
+					name.given = self.firstname
+					name.family = self.lastname
+				end unless self.firstname.nil? and self.lastname.nil?
+
+				maker.add_addr do |addr|
+					addr.street = self.street
+					addr.locality = self.city
+					addr.postalcode = self.zip
+				end unless self.street.nil? and self.city.nil? and self.zip.nil?
+				
+				maker.add_tel(self.phone) if self.phone?
+				maker.add_email(self.email) if self.email?
+			end
+			return card.to_s
+		rescue Vpim::Unencodeable 
+			return ""
+		end
+	end
 end

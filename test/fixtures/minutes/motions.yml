@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  rationale: MyText
+  mover_id: 
+  amount: 9.99
+  pro: 1
+  abs: 1
+  con: 1
+
+two:
+  rationale: MyText
+  mover_id: 
+  amount: 9.99
+  pro: 1
+  abs: 1
+  con: 1

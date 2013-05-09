@@ -14,12 +14,13 @@
 ActiveRecord::Schema.define(version: 20130416071841) do
 
   create_table "beverage_tabs", force: true do |t|
-    t.integer  "beverage_id"
     t.integer  "tab_id"
     t.integer  "count"
-    t.decimal  "price",       precision: 8, scale: 2
+    t.decimal  "price",      precision: 8, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.decimal  "capacity",   precision: 8, scale: 2
   end
 
   create_table "beverages", force: true do |t|
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 20130416071841) do
     t.decimal  "price",       precision: 8, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "capacity",    precision: 8, scale: 2
   end
 
   create_table "invitees", id: false, force: true do |t|

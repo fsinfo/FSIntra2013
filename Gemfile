@@ -27,12 +27,20 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.0.1'
 
+gem 'quiet_assets', :group => :development
+gem 'faker', :group => :development
+
 gem 'net-ldap'
 gem 'annotate'
 gem 'haml'
 gem 'haml-rails'
 
+# for pdf-export
 gem 'prawn'
+
+# for vcards
+gem 'vpim-rails', :git => 'https://github.com/fraser/vpim-rails'
+gem 'rqrcode-rails3'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -17,6 +17,7 @@
 //= require turbolinks
 //= require redactor_de
 //= require redactor.min
+//= require chosen.jquery.min
 //= require_tree .
 
 $(document).foundation();

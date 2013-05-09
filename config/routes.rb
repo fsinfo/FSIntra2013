@@ -1,14 +1,14 @@
 # The restful routes are lazily translated using following the pattern:
 #   resources :$deutschername, :as => "$englishname", :controller => "$englishname"
 Fsintra::Application.routes.draw do
-  resources :benutzer, except: [:destroy], :as => 'users', :controller => 'users' 
+  resources :benutzer, only: [:update], :as => 'users', :controller => 'users' 
   resources :personen, except: [:destroy], :as => 'people', :controller => 'people'
 	resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
 		get 'offen'  => 'tabs#unpaid', :on => :collection
-		put 'ist_bezahlt' => 'tabs#set_paid', :on => :member
+		put 'ist_bezahlt' => 'tabs#pay', :on => :member
 	end
   resources :strichliste, :as => 'tally_sheets', :controller => 'tally_sheets'
-  resources :getraenke, :as => 'beverages', :controller => 'beverages'
+  resources :getraenke, :as => 'beverages', :controller => 'beverages', :except => [:destroy]
   resources :sessions, only: [:new, :create, :destroy]
   get '/login' => 'sessions#new'
   delete '/logout' => 'sessions#destroy'
@@ -17,5 +17,5 @@ Fsintra::Application.routes.draw do
     put 'publish', :on => :member
   end
 
-  root :to => 'people#index'
+  root :to => 'home#index'
 end

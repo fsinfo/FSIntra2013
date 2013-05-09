@@ -1,19 +1,26 @@
-Offen:
+%div.actions
+	%h1 Alle offenen Rechnungen
+
 %table
+	%colgroup
+		%col{:width => "30%"}
+		%col{:width => "43%"}
+		%col{:width => "25%"}
+		%col{:width => "2%"}
 	%thead
 		%th Datum
-		%th Betrag
 		%th Benutzer
-		%th Bezahlt
+		%th.text-center Betrag
+		%th.text-center Aktion
 	%tbody
-		- @tabs.each do |tab|
+		- @tabs.find_each do |tab|
 			%tr{:id => "tab_row_#{tab.id}"}
 				%td
-					= link_to tab.created_at, tab_path(tab)
-				%td
-					= tab.total_invoice
+					= link_to tab.created_at.strftime("%d. %B %Y"), tab_path(tab)
 				%td
 					= tab.user.displayed_name
-				%td
-					= form_for tab, :class => 'tab_paid', :method => 'PUT', :remote => true do |f|
-						= f.submit
+				%td.text-center
+					= "%.2f" % tab.total_invoice
+					&euro;
+				%td.text-center.no-linebreak
+					= link_to content_tag(:span, 'Hat bezahlt', :class => "icon-ok"), ist_bezahlt_tab_path(tab),:method => 'PUT', :remote => true, :class => 'tab_paid', :"data-id" => tab.id
