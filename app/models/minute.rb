@@ -17,6 +17,7 @@ class Minute < ActiveRecord::Base
 	STATUSES = ['draft', 'published']
 	#validates_inclusion_of :status, :in => STATUSES
 
+
 	validates_presence_of :date
 	validates_presence_of :keeper_of_the_minutes_id
 	validates_presence_of :chairperson_id
@@ -47,7 +48,6 @@ class Minute < ActiveRecord::Base
 	scope :published, -> {where :status => 'published' }
 	scope :accepted, -> {where :status => 'published' }
 													
-
 	# Accept the existing minute.
 	# Returns true		if the status was 'draft' before,
 	# and			false 	if the status 'accepted' already.

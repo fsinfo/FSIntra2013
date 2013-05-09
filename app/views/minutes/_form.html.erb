@@ -83,7 +83,7 @@
 		<%= f.fields_for :items do |fi| %>
 			<section>
 				<p class="title" data-section-title>
-					<a href="#"><b><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></b></a>
+					<a href="#"><b><%=t Minutes::Item.model_name.human %> <%= fi.index %></b></a>
 				</p>
 				<div class="content" data-section-content>
 					<div class="inline-field">
@@ -94,6 +94,7 @@
 						<%= fi.text_area :content %>
 					</div>
 					<%= fi.hidden_field(:id) %>
+					<%= fi.hidden_field :order, :value => fi.index.to_s %>
 				</div>
 			</section>
 		<% end %>
@@ -101,74 +102,10 @@
 		<%# wysiwyg help section: shortcut overview %>
 		<section>
 			<p class="title">
-				<a href="#"><span id="close_the_help" class="icon-help-circled"></span></a>
+				<a href="#"><span class="icon-help-circled"></span></a>
 			</p>
 			<div class="content" data-section-content>
-				Die folgende Tabelle Listet alle Shortcuts die im Editor zur Verfügung stehen.
-				<table>
-					<thead>
-						<tr>
-							<td></td>
-							<td>OS X</td>
-							<td>Windows</td>						
-						</tr>
-					</thead>
-					<tr>
-						<td>Undo</td>	
-						<td><kbd>Cmd + z</kbd></td>
-						<td><kbd>Ctrl + z</kbd></td>		
-					</tr>
-					<tr>
-						<td>Redo</td>
-						<td><kbd>Cmd + Shift + z</kbd></td>
-						<td><kbd>Ctrl + Shift + z</kbd></td>				
-					</tr>
-					<tr>
-						<td>Increase indent</td>
-						<td><kbd>Tab</kbd></td>
-						<td><kbd>Tab</kbd></td>				
-					</tr>
-					<tr>
-						<td>Decrease indent</td>
-						<td><kbd>Shift + Tab</kbd></td>
-						<td><kbd>Shift + Tab</kbd></td>				
-					</tr>
-					<tr>
-						<td>Clear formatting</td>
-						<td><kbd>Cmd + m</kbd></td>
-						<td><kbd>Ctrl + m</kbd></td>				
-					</tr>
-					<tr>
-						<td>Bold</td>
-						<td><kbd>Cmd + b</kbd></td>
-						<td><kbd>Ctrl + b</kbd></td>				
-					</tr>
-					<tr>
-					     	<td>Italic</td>
-					     	<td><kbd>Cmd + i</kbd></td>
-					     	<td><kbd>Ctrl + i</kbd></td>				
-					</tr>	                            			
-					<tr>
-						<td>Numbered list</td>
-						<td><kbd>Cmd + k</kbd></td>
-						<td><kbd>Ctrl + k</kbd></td>				
-					</tr>
-					<tr>
-						<td>Bulleted list</td>
-						<td><kbd>Cmd + j</kbd></td>
-						<td><kbd>Ctrl + j</kbd></td>				
-					</tr>
-					<tr>
-					     	<td>Superscript</td>
-					     	<td><kbd>Cmd + l</kbd></td>
-					     	<td><kbd>Ctrl + l</kbd></td>				
-					</tr>	                            	
-					<tr>
-						<td>Subscript</td>
-						<td><kbd>Cmd + h</kbd></td>
-						<td><kbd>Ctrl + h</kbd></td>				
-					</tr>
-				</table>
+				<%= render "shared/editor_help" %>
 			</div>
 		</section>
 	</div>
@@ -220,11 +157,6 @@
 			updateAttandanceStatus();
 		});
 		updateAttandanceStatus();
-
-		// toggle help
-		$("#close_the_help").click(function() {
-			$("#close_the_help").parents("section").children("div").toggle();
-		})
 	});
 
 	function updateAttandanceStatus(){

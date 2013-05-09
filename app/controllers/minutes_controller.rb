@@ -1,6 +1,6 @@
 class MinutesController < ApplicationController
   before_action :set_minute, only: [:show, :edit, :update, :destroy, :publish, :accept]
-  before_action :extract_approved_minutes, only: [:create, :update]
+  #before_action :extract_approved_minutes, only: [:create, :update]
 
   # GET /minutes
   # GET /minutes.json
@@ -24,6 +24,16 @@ class MinutesController < ApplicationController
   # GET /minutes/new
   def new
     @minute = Minute.new
+
+    order_counter = 0
+    @minute.build_minute_approve_item
+    ["Festlegung der Tagesordnung", "Mitteilungen", "Anträge", "Verschiedenes"].each do |item|
+      new_item = @minute.items.build
+      new_item.title = item
+      new_item.order = order_counter
+      order_counter += 1
+    end
+
     @acceptable_minutes = Minute.published.where.not(:id => @minute.id)
   end
 
@@ -36,15 +46,8 @@ class MinutesController < ApplicationController
   # POST /minutes.json
   def create
     @minute = Minute.new(minute_params)
-    @minute.
-
-    count = params[:number_of_items].to_i
-
     respond_to do |format|
-      if count > 0 and @minute.save
-        count.times do
-          @minute.items.create
-        end
+      if @minute.save
         format.html { redirect_to edit_minute_path(@minute), notice: t('feedback.created', :model => Minute.model_name.human) }
         format.json { render action: 'edit', status: :created, location: @minute }
       else
