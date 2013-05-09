@@ -90,9 +90,9 @@
 		<%# agenda items: tabular display for each item, a title field and a wysiwyg editor field %>
 		<%# Important: If you change the appearance for the <section>, also change the creation for the javascript new item thing %>
 		<%= f.fields_for :items do |fi| %>
-			<section data-index="<%= fi.index %>">
+			<section data-index="<%= fi.index %>" class="minute-item">
 				<p class="title" data-section-title>
-					<a href="#"><b><%=t Minutes::Item.model_name.human %> <%= fi.index %></b></a>
+					<a href="#"><b><%=t Minutes::Item.model_name.human %> <%= content_tag :span, fi.index, :class => 'item-index' %></b></a>
 				</p>
 				<div class="content" data-section-content>
 					<div class="inline-field">
