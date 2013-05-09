@@ -19,6 +19,7 @@ $("#add_new_item").click(function() {
   var activeBefore = $("section.active")
   var activeAfter = $("section.active").prev()
   activeBefore.removeClass("active")
+  activeBefore.css("padding-top", "")
   activeAfter.addClass("active")
 
   // initialize the redactor field
@@ -28,6 +29,9 @@ $("#add_new_item").click(function() {
 			minHeight: 350,
 		});
 
+  // renumber the items
+  markItemOrdering()
+
   // Hack, forces foundation to repaint the section tab bar
   $(window).trigger('resize')
 })
@@ -35,15 +39,35 @@ $("#add_new_item").click(function() {
 /**
  * Shuffles the current item one to the left
  */
-$().click(function(){
+$("#move_item_to_left").click(function(){
+	// geht nicht weiter nach links!
+	if(getActiveSection() == 0) {
+		return
+	}
+	var movingNode = $("section.active")
+	var replaceNode = movingNode.prev()
+	movingNode.insertBefore(replaceNode)
 
+	// renumber the items
+  markItemOrdering()
+	$(window).trigger('resize')
 })
 
 /**
  * Shuffles the current item one to the right
  */
-$().click(function(){
+$("#move_item_to_right").click(function(){
+	// geht nicht weiter nach rechts!
+	if(!$("section.active").next().attr("data-index")) {
+		return
+	}
+	var movingNode = $("section.active")
+	var replaceNode = movingNode.next()
+	movingNode.insertAfter(replaceNode)
 
+	// renumber the items
+  markItemOrdering()
+	$(window).trigger('resize')
 })
 
 /**
