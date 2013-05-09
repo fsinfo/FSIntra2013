@@ -15,5 +15,5 @@ class Minutes::Item < ActiveRecord::Base
 	belongs_to :minute
 	has_many :motions
 
-	validates_presence_of :title, :content, :on => :update
+	validates_presence_of :title
 end

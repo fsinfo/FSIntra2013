@@ -49,13 +49,13 @@
 	<h6>Gäste</h6>
 	<%# TODO: display guests %>
 </div>
-<% @minute.items.each_with_index do |i, index| %>
+<% @minute.items.each do |i| %>
 	<div class="panel top">
 		<div class="edit-shortcut">
 			<%= link_to content_tag(:span, nil, :class => "icon-pencil"), edit_minute_path(@minute), :class => "button tiny secondary" %>
 		</div>
 		<h4>
-			<span class="subheader"><%=t Minutes::Item.model_name.human %> <%= index + 1 %>&nbsp;</span>
+			<span class="subheader"><%=t Minutes::Item.model_name.human %> <%= i.order %>&nbsp;</span>
 			<span><%= i.title %></span>
 		</h4>
 		<div>

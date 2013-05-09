@@ -22,7 +22,9 @@ class Minute < ActiveRecord::Base
 	validates_presence_of :keeper_of_the_minutes_id
 	validates_presence_of :chairperson_id
 
-	has_many :items, :class_name => 'Minutes::Item'
+	validates_associated :items
+
+	has_many :items, -> { order '"order" ASC' }, :class_name => 'Minutes::Item'
 	accepts_nested_attributes_for :items
 
 	has_one :minute_approve_item, :class_name => 'Minutes::MinuteApproveItem'

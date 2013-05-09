@@ -110,6 +110,7 @@ function markItemOrdering() {
 	$(".minute-item").each(function() {
   	$(this).attr("data-index", i)
   	$(this).find(".title .item-index").html(i);
+  	$(this).find("input[id*=minute_items_attributes][id*=order]").attr("value", i)
   	i++
 	})
 }

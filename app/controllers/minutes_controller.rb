@@ -1,5 +1,6 @@
 class MinutesController < ApplicationController
   before_action :set_minute, only: [:show, :edit, :update, :destroy, :publish, :accept]
+  before_action :set_acceptable_minutes, only: [:new, :create, :edit, :update]
   #before_action :extract_approved_minutes, only: [:create, :update]
 
   # GET /minutes
@@ -87,10 +88,10 @@ class MinutesController < ApplicationController
     @minute.publish
     respond_to do |format|
       if @minute.save
-        format.html { redirect_to @minute, notice: '' }
+        format.html { redirect_to @minute, notice: 'Protokoll veröffentlicht' }
         format.json { head :no_content }
       else
-        format.html { redirect_to @minute, notice: '' }
+        format.html { redirect_to @minute, notice: 'Protokoll nicht veröffentlicht :(' }
         format.json { head :no_content }
       end
     end
@@ -100,6 +101,14 @@ class MinutesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_minute
       @minute = Minute.find(params[:id])
+    end
+
+    def set_acceptable_minutes
+      if @minute
+        @acceptable_minutes = Minute.published.where.not(:id => @minute.id)
+      else
+        @acceptable_minutes = Minute.published
+      end
     end
 
     # Replace the ids with the right user object (if id is present)

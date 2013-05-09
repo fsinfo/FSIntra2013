@@ -102,11 +102,29 @@
 					<div class="redactor-field">
 						<%= fi.text_area :content %>
 					</div>
+					<%= fi.fields_for :motion %>
+						
+					<% end %>
+
 					<%= fi.hidden_field(:id) %>
 					<%= fi.hidden_field :order, :value => fi.index.to_s %>
 				</div>
 			</section>
 		<% end %>
+
+		<%# the generic minute approve item %>
+		<section>
+			<p class="title">
+				<a href="#"><span class="icon-doc-text">Protokolle</span></a>
+			</p>
+			<div class="content" data-section-content>
+				<ul>
+					<% @acceptable_minutes.each do |m| %>
+					  <li>Protokoll vom <%= l m.date, :format => "%d.%m.%Y" %></li>
+					<% end %>
+				</ul>
+			</div>
+		</section>
 
 		<%# wysiwyg help section: shortcut overview %>
 		<section>
