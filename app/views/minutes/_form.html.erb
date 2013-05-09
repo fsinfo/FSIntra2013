@@ -78,10 +78,19 @@
 	</fieldset>
 
 	<hr>
+
+	<%# TODO: Integrate this seamlessly into the section container %>
+	<ul class="button-group">
+		<li><button type="button" id="move_item_to_left" class="small button" title="Nach vorne verschieben">&lt;</button></li>
+		<li><button type="button" id="add_new_item" class="small button" title="Neuen Tagesordnungspunkt anlegen">Neuer TOP</button></li>
+		<li><button type="button" id="move_item_to_right" class="small button" title="Nach hinten verschieben">&gt;</button></li>
+	</ul>
+
 	<div class="section-container tabs" data-section="tabs">
 		<%# agenda items: tabular display for each item, a title field and a wysiwyg editor field %>
+		<%# Important: If you change the appearance for the <section>, also change the creation for the javascript new item thing %>
 		<%= f.fields_for :items do |fi| %>
-			<section>
+			<section data-index="<%= fi.index %>">
 				<p class="title" data-section-title>
 					<a href="#"><b><%=t Minutes::Item.model_name.human %> <%= fi.index %></b></a>
 				</p>
