@@ -48,7 +48,7 @@ class MinutesController < ApplicationController
     @minute = Minute.new(minute_params)
     respond_to do |format|
       if @minute.save
-        format.html { redirect_to edit_minute_path(@minute), notice: t('feedback.created', :model => Minute.model_name.human) }
+        format.html { redirect_to @minute, notice: t('feedback.created', :model => Minute.model_name.human) }
         format.json { render action: 'edit', status: :created, location: @minute }
       else
         format.html { render action: 'new', notice: 'größerezalh' }
