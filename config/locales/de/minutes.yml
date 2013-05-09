@@ -25,6 +25,8 @@ de:
       minutes/item:
         one: TOP
         other: TOPs
+      minutes/minute_approve_item:
+        one: Protokolle Genehmigen
     attributes:
       minute:
         date: Datum
@@ -37,3 +39,7 @@ de:
       minutes/item:
         title: Titel
         content: Inhalt
+      minutes/minute_approve_item:
+        pro: Dafür
+        abs: Enthaltung
+        con: Dagegen

@@ -1,6 +1,6 @@
 class MinutesController < ApplicationController
-  before_action :set_minute, only: [:show, :edit, :update, :destroy]
-  #before_action :users_to_ids, only: [:update]
+  before_action :set_minute, only: [:show, :edit, :update, :destroy, :publish, :accept]
+  before_action :extract_approved_minutes, only: [:create, :update]
 
   # GET /minutes
   # GET /minutes.json
@@ -16,7 +16,7 @@ class MinutesController < ApplicationController
       format.html
       format.pdf do
         pdf = MinutePdf.new(@minute, view_context)
-        send_data pdf.render, filename: "TODO_Protokollnamenüberlegen.pdf", type: "application/pdf"
+        send_data pdf.render, filename: "TODO_Protokollnamenüberlegen.pdf", type: "application/pdf", disposition: inline
       end
     end
   end
@@ -24,16 +24,19 @@ class MinutesController < ApplicationController
   # GET /minutes/new
   def new
     @minute = Minute.new
+    @acceptable_minutes = Minute.published.where.not(:id => @minute.id)
   end
 
   # GET /minutes/1/edit
   def edit
+    @acceptable_minutes = Minute.published.where.not(:id => @minute.id)
   end
 
   # POST /minutes
   # POST /minutes.json
   def create
     @minute = Minute.new(minute_params)
+    @minute.
 
     count = params[:number_of_items].to_i
 
@@ -54,9 +57,7 @@ class MinutesController < ApplicationController
   # PATCH/PUT /minutes/1
   # PATCH/PUT /minutes/1.json
   def update
-    puts "\n\n\n *** \n\n\n "
-    puts @minute
-    puts "\n\n\n *** \n\n\n "
+    @minute.unpublish
     respond_to do |format|
       if @minute.update(minute_params)
         format.html { redirect_to @minute, notice: t('feedback.updated', :model => Minute.model_name.human) }
@@ -78,6 +79,20 @@ class MinutesController < ApplicationController
     end
   end
 
+  # PUT /minutes/1/publish
+  def publish
+    @minute.publish
+    respond_to do |format|
+      if @minute.save
+        format.html { redirect_to @minute, notice: '' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to @minute, notice: '' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_minute
@@ -92,6 +107,18 @@ class MinutesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def minute_params
-      params.require(:minute).permit(:date, :keeper_of_the_minutes_id, :chairperson_id, :items_attributes => [:id, :title, :content])
+      params.require(:minute).permit(:date, :keeper_of_the_minutes_id, :chairperson_id,
+                                     :items_attributes => [:id, :title, :content, :order])
+    end
+
+    def extract_approved_minutes
+      the_item = @minute.build_minute_approve_item
+      params[:minute][:minutes_minute_approve_item].each_pair do |k, v|
+        motion = the_item.minute_approve_motions.build
+        motion.minute = Minute.find(k)
+        motion.pro = v[:pro]
+        motion.abs = v[:abs]
+        motion.con = v[:con]
+      end
     end
 end

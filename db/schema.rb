@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130412165508) do
+ActiveRecord::Schema.define(version: 20130416071841) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "beverage_id"
@@ -61,10 +61,41 @@ ActiveRecord::Schema.define(version: 20130412165508) do
     t.integer  "order"
   end
 
+  create_table "minutes_minute_approve_items", force: true do |t|
+    t.integer  "order"
+    t.integer  "minute_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "minutes_minute_approve_motions", force: true do |t|
+    t.integer  "pro"
+    t.integer  "abs"
+    t.integer  "con"
+    t.integer  "minute_approve_item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "minute_id"
+  end
+
   create_table "minutes_minutes_guests", id: false, force: true do |t|
     t.integer "guest_id"
     t.integer "minute_id"
   end
+
+  create_table "minutes_motions", force: true do |t|
+    t.text     "rationale"
+    t.integer  "mover_id"
+    t.decimal  "amount"
+    t.integer  "pro"
+    t.integer  "abs"
+    t.integer  "con"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "item_id"
+  end
+
+  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id"
 
   create_table "people", force: true do |t|
     t.string   "firstname"

@@ -13,7 +13,9 @@ Fsintra::Application.routes.draw do
   get '/login' => 'sessions#new'
   delete '/logout' => 'sessions#destroy'
 
-  resources :protokolle, :as => "minutes", :controller => "minutes"
+  resources :protokolle, :as => "minutes", :controller => "minutes" do
+    put 'publish', :on => :member
+  end
 
   root :to => 'people#index'
 end

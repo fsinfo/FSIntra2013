@@ -54,7 +54,9 @@
 	<hr />
 	<%= f.fields_for :items do |fi| %>
 		<fieldset>
+			<%# Important: Here the i of TOPi is fetched from the form builder %>
 			<legend><%=t Minutes::Item.model_name.human %> <%= fi.index + 1 %></legend>
+			<%= fi.hidden_field :order, :value => (fi.index + 1).to_s %>
 			<div class="inline-field">
 				<%= fi.label :title %>
 				<%= fi.text_field :title %>
@@ -62,9 +64,54 @@
 			<div class="redactor-field">
 				<%= fi.text_area :content %>
 			</div>
+			<div>
+				<%= fi.fields_for :motions, fi.object.motions.build do |fm| %>
+					<strong>(Finanz-)antrag</strong>
+					<%= fm.label :rationale %>
+					<%= fm.text_area :rationale %>
+					<%= fm.label :mover %>
+					<%= fm.text_field :mover %>
+					<%= fm.label :amount %>
+					<%= fm.text_field :amount %>
+					<%= fm.label :pro %>
+					<%= fm.text_field :pro %>
+					<%= fm.label :abs %>
+					<%= fm.text_field :abs %>
+					<%= fm.label :con %>
+					<%= fm.text_field :con %>
+				<% end %>
+			</div>
 		</fieldset>
 	<% end %>
-	
+
+	<%= f.fields_for @minute.build_minute_approve_item do |fma| %>
+	<fieldset>
+		<legend><%=t Minutes::MinuteApproveItem.model_name.human %></legend>
+		<% if Minute.published.count == 0 %>
+			Keine veröffentlichten, noch nicht genehmigten Protokolle
+		<% end %>
+		<ul>
+		<% fma.fields_for :minute_approve_motions do |mam| %>
+			<li>
+		  		<%= mam.label :pro %><%= mam.text_field :pro %>
+		  		<%= mam.label :abs %><%= mam.text_field :abs %>
+		  		<%= mam.label :con %><%= mam.text_field :con %>
+		  </li>
+		<% end %>
+		<% @acceptable_minutes.each do |m| %>
+		  <li>
+		  	Protokoll vom <%= l m.date.to_date, :format => :long %> (<%= m.keeper_of_the_minutes %>)
+		  	<%= fma.fields_for "#{m.id}", fma.object.minute_approve_motions.build do |mapm| %>
+		  		<%= mapm.label :pro %><%= mapm.text_field :pro %>
+		  		<%= mapm.label :abs %><%= mapm.text_field :abs %>
+		  		<%= mapm.label :con %><%= mapm.text_field :con %>
+	  		<% end %>
+		  </li>
+		<% end %>
+		</ul>
+	</fieldset>
+	<% end %>
+
 	<div class="submit">
 		<%= f.submit nil, :class => "button" %>
 	</div>

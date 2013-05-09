@@ -20,9 +20,20 @@
   <%= @minute.chairperson.displayed_name if @minute.chairperson %>
 </p>
 
+<%# Overview over items of this protocol %>
+<ul>
 <% @minute.items.each do |i| %>
+  <li><strong><%=t Minutes::Item.model_name.human %> <%= i.order %> <%= i.title %></strong></li>
+<% end %>
+</ul>
+
+<%# Detailed display of items %>
+<% @minute.items.each do |i| %>
+  <hr />
   <p>
-  	<strong><%=t Minutes::Item.model_name.human %><%= i.title %></strong>
+    <strong><%=t Minutes::Item.model_name.human %> <%= i.order %> <%= i.title %></strong>
+    <%# i.content is set with wysiwyg editor and thus contains html %>
+    <%= i.content.html_safe %>
   </p>
 <% end %>
 

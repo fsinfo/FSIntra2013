@@ -48,8 +48,12 @@ class User < Person
 		end
 	end
 
-	def displayed_name
+	def to_s
 		"#{firstname} #{lastname}"
+	end
+
+	def displayed_name
+		to_s
 	end
 
 	private 
