@@ -20,13 +20,13 @@
 	
 	<%# The value of the selected option is the id of a fsr member (user) %>
 	<div class="inline-field chosen-field">
-		<%= f.label :keeper_of_the_minutes %><br />
+		<%= f.label :keeper_of_the_minutes %>
 		<%= f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, :include_blank => true %>
 	</div>
 
 	<%# The value of the selected option is the id of a fsr member (user) %>
 	<div class="inline-field chosen-field">
-		<%= f.label :chairperson %><br />
+		<%= f.label :chairperson %>
 		<%= f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
 	</div>
 
@@ -101,7 +101,7 @@
 		<%# wysiwyg help section: shortcut overview %>
 		<section>
 			<p class="title">
-				<a href="#"><span class="icon-help-circled"></span></a>
+				<a href="#"><span id="close_the_help" class="icon-help-circled"></span></a>
 			</p>
 			<div class="content" data-section-content>
 				Die folgende Tabelle Listet alle Shortcuts die im Editor zur Verfügung stehen.
@@ -220,6 +220,11 @@
 			updateAttandanceStatus();
 		});
 		updateAttandanceStatus();
+
+		// toggle help
+		$("#close_the_help").click(function() {
+			$("#close_the_help").parents("section").children("div").toggle();
+		})
 	});
 
 	function updateAttandanceStatus(){
@@ -238,4 +243,5 @@
 			$("#attendance-nohouse").show();
 		}
 	}
+
 </script>
