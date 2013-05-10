@@ -119,8 +119,28 @@ class MinutesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def minute_params
-      params.require(:minute).permit(:date, :keeper_of_the_minutes_id, :chairperson_id,
-                                     :items_attributes => [:id, :title, :content, :order])
+
+      puts params
+
+      #params.require(:minute).permit(:date, :keeper_of_the_minutes_id, :chairperson_id,
+      #                               :items_attributes => [:id, :title, :content, :order,
+      #                               :minutes_motion_attributes => [:rationale, :mover_id, :pro, :abs, :con]])
+      params.require(:minute).permit(:date,
+                                     :keeper_of_the_minutes_id,
+                                     :chairperson_id,
+                                     {:items_attributes => [
+                                        :id,
+                                        :title,
+                                        :content,
+                                        :order ],
+                                      :minutes_motion_attributes => [
+                                          :rationale,
+                                          :mover_id,
+                                          :pro,
+                                          :abs,
+                                          :con
+                                        ]
+                                      })
     end
 
     def extract_approved_minutes

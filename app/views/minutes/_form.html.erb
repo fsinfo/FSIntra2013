@@ -102,8 +102,20 @@
 					<div class="redactor-field">
 						<%= fi.text_area :content %>
 					</div>
-					<%= fi.fields_for :motion %>
-						
+					<%= fi.fields_for fi.object.motions.build do |fm| %>
+						<%= fm.label :rationale %>
+						<%= fm.text_area :rationale %>
+						<%= fm.label :mover %>
+						<%= fm.text_area :mover %>
+						<hr />
+						<%= fm.label :pro %>
+						<%= fm.text_field :pro %>
+
+						<%= fm.label :abs %>
+						<%= fm.text_field :abs %>
+
+						<%= fm.label :con %>
+						<%= fm.text_field :con %>
 					<% end %>
 
 					<%= fi.hidden_field(:id) %>

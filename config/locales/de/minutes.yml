@@ -39,7 +39,7 @@ de:
       minutes/item:
         title: Titel
         content: Inhalt
-      minutes/minute_approve_item:
+      minutes/motion:
         pro: Dafür
         abs: Enthaltung
         con: Dagegen

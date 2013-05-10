@@ -15,5 +15,7 @@ class Minutes::Item < ActiveRecord::Base
 	belongs_to :minute
 	has_many :motions
 
+	accepts_nested_attributes_for :motions
+
 	validates_presence_of :title
 end
