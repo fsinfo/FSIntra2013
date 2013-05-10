@@ -50,6 +50,10 @@ class User < Person
 		to_s
 	end
 
+	def short_name
+		"#{firstname.first}. #{lastname}"
+	end
+
 	def has_group?(group)
 		# TODO: remove return true
 		return true
