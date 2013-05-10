@@ -18,9 +18,9 @@ class TallySheetsController < ApplicationController
 		mail_queue = Queue.new
 		ActiveRecord::Base.transaction do
 			@users.each do |user|
-				temp = post[user.id.to_s]
+				beverages = post[user.id.to_s]
 				tab = user.tabs.build(:paid => false)
-				temp.each do |id,array|
+				beverages.each do |id,array|
 					unless array["count"].to_i == 0
 						beverage = Beverage.find_cached(id)
 						tab.beverage_tabs.build(:name => beverage.name, :price => beverage.price, :count => array["count"], :capacity => beverage.capacity) 
@@ -41,10 +41,21 @@ class TallySheetsController < ApplicationController
 		redirect_to root_url
 	end
 
+	def edit_list
+		@new_candidates = User.all.where(:on_beverage_list => false)
+		@delete_candidates = User.all.where(:on_beverage_list => true)
+	end
+
+	def update_list
+		User.where(:id => params['new']).update_all(:on_beverage_list => true)
+		User.where(:id => params['delete']).update_all(:on_beverage_list => false)
+		redirect_to strichliste_edit_url, notice: t('.successful')
+	end
+
 	private
 		# TODO: get only the right users (active/on list)
 		def get_users
-			@users = User.all.order('firstname, lastname')
+			@users = User.all.where(:on_beverage_list => true).order('firstname, lastname')
 		end
 
 		def get_beverages

@@ -1,7 +1,7 @@
 class TallySheetPdf < Prawn::Document
   def initialize(users, beverages)
     super({:page_layout => :landscape, :page_size => "A4"})
-    beverages = beverages.map(&:name)
+    beverages = beverages.pluck(:name)
     users = users.map(&:displayed_name)
 
     # set up table
@@ -18,7 +18,7 @@ class TallySheetPdf < Prawn::Document
     end
 
     table(data, :header => true, :width => bounds.width) do |table|
-      table.row_colors = ['ffffff','ffffff','ffffff','ffffff','C9C9C9']
+      table.row_colors = ['ffffff','C9C9C9']
       table.column_widths = table.width/table.column_length
     end
   end

@@ -7,7 +7,9 @@ Fsintra::Application.routes.draw do
 		get 'offen'  => 'tabs#unpaid', :on => :collection
 		put 'ist_bezahlt' => 'tabs#pay', :on => :member
 	end
-  resources :strichliste, :as => 'tally_sheets', :controller => 'tally_sheets'
+  resources :strichliste, :as => 'tally_sheets', :controller => 'tally_sheets', :only => [:new, :create]
+  get '/strichliste/edit' => 'tally_sheets#edit_list'
+  post '/strichliste/update' => 'tally_sheets#update_list'
   resources :getraenke, :as => 'beverages', :controller => 'beverages', :except => [:destroy]
   resources :sessions, only: [:new, :create, :destroy]
   get '/login' => 'sessions#new'

@@ -64,17 +64,13 @@ class User < Person
 		end
 	end
 
-	# Returns the loginnames of all members who are in the 'fsr' group in an array
+	# Returns the users that have the LDAP-group 'fsr'
 	def self.fsr
 		ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
 		if ldap.bind
 			filter = Net::LDAP::Filter.eq('cn', 'fsr')
 			loginnames = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter).flat_map(&:memberuid)
-			result = []
-			users = User.where(:loginname => loginnames).find_each do |u|
-				result << u
-			end
-			return result
+			return User.where(:loginname => loginnames)
 		else 
 			return []
 		end
