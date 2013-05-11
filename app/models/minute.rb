@@ -42,14 +42,19 @@ class Minute < ActiveRecord::Base
 													class_name: 'User'
 	
   has_and_belongs_to_many :unexcused_absentees,
-  												-> { where "absent = 'Without" },
+  												-> { where "absent = 'Without'" },
   												join_table: 'invitees',
   												class_name: 'User'
 
 	scope :draft, -> {where :status => 'draft' }
 	scope :published, -> {where :status => 'published' }
 	scope :accepted, -> {where :status => 'published' }
-													
+	
+	def attendees
+		User.fsr - self.absentees - self.unexcused_absentees
+	end
+
+
 	# Accept the existing minute.
 	# Returns true		if the status was 'draft' before,
 	# and			false 	if the status 'accepted' already.

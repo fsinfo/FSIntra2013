@@ -26,24 +26,24 @@
 </div>
 
 <div class="panel">
-	<h6>Anwesend
-		<%# TODO: check if there is a quorum %>
-		<span class="label success">Beschlussfähig!</span>
-		<span class="label alert">Nicht Beschlussfähig!</span>
-	</h6>
+	<%# TODO: check if there is a quorum %>
+	<span class="label success">Beschlussfähig!</span>
+	<span class="label alert">Nicht Beschlussfähig!</span>
+	<h6>Anwesend</h6>
 	<ul class="inline-list">
-		<%# TODO: filter, only present Users %>
 		<%# TODO: better display (comma separation or list symbol) %>
-		<% User.all.each do |u| %>
+		<% @minute.attendees.each do |u| %>
 			<li><%= u.displayed_name %></li>
 		<% end %>
 	</ul>
 	<h6>Abwesend</h6>
 	<ul class="inline-list">
-		<%# TODO: filter, only absent Users %>
 		<%# TODO: better display (comma separation or list symbol) %>
-		<% User.all.each do |u| %>
+		<% @minute.absentees.fsr.each do |u| %>
 			<li><%= u.displayed_name %></li>
+		<% end %>
+		<% @minute.unexcused_absentees.fsr.each do |u| %>
+			<li><%= u.displayed_name %> (unentschuldigt)</li>
 		<% end %>
 	</ul>
 	<h6>Gäste</h6>
@@ -61,5 +61,16 @@
 		<div>
 			<%= i.content.html_safe %>
 		</div>
+
+		<% if i.motions.length > 0 %>
+		<h5>Anträge</h5>
+		  <% i.motions.each do |m| %>
+		  	<p>
+			  	Von <%= m.mover %>:<br />
+			  	<%= m.rationale %><br />
+			  	Ergebnis: <%= [m.pro, m.abs, m.con].join(' | ') %>
+			  </p>
+		  <% end %>
+		<% end %>
 	</div>
 <% end %>
