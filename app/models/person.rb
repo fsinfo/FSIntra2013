@@ -22,8 +22,16 @@
 require 'vpim/vcard'
 
 class Person < ActiveRecord::Base
+	def to_s
+		displayed_name
+	end
+
 	def displayed_name
-		"#{firstname} #{lastname}"
+		"#{self.firstname} #{self.lastname}"	
+	end
+
+	def short_name
+		"#{self.firstname.first}. #{self.lastname}"
 	end
 
 	def to_vcard
