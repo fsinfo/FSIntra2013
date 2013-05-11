@@ -103,6 +103,13 @@
 						<%= fi.text_area :content %>
 					</div>
 					<button type="button" class="small button add_new_motion" title="Abstimmung hinzufügen">+ Abs</button>
+					<% if fi.object.new_record? %>
+					  <button type="button" class="small button remove_motion" title="Doch nicht">-</button>
+					<% else %>
+						<%= fi.check_box '_destroy' %> TOP löschen?
+					<% end %>
+
+
 					<%= fi.fields_for :motions do |fm| %>
 						<div class="motion">
 							<%= fm.label :rationale %>

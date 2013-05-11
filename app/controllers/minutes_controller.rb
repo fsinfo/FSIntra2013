@@ -131,6 +131,7 @@ class MinutesController < ApplicationController
                                      {
                                         :items_attributes => [
                                           :id,
+                                          :_destroy,
                                           :title,
                                           :content,
                                           :order,

@@ -25,7 +25,7 @@ class Minute < ActiveRecord::Base
 	validates_associated :items
 
 	has_many :items, -> { order '"order" ASC' }, :class_name => 'Minutes::Item'
-	accepts_nested_attributes_for :items
+	accepts_nested_attributes_for :items, :allow_destroy => true
 
 	has_one :minute_approve_item, :class_name => 'Minutes::MinuteApproveItem'
 	accepts_nested_attributes_for :minute_approve_item
