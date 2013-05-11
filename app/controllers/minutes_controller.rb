@@ -1,7 +1,6 @@
 class MinutesController < ApplicationController
   before_action :set_minute, only: [:show, :edit, :update, :destroy, :publish, :accept]
   before_action :set_acceptable_minutes, only: [:new, :create, :edit, :update]
-  #before_action :extract_approved_minutes, only: [:create, :update]
 
   # GET /minutes
   # GET /minutes.json
@@ -111,20 +110,8 @@ class MinutesController < ApplicationController
       end
     end
 
-    # Replace the ids with the right user object (if id is present)
-    def users_to_ids
-      params[:minute][:keeper_of_the_minutes] = User.find_by_id(params[:minute][:keeper_of_the_minutes])
-      params[:minute][:chairperson] = User.find_by_id(params[:minute][:chairperson])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def minute_params
-
-      puts params
-
-      #params.require(:minute).permit(:date, :keeper_of_the_minutes_id, :chairperson_id,
-      #                               :items_attributes => [:id, :title, :content, :order,
-      #                               :minutes_motion_attributes => [:rationale, :mover_id, :pro, :abs, :con]])
       params.require(:minute).permit(:date,
                                      :keeper_of_the_minutes_id,
                                      :chairperson_id,
@@ -146,16 +133,5 @@ class MinutesController < ApplicationController
                                           }
                                         ]
                                       })
-    end
-
-    def extract_approved_minutes
-      the_item = @minute.build_minute_approve_item
-      params[:minute][:minutes_minute_approve_item].each_pair do |k, v|
-        motion = the_item.minute_approve_motions.build
-        motion.minute = Minute.find(k)
-        motion.pro = v[:pro]
-        motion.abs = v[:abs]
-        motion.con = v[:con]
-      end
     end
 end
