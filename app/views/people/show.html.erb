@@ -1,7 +1,7 @@
 <div class="actions">
 	<h1><%= @person.firstname %> <%= @person.lastname %></h1>
 	<%= link_to content_tag(:span, ' Zurück', :class => "icon-left-fat"), people_path, :class => "button small round secondary" %>
-	<% if current_user?(@person) %>
+	<% if @person.type.nil? or current_user?(@person) %>
 		<%= link_to content_tag(:span, ' Bearbeiten', :class => "icon-pencil"), edit_person_path(@person), :class => "button small round secondary" %>
 	<% end %>
 	<%= link_to content_tag(:span, ' vCard', :class => "icon-vcard"), person_path(@person, :format => 'vcf'), :class => "button small round secondary" %>

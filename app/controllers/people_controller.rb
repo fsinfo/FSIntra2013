@@ -1,6 +1,7 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update]
   before_action :signed_in_user
+  before_action :correct_target, except: [:index, :show]
 
   def index
     @people = Person.all
@@ -48,5 +49,9 @@ class PeopleController < ApplicationController
 
     def person_params 
       params.require(:person).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc)
+    end
+
+    def correct_target
+      redirect_to root_url unless @person.type.nil? or current_user?(@person)
     end
 end
