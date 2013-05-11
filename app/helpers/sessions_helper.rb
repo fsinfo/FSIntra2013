@@ -1,3 +1,5 @@
+require 'fs_ldap'
+
 module SessionsHelper
 	def login(user)
 		cookies[:remember_token] = {
@@ -32,7 +34,6 @@ module SessionsHelper
 
 	def logout
 		self.current_user = nil
-		session.delete(:groups)
 		cookies.delete(:remember_token)
 	end
 
@@ -45,20 +46,7 @@ module SessionsHelper
 		session[:return_to] = request.url
 	end
 
-	# LDAP-Gruppen: fsinfo, it, ewoche, ausland, kasse, kai, fete, 
-	#								fsk, pr, hh, sprecher, fsl, kuehlschrank, datenschutz, vlu, pa, stupa, protokolle, fbr, 
-	#								fit, events, homepage, kommunikation, fsr, ausleihe, oe
 	def has_group?(group)
-		# TODO: remove return true
-		return true
-
-		ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
-		if ldap.bind
-			filter = Net::LDAP::Filter.eq('memberUid', current_user.loginname)
-			groups = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).flat_map(&:cn)
-			return groups.include?(group)
-		else
-			return false
-		end
+		redirect_to root_url unless current_user.has_group?(group)
 	end
 end

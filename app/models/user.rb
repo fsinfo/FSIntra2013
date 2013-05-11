@@ -19,7 +19,8 @@
 #  updated_at     :datetime
 #
 
-require 'net/ldap'
+require 'fs_ldap'
+
 class User < Person
 	before_save :create_remember_token 
 	before_validation :fill_with_ldap
@@ -34,39 +35,30 @@ class User < Person
 	end
 
 	def self.authenticate(loginname,password)
-		ldap = Net::LDAP.new(:host => 'ford.fachschaft.cs.uni-kl.de')
-		ldap.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)
-		if ldap.bind
-			return User.find_or_create_by(:loginname => loginname)
-		else 
-			return nil
+		if FsLdap::authenticate(loginname,password)
+			user = User.find_or_create_by(:loginname => loginname)
 		end
 	end
 
+	# LDAP-Gruppen: fsinfo, it, ewoche, ausland, kasse, kai, fete, 
+	#								fsk, pr, hh, sprecher, fsl, kuehlschrank, datenschutz, vlu, pa, stupa, protokolle, fbr, 
+	#								fit, events, homepage, kommunikation, fsr, ausleihe, oe
 	def has_group?(group)
 		# TODO: remove return true
-		return true
-
-		ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
-		if ldap.bind
-			filter = Net::LDAP::Filter.eq('memberUid', self.loginname)
-			groups = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).flat_map(&:cn)
-			return groups.include?(group)
-		else
-			return false
-		end
+		# return true
+		return FsLdap::groups_of_loginname(self.loginname).include? group
 	end
+
+	def self.login(loginname,password)
+		lderp = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
+    lderp.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)
+    return lderp.bind
+  end
 
 	# Returns the users that have the LDAP-group 'fsr'
 	def self.fsr
-		ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
-		if ldap.bind
-			filter = Net::LDAP::Filter.eq('cn', 'fsr')
-			loginnames = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter).flat_map(&:memberuid)
-			return User.where(:loginname => loginnames)
-		else 
-			return []
-		end
+		loginnames = FsLdap::loginnames_of_group('fsr')
+		return User.where(:loginname => loginnames)
 	end
 
 	private 
@@ -75,10 +67,8 @@ class User < Person
 		end
 
 		def fill_with_ldap
-			ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
-			filter = Net::LDAP::Filter.eq('cn',self.loginname)
-			self.firstname= ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).first.cn.last if self.firstname.nil? or self.firstname.empty?
-			self.lastname = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['sn']).first.sn.first if self.lastname.nil? or self.lastname.empty?
+			self.firstname= FsLdap::get_firstname(self.loginname) if self.firstname.nil? or self.firstname.empty?
+			self.lastname = FsLdap::get_lastname(self.loginname) if self.lastname.nil? or self.lastname.empty?
 			self.email = "#{self.loginname}@cs.uni-kl.de" if self.email.nil?
 		end
 end

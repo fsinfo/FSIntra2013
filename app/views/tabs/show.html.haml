@@ -3,7 +3,7 @@
 		Rechnung vom
 		=@tab.created_at.strftime("%d. %B %Y")
 	= link_to content_tag(:span, ' ' + 'Zurück', :class=> "icon-left-fat"), tabs_path, :class => "button small round secondary"
-	- if has_group?('kuehlschrank')
+	- if current_user.has_group?('kuehlschrank')
 		= link_to content_tag(:span, ' ' + t('actions.edit'), :class=> "icon-pencil"), edit_tab_path(@tab), :class => "button small round secondary"
 
 = render @tab
