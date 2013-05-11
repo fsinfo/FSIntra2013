@@ -21,8 +21,11 @@
 
 require 'net/ldap'
 class User < Person
+	before_save :create_remember_token 
+	before_validation :fill_with_ldap
+	validates :email, :format => { :with => /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i }
+
 	has_many :tabs
-	before_save :create_remember_token
 
 	has_many :minutes
 
@@ -34,20 +37,10 @@ class User < Person
 		ldap = Net::LDAP.new(:host => 'ford.fachschaft.cs.uni-kl.de')
 		ldap.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)
 		if ldap.bind
-			# create a new user if it doesn't exist yet
-			user = User.find_or_create_by(:loginname => loginname)
-			return user
+			return User.find_or_create_by(:loginname => loginname)
 		else 
 			return nil
 		end
-	end
-
-	def to_s
-		"#{firstname} #{lastname}"
-	end
-
-	def displayed_name
-		to_s
 	end
 
 	def has_group?(group)
@@ -56,7 +49,7 @@ class User < Person
 
 		ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
 		if ldap.bind
-			filter = Net::LDAP::Filter.eq('memberUid', current_user.loginname)
+			filter = Net::LDAP::Filter.eq('memberUid', self.loginname)
 			groups = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).flat_map(&:cn)
 			return groups.include?(group)
 		else
@@ -81,4 +74,11 @@ class User < Person
 			self.remember_token = SecureRandom.urlsafe_base64
 		end
 
+		def fill_with_ldap
+			ldap = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
+			filter = Net::LDAP::Filter.eq('cn',self.loginname)
+			self.firstname= ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['cn']).first.cn.last if self.firstname.nil? or self.firstname.empty?
+			self.lastname = ldap.search(:base => 'dc=fachschaft,dc=informatik,dc=uni-kl,dc=de', :filter => filter, :attributes => ['sn']).first.sn.first if self.lastname.nil? or self.lastname.empty?
+			self.email = "#{self.loginname}@cs.uni-kl.de" if self.email.nil?
+		end
 end

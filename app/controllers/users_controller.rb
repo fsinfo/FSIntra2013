@@ -1,14 +1,15 @@
-class UsersController < ApplicationController
-  before_action :set_user, only: [:update]
+class UsersController < PeopleController
+  before_action :set_user, only: [:update, :edit]
   before_action :signed_in_user
-  before_action :correct_user, only: [:update]
+  before_action :correct_user, only: [:update, :edit]
 
   def update
     if @user.update(user_params)
 			login @user
-      redirect_to person_path(@user), notice: t('.successful')
+      redirect_to @user, notice: t('.successful')
     else
-      render action: 'edit'
+      @person = @user
+      render 'edit'
     end
   end
 
