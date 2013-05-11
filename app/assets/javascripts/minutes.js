@@ -1,10 +1,4 @@
 /**
- * This counter holds the number of currently inserted items in this minute.
- * TODO: This currently works just for new protocols
- */
-sectionCounter = 4
-
-/**
  * Adds a new item after the currently displayed one.
  */
 $("#add_new_item").click(function() {
@@ -31,6 +25,17 @@ $("#add_new_item").click(function() {
 
   // renumber the items
   markItemOrdering()
+
+  $("section.active button.add_new_motion").click(function() {
+		var html = newMotionHTML(getActiveSection());
+		$("section.active div.content").append(html);
+
+		// register the remove function
+		$("section.active button.remove_motion").click(function() {
+			$(this).parent(".motion").detach();
+		})
+		})
+
 
   // Hack, forces foundation to repaint the section tab bar
   $(window).trigger('resize')
@@ -115,10 +120,14 @@ function newSectionHTML(index) {
 							'<textarea id="minute_items_attributes_' + sectionCounter + '_content" name="minute[items_attributes][' + sectionCounter + '][content]">' +
 							'</textarea>' +
 						'</div>' +
+						'<button type="button" class="small button add_new_motion" title="Abstimmung hinzufügen">+ Abs</button>' +
 						'<input id="minute_items_attributes_' + sectionCounter + '_id" name="minute[items_attributes][' + sectionCounter + '][id]" type="hidden" />' +
 						'<input id="minute_items_attributes_' + sectionCounter + '_order" name="minute[items_attributes][' + sectionCounter + '][order]" type="hidden" value="' + index + '" />' +
 					'</div>' +
 				'</section>';
+	// insert that newly discovered index
+	motionLevels[sectionCounter] = 0;
+	
 	sectionCounter++;
 	return html;
 }
