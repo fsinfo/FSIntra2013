@@ -41,9 +41,14 @@ $("#add_new_item").click(function() {
  */
 $("#move_item_to_left").click(function(){
 	// geht nicht weiter nach links!
-	if(getActiveSection() == 0) {
+	if(!$("section.active").prev()) {
 		return
 	}
+	// swap the entries in motionLevels (ugly)
+	//var temp = motionLevels[parseInt(getActiveSection() - 1)]
+	//motionLevels[parseInt(getActiveSection() - 1)] = motionLevels[getActiveSection()]
+	//motionLevels[getActiveSection()] = temp
+
 	var movingNode = $("section.active")
 	var replaceNode = movingNode.prev()
 	movingNode.insertBefore(replaceNode)
@@ -61,6 +66,11 @@ $("#move_item_to_right").click(function(){
 	if(!$("section.active").next().attr("data-index")) {
 		return
 	}
+	// swap the entries in motionLevels (ugly)
+	//var temp = motionLevels[parseInt(getActiveSection()) + 1]
+	//motionLevels[parseInt(getActiveSection()) + 1] = motionLevels[getActiveSection()]
+	//motionLevels[getActiveSection()] = temp
+
 	var movingNode = $("section.active")
 	var replaceNode = movingNode.next()
 	movingNode.insertAfter(replaceNode)
@@ -71,17 +81,19 @@ $("#move_item_to_right").click(function(){
 })
 
 /**
- *
+ * TODO: Do i need documentataion?
  */
 $("button.add_new_motion").click(function() {
 	var html = newMotionHTML(getActiveSection());
 	$("section.active div.content").append(html);
+
+	// register the remove function
+	$("section.active button.remove_motion").click(function() {
+		$(this).parent(".motion").detach();
+	})
 })
 
 
-/**
- * TODO: Is this needed?
- */
 getActiveSection = function() {
 	return $("section.active").attr("data-index")
 }
@@ -117,7 +129,6 @@ function newSectionHTML(index) {
 function markItemOrdering() {
 	var i = 0
 	$(".minute-item").each(function() {
-  	$(this).attr("data-index", i)
   	$(this).find(".title .item-index").html(i);
   	$(this).find("input[id*=minute_items_attributes][id*=order]").attr("value", i)
   	i++
@@ -129,7 +140,8 @@ function markItemOrdering() {
  */
 function newMotionHTML(index) {
 	var mi = motionLevels[index]
-	var html =  '<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale">Rationale</label>' +
+	var html =  '<div class="motion">' +
+							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale">Rationale</label>' +
 							'<textarea id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][rationale]"></textarea>' +
 							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_mover_id">Antragssteller</label>' +
 							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_mover_id" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][mover_id]" type="text" />' + 
@@ -138,7 +150,9 @@ function newMotionHTML(index) {
 							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_abs">Enthaltung</label>' +
 							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_abs" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][abs]" type="text" />' +
 							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con">Dagegen</label>' +
-							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][con]" type="text" /><hr/>'
+							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][con]" type="text" />' +
+							'<button type="button" class="small button remove_motion" title="Doch nicht">-</button>' +
+							'</div><hr/>'
 	motionLevels[index] = motionLevels[index] + 1;
 	return html
 }

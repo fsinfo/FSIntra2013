@@ -136,6 +136,7 @@ class MinutesController < ApplicationController
                                           :order,
                                           {:motions_attributes => [
                                               :id,
+                                              :_destroy,
                                               :rationale,
                                               :mover_id,
                                               :pro,

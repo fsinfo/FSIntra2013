@@ -103,8 +103,8 @@
 						<%= fi.text_area :content %>
 					</div>
 					<button type="button" class="small button add_new_motion" title="Abstimmung hinzufügen">+ Abs</button>
-					<div>
-						<%= fi.fields_for :motions do |fm| %>
+					<%= fi.fields_for :motions do |fm| %>
+						<div class="motion">
 							<%= fm.label :rationale %>
 							<%= fm.text_area :rationale %>
 							<%= fm.label :mover_id %>
@@ -118,9 +118,16 @@
 
 							<%= fm.label :con %>
 							<%= fm.text_field :con %>
+
+							<% if fm.object.new_record? %>
+							  <button type="button" class="small button remove_motion" title="Doch nicht">-</button>
+							<% else %>
+								<%= fm.check_box '_destroy' %> Antrag löschen?
+							<% end %>
 							<hr />
-						<% end %>
-					</div>
+						</div>
+					<% end %>
+					<%= fi.hidden_field :id %><%# the :id element has to be placed here explicitly, otherwise the move function explodes. %>
 					<%= fi.hidden_field :order, :value => fi.index.to_s %>
 				</div>
 			</section>
@@ -202,6 +209,11 @@
 			updateAttandanceStatus();
 		});
 		updateAttandanceStatus();
+
+		// register the remove function
+		$("section button.remove_motion").click(function() {
+			$(this).parent(".motion").detach();
+		})
 	});
 
 	function updateAttandanceStatus(){
