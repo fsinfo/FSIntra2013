@@ -102,23 +102,25 @@
 					<div class="redactor-field">
 						<%= fi.text_area :content %>
 					</div>
-					<%= fi.fields_for fi.object.motions.build do |fm| %>
-						<%= fm.label :rationale %>
-						<%= fm.text_area :rationale %>
-						<%= fm.label :mover %>
-						<%= fm.text_area :mover %>
-						<hr />
-						<%= fm.label :pro %>
-						<%= fm.text_field :pro %>
+					<button type="button" class="small button add_new_motion" title="Abstimmung hinzufügen">+ Abs</button>
+					<div>
+						<%= fi.fields_for :motions do |fm| %>
+							<%= fm.label :rationale %>
+							<%= fm.text_area :rationale %>
+							<%= fm.label :mover_id %>
+							<%= fm.text_field :mover_id %>
+							
+							<%= fm.label :pro %>
+							<%= fm.text_field :pro %>
 
-						<%= fm.label :abs %>
-						<%= fm.text_field :abs %>
+							<%= fm.label :abs %>
+							<%= fm.text_field :abs %>
 
-						<%= fm.label :con %>
-						<%= fm.text_field :con %>
-					<% end %>
-
-					<%= fi.hidden_field(:id) %>
+							<%= fm.label :con %>
+							<%= fm.text_field :con %>
+							<hr />
+						<% end %>
+					</div>
 					<%= fi.hidden_field :order, :value => fi.index.to_s %>
 				</div>
 			</section>
@@ -156,6 +158,10 @@
 
 <script>
 	var critical_mass = 2/3*100; // percentage needed for a quorum
+
+	// easy way of counting the number of motions,
+	// note that the order has to be unique.
+	var motionLevels = { <%= @minute.items.map { |x| "#{x.order}: #{x.motions.length}" }.join(',') %> }
 
 	$(function() {
 		// All Users .. see http://api.jqueryui.com/autocomplete/#option-source for why this way

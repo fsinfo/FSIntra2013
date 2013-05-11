@@ -128,17 +128,20 @@ class MinutesController < ApplicationController
       params.require(:minute).permit(:date,
                                      :keeper_of_the_minutes_id,
                                      :chairperson_id,
-                                     {:items_attributes => [
-                                        :id,
-                                        :title,
-                                        :content,
-                                        :order ],
-                                      :minutes_motion_attributes => [
-                                          :rationale,
-                                          :mover_id,
-                                          :pro,
-                                          :abs,
-                                          :con
+                                     {
+                                        :items_attributes => [
+                                          :id,
+                                          :title,
+                                          :content,
+                                          :order,
+                                          {:motions_attributes => [
+                                              :id,
+                                              :rationale,
+                                              :mover_id,
+                                              :pro,
+                                              :abs,
+                                              :con ]
+                                          }
                                         ]
                                       })
     end

@@ -71,6 +71,15 @@ $("#move_item_to_right").click(function(){
 })
 
 /**
+ *
+ */
+$("button.add_new_motion").click(function() {
+	var html = newMotionHTML(getActiveSection());
+	$("section.active div.content").append(html);
+})
+
+
+/**
  * TODO: Is this needed?
  */
 getActiveSection = function() {
@@ -113,4 +122,23 @@ function markItemOrdering() {
   	$(this).find("input[id*=minute_items_attributes][id*=order]").attr("value", i)
   	i++
 	})
+}
+
+/**
+ * index = the index of the item to which this is added to
+ */
+function newMotionHTML(index) {
+	var mi = motionLevels[index]
+	var html =  '<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale">Rationale</label>' +
+							'<textarea id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][rationale]"></textarea>' +
+							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_mover_id">Antragssteller</label>' +
+							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_mover_id" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][mover_id]" type="text" />' + 
+							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_pro">Dafür</label>' +
+							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_pro" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][pro]" type="text" />' +
+							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_abs">Enthaltung</label>' +
+							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_abs" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][abs]" type="text" />' +
+							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con">Dagegen</label>' +
+							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][con]" type="text" /><hr/>'
+	motionLevels[index] = motionLevels[index] + 1;
+	return html
 }
