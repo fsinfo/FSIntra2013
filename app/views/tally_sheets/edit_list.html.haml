@@ -1,5 +1,7 @@
+-if notice
+  %p#notice=notice
+
 =form_tag({controller: "tally_sheets", action: "update_list"}) do
-  / = select_tag("new",options_for_select(User.all.collect {|p| [p.displayed_name, p.id] }), :include_blank => true, :multiple => true, :class => ['chosen-field','chosen-select'])
   =label_tag("new")
   =select_tag("new",options_for_select(@new_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'chosen-select')
   =label_tag("delete")

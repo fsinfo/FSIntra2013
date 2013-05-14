@@ -4,7 +4,7 @@ class PeopleController < ApplicationController
   before_action :correct_target, except: [:index, :show]
 
   def index
-    @people = Person.all
+    @people = Person.all.order(:firstname,:lastname)
   end
 
   def show

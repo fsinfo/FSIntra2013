@@ -45,8 +45,8 @@ class User < Person
 	#								fit, events, homepage, kommunikation, fsr, ausleihe, oe
 	def has_group?(group)
 		# TODO: remove return true
-		# return true
-		return FsLdap::groups_of_loginname(self.loginname).include? group
+		return true
+		# return FsLdap::groups_of_loginname(self.loginname).include? group
 	end
 
 	def self.login(loginname,password)

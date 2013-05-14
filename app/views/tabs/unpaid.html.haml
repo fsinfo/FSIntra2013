@@ -13,7 +13,7 @@
 		%th.text-center Betrag
 		%th.text-center Aktion
 	%tbody
-		- @tabs.find_each do |tab|
+		- @tabs.each do |tab|
 			%tr{:id => "tab_row_#{tab.id}"}
 				%td
 					= link_to tab.created_at.strftime("%d. %B %Y"), tab_path(tab)

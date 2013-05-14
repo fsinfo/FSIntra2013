@@ -32,25 +32,21 @@ class TabsController < ApplicationController
 	end
 
 	def unpaid
-		@tabs = Tab.unpaid.includes(:beverage_tabs, :user)
+		@tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname')
 	end
 
 	  private
-    # Use callbacks to share common setup or constraints between actions.
     def set_tab
       @tab = Tab.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def tab_params 
-      # params.require(:tab).permit(beverage_tabs_attributes: :count)
-      params.require(:tab).permit!
+    def tab_params
+      params.require(:tab).permit(:paid)
+      # params.require(:tab).permit!
     end
 
     def has_permission
-			unless has_group?('kuehlschrank')
-				redirect_to root_url, flash => {:error => 'You have no permission'}
-			end
+			redirect_to root_url, flash => {:error => 'You have no permission'} unless current_user.has_group?('kuehlschrank')
 		end
 
 end

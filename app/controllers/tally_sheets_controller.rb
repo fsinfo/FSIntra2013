@@ -63,8 +63,6 @@ class TallySheetsController < ApplicationController
 		end
 
 		def has_permission
-			unless has_group?('kuehlschrank')
-				redirect_to root_url, flash => {:error => 'You have no permission'}
-			end
+			redirect_to root_url, flash => {:error => 'You have no permission'} unless current_user.has_group?('kuehlschrank')
 		end
 	end

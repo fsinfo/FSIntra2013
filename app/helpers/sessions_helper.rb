@@ -45,8 +45,4 @@ module SessionsHelper
 	def store_location
 		session[:return_to] = request.url
 	end
-
-	def has_group?(group)
-		redirect_to root_url unless current_user.has_group?(group)
-	end
 end

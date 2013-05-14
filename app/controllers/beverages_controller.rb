@@ -57,6 +57,6 @@ class BeveragesController < ApplicationController
     end
 
     def check_permission
-      has_group?('kuehlschrank')
+      redirect_to root_url unless current_user.has_group?('kuehlschrank')
     end
 end
