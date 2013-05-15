@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130509100229) do
+ActiveRecord::Schema.define(version: 20130515095237) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20130509100229) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "paid"
+    t.boolean  "marked_as_paid"
   end
 
   create_table "user_tabs", id: false, force: true do |t|

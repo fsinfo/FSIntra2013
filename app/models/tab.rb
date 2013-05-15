@@ -2,11 +2,12 @@
 #
 # Table name: tabs
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  paid       :boolean
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  paid           :boolean
+#  marked_as_paid :boolean
 #
 
 class Tab < ActiveRecord::Base
@@ -23,6 +24,10 @@ class Tab < ActiveRecord::Base
 
 	def is_paid
 		self.paid = true
+	end
+
+	def is_paid?
+		self.paid
 	end
 
 	def total_invoice

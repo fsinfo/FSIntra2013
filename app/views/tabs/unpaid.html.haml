@@ -12,6 +12,7 @@
 		%th Benutzer
 		%th.text-center Betrag
 		%th.text-center Aktion
+		%th
 	%tbody
 		- @tabs.each do |tab|
 			%tr{:id => "tab_row_#{tab.id}"}
@@ -24,3 +25,6 @@
 					&euro;
 				%td.text-center.no-linebreak
 					= link_to content_tag(:span, 'Hat bezahlt', :class => "icon-ok"), ist_bezahlt_tab_path(tab),:method => 'PUT', :remote => true, :class => 'tab_paid', :"data-id" => tab.id
+				%td
+					- if tab.marked_as_paid
+						= 'Behauptet/Ist der Meinung/Denkt/Sagt, er hat bezahlt'
