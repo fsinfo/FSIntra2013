@@ -7,6 +7,3 @@
   =label_tag("delete")
   =select_tag("delete",options_for_select(@delete_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'chosen-select')
   =submit_tag()
-
-:javascript
-  $('.chosen-select').chosen()
