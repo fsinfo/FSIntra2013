@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require foundation
 //= require jquery-ui
-//= require turbolinks
 //= require redactor_de
 //= require redactor.min
 //= require chosen.jquery.min
