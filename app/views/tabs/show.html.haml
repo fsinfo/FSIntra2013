@@ -8,8 +8,8 @@
 	- if @tab.paid 
 		.button.small.round.secondary.success Ist bezahlt
 	- elsif !@tab.marked_as_paid
-		= link_to 'Als bezahlt markieren', als_bezahlt_markieren_tab_path(@tab), :class => 'button small round secondary', :remote => true, :method => :put
+		= link_to 'Als bezahlt markieren', als_bezahlt_markieren_tab_path(@tab), :class => 'mark_tab_as_paid button small round secondary', :remote => true, :method => :put
 	- else
-		.button.small.success.round.secondary.disabled Habe ich bereits als bezahlt markiert
+		= render('marked_as_paid')
 
 = render @tab

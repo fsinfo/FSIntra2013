@@ -1,18 +1,18 @@
 class TabMailer < ActionMailer::Base
 
-	def paid_email(from_user, to_user, tab)
-		@user = to_user
+	# kuehlschrank accepts a tab as paid
+	def paid_email(tab)
+		@user = tab.user
 		@tab = tab
-		@from_user = from_user
 		to = get_email_with_name(@user)
-		from = get_email_with_name(@from_user)
 		mail(
-			from: from,
+			from: 'kuehlschrank@fachschaft.cs.uni-kl.de',
 			to: to,
 			subject: 'Eine deiner Rechnungen ist als bezahlt markiert'
 			)
 	end
 
+	# kuehlschrank submitted a tally sheet
 	def tab_email(from_user, to_user, tab)
 		@user = to_user
 		@from_user = from_user
@@ -27,14 +27,15 @@ class TabMailer < ActionMailer::Base
 			)
 	end
 
-	def marked_as_paid_email(from_user, to, tab)
-		@user = user
+	# a user marks a tab as paid
+	def marked_as_paid_email(from_user, tab)
 		@from_user = from_user
+		to = 'kuehlschrank@fachschaft.cs.uni-kl.de'		
 		@tab = tab
 		mail(
-			from: from,
+			from: get_email_with_name(from_user),
 			to: to,
-			subject: "#{@user.displayed_name} hat eine Rechnung als bezahlt markiert"
+			subject: "#{@from_user.displayed_name} hat eine Rechnung als bezahlt markiert"
 			)
 	end
 

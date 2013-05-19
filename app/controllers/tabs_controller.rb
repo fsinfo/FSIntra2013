@@ -28,16 +28,15 @@ class TabsController < ApplicationController
 	def pay
 		@tab.is_paid
 		@user = @tab.user
-		TabMailer.paid_email(current_user, @user, @tab) if @tab.save
+		TabMailer.paid_email(@tab) if @tab.save
 		render :nothing => true
 	end
 
   def mark_as_paid
     @tab.marked_as_paid = true
-    if @tab.save
-      # TabMailer.marked_as_paid_email(current_user)
-    end
+    TabMailer.marked_as_paid_email(current_user, @tab) if @tab.save
     render :nothing => true
+    # redirect_to @tab, notice: 'Tab was marked as paid by you.'
   end
 
 	def unpaid

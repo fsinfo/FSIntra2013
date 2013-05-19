@@ -27,4 +27,4 @@
 					= link_to content_tag(:span, 'Hat bezahlt', :class => "icon-ok"), ist_bezahlt_tab_path(tab),:method => 'PUT', :remote => true, :class => 'tab_paid', :"data-id" => tab.id
 				%td
 					- if tab.marked_as_paid
-						= 'Behauptet/Ist der Meinung/Denkt/Sagt, er hat bezahlt'
+						= 'Behauptet/Ist der Meinung/Denkt/Sagt, er/sie hat bezahlt'
