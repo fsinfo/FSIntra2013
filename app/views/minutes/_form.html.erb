@@ -141,18 +141,34 @@
 		<% end %>
 
 		<%# the generic minute approve item %>
+		<%= f.fields_for :minute_approve_item do |fi| %>
 		<section>
 			<p class="title">
 				<a href="#"><span class="icon-doc-text">Protokolle</span></a>
 			</p>
 			<div class="content" data-section-content>
-				<ul>
-					<% @acceptable_minutes.each do |m| %>
-					  <li>Protokoll vom <%= l m.date, :format => "%d.%m.%Y" %></li>
-					<% end %>
-				</ul>
+				<% if @minute.minute_approve_item.minute_approve_motions.length == 0 %>
+				<p>Es gibt gerade keine Protokolle zu genehmigen.</p>
+				<% end %>
+
+				<%= fi.fields_for :minute_approve_motions do |mam| %>
+					<%= mam.hidden_field :minute_id %>
+					<p>
+					  Protokoll vom <%= l mam.object.minute.date, :format => "%d.%m.%Y" %> genehmigen:
+					  	<%= mam.text_field :pro %>
+					  	<%= mam.text_field :abs %>
+					  	<%= mam.text_field :con %>
+					  <ul>
+					  Tops dieser Sitzung:
+					  <% mam.object.minute.items.each do |top| %> 
+  						<li><%= top.title %></li>
+					  <% end %>
+						</ul>
+					</p>
+				<% end %>
 			</div>
 		</section>
+		<% end %>
 
 		<%# wysiwyg help section: shortcut overview %>
 		<section>

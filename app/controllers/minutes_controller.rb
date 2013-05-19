@@ -1,11 +1,10 @@
 class MinutesController < ApplicationController
   before_action :set_minute, only: [:show, :edit, :update, :destroy, :publish, :accept]
-  before_action :set_acceptable_minutes, only: [:new, :create, :edit, :update]
 
   # GET /minutes
   # GET /minutes.json
   def index
-    @minutes = Minute.all
+    @minutes = Minute.order ('date DESC')
   end
 
   # GET /minutes/1
@@ -34,12 +33,15 @@ class MinutesController < ApplicationController
       order_counter += 1
     end
 
-    @acceptable_minutes = Minute.published.where.not(:id => @minute.id)
+    set_acceptable_minutes
   end
 
   # GET /minutes/1/edit
   def edit
-    @acceptable_minutes = Minute.published.where.not(:id => @minute.id)
+    if @minute.minute_approve_item.nil?
+      @minute.build_minute_approve_item
+    end
+    set_acceptable_minutes
   end
 
   # POST /minutes
@@ -102,11 +104,28 @@ class MinutesController < ApplicationController
       @minute = Minute.find(params[:id])
     end
 
+
+    # sets the @acceptable_minutes member variable
+    # note that this requires an existing @minute object
+    # and should therefore not be called via before_actions
     def set_acceptable_minutes
+      # we "pre build" the approvable minutes
       if @minute
-        @acceptable_minutes = Minute.published.where.not(:id => @minute.id)
+        # don't approve yourself
+        @acceptable_minutes = Minute.acceptable.where.not(:id => @minute.id)
       else
-        @acceptable_minutes = Minute.published
+        @acceptable_minutes = Minute.acceptable
+      end
+
+      @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }.inspect
+
+      
+      # these minutes are allready in this protocoll
+      @acceptable_minutes -= @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }
+
+      @acceptable_minutes.each do |m|
+        motion = @minute.minute_approve_item.minute_approve_motions.build
+        motion.minute = m
       end
     end
 
@@ -131,6 +150,14 @@ class MinutesController < ApplicationController
                                               :abs,
                                               :con ]
                                           }
+                                        ],
+                                        :minute_approve_item_attributes => [
+                                          {:minute_approve_motions_attributes => [
+                                              :pro,
+                                              :abs,
+                                              :con,
+                                              :minute_id
+                                              ]}
                                         ]
                                       })
     end

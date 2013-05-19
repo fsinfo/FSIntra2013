@@ -48,7 +48,8 @@ class Minute < ActiveRecord::Base
 
 	scope :draft, -> {where :status => 'draft' }
 	scope :published, -> {where :status => 'published' }
-	scope :accepted, -> {where :status => 'published' }
+	scope :accepted, -> { published.where :id => Minutes::MinuteApproveMotion.all.map(&:minute_id).inject([],:<<) }
+	scope :acceptable, -> { published.where "id not in (?)", Minutes::MinuteApproveMotion.all.map(&:minute_id).inject([],:<<) }
 	
 	def attendees
 		User.fsr - self.absentees - self.unexcused_absentees
