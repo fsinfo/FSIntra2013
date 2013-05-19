@@ -134,8 +134,6 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     ttfunk (1.0.3)
-    turbolinks (1.1.1)
-      coffee-rails
     tzinfo (0.3.37)
     uglifier (2.0.1)
       execjs (>= 0.3.0)
@@ -161,7 +159,6 @@ DEPENDENCIES
   rqrcode-rails3
   sass-rails (~> 4.0.0.beta1)
   sqlite3
-  turbolinks
   uglifier (>= 1.0.3)
   vpim-rails!
   zurb-foundation (~> 4.0.0)
