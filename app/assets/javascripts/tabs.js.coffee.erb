@@ -6,9 +6,14 @@ $ ->
 			update_dom($(this).data('id'))
 		.bind 'ajax:error', (event,xhr,status) ->
 			alert('There was an error while processing the ajax request')
+  $('.mark_tab_as_paid')
+    .bind 'ajax:beforeSend', () ->
+      set_loading
+    .bind 'ajax:success', (event, xhr, status) ->
+      $(this).replaceWith('<a class="button small success round secondary disabled">Habe ich bereits als bezahlt markiert</a>')
 
 update_dom = (id) -> 
 	$('#tab_row_'+id).remove()
 
 set_loading = () ->
-	# TODO: loading animation?
+  # TODO: do something?

@@ -1,6 +1,7 @@
 class TabsController < ApplicationController
-	before_action :set_tab, only: [:update, :new, :show, :edit, :pay]
+	before_action :set_tab, only: [:update, :new, :show, :edit, :pay, :mark_as_paid]
 	before_action :signed_in_user
+  before_action :correct_user, only: [:show, :mark_as_paid]
 	before_action :has_permission, only: [:update, :unpaid, :pay, :edit]
 
 	def index
@@ -27,9 +28,16 @@ class TabsController < ApplicationController
 	def pay
 		@tab.is_paid
 		@user = @tab.user
-		TabMailer.paid_email(current_user, @user, @tab) if @tab.save
+		TabMailer.paid_email(@tab) if @tab.save
 		render :nothing => true
 	end
+
+  def mark_as_paid
+    @tab.marked_as_paid = true
+    TabMailer.marked_as_paid_email(current_user, @tab) if @tab.save
+    render :nothing => true
+    # redirect_to @tab, notice: 'Tab was marked as paid by you.'
+  end
 
 	def unpaid
 		@tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname')
@@ -42,11 +50,13 @@ class TabsController < ApplicationController
 
     def tab_params
       params.require(:tab).permit(:paid)
-      # params.require(:tab).permit!
     end
 
     def has_permission
 			redirect_to root_url, flash => {:error => 'You have no permission'} unless current_user.has_group?('kuehlschrank')
 		end
 
+    def correct_user
+      redirect_to root_url, flash => {:error => 'You have no permission'} unless current_user.id == @tab.user_id
+    end
 end

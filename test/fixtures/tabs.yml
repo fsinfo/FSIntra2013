@@ -2,11 +2,12 @@
 #
 # Table name: tabs
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  paid       :boolean
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  paid           :boolean
+#  marked_as_paid :boolean
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

@@ -6,6 +6,7 @@ Fsintra::Application.routes.draw do
 	resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
 		get 'offen'  => 'tabs#unpaid', :on => :collection
 		put 'ist_bezahlt' => 'tabs#pay', :on => :member
+    put 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member
 	end
   resources :strichliste, :as => 'tally_sheets', :controller => 'tally_sheets', :only => [:new, :create]
   get '/strichliste/edit' => 'tally_sheets#edit_list'
