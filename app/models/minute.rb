@@ -22,10 +22,10 @@ class Minute < ActiveRecord::Base
 
 	validates_associated :items
 
-	has_many :items, -> { order '"order" ASC' }, :class_name => 'Minutes::Item'
+	has_many :items, -> { order '"order" ASC' }, :class_name => 'Minutes::Item', :dependent => :destroy
 	accepts_nested_attributes_for :items, :allow_destroy => true
 
-	has_one :minute_approve_item, :class_name => 'Minutes::MinuteApproveItem'
+	has_one :minute_approve_item, :class_name => 'Minutes::MinuteApproveItem', :dependent => :destroy
 	accepts_nested_attributes_for :minute_approve_item
 
 	has_and_belongs_to_many :guests, :class_name => 'Minutes::Guest'
@@ -46,8 +46,9 @@ class Minute < ActiveRecord::Base
 
 	scope :draft, -> {where :status => 'draft' }
 	scope :published, -> {where :status => 'published' }
+	# TODO approved flag benutzen
 	scope :approved, -> { published.where :id => Minutes::MinuteApproveMotion.where(:approved => true).map(&:minute_id).inject([],:<<) }
-	scope :approvable, -> { published.where :id => Minutes::MinuteApproveMotion.where(:approved => false).map(&:minute_id).inject([],:<<) }
+	scope :approvable, -> { published.where "id not in (?)", Minutes::MinuteApproveMotion.all.map(&:minute_id).inject([],:<<) }
 	
 	def attendees
 		User.fsr - self.absentees - self.unexcused_absentees

@@ -13,8 +13,8 @@
 
 class Minutes::Item < ActiveRecord::Base
 	belongs_to :minute
-	has_many :motions
-
+	
+	has_many :motions, :dependent => :destroy
 	accepts_nested_attributes_for :motions, :allow_destroy => true
 
 	validates_presence_of :title
