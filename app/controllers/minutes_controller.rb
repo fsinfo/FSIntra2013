@@ -1,5 +1,5 @@
 class MinutesController < ApplicationController
-  before_action :set_minute, only: [:show, :edit, :update, :destroy, :publish, :accept]
+  before_action :set_minute, only: [:show, :edit, :update, :destroy, :publish]
 
   # GET /minutes
   # GET /minutes.json
@@ -33,7 +33,7 @@ class MinutesController < ApplicationController
       order_counter += 1
     end
 
-    set_acceptable_minutes
+    set_approvable_minutes
   end
 
   # GET /minutes/1/edit
@@ -41,7 +41,7 @@ class MinutesController < ApplicationController
     if @minute.minute_approve_item.nil?
       @minute.build_minute_approve_item
     end
-    set_acceptable_minutes
+    set_approvable_minutes
   end
 
   # POST /minutes
@@ -105,25 +105,25 @@ class MinutesController < ApplicationController
     end
 
 
-    # sets the @acceptable_minutes member variable
+    # sets the @approvable_minutes member variable
     # note that this requires an existing @minute object
     # and should therefore not be called via before_actions
-    def set_acceptable_minutes
+    def set_approvable_minutes
       # we "pre build" the approvable minutes
       if @minute
         # don't approve yourself
-        @acceptable_minutes = Minute.acceptable.where.not(:id => @minute.id)
+        @approvable_minutes = Minute.approvable.where.not(:id => @minute.id)
       else
-        @acceptable_minutes = Minute.acceptable
+        @approvable_minutes = Minute.approvable
       end
 
       @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }.inspect
 
       
       # these minutes are allready in this protocoll
-      @acceptable_minutes -= @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }
+      @approvable_minutes -= @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }
 
-      @acceptable_minutes.each do |m|
+      @approvable_minutes.each do |m|
         motion = @minute.minute_approve_item.minute_approve_motions.build
         motion.minute = m
       end
@@ -152,10 +152,13 @@ class MinutesController < ApplicationController
                                           }
                                         ],
                                         :minute_approve_item_attributes => [
+                                          :id,
                                           {:minute_approve_motions_attributes => [
+                                              :id,
                                               :pro,
                                               :abs,
                                               :con,
+                                              :approved,
                                               :minute_id
                                               ]}
                                         ]

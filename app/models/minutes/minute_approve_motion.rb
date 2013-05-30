@@ -15,8 +15,6 @@
 class Minutes::MinuteApproveMotion < ActiveRecord::Base
 	# the minute that is to be approved
 	belongs_to :minute
-	# one minute can only be approved once
-	validates_uniqueness_of :minute_id
 
 	# the item of the minute of the approving session
 	belongs_to :minute_approve_item

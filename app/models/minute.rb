@@ -15,8 +15,6 @@ class Minute < ActiveRecord::Base
 	# Protocols are in one of those statuses
 	# Don't forget to update config/locales/minutes.yml if you change these!
 	STATUSES = ['draft', 'published']
-	#validates_inclusion_of :status, :in => STATUSES
-
 
 	validates_presence_of :date
 	validates_presence_of :keeper_of_the_minutes_id
@@ -48,17 +46,20 @@ class Minute < ActiveRecord::Base
 
 	scope :draft, -> {where :status => 'draft' }
 	scope :published, -> {where :status => 'published' }
-	scope :accepted, -> { published.where :id => Minutes::MinuteApproveMotion.all.map(&:minute_id).inject([],:<<) }
-	scope :acceptable, -> { published.where "id not in (?)", Minutes::MinuteApproveMotion.all.map(&:minute_id).inject([],:<<) }
+	scope :approved, -> { published.where :id => Minutes::MinuteApproveMotion.where(:approved => true).map(&:minute_id).inject([],:<<) }
+	scope :approvable, -> { published.where :id => Minutes::MinuteApproveMotion.where(:approved => false).map(&:minute_id).inject([],:<<) }
 	
 	def attendees
 		User.fsr - self.absentees - self.unexcused_absentees
 	end
 
+	def approved?
+		Minute.approved.exists? self 
+	end
 
-	# Accept the existing minute.
+	# Approve the existing minute.
 	# Returns true		if the status was 'draft' before,
-	# and			false 	if the status 'accepted' already.
+	# and			false 	if the status 'approved' already.
 	def publish
 		changed = !published?
 		self.status = 'published'

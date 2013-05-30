@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130515095237) do
+ActiveRecord::Schema.define(version: 20130530100901) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20130515095237) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "minute_id"
+    t.boolean  "approved",               default: false
   end
 
   create_table "minutes_minutes_guests", id: false, force: true do |t|
@@ -95,6 +96,7 @@ ActiveRecord::Schema.define(version: 20130515095237) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "item_id"
+    t.boolean  "approved",   default: false
   end
 
   add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id"
