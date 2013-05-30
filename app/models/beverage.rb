@@ -13,9 +13,6 @@
 #
 
 class Beverage < ActiveRecord::Base
-	has_many :beverage_tabs
-	has_many :tabs, :through => :beverage_tabs
-
 	validates :name, :presence => true
 	validates :price, :numericality => {:greater_than => 0}
 

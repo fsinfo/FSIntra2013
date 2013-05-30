@@ -12,7 +12,6 @@
 
 class Tab < ActiveRecord::Base
 	has_many :beverage_tabs, :dependent => :delete_all
-	has_many :beverages, :through => :beverage_tabs
 	belongs_to :user
 
 	validates :total_invoice, :numericality => {:greater_than => 0}

@@ -30,6 +30,12 @@ gem 'jbuilder', '~> 1.0.1'
 gem 'quiet_assets', :group => :development
 gem 'faker', :group => :development
 
+group :development, :test do
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+end
+
 gem 'net-ldap'
 gem 'annotate'
 gem 'haml'
