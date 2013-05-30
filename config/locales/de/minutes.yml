@@ -26,7 +26,7 @@ de:
         one: TOP
         other: TOPs
       minutes/minute_approve_item:
-        one: Protokolle Genehmigen
+        one: Genehmigung von Protokollen
     attributes:
       minute:
         date: Datum

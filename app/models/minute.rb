@@ -47,15 +47,21 @@ class Minute < ActiveRecord::Base
 	scope :draft, -> {where :status => 'draft' }
 	scope :published, -> {where :status => 'published' }
 	# TODO approved flag benutzen
-	scope :approved, -> { published.where :id => Minutes::MinuteApproveMotion.where(:approved => true).map(&:minute_id).inject([],:<<) }
-	scope :approvable, -> { published.where "id not in (?)", Minutes::MinuteApproveMotion.all.map(&:minute_id).inject([],:<<) }
+	scope :approved, -> { published.where(:id => Minutes::MinuteApproveMotion.select(:minute_id).where(:approved => true)) }
+	scope :approvable, -> { published.where.not :id => Minutes::MinuteApproveMotion.select(:minute_id).where(:approved => true) }
 	
 	def attendees
 		User.fsr - self.absentees - self.unexcused_absentees
 	end
 
 	def approved?
-		Minute.approved.exists? self 
+		Minute.approved.exists?(self) == 1
+	end
+
+	# Returns the minute (if existent) where this minute was approved
+	def approving_minute
+		motion = Minutes::MinuteApproveMotion.where(:minute_id => self.id).where(:approved => true)
+		motion.first.minute_approve_item.minute
 	end
 
 	# Approve the existing minute.

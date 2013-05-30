@@ -74,3 +74,18 @@
 		<% end %>
 	</div>
 <% end %>
+
+<% if @minute.minute_approve_item %>
+	<div class="panel top">
+		<div class="edit-shortcut">
+			<%= link_to content_tag(:span, nil, :class => "icon-pencil"), edit_minute_path(@minute), :class => "button tiny secondary" %>
+		</div>
+		<h4>
+			<span><%=t Minutes::MinuteApproveItem.model_name.human %></span>
+		</h4>
+		<% @minute.minute_approve_item.minute_approve_motions.each do |m| %>
+		penis
+		<% end %>
+		<div>
+	</div>
+<% end %>

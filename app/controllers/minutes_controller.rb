@@ -110,17 +110,23 @@ class MinutesController < ApplicationController
     # and should therefore not be called via before_actions
     def set_approvable_minutes
       # we "pre build" the approvable minutes
-      if @minute
+      puts "\n\nD E B U G G I N G\n\n"
+
+      if @minute.persisted?
         # don't approve yourself
         @approvable_minutes = Minute.approvable.where.not(:id => @minute.id)
+        puts "Was persisted"
       else
         @approvable_minutes = Minute.approvable
+        puts "Was not persisted"
       end
+
+      puts @approvable_minutes
 
       @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }.inspect
 
       
-      # these minutes are allready in this protocoll
+      # these minutes are already in this protocoll
       @approvable_minutes -= @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }
 
       @approvable_minutes.each do |m|
