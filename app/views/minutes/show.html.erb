@@ -47,7 +47,11 @@
 		<% end %>
 	</ul>
 	<h6>Gäste</h6>
-	<%# TODO: display guests %>
+	<ul class="inline-list">
+		<% @minute.guests.each do |g| %>
+			<li><%= g.name %></li>
+		<% end %>
+	</ul>
 </div>
 <% @minute.items.each do |i| %>
 	<div class="panel top">

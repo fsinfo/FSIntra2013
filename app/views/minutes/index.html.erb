@@ -37,7 +37,7 @@
 						<i>[nicht eingetragen]</i>
 					<% end %>
 				</td>
-				<td class="text-center"><%= minute.translated_status %><% if minute.approved? %> (<%= link_to (l minute.approving_minute.date, :format => "%d.%m.%Y"), minute.approving_minute %>)<% end %></td>
+				<td class="text-center"><% if minute.approved? %> Genehmigt (<%= link_to (l minute.approving_minute.date, :format => "%d.%m.%Y"), minute.approving_minute %>)<% else %><%= minute.translated_status %><% end %></td>
 				<td class="text-center no-linebreak">
 					<%= link_to content_tag(:span, t('actions.show'), :class => "icon-doc-text"), minute %>
 				</td>

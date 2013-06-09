@@ -14,20 +14,20 @@
 	<%# Here we should add a poly fill for browsers
 	that don't support the new html5 date-field (i.e. Firefox) %>
 	<div class="inline-field">
-		<%= f.label :date %>
-		<%= f.date_field :date %>
+			<%= f.label :date, :class=>"prefix" %>
+			<%= f.date_field :date %>
 	</div>
 	
 	<%# The value of the selected option is the id of a fsr member (user) %>
 	<div class="inline-field chosen-field">
 		<%= f.label :keeper_of_the_minutes %>
-		<%= f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, :include_blank => true %>
+		<%= f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' } %>
 	</div>
 
 	<%# The value of the selected option is the id of a fsr member (user) %>
 	<div class="inline-field chosen-field">
 		<%= f.label :chairperson %>
-		<%= f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
+		<%= f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id]}, {:include_blank => true}, { :style => 'width: 400px' } %>
 	</div>
 
 	<hr>
@@ -71,10 +71,10 @@
 
 	<%# Here could be a text field with autocomplete.
 	TODO: New persons should be supported! %>
-	<fieldset>
+	<fieldset class="chosen-field">
 		<legend>Gäste</legend>
-		<!-- <%= f.label :guests %><br /> -->
-		<%= f.select :guests, ["foo", "bar"] %>
+		<p>Gäste der Sitzung bitte kommagetrennt eingeben. Zum Beispiel: <em>Hans Wagner, Torben von Klein, ...</em></p>
+		<%= f.text_field :guests, :value => f.object.guests.map{|x| x.name }.join(', ') %>
 	</fieldset>
 
 	<hr>
@@ -102,34 +102,43 @@
 					<div class="redactor-field">
 						<%= fi.text_area :content %>
 					</div>
-					<button type="button" class="small button add_new_motion" title="Abstimmung hinzufügen">+ Abs</button>
+					<button type="button" class="small button add_new_motion" title="Abstimmung hinzufügen">+ Abstimmung</button>
 					<% if fi.object.new_record? %>
 					  <button type="button" class="small button remove_motion" title="Doch nicht">-</button>
 					<% else %>
-						<%= fi.check_box '_destroy' %> TOP löschen?
+						<%= fi.check_box '_destroy' %>Diesen TOP löschen?
 					<% end %>
 
 
 					<%= fi.fields_for :motions do |fm| %>
 						<div class="motion">
-							<%= fm.label :rationale %>
-							<%= fm.text_area :rationale %>
-							<%= fm.label :mover_id %>
-							<%= fm.text_field :mover_id %>
-							
-							<%= fm.label :pro %>
-							<%= fm.text_field :pro %>
-
-							<%= fm.label :abs %>
-							<%= fm.text_field :abs %>
-
-							<%= fm.label :con %>
-							<%= fm.text_field :con %>
-
+							<h4>Antrag</h4>
+							<div class=>
+								<%= fm.text_area :rationale, :placeholder => "foo" %>
+							</div>
+							<div class="inline-field chosen-field">
+								<%= fm.label :mover_id, 'Antragssteller' %>
+								<% fm.text_field :mover_id, :placeholder => "Antragssteller" %>
+								<%= fm.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
+							</div>
+							<div class="row inline-field">
+								<div class="large-4 columns">
+									<%= fm.label :pro %>
+									<%= fm.text_field :pro, :placeholder => "Dafür" %>
+								</div>
+								<div class="large-4 columns">
+									<%= fm.label :abs %>
+									<%= fm.text_field :abs, :placeholder => "Enhaltung" %>
+								</div>
+								<div class="large-4 columns">
+									<%= fm.label :con %>
+									<%= fm.text_field :con, :placeholder => "Dagegen" %>
+								</div>
+							</div>
 							<% if fm.object.new_record? %>
 							  <button type="button" class="small button remove_motion" title="Doch nicht">-</button>
 							<% else %>
-								<%= fm.check_box '_destroy' %> Antrag löschen?
+								<%= fm.label :_destroy, 'Antrag löschen?' %><%= fm.check_box '_destroy' %>
 							<% end %>
 							<hr />
 						</div>
@@ -238,6 +247,45 @@
 		$("section button.remove_motion").click(function() {
 			$(this).parent(".motion").detach();
 		})
+		function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+
+		var availableGuests = [ <%= raw Minutes::Guest.all.map { |x| "'#{x.name}'" }.join(",") %> ];
+		$( "#minute_guests" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).data( "ui-autocomplete" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            availableGuests, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
 	});
 
 	function updateAttandanceStatus(){

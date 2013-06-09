@@ -48,6 +48,7 @@ class MinutesController < ApplicationController
   # POST /minutes.json
   def create
     @minute = Minute.new(minute_params)
+    update_guests
     respond_to do |format|
       if @minute.save
         format.html { redirect_to @minute, notice: t('feedback.created', :model => Minute.model_name.human) }
@@ -63,6 +64,7 @@ class MinutesController < ApplicationController
   # PATCH/PUT /minutes/1.json
   def update
     @minute.unpublish
+    update_guests
     respond_to do |format|
       if @minute.update(minute_params)
         format.html { redirect_to @minute, notice: t('feedback.updated', :model => Minute.model_name.human) }
@@ -104,24 +106,22 @@ class MinutesController < ApplicationController
       @minute = Minute.find(params[:id])
     end
 
+    def update_guests
+      @minute.update_guests(params[:minute][:guests])
+    end
+
 
     # sets the @approvable_minutes member variable
     # note that this requires an existing @minute object
     # and should therefore not be called via before_actions
     def set_approvable_minutes
       # we "pre build" the approvable minutes
-      puts "\n\nD E B U G G I N G\n\n"
-
       if @minute.persisted?
         # don't approve yourself
-        @approvable_minutes = Minute.approvable.where.not(:id => @minute.id)
-        puts "Was persisted"
+        @approvable_minutes = Minute.approvable.where("date <= :date", :date => @minute.date).where.not(:id => @minute.id)
       else
-        @approvable_minutes = Minute.approvable
-        puts "Was not persisted"
+        @approvable_minutes = Minute.approvable.where("date <= #{Date.today}")
       end
-
-      puts @approvable_minutes
 
       @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }.inspect
 

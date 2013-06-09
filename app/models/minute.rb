@@ -87,4 +87,16 @@ class Minute < ActiveRecord::Base
 		I18n.t(status, :scope => 'minutes')
 	end
 
+	# Input: A string of comma seperated names of guests, e.g.
+	#   "Hans Wagner, Torben von Klein, Otto Mops"
+	# This method creates the Minutes::Guest if necessary and 
+	# sets up the relationship between self and the guests.
+	def update_guests g
+		guest_strings = g.split ','
+		guest_strings.map do |x|
+			guest = Minutes::Guest.find_or_create_by :name => x.strip # no whitespaces
+			self.guests << guest
+		end
+	end
+
 end
