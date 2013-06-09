@@ -69,8 +69,6 @@
 		</tbody>
 	</table>
 
-	<%# Here could be a text field with autocomplete.
-	TODO: New persons should be supported! %>
 	<fieldset class="chosen-field">
 		<legend>Gäste</legend>
 		<p>Gäste der Sitzung bitte kommagetrennt eingeben. Zum Beispiel: <em>Hans Wagner, Torben von Klein, ...</em></p>
@@ -303,6 +301,16 @@
 			$("#attendance-quorate").hide();
 			$("#attendance-nohouse").show();
 		}
+
+		// also: update the value of the input field
+		// since that phunny css thing doesn't do it :\
+		checkboxes.each(function() {
+			if(this.checked) {
+				this.value = 1
+			} else {
+				this.value = 0
+			}
+		})
 	}
 
 	/**
