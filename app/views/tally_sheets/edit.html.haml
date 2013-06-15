@@ -1,0 +1,25 @@
+%h1=t '.headline'
+= form_tag tally_sheet_update_path, :method => 'put' do
+  %table
+    %thead
+      %tr
+        %td 
+        - @beverages.each do |beverage|
+          %td= "#{beverage.name} (#{beverage.price}/#{beverage.capacity})"
+    %tbody 
+    - @tabs.each_with_index do |tab,index|
+      = fields_for 'tabs' do |form|
+        = form.fields_for index.to_s,tab do |tab_form|
+          = tab_form.hidden_field :user_id
+          %tr
+            %td 
+              = tab_form.object.user.displayed_name
+            = tab_form.fields_for :beverage_tabs, @beverage_tabs[tab.id] do |bf| 
+              %td
+                = bf.text_field :count, :class => 'text-center'
+                = bf.hidden_field :name
+                = bf.hidden_field :capacity
+                = bf.hidden_field :price
+  = submit_tag
+
+= link_to 'Yo dawg', tally_sheet_accounting_path, method: 'post'

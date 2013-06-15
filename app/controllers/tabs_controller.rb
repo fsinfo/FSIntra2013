@@ -5,6 +5,7 @@ class TabsController < ApplicationController
 	before_action :has_permission, only: [:update, :unpaid, :pay, :edit]
 
 	def index
+    @running_tab = current_user.tabs.running
 		@unpaid_tabs = current_user.tabs.unpaid
 		@paid_tabs = current_user.tabs.paid
 	end
@@ -26,22 +27,36 @@ class TabsController < ApplicationController
 	end
 
 	def pay
-		@tab.is_paid
+		@tab.paid
 		@user = @tab.user
 		TabMailer.paid_email(@tab) if @tab.save
 		render :nothing => true
 	end
 
   def mark_as_paid
-    @tab.marked_as_paid = true
-    TabMailer.marked_as_paid_email(current_user, @tab) if @tab.save
+    @tab.status = 'marked_as_paid'
+    TabMailer.marked_as_paid_email(@tab) if @tab.save
     render :nothing => true
-    # redirect_to @tab, notice: 'Tab was marked as paid by you.'
   end
 
 	def unpaid
 		@tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname')
 	end
+
+  # expect post-data:
+  # params[:buy] => {:user_id => 1, :beverages => { 2 => 1, 3 => 4}}
+  def buy
+    beverages = buy_params[:buy][:beverages]
+    user_id = buy_params[:buy][:user_id]
+
+    tab = Tab.running.find_or_create_by(user_id: user_id)
+    beverages.each do |id, count|
+      beverage = Beverage.find(id)
+      beverage_tab = tab.tabs.find_or_create_by(name: beverage.name, price: beverage.price, capacity: beverage.capacity)
+      beverage_tab.count += count
+    end
+    tab.save
+  end
 
 	  private
     def set_tab

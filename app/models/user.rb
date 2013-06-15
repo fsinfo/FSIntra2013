@@ -50,12 +50,6 @@ class User < Person
 		# return FsLdap::groups_of_loginname(self.loginname).include? group
 	end
 
-	def self.login(loginname,password)
-		lderp = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
-    lderp.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)
-    return lderp.bind
-  end
-
 	# Returns the users that have the LDAP-group 'fsr'
 	def self.fsr
 		loginnames = FsLdap::loginnames_of_group('fsr')

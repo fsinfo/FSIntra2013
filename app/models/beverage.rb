@@ -15,6 +15,7 @@
 class Beverage < ActiveRecord::Base
 	validates :name, :presence => true
 	validates :price, :numericality => {:greater_than => 0}
+  validates :capacity, :numericality => {:greater_than => 0}
 
 	scope :available, -> { where :available => true }
 

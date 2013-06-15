@@ -19,9 +19,9 @@
 							<ul class="dropdown">
 								<li><%= link_to 'Eigene Rechnungen', tabs_path %></li>
 								<li><%= link_to 'Getränke', beverages_path %></li>
-								<li><%= link_to 'Strichliste', new_tally_sheet_path %></li>
+								<li><%= link_to 'Strichliste', tally_sheet_path %></li>
 								<li><%= link_to 'Offene Rechnungen', offen_tabs_path %></li>
-								<li><%= link_to 'Strichliste verwalten', strichliste_edit_path %></li>
+								<li><%= link_to 'Strichliste verwalten', tally_sheet_edit_list_path %></li>
 							</ul>
 						<% else %>
 							<li><%= link_to 'Rechnungen', tabs_path %></li>

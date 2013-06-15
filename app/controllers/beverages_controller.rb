@@ -5,6 +5,10 @@ class BeveragesController < ApplicationController
   # GET /beverages
   def index
     @beverages = Beverage.all
+    respond_to do |format|
+      format.html
+      format.json { render :json => @beverages.to_json}
+    end
   end
 
   # GET /beverages/1

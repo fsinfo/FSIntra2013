@@ -2,38 +2,45 @@
 #
 # Table name: tabs
 #
-#  id             :integer          not null, primary key
-#  user_id        :integer
-#  created_at     :datetime
-#  updated_at     :datetime
-#  paid           :boolean
-#  marked_as_paid :boolean
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  status     :string(255)      default("running")
 #
 
 class Tab < ActiveRecord::Base
+	STATUSES = ['paid', 'marked_as_paid', 'unpaid', 'running']
 	has_many :beverage_tabs, :dependent => :delete_all
 	belongs_to :user
 
-	validates :total_invoice, :numericality => {:greater_than => 0}
+	scope :paid, -> { where(status: 'paid').order('created_at DESC') }
+	scope :unpaid, -> { where(status: 'unpaid').order('created_at DESC') }
+	scope :marked_as_paid, -> { where(status: 'marked_as_paid').order('created_at DESC') }
+	scope :running, -> {where(status: 'running')}
 
-	scope :paid, -> { where(paid: true).order('created_at DESC') }
-	scope :unpaid, -> { where(paid: false).order('created_at DESC') }
-	
+	# accepts_nested_attributes_for :beverage_tabs, :reject_if => lambda { |bt| bt.count == 0 }
 	accepts_nested_attributes_for :beverage_tabs
 
-	def is_paid
-		self.paid = true
+	default_scope includes(:beverage_tabs)
+
+	def paid
+		self.status = 'paid'
 	end
 
 	def is_paid?
-		self.paid
+		self.status == 'paid'
+	end
+
+	def marked_as_paid
+		self.status = 'marked_as_paid'
+	end
+
+	def is_marked_as_paid?
+		self.status == 'marked_as_paid'
 	end
 
 	def total_invoice
-		total = 0.0
-		self.beverage_tabs.each do |b|
-			total += b.price * b.count
-		end
-		return total
+		self.beverage_tabs.inject(0.0) {|sum,beverage_tab| sum += beverage_tab.count * beverage_tab.price }
 	end
 end
