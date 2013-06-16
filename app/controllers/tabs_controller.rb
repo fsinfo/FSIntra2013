@@ -49,11 +49,12 @@ class TabsController < ApplicationController
 	end
 
   # expect post-data:
-  # params[:buy] => {:user_id => 1, :beverages => { 2 => 1, 3 => 4}}
+  # params[:buy] => {:user => loginname, :beverages => { 2 => 1, 3 => 4}}
   def buy
     beverages = buy_params[:beverages]
-    user_id = buy_params[:user_id]
+    loginname = buy_params[:user]
 
+    user_id = User.find_by(loginname: loginname)
     tab = Tab.running.find_or_create_by(user_id: user_id)
     beverages.each do |id, count|
       beverage = Beverage.find(id)
@@ -61,7 +62,7 @@ class TabsController < ApplicationController
       beverage_tab.count += count
       beverage_tab.save
     end
-    tab.save
+    render :nothing => true if tab.save
   end
 
 	  private
