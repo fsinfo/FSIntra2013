@@ -61,6 +61,6 @@ class BeveragesController < ApplicationController
     end
 
     def check_permission
-      redirect_to root_url unless current_user.has_group?('kuehlschrank')
+      redirect_to root_url unless current_user.has_group?('kuehlschrank') or http_basic_authenticate_with :name => HTTP_AUTH_USER, :password => HTTP_AUTH_PASSWORD
     end
 end

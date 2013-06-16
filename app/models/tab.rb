@@ -17,12 +17,12 @@ class Tab < ActiveRecord::Base
 	scope :paid, -> { where(status: 'paid').order('created_at DESC') }
 	scope :unpaid, -> { where(status: 'unpaid').order('created_at DESC') }
 	scope :marked_as_paid, -> { where(status: 'marked_as_paid').order('created_at DESC') }
-	scope :running, -> {where(status: 'running')}
+	scope :running, -> { where(status: 'running') }
 
 	# accepts_nested_attributes_for :beverage_tabs, :reject_if => lambda { |bt| bt.count == 0 }
 	accepts_nested_attributes_for :beverage_tabs
 
-	default_scope includes(:beverage_tabs)
+	default_scope -> { includes(:beverage_tabs) }
 
 	def paid
 		self.status = 'paid'

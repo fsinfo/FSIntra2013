@@ -1,0 +1,2 @@
+HTTP_AUTH_USER = 'user'
+HTTP_AUTH_PASSWORD = 'password'

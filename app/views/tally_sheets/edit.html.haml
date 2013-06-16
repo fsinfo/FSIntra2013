@@ -20,6 +20,6 @@
                 = bf.hidden_field :name
                 = bf.hidden_field :capacity
                 = bf.hidden_field :price
-  = submit_tag
+  = submit_tag t('.save'), class: 'button', disable_with: 'Saving...'
 
-= link_to 'Yo dawg', tally_sheet_accounting_path, method: 'post'
+= link_to t('.accounting'), tally_sheet_accounting_path, method: 'post', class: 'button', disable_with: 'Accounting...'

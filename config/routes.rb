@@ -6,7 +6,9 @@ Fsintra::Application.routes.draw do
 	resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
 		get 'offen'  => 'tabs#unpaid', :on => :collection
 		put 'ist_bezahlt' => 'tabs#pay', :on => :member
+    post 'ist_bezahlt' => 'tabs#pay', :on => :member
     put 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member
+    post 'buy' => 'tabs#buy', :on => :collection
 	end
 
   get '/tally_sheet' => 'tally_sheets#edit'

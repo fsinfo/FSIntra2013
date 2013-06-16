@@ -1,8 +1,10 @@
 class TabsController < ApplicationController
 	before_action :set_tab, only: [:update, :new, :show, :edit, :pay, :mark_as_paid]
-	before_action :signed_in_user
+	before_action :signed_in_user, except: :buy
   before_action :correct_user, only: [:show, :mark_as_paid]
 	before_action :has_permission, only: [:update, :unpaid, :pay, :edit]
+  http_basic_authenticate_with :name => HTTP_AUTH_USER, :password => HTTP_AUTH_PASSWORD, :only => :buy
+  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }, only: :buy
 
 	def index
     @running_tab = current_user.tabs.running
@@ -30,7 +32,10 @@ class TabsController < ApplicationController
 		@tab.paid
 		@user = @tab.user
 		TabMailer.paid_email(@tab) if @tab.save
-		render :nothing => true
+    respond_to do |format|
+      format.js {}
+      format.html { redirect_to offen_tab_path }
+    end
 	end
 
   def mark_as_paid
@@ -46,19 +51,24 @@ class TabsController < ApplicationController
   # expect post-data:
   # params[:buy] => {:user_id => 1, :beverages => { 2 => 1, 3 => 4}}
   def buy
-    beverages = buy_params[:buy][:beverages]
-    user_id = buy_params[:buy][:user_id]
+    beverages = buy_params[:beverages]
+    user_id = buy_params[:user_id]
 
     tab = Tab.running.find_or_create_by(user_id: user_id)
     beverages.each do |id, count|
       beverage = Beverage.find(id)
-      beverage_tab = tab.tabs.find_or_create_by(name: beverage.name, price: beverage.price, capacity: beverage.capacity)
+      beverage_tab = tab.beverage_tabs.find_or_create_by(name: beverage.name, price: beverage.price, capacity: beverage.capacity)
       beverage_tab.count += count
+      beverage_tab.save
     end
     tab.save
   end
 
 	  private
+    def buy_params
+      params[:buy]
+    end
+
     def set_tab
       @tab = Tab.find(params[:id])
     end
