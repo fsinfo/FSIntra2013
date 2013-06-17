@@ -43,6 +43,8 @@ gem 'haml-rails'
 
 # for pdf-export
 gem 'prawn'
+gem 'prawnto'
+gem 'barby'
 
 # for vcards
 gem 'vpim-rails', :git => 'https://github.com/fraser/vpim-rails'

@@ -1,6 +1,7 @@
 class TallySheetsController < ApplicationController
-  before_action :signed_in_user, :has_permission , :get_users, :get_beverages, :get_tabs
-  before_action :get_tabs
+  before_action :signed_in_user, :has_permission , :get_users, :get_beverages, :get_tabs, except: [:print_users, :print_items]
+  before_action :get_users, only: :print_users
+  before_action :get_beverages, only: :print_items
   before_action :tally_sheet_params, only: :update
 
   def edit
@@ -57,6 +58,18 @@ class TallySheetsController < ApplicationController
     User.where(:id => params['new']).update_all(:on_beverage_list => true)
     User.where(:id => params['delete']).update_all(:on_beverage_list => false)
     redirect_to tally_sheet_edit_list_url, notice: t('.successful')
+  end
+
+  def print_users
+    respond_to do |format|
+      format.pdf 
+    end
+  end
+
+  def print_items
+    respond_to do |format|
+      format.pdf
+    end
   end
 
   private
