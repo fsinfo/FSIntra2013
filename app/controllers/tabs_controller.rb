@@ -54,13 +54,15 @@ class TabsController < ApplicationController
     beverages = buy_params[:beverages]
     loginname = buy_params[:user]
 
-    user_id = User.find_by(loginname: loginname)
-    tab = Tab.running.find_or_create_by(user_id: user_id)
+    user = User.find_by(loginname: loginname)
+    tab = Tab.running.find_or_create_by(user_id: user.id)
     beverages.each do |id, count|
       beverage = Beverage.find(id)
-      beverage_tab = tab.beverage_tabs.find_or_create_by(name: beverage.name, price: beverage.price, capacity: beverage.capacity)
-      beverage_tab.count += count
-      beverage_tab.save
+      unless beverage.nil?
+        beverage_tab = tab.beverage_tabs.find_or_create_by(name: beverage.name, price: beverage.price, capacity: beverage.capacity)
+        beverage_tab.count += count
+        beverage_tab.save
+      end
     end
     render :nothing => true if tab.save
   end
