@@ -23,3 +23,22 @@ pdf.define_grid(:columns => columns, :rows => rows, :gutter => 5)
   end
   count += 1
 end
+
+count += 2
+
+column = count % columns
+pdf.grid(count/columns, column).bounding_box do
+  barcode = Barby::Code128B.new "__accept"
+  pdf.stroke_horizontal_rule
+  pdf.pad(3) { pdf.text 'Accept' }
+  barcode.annotate_pdf(pdf, :height => code_height)
+end
+
+count += 1
+column = count % columns
+pdf.grid(count/columns, column).bounding_box do
+  barcode = Barby::Code128B.new "__decline"
+  pdf.stroke_horizontal_rule
+  pdf.pad(3) { pdf.text 'Decline' }
+  barcode.annotate_pdf(pdf, :height => code_height)
+end

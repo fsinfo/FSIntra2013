@@ -1,7 +1,8 @@
 class TallySheetsController < ApplicationController
-  before_action :signed_in_user, :has_permission , :get_users, :get_beverages, :get_tabs, except: [:print_users, :print_items]
-  before_action :get_users, only: :print_users
-  before_action :get_beverages, only: :print_items
+  before_action :signed_in_user, :has_permission
+  before_action :get_users, only: [:print_users]
+  before_action :get_beverages, only: [:print_items]
+  before_action :get_tabs, only: [:edit, :update, :accounting]
   before_action :tally_sheet_params, only: :update
 
   def edit
@@ -78,6 +79,8 @@ class TallySheetsController < ApplicationController
       ActiveRecord::Base.transaction do
         @tabs = []
         @beverage_tabs = {}
+        get_users
+        get_beverages
         @users.each do |user|
           tab = user.tabs.find_or_initialize_by(status: 'running')
           @beverage_tabs[tab.id] = []
@@ -91,7 +94,7 @@ class TallySheetsController < ApplicationController
     end
 
     def get_users
-      @users = User.includes(:tabs).where(:on_beverage_list => true).order('firstname, lastname')
+      @users = User.where(:on_beverage_list => true).order('firstname, lastname')
     end
 
     def get_beverages
