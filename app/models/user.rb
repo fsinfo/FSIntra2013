@@ -52,6 +52,10 @@ class User < Person
 		return User.where(:loginname => loginnames)
 	end
 
+	def birthday_without_year
+		return birthday.change(year: Date.today.year)
+	end
+
 	def days_to_next_birthday
 		if self.birthday
 			day_month = self.birthday.change(year: Date.today.year)

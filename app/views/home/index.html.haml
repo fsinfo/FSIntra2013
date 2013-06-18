@@ -46,5 +46,4 @@
 				- @birthday_people.each do |bp|
 					%li
 						= bp.displayed_name
-						= "(#{l bp.birthday, :format => :short})"
-						= "in #{bp.days_to_next_birthday} Tagen"
+						= "(#{l bp.birthday, :format => :short}, #{distance_of_time_in_words (bp.birthday_without_year.to_time - DateTime.now.midnight)})"
