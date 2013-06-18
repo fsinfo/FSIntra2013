@@ -52,6 +52,20 @@ class User < Person
 		return User.where(:loginname => loginnames)
 	end
 
+	def days_to_next_birthday
+		if self.birthday
+			day_month = self.birthday.change(year: Date.today.year)
+	    dif = (day_month - Date.today).to_i
+	    if dif < 0 
+	    	return 365+dif
+	    else
+	    	return dif
+	    end
+	  else
+	  	return 999
+	  end
+	end
+
 	private 
 		def create_remember_token
 			self.remember_token = SecureRandom.urlsafe_base64

@@ -5,6 +5,9 @@
 %div.row
 	%div.small-12.large-12.columns
 		%div.panel
+			-if @running_tab
+				%h4 Laufende Rechnung
+				= render @running_tab
 			%h4 Offene Rechnungen
 			-if @unpaid_tabs.any?
 				%table
@@ -40,6 +43,8 @@
 		%div.panel
 			%h4 Geburtstage
 			%ul
-				%li ...
-				%li ...
-				%li ...
+				- @birthday_people.each do |bp|
+					%li
+						= bp.displayed_name
+						= "(#{l bp.birthday, :format => :short})"
+						= "in #{bp.days_to_next_birthday} Tagen"
