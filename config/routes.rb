@@ -8,10 +8,9 @@ Fsintra::Application.routes.draw do
 		put 'ist_bezahlt' => 'tabs#pay', :on => :member
     post 'ist_bezahlt' => 'tabs#pay', :on => :member
     put 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member
-    post 'buy' => 'tabs#buy', :on => :collection
 	end
 
-# Tally sheet/ API related stuff:
+# Tally sheet
   get '/tally_sheet' => 'tally_sheets#edit'
   put '/tally_sheet/update' => 'tally_sheets#update'
   post '/tally_sheet/abrechnung' => 'tally_sheets#accounting'
@@ -20,6 +19,10 @@ Fsintra::Application.routes.draw do
   post '/tally_sheet/update_list' => 'tally_sheets#update_list'
   get '/tally_sheet/print_users' => 'tally_sheets#print_users'
   get '/tally_sheet/print_items' => 'tally_sheets#print_items'
+
+# API
+  get '/api/items' => 'api#items'
+  put '/api/buy' => 'api#buy'
 
   resources :getraenke, :as => 'beverages', :controller => 'beverages', :except => [:destroy]
   resources :sessions, only: [:new, :create, :destroy]

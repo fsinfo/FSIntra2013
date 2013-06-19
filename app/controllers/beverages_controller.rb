@@ -1,14 +1,11 @@
 class BeveragesController < ApplicationController
   before_action :set_beverage, only: [:show, :edit, :update]
+  before_action :signed_in_user
   before_action :check_permission
 
   # GET /beverages
   def index
     @beverages = Beverage.all
-    respond_to do |format|
-      format.html
-      format.json { render :json => @beverages.to_json}
-    end
   end
 
   # GET /beverages/1
@@ -61,6 +58,6 @@ class BeveragesController < ApplicationController
     end
 
     def check_permission
-      redirect_to root_url unless (current_user and current_user.has_group?('kuehlschrank')) or authenticate_or_request_with_http_basic {|username, password| HTTP_AUTH_USER == username && HTTP_AUTH_PASSWORD == password}
+      redirect_to root_url unless current_user.has_group?('kuehlschrank')
     end
 end

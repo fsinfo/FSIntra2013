@@ -1,10 +1,8 @@
 class TabsController < ApplicationController
 	before_action :set_tab, only: [:update, :new, :show, :edit, :pay, :mark_as_paid]
-	before_action :signed_in_user, except: :buy
+	before_action :signed_in_user
   before_action :correct_user, only: [:show, :mark_as_paid]
 	before_action :has_permission, only: [:update, :unpaid, :pay, :edit]
-  http_basic_authenticate_with :name => HTTP_AUTH_USER, :password => HTTP_AUTH_PASSWORD, :only => :buy
-  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }, only: :buy
 
 	def index
     @running_tab = current_user.tabs.running.first
@@ -48,30 +46,7 @@ class TabsController < ApplicationController
 		@tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname') + Tab.marked_as_paid
 	end
 
-  # expect post-data:
-  # params[:buy] => {:user => loginname, :beverages => { 2 => 1, 3 => 4}}
-  def buy
-    beverages = buy_params[:beverages]
-    loginname = buy_params[:user]
-
-    user = User.find_by(loginname: loginname)
-    tab = Tab.running.find_or_create_by(user_id: user.id)
-    beverages.each do |id, count|
-      beverage = Beverage.find(id)
-      unless beverage.nil?
-        beverage_tab = tab.beverage_tabs.find_or_create_by(name: beverage.name, price: beverage.price, capacity: beverage.capacity)
-        beverage_tab.count += count
-        beverage_tab.save
-      end
-    end
-    render :nothing => true if tab.save
-  end
-
 	  private
-    def buy_params
-      params[:buy]
-    end
-
     def set_tab
       @tab = Tab.find(params[:id])
     end
