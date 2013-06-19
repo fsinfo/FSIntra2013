@@ -1,4 +1,7 @@
 %h1=t '.headline'
+- if notice
+  %p#notice= notice
+
 = form_tag tally_sheet_update_path, :method => 'put' do
   %table
     %thead
@@ -22,4 +25,4 @@
                 = bf.hidden_field :price
   = submit_tag t('.save'), class: 'button', data: {disable_with: 'Saving...'}
 
-= link_to t('.accounting'), tally_sheet_accounting_path, method: 'post', class: 'button', data: {disable_with: 'Accounting...'}
+= link_to t('.accounting'), tally_sheet_accounting_path, method: 'post', class: 'button', data: {disable_with: 'Accounting...'}, confirm: t(".saved")

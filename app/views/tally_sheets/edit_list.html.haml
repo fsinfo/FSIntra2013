@@ -2,8 +2,8 @@
   %p#notice=notice
 
 =form_tag({controller: "tally_sheets", action: "update_list"}) do
-  =label_tag("new")
-  =select_tag("new",options_for_select(@new_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'chosen-select')
-  =label_tag("delete")
-  =select_tag("delete",options_for_select(@delete_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'chosen-select')
-  =submit_tag()
+  =label_tag("new", t('.new'))
+  =select_tag("new",options_for_select(@new_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'chosen-select', data: {placeholder: t('.chosen.placeholder')})
+  =label_tag("delete", t('.delete'))
+  =select_tag("delete",options_for_select(@delete_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'chosen-select', data: { placeholder: t('.chosen.placeholder')})
+  =submit_tag t('.save')

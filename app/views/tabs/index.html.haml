@@ -1,10 +1,9 @@
 %div.actions
 	%h1 Meine Rechnungen
 
-%h3 Laufend
-= render @running_tab
+= render 'running_tab', :tab => @running_tab
 
-%h3 Offen
+%h4 Offen
 %table
 	%colgroup
 		%col{:width => "40%"}
@@ -25,7 +24,7 @@
 				= "%.2f" % current_user.debts
 				&euro;
 
-%h3 Bezahlt
+%h4 Bezahlt
 %table
 	%colgroup
 		%col{:width => "40%"}

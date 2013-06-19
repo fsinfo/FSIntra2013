@@ -31,7 +31,7 @@ class TallySheetsController < ApplicationController
         tab.save unless tab.new_record? and tab.total_invoice == 0.0
       end
     end
-    redirect_to tally_sheet_url
+    redirect_to tally_sheet_url, notice: t('feedback.updated', :model => t('tally_sheet'))
   end
 
   # send mails where the tabs' invoice is greater than 0.0

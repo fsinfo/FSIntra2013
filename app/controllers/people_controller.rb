@@ -1,7 +1,7 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update]
   before_action :signed_in_user
-  before_action :correct_target, except: [:index, :show]
+  before_action :correct_target, except: [:index, :show, :new, :create]
 
   def index
     @people = Person.all.order(:firstname,:lastname)
@@ -28,7 +28,7 @@ class PeopleController < ApplicationController
     @person = Person.new(person_params)
 
     if @person.save
-      redirect_to @person, notice: 'Contact was successfully created.'
+      redirect_to @person, notice: t('feedback.created', :model => Person.model_name.human)
     else
       render action: 'new'
     end
@@ -36,7 +36,7 @@ class PeopleController < ApplicationController
 
   def update
     if @person.update(person_params)
-      redirect_to @person, notice: 'Contact was successfully updated.'
+      redirect_to @person, notice: t('feedback.updated', :model => Person.model_name.human)
     else
       render action: 'edit'
     end

@@ -7,8 +7,8 @@ class TabsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }, only: :buy
 
 	def index
-    @running_tab = current_user.tabs.running
-		@unpaid_tabs = current_user.tabs.unpaid
+    @running_tab = current_user.tabs.running.first
+		@unpaid_tabs = current_user.tabs.unpaid + current_user.tabs.marked_as_paid
 		@paid_tabs = current_user.tabs.paid
 	end
 
@@ -45,7 +45,7 @@ class TabsController < ApplicationController
   end
 
 	def unpaid
-		@tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname')
+		@tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname') + Tab.marked_as_paid
 	end
 
   # expect post-data:

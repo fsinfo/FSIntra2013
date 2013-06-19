@@ -30,7 +30,7 @@ class BeveragesController < ApplicationController
     @beverage = Beverage.new(beverage_params)
 
     if @beverage.save
-      redirect_to @beverage, notice: 'Beverage was successfully created.'
+      redirect_to @beverage, notice: t('feedback.created', model: Beverage.model_name.human)
     else
       render action: 'new'
     end
@@ -40,7 +40,7 @@ class BeveragesController < ApplicationController
   def update
     # convert_params beverage_params
     if @beverage.update(beverage_params)
-      redirect_to @beverage, notice: 'Beverage was successfully updated.'
+      redirect_to @beverage, notice: t('feedback.updated', model: Beverage.model_name.human)
     else
       render action: 'edit'
     end
