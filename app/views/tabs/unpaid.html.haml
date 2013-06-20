@@ -17,7 +17,7 @@
 		- @tabs.each do |tab|
 			%tr{:id => "tab_row_#{tab.id}"}
 				%td
-					= link_to tab.created_at.strftime("%d. %B %Y"), tab_path(tab)
+					= link_to(l(tab.created_at, format: :date_only), tab_path(tab))
 				%td
 					= tab.user.displayed_name
 				%td.text-center

@@ -1,7 +1,7 @@
 %div.actions
 	%h1
 		Rechnung vom
-		=@tab.created_at.strftime("%d. %B %Y")
+		=l @tab.created_at, format: :date_only
 	= link_to content_tag(:span, ' ' + 'Zurück', :class=> "icon-left-fat"), tabs_path, :class => "button small round secondary"
 	- if current_user.has_group?('kuehlschrank')
 		= link_to content_tag(:span, ' ' + t('actions.edit'), :class=> "icon-pencil"), edit_tab_path(@tab), :class => "button small round secondary"

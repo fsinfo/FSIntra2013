@@ -14,7 +14,7 @@
 	%tbody
 		- @unpaid_tabs.each do |tab|
 			%tr 
-				%td= link_to tab.created_at.strftime("%d. %B %Y"), tab_path(tab)
+				%td= link_to(l(tab.created_at, format: :date_only), tab_path(tab))
 				%td.text-right
 					= "%.2f" % tab.total_invoice
 					&euro;
@@ -35,7 +35,7 @@
 	%tbody
 		- @paid_tabs.each do |tab|
 			%tr
-				%td.text-left= link_to tab.created_at.strftime("%d. %B %Y"), tab_path(tab)
+				%td.text-left= link_to(l(tab.created_at, format: :date_only), tab_path(tab))
 				%td.text-right
 					= "%.2f" % tab.total_invoice
 					&euro;

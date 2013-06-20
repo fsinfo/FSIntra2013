@@ -18,7 +18,7 @@
 					%tbody 
 						- @unpaid_tabs.each do |tab|
 							%tr 
-								%td=link_to tab.created_at, tab_path(tab)
+								%td=link_to(l(tab.created_at, format: :date_only), tab_path(tab))
 								%td.text-right
 									= "%.2f" % tab.total_invoice
 									&euro;
@@ -44,5 +44,5 @@
 				- @birthday_people.each do |bp|
 					- if bp.birthday
 						%li
-							= bp.displayed_name
+							= link_to bp.displayed_name, person_path(bp)
 							= "(#{l bp.birthday, :format => :short}, #{distance_of_time_in_words (bp.time_to_next_birthday)})"
