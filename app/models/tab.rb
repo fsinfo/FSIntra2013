@@ -15,8 +15,7 @@ class Tab < ActiveRecord::Base
 	belongs_to :user
 
 	scope :paid, -> { where(status: 'paid').order('created_at DESC') }
-	scope :unpaid, -> { where(status: 'unpaid').order('created_at DESC') }
-	scope :marked_as_paid, -> { where(status: 'marked_as_paid').order('created_at DESC') }
+	scope :unpaid, -> { where(status: ['marked_as_paid','unpaid']).order('created_at DESC') }
 	scope :running, -> { where(status: 'running') }
 
 	# accepts_nested_attributes_for :beverage_tabs, :reject_if => lambda { |bt| bt.count == 0 }

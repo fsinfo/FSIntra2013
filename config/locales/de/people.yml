@@ -1,8 +1,12 @@
 de:
   people:
+    qrcode: QR Code
+    vcard: vCard
+    details: Details
     index:
       headline: Adressbuch
       new: Neuen Kontakt anlegen
+      new_entry: Neuen Eintrag anlegen
     edit:
       headline: Kontakt bearbeiten
     new:
@@ -26,5 +30,7 @@ de:
         zip: Postleitzahl
         city: Ort
         email: E-Mail
-        birthday: Geburtstag
+        birthday: 
+          one: Geburtstag
+          other: Geburtstage
         misc: Sonstiges

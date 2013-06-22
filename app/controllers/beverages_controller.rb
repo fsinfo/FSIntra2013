@@ -1,5 +1,5 @@
 class BeveragesController < ApplicationController
-  before_action :set_beverage, only: [:show, :edit, :update]
+  before_action :set_beverage, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_user
   before_action :check_permission
 
@@ -43,6 +43,11 @@ class BeveragesController < ApplicationController
     end
   end
 
+  def destroy
+    @beverage.destroy
+    redirect_to action: 'index', notice: t('feedback.destroyed', model: Beverage.model_name.human)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_beverage
@@ -52,6 +57,7 @@ class BeveragesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def beverage_params
       params[:beverage][:capacity].gsub!(/,/,'.')
+      params[:beverage][:capacity].delete!('\s*l$')
       params[:beverage][:price].gsub!(/,/,'.')
       params[:beverage][:price].delete!('€\s')
       params.require(:beverage).permit(:name, :description, :available, :price, :capacity)

@@ -1,7 +1,7 @@
 <%= form_for(@beverage, :html => {:class => "inline"}) do |f| %>
 	<% if @beverage.errors.any? %>
 		<div id="error_explanation">
-			<h2><%= pluralize(@beverage.errors.count, "error") %> prohibited this beverage from being saved:</h2>
+			<h2><%= t('feedback.form_error', count: @beverage.errors.count) %></h2>
 
 			<ul>
 			<% @beverage.errors.full_messages.each do |msg| %>
@@ -19,7 +19,7 @@
 		<%= f.text_area :description %>
 
 		<%= f.label :capacity %>
-		<%= f.text_field :capacity, :value=>number_to_human(f.object.capacity, :separator => ',') %>
+		<%= f.text_field :capacity, :value=>number_to_human(f.object.capacity, :units=> 'beverages.capacity') %>
 
 		<%= f.label :price %>
 		<%= f.text_field :price, :value=>number_to_currency(f.object.price) %>
@@ -30,15 +30,15 @@
 				<%# TODO: move hidden field yielded by the check_box helper -> must not be the first child %>
 				<%= f.check_box :available %>
 				<p>
-					<span>Ja</span>
-					<span>Nein</span>
+					<span><%= t 'views.yep' %></span>
+					<span><%= t 'views.nope' %></span>
 				</p>
 				<a class="slide-button"></a>
 			</label>
 		</div>
 		
 		<div class="submit">
-			<%= f.submit nil, :class => "button" %>
+			<%= f.submit :class => "button" %>
 		</div>
 	</div>
 <% end %>

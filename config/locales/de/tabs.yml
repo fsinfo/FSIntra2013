@@ -1,0 +1,34 @@
+de:
+  activerecord:
+    models:
+      tab:
+        zero: Keine Rechnung
+        one: Rechnung
+        other: Rechnungen
+  tabs:
+    running_tab:
+      nothing_on_tab: Noch nichts auf der Rechnung
+    tabs:
+      no_tabs: Keine 
+      total: Gesamt
+      amount: Betrag
+    pay:
+      paid_tab: "%{name}s Rechnung über %{total} wurde bezahlt"
+    index:
+      headline: Meine Rechnungen
+      unpaid_tabs: Offene Rechnungen
+      paid_tabs: Bezahlte Rechnungen
+      running_tab: Laufende Rechnung
+    show:
+      headline: "Rechnung vom %{date}"
+      is_paid: "Ist bezahlt"
+      mark_as_paid: Als bezahlt markieren
+    edit: 
+      headline: "Rechnung bearbeiten"
+    form:
+      quantity: Anzahl
+      expense: Kosten
+      sum: Summe
+      total: Gesamtkosten
+    marked_as_paid:
+      is_marked_as_paid: Ist von dir als bezahlt markiert

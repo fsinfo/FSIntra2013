@@ -4,10 +4,12 @@ Fsintra::Application.routes.draw do
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users' 
   resources :personen, except: [:destroy], :as => 'people', :controller => 'people'
 	resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
-		get 'offen'  => 'tabs#unpaid', :on => :collection
-		put 'ist_bezahlt' => 'tabs#pay', :on => :member
-    post 'ist_bezahlt' => 'tabs#pay', :on => :member
-    put 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member
+		get 'offen'  => 'tabs#unpaid', :on => :collection, :as => 'unpaid'
+    # get 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
+		put 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
+    post 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
+    put 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member, :as => 'mark_as_paid'
+    # get 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member, :as => 'mark_as_paid'
 	end
 
 # Tally sheet
@@ -24,7 +26,7 @@ Fsintra::Application.routes.draw do
   get '/api/items' => 'api#items'
   put '/api/buy' => 'api#buy'
 
-  resources :getraenke, :as => 'beverages', :controller => 'beverages', :except => [:destroy]
+  resources :getraenke, :as => 'beverages', :controller => 'beverages'
   resources :sessions, only: [:new, :create, :destroy]
 
   get '/login' => 'sessions#new'

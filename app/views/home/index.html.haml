@@ -1,45 +1,25 @@
 %div{:class => 'actions'}
-	%h1 Oh, hi #{current_user.displayed_name}
+	%h1=t('.greeting', name: current_user.firstname)
 
 %br
 %div.row
 	%div.small-12.large-12.columns
 		%div.panel
+			%h4= t 'tabs.index.running_tab'
 			=render 'tabs/running_tab',:tab => @running_tab
-			%h4 Offene Rechnungen
-			-if @unpaid_tabs.any?
-				%table
-					%colgroup
-						%col{:width => "60%"}
-						%col{:width => "40%"}
-					%thead
-						%th.text-left Datum
-						%th.text-right Betrag
-					%tbody 
-						- @unpaid_tabs.each do |tab|
-							%tr 
-								%td=link_to(l(tab.created_at, format: :date_only), tab_path(tab))
-								%td.text-right
-									= "%.2f" % tab.total_invoice
-									&euro;
-						%tr
-							%td.text-left Gesamt
-							%td.text-right
-								= "%.2f" % current_user.debts
-								&euro;
-			-else
-				Keine offenen Rechnungen
+			%h4= t 'tabs.index.unpaid_tabs'
+			=render 'tabs/tabs', :tabs => @unpaid_tabs
 %div.row
 	%div.small-12.large-6.column
 		%div.panel
-			%h4 Personensuche
+			%h4= t('.search_people')
 			%form
 				%input{:type => "text", :placeholder => "Value"}
 				%div.submit
-					%input.button{:type => "submit", :value => "Suchen"}
+					%input.button{:type => "submit", :value => t('actions.search')}
 	%div.small-12.large-6.column
 		%div.panel
-			%h4 Geburtstage
+			%h4= Person.human_attribute_name :birthday, count: 2
 			%ul
 				- @birthday_people.each do |bp|
 					- if bp.birthday

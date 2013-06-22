@@ -1,5 +1,5 @@
 %div.actions
-	%h1 Rechnung bearbeiten
-	= link_to content_tag(:span, ' ' + 'Abbrechen', :class=> "icon-cancel-1"), tab_path(@tab), :class => "button small round secondary"
+	%h1= t '.headline'
+	= link_to content_tag(:span, ' ' + t('actions.cancel'), :class=> "icon-cancel-1"), tab_path(@tab), :class => "button small round secondary"
 
 = render 'form'

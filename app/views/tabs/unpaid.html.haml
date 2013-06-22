@@ -1,6 +1,8 @@
 %div.actions
 	%h1 Alle offenen Rechnungen
 
+%div#ajax-feedback
+
 %table
 	%colgroup
 		%col{:width => "30%"}
@@ -11,20 +13,15 @@
 		%th Datum
 		%th Benutzer
 		%th.text-center Betrag
-		%th
 		%th.text-center Aktion
 	%tbody
 		- @tabs.each do |tab|
-			%tr{:id => "tab_row_#{tab.id}"}
+			%tr{:id => "tab_row_#{tab.id}", class: ('marked_as_paid' if tab.is_marked_as_paid?)}
 				%td
 					= link_to(l(tab.created_at, format: :date_only), tab_path(tab))
 				%td
 					= tab.user.displayed_name
 				%td.text-center
-					= "%.2f" % tab.total_invoice
-					&euro;
-				%td
-					- if tab.is_marked_as_paid?
-						Behauptet/Ist der Meinung/Denkt/Sagt, er/sie hat bezahlt
+					= number_to_currency tab.total_invoice
 				%td.text-center.no-linebreak
-					= link_to content_tag(:span, 'Hat bezahlt', :class => "icon-ok"), ist_bezahlt_tab_path(tab),:method => 'PUT', :remote => true, :class => 'tab_paid', :"data-id" => tab.id
+					= link_to content_tag(:span, 'Hat bezahlt', :class => "icon-ok"), is_paid_tab_path(tab),:method => 'PUT', :remote => true, :class => 'tab_paid', :"data-id" => tab.id

@@ -22,7 +22,7 @@
 								<li><%= link_to 'Benutzerliste drucken', tally_sheet_print_users_path(:format => :pdf), :target => '_blank' %>
 								<li><%= link_to 'Preisliste drucken', tally_sheet_print_items_path(:format => :pdf), :target => '_blank' %>
 								<li><%= link_to 'Strichliste', tally_sheet_path %></li>
-								<li><%= link_to 'Offene Rechnungen', offen_tabs_path %></li>
+								<li><%= link_to 'Offene Rechnungen', unpaid_tabs_path %></li>
 								<li><%= link_to 'Strichliste verwalten', tally_sheet_edit_list_path %></li>
 							</ul>
 						<% else %>

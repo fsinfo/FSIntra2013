@@ -1,19 +1,26 @@
 de:
-  actions:
+  views: 
+    yep: Ja
+    nope: Nein
+  actions: 
+    one: Aktion
+    other: Aktionen
     show: Anzeigen
     edit: Bearbeiten
+    cancel: Abbrechen
     destroy: Löschen
     back: Zurück
     destroy_confirm: Bist du sicher?
+    search: Suchen
   feedback:
     created: '%{model} erfolgreich angelegt.'
     updated: '%{model} erfolgreich geändert.'
     destroyed: '%{model} erfolgreich gelöscht.'
     form_error: 'Es gab %{count} Fehler, das Formular konnte deshalb nicht gespeichert werden.'
-
 # Copied the following translation from:
 # https://github.com/svenfuchs/rails-i18n
   date:
+    date: Datum
     abbr_day_names:
     - So
     - Mo
@@ -48,6 +55,7 @@ de:
       default: ! '%d.%m.%Y'
       long: ! '%e. %B %Y'
       short: ! '%e. %b'
+      without_year: ! '%e. %B'
     month_names:
     - 
     - Januar
