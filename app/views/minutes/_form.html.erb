@@ -47,7 +47,7 @@
 				<tr>
 					<td>
 						<label class="checkbox toggle fsintra" onclick="" style="min-width: 250px;">
-							<%= check_box_tag "minute[absentee_ids][]", u.id, not(@minute.absentee_ids.include?(u.id)), id: dom_id(u), class: "attendance-checkbox" %>
+							<%= check_box_tag "minute[attendee_ids][]", u.id, not(@minute.absentee_ids.include?(u.id)), id: dom_id(u), class: "attendance-checkbox" %>
 							<p>
 								<span>Anwesend</span>
 								<span>Abwesend</span>
@@ -306,9 +306,9 @@
 		// since that phunny css thing doesn't do it :\
 		checkboxes.each(function() {
 			if(this.checked) {
-				this.value = 1
+				$(this).attr("checked", "checked")
 			} else {
-				this.value = 0
+				$(this).removeAttr("checked")
 			}
 		})
 	}

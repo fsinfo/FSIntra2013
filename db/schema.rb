@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130530100901) do
+ActiveRecord::Schema.define(version: 20130609162923) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -48,11 +48,19 @@ ActiveRecord::Schema.define(version: 20130530100901) do
     t.integer  "chairperson_id"
   end
 
+  create_table "minutes_attendances", force: true do |t|
+    t.string  "absent"
+    t.integer "user_id"
+    t.integer "minute_id"
+  end
+
   create_table "minutes_guests", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "minutes_guests", ["name"], name: "index_minutes_guests_on_name", unique: true
 
   create_table "minutes_items", force: true do |t|
     t.string   "title"

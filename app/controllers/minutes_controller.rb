@@ -48,6 +48,7 @@ class MinutesController < ApplicationController
   # POST /minutes.json
   def create
     @minute = Minute.new(minute_params)
+
     update_guests
     respond_to do |format|
       if @minute.save
@@ -64,6 +65,7 @@ class MinutesController < ApplicationController
   # PATCH/PUT /minutes/1.json
   def update
     @minute.unpublish
+    params[:minute][:absentees] ||= []
     update_guests
     respond_to do |format|
       if @minute.update(minute_params)
@@ -108,6 +110,15 @@ class MinutesController < ApplicationController
 
     def update_guests
       @minute.update_guests(params[:minute][:guests])
+    end
+
+    # This method sets the fsr members correctly.
+    # It's needed since the People.fsr method depends
+    # on the members of the fsr ldap group
+    #
+    # Do it after @minute is set correctly!
+    def extract_attendees
+      @minute.attendees = ""
     end
 
 

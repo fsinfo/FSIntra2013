@@ -31,18 +31,13 @@ class Minute < ActiveRecord::Base
 	has_and_belongs_to_many :guests, :class_name => 'Minutes::Guest'
 
 	belongs_to :keeper_of_the_minutes, :class_name => 'User'
-	
 	belongs_to :chairperson, :class_name => 'User'
 
-	has_and_belongs_to_many :absentees,
-													-> { where "absent = 'With'" },
-													join_table: 'invitees',
-													class_name: 'User'
-	
-  has_and_belongs_to_many :unexcused_absentees,
-  												-> { where "absent = 'Without'" },
-  												join_table: 'invitees',
-  												class_name: 'User'
+
+	has_many :attendance, :class_name => 'Minutes::Attendance'
+	has_many :attendees, :through => :attendance, :class_name => 'User', :source => 'minute'
+	has_many :absentees, :through => :attendance, :class_name => 'User', :source => 'minute'
+	has_many :unexcused_absentees, :through => :attendance, :class_name => 'User', :source => 'minute'
 
 	scope :draft, -> {where :status => 'draft' }
 	scope :published, -> {where :status => 'published' }
@@ -50,10 +45,6 @@ class Minute < ActiveRecord::Base
 	scope :approved, -> { published.where(:id => Minutes::MinuteApproveMotion.select(:minute_id).where(:approved => true)) }
 	scope :approvable, -> { published.where.not :id => Minutes::MinuteApproveMotion.select(:minute_id).where(:approved => true) }
 	
-	def attendees
-		User.fsr - self.absentees - self.unexcused_absentees
-	end
-
 	def approved?
 		Minute.approved.exists?(self) == 1
 	end
@@ -95,7 +86,7 @@ class Minute < ActiveRecord::Base
 		guest_strings = g.split ','
 		guest_strings.map do |x|
 			guest = Minutes::Guest.find_or_create_by :name => x.strip # no whitespaces
-			self.guests << guest
+			self.guests = self.guests | [guest]
 		end
 	end
 

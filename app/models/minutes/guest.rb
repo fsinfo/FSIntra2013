@@ -9,4 +9,5 @@
 #
 
 class Minutes::Guest < ActiveRecord::Base
+	validates :name, :uniqueness => true
 end
