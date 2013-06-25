@@ -1,19 +1,26 @@
 de:
-  actions:
+  views: 
+    yep: Ja
+    nope: Nein
+  actions: 
+    one: Aktion
+    other: Aktionen
     show: Anzeigen
     edit: Bearbeiten
+    cancel: Abbrechen
     destroy: Löschen
     back: Zurück
     destroy_confirm: Bist du sicher?
+    search: Suchen
   feedback:
     created: '%{model} erfolgreich angelegt.'
     updated: '%{model} erfolgreich geändert.'
     destroyed: '%{model} erfolgreich gelöscht.'
     form_error: 'Es gab %{count} Fehler, das Formular konnte deshalb nicht gespeichert werden.'
-
 # Copied the following translation from:
 # https://github.com/svenfuchs/rails-i18n
   date:
+    date: Datum
     abbr_day_names:
     - So
     - Mo
@@ -48,6 +55,7 @@ de:
       default: ! '%d.%m.%Y'
       long: ! '%e. %B %Y'
       short: ! '%e. %b'
+      without_year: ! '%e. %B'
     month_names:
     - 
     - Januar
@@ -82,7 +90,8 @@ de:
         other: fast %{count} Jahre
       half_a_minute: eine halbe Minute
       less_than_x_minutes:
-        one: weniger als eine Minute
+        # one: weniger als eine Minute
+        one: heute
         other: weniger als %{count} Minuten
       less_than_x_seconds:
         one: weniger als eine Sekunde
@@ -91,7 +100,8 @@ de:
         one: mehr als ein Jahr
         other: mehr als %{count} Jahre
       x_days:
-        one: ein Tag
+        # one: ein Tag
+        one: morgen
         other: ! '%{count} Tage'
       x_minutes:
         one: eine Minute
@@ -207,6 +217,7 @@ de:
       default: ! '%A, %d. %B %Y, %H:%M Uhr'
       long: ! '%A, %d. %B %Y, %H:%M Uhr'
       short: ! '%d. %B, %H:%M Uhr'
+      date_only: ! '%d. %B %Y'
     pm: nachmittags
   # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
   activemodel:

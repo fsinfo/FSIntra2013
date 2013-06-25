@@ -1,19 +1,21 @@
 $ ->
-	$('.tab_paid')
-		.bind 'ajax:beforeSend', () ->
-			set_loading
-		.bind 'ajax:success', (event, xhr, status) ->
-			update_dom($(this).data('id'))
-		.bind 'ajax:error', (event,xhr,status) ->
-			alert('There was an error while processing the ajax request')
-  $('.mark_tab_as_paid')
+  $('.tab_paid')
     .bind 'ajax:beforeSend', () ->
       set_loading
-    .bind 'ajax:success', (event, xhr, status) ->
-      $(this).replaceWith('<a class="button small success round secondary disabled">Habe ich bereits als bezahlt markiert</a>')
-
-update_dom = (id) -> 
-	$('#tab_row_'+id).remove()
+    .bind 'ajax:success', (event, data, status, xhr) ->
+      update_dom($(this).data('id'))
+      json = jQuery.parseJSON(xhr.responseText)
+      $('#ajax-feedback').replaceWith("<div id='ajax-feedback' class='alert-box success' width='100%'>"+json.feedback+"</div>")
+    .bind 'ajax:error', (event,xhr,status) ->
+      $('#ajax-feedback').replaceWith("<div id='ajax-feedback' class='alert-box alert' width='100%'>"+There was an error, please reload the page+"</div>")
+  # $('.mark_tab_as_paid')
+  #   .bind 'ajax:beforeSend', () ->
+  #     set_loading
+  #   .bind 'ajax:success', (event, xhr, status) ->
+  #     $(this).replaceWith('<a class="button small success round secondary disabled">Habe ich bereits als bezahlt markiert</>')
 
 set_loading = () ->
   # TODO: do something?
+
+update_dom = (id) -> 
+  $('#tab_row_'+id).remove()

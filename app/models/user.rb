@@ -36,25 +36,15 @@ class User < Person
 	end
 
 	def self.authenticate(loginname,password)
-		if FsLdap::authenticate(loginname,password)
-			user = User.find_or_create_by(:loginname => loginname)
-		end
+		user = User.find_or_create_by(:loginname => loginname) if FsLdap::authenticate(loginname,password)
 	end
 
 	# LDAP-Gruppen: fsinfo, it, ewoche, ausland, kasse, kai, fete, 
 	#								fsk, pr, hh, sprecher, fsl, kuehlschrank, datenschutz, vlu, pa, stupa, protokolle, fbr, 
 	#								fit, events, homepage, kommunikation, fsr, ausleihe, oe
 	def has_group?(group)
-		# TODO: remove return true
-		return true
-		# return FsLdap::groups_of_loginname(self.loginname).include? group
+		Rails.env == 'development' ? true : FsLdap::groups_of_loginname(self.loginname).include?(group)
 	end
-
-	def self.login(loginname,password)
-		lderp = Net::LDAP.new(:host => 'ford.fachschaft.informatik.uni-kl.de')
-    lderp.auth("cn=#{loginname},ou=users,dc=fachschaft,dc=informatik,dc=uni-kl,dc=de",password)
-    return lderp.bind
-  end
 
 	# Returns the users that have the LDAP-group 'fsr'
 	def self.fsr

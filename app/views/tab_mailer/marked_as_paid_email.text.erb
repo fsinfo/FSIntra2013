@@ -1,2 +1,2 @@
-<%= @from_user.displayed_name %> hat die Rechnung (<%= tab_url(@tab) %>) vom <%= tab.created_at %> über <%= @tab.total_invoice %> € als bezahlt markiert.
+<%= @from_user.displayed_name %> hat die Rechnung (<%= tab_url(@tab) %>) vom <%= @tab.created_at %> über <%= number_to_currency @tab.total_invoice %> als bezahlt markiert.
 

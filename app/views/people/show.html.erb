@@ -1,10 +1,10 @@
 <div class="actions">
 	<h1><%= @person.firstname %> <%= @person.lastname %></h1>
-	<%= link_to content_tag(:span, ' Zurück', :class => "icon-left-fat"), people_path, :class => "button small round secondary" %>
+	<%= link_to content_tag(:span, t('actions.back'), :class => "icon-left-fat"), people_path, :class => "button small round secondary" %>
 	<% if @person.type.nil? or current_user?(@person) %>
-		<%= link_to content_tag(:span, ' Bearbeiten', :class => "icon-pencil"), edit_person_path(@person), :class => "button small round secondary" %>
+		<%= link_to content_tag(:span, t('actions.edit'), :class => "icon-pencil"), edit_person_path(@person), :class => "button small round secondary" %>
 	<% end %>
-	<%= link_to content_tag(:span, ' vCard', :class => "icon-vcard"), person_path(@person, :format => 'vcf'), :class => "button small round secondary" %>
+	<%= link_to content_tag(:span, t('people.vcard'), :class => "icon-vcard"), person_path(@person, :format => 'vcf'), :class => "button small round secondary" %>
 </div>
 
 <% if notice %>
@@ -18,39 +18,44 @@
 	</colgroup>
 	<tbody>
 		<tr>
-			<th>Vorname</th>
+			<th><%=t Person.human_attribute_name :firstname %></th>
 			<td><%= @person.firstname %></td>
 		</tr>
 		<tr>
-			<th>Nachname</th>
+			<th><%=t Person.human_attribute_name :lastname %></th>
 			<td><%= @person.lastname %></td>
 		</tr>
 		<tr>
-			<th>eMail</th>
+			<th><%=t Person.human_attribute_name :email %></th>
 			<td><%= @person.email %></td>
 		</tr>
 		<tr>
-			<th>Telefonnummer</th>
+			<th><%=t Person.human_attribute_name :phone %></th>
 			<td><%= @person.phone %></td>
 		</tr>
 		<tr>
-			<th>Geburtstag</th>
-			<td><%= @person.birthday %></td>
+			<th><%=t Person.human_attribute_name :birthday %></th>
+			<td><%= l(@person.birthday, format: :without_year) unless @person.birthday.nil? %></td>
 		</tr>
 		<tr>
-			<th>Adresse</th>
+			<th><%=t Person.human_attribute_name :street %></th>
 			<td>
 				<%= @person.street %>
+			</td>
+			</tr>
+			<tr>
+			<th><%=t Person.human_attribute_name :city %></th>
+			<td>
 				<%= @person.zip %>
 				<%= @person.city %>
 			</td>
 		</tr>
 		<tr>
-			<th>Sonstiges</th>
+			<th><%=t Person.human_attribute_name :misc %></th>
 			<td><%= @person.misc %></td>
 		</tr>
 		<tr>
-			<th>QR Code</th>
+			<th><%= t 'people.qrcode' %></th>
 			<td colspan="3">
 				<div id="qrcode"><%= tag 'embed', :src => person_path(@person, :format => 'svg') %></div>
 			</td>

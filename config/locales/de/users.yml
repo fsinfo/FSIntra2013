@@ -1,4 +1,6 @@
 de:
-  users:
-    update: 
-      successful: 'Daten wurden erfolgreich aktualisiert'
+  activerecord:
+    models:
+      user:
+        one: Benutzer
+        other: Benutzer

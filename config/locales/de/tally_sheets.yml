@@ -1,0 +1,14 @@
+de:
+  tally_sheets:
+    edit:
+      headline: Strichliste bearbeiten
+      save: Strichliste speichern
+      accounting: Rechnungen verschicken
+      saved: Strichliste schon gespeichert?
+    edit_list:
+      new: Zur Strichliste hinzufügen
+      delete: Von Strichliste entfernen
+      save: Aktualisieren
+      chosen:
+        placeholder: Wähle Personen    
+  tally_sheet: Strichliste

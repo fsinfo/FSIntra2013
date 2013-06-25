@@ -3,10 +3,15 @@ de:
     index:
       headline: Getränke
       new: Neues Getränk anlegen
+      ppl: Preis / Liter
     edit:
       headline: Getränk bearbeiten
     new:
       headline: Neues Getränk anlegen
+    capacity:
+      unit:
+        one: l
+        other: l
 
 # --------------
 # --- Models ---
@@ -21,5 +26,5 @@ de:
         name: Name
         price: Preis
         description: Beschreibung
-        available: Verfügbar
+        available: Verfügbar?
         capacity: Inhalt

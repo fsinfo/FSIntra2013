@@ -1,0 +1,5 @@
+de:
+  home:
+    index:
+      greeting: "Hallo %{name}!"
+      search_people: "Personensuche"

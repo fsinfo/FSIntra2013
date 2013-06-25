@@ -15,13 +15,10 @@
 				%td= bt.name
 				%td.text-center= bt.count
 				%td.text-center
-					= "%.2f" % bt.price
-					&euro;
+					= number_to_currency bt.price
 				%td.text-right
-					= "%.2f" % (bt.price * bt.count)
-					&euro;
+					= number_to_currency (bt.price * bt.count)
 		%tr 
 			%th.text-left{:colspan => "3"} Gesamtkosten
 			%th.text-right
-				= "%.2f" % @tab.total_invoice
-				&euro;
+				= number_to_currency tab.total_invoice

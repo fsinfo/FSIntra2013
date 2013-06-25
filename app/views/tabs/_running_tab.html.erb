@@ -1,0 +1,5 @@
+<% if tab.nil? or tab.total_invoice == 0.0 %>
+  <%=t '.nothing_on_tab' %>
+<% else %>
+  <%= render tab %>
+<% end %>

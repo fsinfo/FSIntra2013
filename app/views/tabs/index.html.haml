@@ -1,40 +1,9 @@
 %div.actions
-	%h1 Meine Rechnungen
+	%h1= t '.headline'
 
-%h3 Offen
-%table
-	%colgroup
-		%col{:width => "40%"}
-		%col{:width => "60%"}
-	%thead
-		%th Datum
-		%th.text-right Betrag
-	%tbody
-		- @unpaid_tabs.each do |tab|
-			%tr 
-				%td= link_to tab.created_at.strftime("%d. %B %Y"), tab_path(tab)
-				%td.text-right
-					= "%.2f" % tab.total_invoice
-					&euro;
-		%tr
-			%th.text-left Rechnungsbetrag gesamt
-			%th.text-right
-				= "%.2f" % current_user.debts
-				&euro;
-
-%h3 Bezahlt
-%table
-	%colgroup
-		%col{:width => "40%"}
-		%col{:width => "60%"}
-	%thead
-		%th Datum
-		%th.text-right Betrag
-	%tbody
-		- @paid_tabs.each do |tab|
-			%tr
-				%td.text-left= link_to tab.created_at.strftime("%d. %B %Y"), tab_path(tab)
-				%td.text-right
-					= "%.2f" % tab.total_invoice
-					&euro;
-					
+%h4= t '.running_tab' 
+= render 'running_tab', :tab => @running_tab
+%h4= t '.unpaid_tabs'
+= render 'tabs', :tabs => @unpaid_tabs
+%h4= t '.paid_tabs'
+= render 'tabs', :tabs => @paid_tabs

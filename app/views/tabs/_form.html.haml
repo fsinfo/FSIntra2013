@@ -6,10 +6,10 @@
 			%col{:width => "20%"}
 			%col{:width => "20%"}
 		%thead 
-			%th Getränk
-			%th.text-center Anzahl
-			%th.text-center Kosten
-			%th.text-right Gesamt
+			%th=Beverage.model_name.human
+			%th.text-center=t '.quantity'
+			%th.text-center=t '.expense'
+			%th.text-right=t '.sum'
 		%tbody
 			= f.fields_for :beverage_tabs do |fi|
 				%tr
@@ -22,7 +22,7 @@
 						= "%.2f" % (fi.object.count * fi.object.price)
 						&euro;
 			%tr 
-				%th.text-left{:colspan => "3"} Gesamtkosten
+				%th.text-left{:colspan => "3"}= t '.total'
 				%th.text-right
 					= "%.2f" % @tab.total_invoice
 					&euro;

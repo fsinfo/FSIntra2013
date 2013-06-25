@@ -1,5 +1,6 @@
 class BeveragesController < ApplicationController
-  before_action :set_beverage, only: [:show, :edit, :update]
+  before_action :set_beverage, only: [:show, :edit, :update, :destroy]
+  before_action :signed_in_user
   before_action :check_permission
 
   # GET /beverages
@@ -26,7 +27,7 @@ class BeveragesController < ApplicationController
     @beverage = Beverage.new(beverage_params)
 
     if @beverage.save
-      redirect_to @beverage, notice: 'Beverage was successfully created.'
+      redirect_to @beverage, notice: t('feedback.created', model: Beverage.model_name.human)
     else
       render action: 'new'
     end
@@ -36,10 +37,15 @@ class BeveragesController < ApplicationController
   def update
     # convert_params beverage_params
     if @beverage.update(beverage_params)
-      redirect_to @beverage, notice: 'Beverage was successfully updated.'
+      redirect_to @beverage, notice: t('feedback.updated', model: Beverage.model_name.human)
     else
       render action: 'edit'
     end
+  end
+
+  def destroy
+    @beverage.destroy
+    redirect_to action: 'index', notice: t('feedback.destroyed', model: Beverage.model_name.human)
   end
 
   private
@@ -51,6 +57,7 @@ class BeveragesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def beverage_params
       params[:beverage][:capacity].gsub!(/,/,'.')
+      params[:beverage][:capacity].delete!('\s*l$')
       params[:beverage][:price].gsub!(/,/,'.')
       params[:beverage][:price].delete!('€\s')
       params.require(:beverage).permit(:name, :description, :available, :price, :capacity)

@@ -6,7 +6,7 @@ class UsersController < PeopleController
   def update
     if @user.update(user_params)
 			login @user
-      redirect_to @user, notice: t('.successful')
+      redirect_to @user, notice: t('feedback.updated', :model => User.model_name.human)
     else
       @person = @user
       render 'edit'

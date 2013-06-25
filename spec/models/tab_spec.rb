@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: tabs
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  status     :string(255)      default("running")
+#
+
 require 'spec_helper'
 
 describe Tab do

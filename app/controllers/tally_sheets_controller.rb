@@ -1,68 +1,111 @@
 class TallySheetsController < ApplicationController
-	before_action :signed_in_user, :has_permission , :get_users, :get_beverages 
+  before_action :signed_in_user, :has_permission
+  before_action :get_users, only: [:print_users]
+  before_action :get_beverages, only: [:print_items]
+  before_action :get_tabs, only: [:edit, :update, :accounting]
+  before_action :tally_sheet_params, only: :update
 
-	def new
-		respond_to do |format|
-			format.html
-			format.pdf do 
-				pdf = TallySheetPdf.new(@users, @beverages)
-				send_data pdf.render, filename: "tally_sheet.pdf", type: "application/pdf", disposition: "inline"
-			end
-		end
-	end
+  def edit
+  end
 
-	def create
-		require 'thread'
-		# "user" => {user_id => {beverage_id => {"count" => count, "price" => price}}}
-		post = params[:user]
-		mail_queue = Queue.new
-		ActiveRecord::Base.transaction do
-			@users.each do |user|
-				beverages = post[user.id.to_s]
-				tab = user.tabs.build(:paid => false)
-				beverages.each do |id,array|
-					unless array["count"].to_i == 0
-						beverage = Beverage.find_cached(id)
-						tab.beverage_tabs.build(:name => beverage.name, :price => beverage.price, :count => array["count"], :capacity => beverage.capacity) 
-					end
-				end
-				if tab.save
-					mail_queue << [user,tab]
-				end
-			end
-		end
-		Thread.new do
-			while !mail_queue.empty?
-				arr = mail_queue.pop
-				TabMailer.tab_email(current_user,arr[0],arr[1])
-			end
-		end
-		# TODO: better route
-		redirect_to root_url
-	end
+  def update
+    ActiveRecord::Base.transaction do
+      tally_sheet_params.each do |key,tab_data|
+        # delete the user_id from the hash so we don't iterate over it in tab_data.each
+        user_id = tab_data.delete 'user_id'
+        tab = Tab.running.find_or_initialize_by(user_id: user_id)
 
-	def edit_list
-		@new_candidates = User.all.where(:on_beverage_list => false)
-		@delete_candidates = User.all.where(:on_beverage_list => true)
-	end
+        tab_data.each do |k, user_bts|
+          user_bts.each do |k, bt_attributes|
+            # delete the count from the hash so we don't search by it
+            count = (bt_attributes.delete 'count').to_i
+            bt = tab.beverage_tabs.find_or_initialize_by(bt_attributes)
+            if count == 0
+              bt.destroy
+            else
+              bt.count = count
+              bt.save
+            end
+          end
+        end
+        tab.save unless tab.new_record? and tab.total_invoice == 0.0
+      end
+    end
+    redirect_to tally_sheet_url, notice: t('feedback.updated', :model => t('tally_sheet'))
+  end
 
-	def update_list
-		User.where(:id => params['new']).update_all(:on_beverage_list => true)
-		User.where(:id => params['delete']).update_all(:on_beverage_list => false)
-		redirect_to strichliste_edit_url, notice: t('.successful')
-	end
+  # send mails where the tabs' invoice is greater than 0.0
+  # remove tabs that have an invoice == 0
+  def accounting
+    ActiveRecord::Base.transaction do
+      @tabs.each do |tab|
+        if tab.total_invoice > 0
+          TabMailer.tab_email(tab)
+        else
+          tab.destroy
+        end
+      end
+      Tab.running.update_all(:status => 'unpaid')
+    end
+    redirect_to root_url
+  end
 
-	private
-		# TODO: get only the right users (active/on list)
-		def get_users
-			@users = User.all.where(:on_beverage_list => true).order('firstname, lastname')
-		end
+  def edit_list
+    @new_candidates = User.all.where(:on_beverage_list => false)
+    @delete_candidates = User.all.where(:on_beverage_list => true)
+  end
 
-		def get_beverages
-			@beverages = Beverage.available
-		end
+  def update_list
+    User.where(:id => params['new']).update_all(:on_beverage_list => true)
+    User.where(:id => params['delete']).update_all(:on_beverage_list => false)
+    redirect_to tally_sheet_edit_list_url, notice: t('.successful')
+  end
 
-		def has_permission
-			redirect_to root_url, flash => {:error => 'You have no permission'} unless current_user.has_group?('kuehlschrank')
-		end
-	end
+  def print_users
+    respond_to do |format|
+      format.pdf 
+    end
+  end
+
+  def print_items
+    respond_to do |format|
+      format.pdf
+    end
+  end
+
+  private
+    # TODO: sort tabs by username somehow
+    def get_tabs
+      ActiveRecord::Base.transaction do
+        @tabs = []
+        @beverage_tabs = {}
+        get_users
+        get_beverages
+        @users.each do |user|
+          tab = user.tabs.find_or_initialize_by(status: 'running')
+          @beverage_tabs[tab.id] = []
+          @beverages.each do |beverage|
+            @beverage_tabs[tab.id] << tab.beverage_tabs.find_or_initialize_by(name: beverage.name, capacity: beverage.capacity, price: beverage.price)
+          end
+          @beverage_tabs[tab.id].sort_by(&:name)
+          @tabs << tab
+        end
+      end
+    end
+
+    def get_users
+      @users = User.where(:on_beverage_list => true).order('firstname, lastname')
+    end
+
+    def get_beverages
+      @beverages = Beverage.available
+    end
+
+    def has_permission
+      redirect_to root_url, flash => {:error => 'You have no permission'} unless current_user.has_group?('kuehlschrank')
+    end
+
+    def tally_sheet_params
+      params[:tabs]
+    end
+end

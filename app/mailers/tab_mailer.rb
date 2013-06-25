@@ -31,7 +31,7 @@ class TabMailer < ActionMailer::Base
 		@from_user = tab.user
 		@tab = tab
 		mail(
-			from: get_email_with_name(from_user),
+			from: get_email_with_name(@from_user),
 			to: KuehlschrankMail,
 			subject: "#{@from_user.displayed_name} hat eine Rechnung als bezahlt markiert"
 			)

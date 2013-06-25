@@ -5,7 +5,8 @@ class TabsController < ApplicationController
 	before_action :has_permission, only: [:update, :unpaid, :pay, :edit]
 
 	def index
-		@unpaid_tabs = current_user.tabs.unpaid
+    @running_tab = current_user.tabs.running.first
+		@unpaid_tabs = current_user.tabs.unpaid 
 		@paid_tabs = current_user.tabs.paid
 	end
 
@@ -26,21 +27,30 @@ class TabsController < ApplicationController
 	end
 
 	def pay
-		@tab.is_paid
+		@tab.paid
 		@user = @tab.user
 		TabMailer.paid_email(@tab) if @tab.save
-		render :nothing => true
+    respond_to do |format|
+      format.json { render :json => {:feedback => t('.paid_tab', name: @tab.user.displayed_name, total: @tab.total_invoice)} }
+      format.html { redirect_to unpaid_tabs_path }
+    end
 	end
 
   def mark_as_paid
-    @tab.marked_as_paid = true
-    TabMailer.marked_as_paid_email(current_user, @tab) if @tab.save
-    render :nothing => true
-    # redirect_to @tab, notice: 'Tab was marked as paid by you.'
+    @tab.status = 'marked_as_paid'
+    respond_to do |format|
+      if @tab.save
+        TabMailer.marked_as_paid_email(@tab)
+        format.js {}
+        format.html {redirect_to @tab}
+      else
+        format.html {render :edit}
+      end
+    end
   end
 
 	def unpaid
-		@tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname')
+		@tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname') 
 	end
 
 	  private
