@@ -165,3 +165,113 @@ function newMotionHTML(index) {
 	motionLevels[index] = motionLevels[index] + 1;
 	return html
 }
+
+
+	$(function() {
+		$( "#name_of_keeper_of_the_minutes" ).autocomplete({
+			source: availableUsers,
+			change: function( event, ui ) {
+				$("#name_of_keeper_of_the_minutes").val(ui.item.label)
+				$("#minute_keeper_of_the_minutes_id").val(ui.item.value)
+			}
+		});
+		$("#name_of_chairperson").autocomplete({
+			source: availableUsers,
+			change: function( event, ui ) {
+				$("#name_of_chairperson").val(ui.item.label)
+				$("#minute_chairperson_id").val(ui.item.value)
+			}
+		});
+
+		// setting up redactor
+		buttons = [
+			'bold', 'italic', 'underline', 'deleted', '|',
+			'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+			'alignleft', 'aligncenter', 'alignright', 'justify', '|',
+			'html'
+		]
+		$(".redactor-field textarea").redactor({
+			lang: 'de',
+			buttons: buttons,
+			minHeight: 350,
+		});
+
+		// setting up chosen
+		$(".chosen-field select").chosen({ placeholder_text: "Auswählen", allow_single_deselect: true });
+
+		// calculating presence of a quorum
+		$("#attendance .attendance-checkbox").change(function(evt){
+			updateAttandanceStatus();
+		});
+		updateAttandanceStatus();
+
+		// register the remove function
+		$("section button.remove_motion").click(function() {
+			$(this).parent(".motion").detach();
+		})
+		function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+
+		$( "#minute_guests" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).data( "ui-autocomplete" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            availableGuests, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
+	});
+
+	function updateAttandanceStatus(){
+		checkboxes = $("#attendance .attendance-checkbox");
+		total = checkboxes.length;
+		present = checkboxes.filter(":checked").length;
+		percentage = present/total*100;
+		$("#attendance-total").text(total);
+		$("#attendance-present").text(present);
+		$("#attendance-percentage").text(percentage.toFixed(1));
+		if (percentage > critical_mass) {
+			$("#attendance-quorate").show();
+			$("#attendance-nohouse").hide();
+		} else {
+			$("#attendance-quorate").hide();
+			$("#attendance-nohouse").show();
+		}
+
+		// also: update the value of the input field
+		// since that phunny css thing doesn't do it :\
+		checkboxes.each(function() {
+			if(this.checked) {
+				$(this).attr("checked", "checked")
+			} else {
+				$(this).removeAttr("checked")
+			}
+		})
+	}
