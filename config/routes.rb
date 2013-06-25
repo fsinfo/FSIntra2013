@@ -3,14 +3,15 @@
 Fsintra::Application.routes.draw do
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users' 
   resources :personen, except: [:destroy], :as => 'people', :controller => 'people'
-	resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
-		get 'offen'  => 'tabs#unpaid', :on => :collection, :as => 'unpaid'
+  resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
+    get 'offen'  => 'tabs#unpaid', :on => :collection, :as => 'unpaid'
     # get 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
-		put 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
-    post 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
+    put 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
+    # FIXME put or post? one of them must be wrong (as rake says...)
+    #post 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
     put 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member, :as => 'mark_as_paid'
     # get 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member, :as => 'mark_as_paid'
-	end
+  end
 
 # Tally sheet
   get '/tally_sheet' => 'tally_sheets#edit'
