@@ -1,6 +1,8 @@
 # NOTE: only doing this in development as some production environments (Heroku)
 # NOTE: are sensitive to local FS writes, and besides -- it's just not proper
 # NOTE: to have a dev-mode tool do its thing in production.
+Dir["#{Gem::Specification.find_by_name("annotate").full_gem_path}/**/tasks/**/*.rake"].each {|ext| load ext} if Rails.env.development?
+
 if(Rails.env.development?)
   task :set_annotation_options do
     ENV['position_in_class']    = "before"

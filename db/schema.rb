@@ -131,7 +131,9 @@ ActiveRecord::Schema.define(version: 20130609162923) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status",     default: "running"
+    t.boolean  "paid"
+    t.boolean  "marked_as_paid"
+    t.string   "status",         default: "running"
   end
 
   create_table "user_tabs", id: false, force: true do |t|

@@ -2,11 +2,13 @@
 #
 # Table name: tabs
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  status     :string(255)      default("running")
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  paid           :boolean
+#  marked_as_paid :boolean
+#  status         :string(255)      default("running")
 #
 
 class Tab < ActiveRecord::Base

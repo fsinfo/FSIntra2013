@@ -12,6 +12,11 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  item_id    :integer
+#  approved   :boolean          default(FALSE)
+#
+# Indexes
+#
+#  index_minutes_motions_on_mover_id  (mover_id)
 #
 
 class Minutes::Motion < ActiveRecord::Base

@@ -10,6 +10,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  minute_id              :integer
+#  approved               :boolean          default(FALSE)
 #
 
 class Minutes::MinuteApproveMotion < ActiveRecord::Base

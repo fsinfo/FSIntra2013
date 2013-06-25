@@ -8,6 +8,7 @@
 #  updated_at     :datetime
 #  paid           :boolean
 #  marked_as_paid :boolean
+#  status         :string(255)      default("running")
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

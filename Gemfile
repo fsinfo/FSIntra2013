@@ -36,6 +36,13 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
+group :development do
+	gem 'bullet'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+end
+
 gem 'net-ldap'
 gem 'annotate'
 gem 'haml'
