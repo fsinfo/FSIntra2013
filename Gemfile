@@ -69,3 +69,5 @@ gem 'rqrcode-rails3'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'acts-as-taggable-on'

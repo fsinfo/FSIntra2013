@@ -4,7 +4,12 @@ class PeopleController < ApplicationController
   before_action :correct_target, except: [:index, :show, :new, :create]
 
   def index
-    @people = Person.all.order(:firstname,:lastname)
+    if params[:tag]
+      @tag = params[:tag]
+      @people = Person.tagged_with(@tag)
+    else
+      @people = Person.all.order(:firstname,:lastname)
+    end
   end
 
   def show
@@ -48,7 +53,7 @@ class PeopleController < ApplicationController
     end
 
     def person_params 
-      params.require(:person).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc)
+      params.require(:person).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc, :tag_list)
     end
 
     def correct_target

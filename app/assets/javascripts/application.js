@@ -18,6 +18,5 @@
 //= require redactor.min
 //= require chosen.jquery.min
 //= require chosen-select
-//= require_tree .
 
 $(document).foundation();

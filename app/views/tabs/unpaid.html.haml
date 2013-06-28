@@ -25,3 +25,6 @@
 					= number_to_currency tab.total_invoice
 				%td.text-center.no-linebreak
 					= link_to content_tag(:span, 'Hat bezahlt', :class => "icon-ok"), is_paid_tab_path(tab),:method => 'PUT', :remote => true, :class => 'tab_paid', :"data-id" => tab.id
+- content_for :scripts do
+	= javascript_include_tag 'tabs'
+

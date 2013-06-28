@@ -55,6 +55,10 @@
 			<td><%= @person.misc %></td>
 		</tr>
 		<tr>
+			<th><%= t 'tag_list' %></th>
+			<td><%= render_tag_list @person.tag_list %></td>
+		</tr>
+		<tr>
 			<th><%= t 'people.qrcode' %></th>
 			<td colspan="3">
 				<div id="qrcode"><%= tag 'embed', :src => person_path(@person, :format => 'svg') %></div>

@@ -1,5 +1,6 @@
 <div class="actions">
 	<h1><%=t '.headline' %></h1>
+	<%= link_to content_tag(:span, @tag, :class => "icon-cancel-1"), people_path, :class => "button small round secondary" if @tag %>
 	<%= link_to content_tag(:span, t('.new_entry'), :class => "icon-plus"), new_person_path, :class => "button small round secondary" %>
 </div>
 
@@ -18,6 +19,7 @@
 			<th><%=t Person.human_attribute_name :lastname %></th>
 			<th><%=t Person.human_attribute_name :email %></th>
 			<th><%=t Person.human_attribute_name :phone %></th>
+			<th><%=t 'tag_list' %> </th>
 			<th colspan="2" class="text-center"><%= t 'actions.other' %></th>
 		</tr>
 	</thead>
@@ -28,6 +30,7 @@
 				<td><%= person.lastname %></td>
 				<td><%= person.email %></td>
 				<td><%= person.phone %></td>
+				<td><%= render_tag_list person.tag_list %></td>
 				<td class="center no-linebreak">
 					<%= link_to content_tag(:span, t('people.details'), :class => "icon-info-circled"), person_path(person) %>
 				</td>
