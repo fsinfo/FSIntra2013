@@ -11,4 +11,6 @@ de:
       save: Aktualisieren
       chosen:
         placeholder: Wähle Personen    
+    update_list:
+      updated: Strichliste erfolgreich aktualisiert
   tally_sheet: Strichliste
