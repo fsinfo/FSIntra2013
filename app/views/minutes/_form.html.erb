@@ -1,3 +1,7 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag 'minutes' %>
+<% end %>
+
 <%= form_for(@minute) do |f| %>
 	<% if @minute.errors.any? %>
 		<div id="error_explanation">
