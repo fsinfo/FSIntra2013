@@ -15,7 +15,7 @@
 	that don't support the new html5 date-field (i.e. Firefox) %>
 	<div class="inline-field">
 			<%= f.label :date, :class=>"prefix" %>
-			<%= f.date_field :date %>
+			<%= f.date_field :date, { :style => 'width: 400px' } %>
 	</div>
 	
 	<%# The value of the selected option is the id of a fsr member (user) %>
@@ -159,20 +159,34 @@
 				<% end %>
 
 				<%= fi.fields_for :minute_approve_motions do |mam| %>
-					<%= mam.hidden_field :minute_id %>
-					<p>
-					  Protokoll vom <%= l mam.object.minute.date, :format => "%d.%m.%Y" %> genehmigen:
+					<% mam.hidden_field :minute_id %>
+					<h5>Protokoll vom <%= l mam.object.minute.date, :format => "%d.%m.%Y" %> genehmigen:</h5>
+			  	<div class="row">
+				  	<div class="inline-field small-3 columns">
+					  	<%= mam.label :pro %>
 					  	<%= mam.text_field :pro %>
+					  </div>
+					  <div class="inline-field small-3 columns">
+					  	<%= mam.label :abs %>
 					  	<%= mam.text_field :abs %>
+					  </div>
+					  <div class="inline-field small-3 columns">
+					  	<%= mam.label :con %>
 					  	<%= mam.text_field :con %>
+						</div>
+					  <div class="small-3 columns">
+					  	<%= mam.label :approved, :class => 'label' %>
 					  	<%= mam.check_box :approved %>
-					  <ul>
-					  Tops dieser Sitzung:
+				  	</div>
+				  </div>
+			  	<div class="row"><p>Tagesordnung:</p>
+				  	<ol class="disc">
 					  <% mam.object.minute.items.each do |top| %> 
-  						<li><%= top.title %></li>
+							<li><%= top.title %></li>
 					  <% end %>
-						</ul>
-					</p>
+						</ol>
+					</div>
+					<hr />
 				<% end %>
 			</div>
 		</section>

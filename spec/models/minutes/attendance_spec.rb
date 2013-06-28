@@ -2,7 +2,6 @@
 #
 # Table name: minutes_attendances
 #
-#  id        :integer          not null, primary key
 #  absent    :string(255)
 #  user_id   :integer
 #  minute_id :integer
