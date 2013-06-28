@@ -20,5 +20,4 @@ class Minutes::MinuteApproveMotion < ActiveRecord::Base
 
 	# the item of the minute of the approving session
 	belongs_to :minute_approve_item
-	validates_presence_of :minute_approve_item
 end

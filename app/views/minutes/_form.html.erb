@@ -159,7 +159,7 @@
 				<% end %>
 
 				<%= fi.fields_for :minute_approve_motions do |mam| %>
-					<% mam.hidden_field :minute_id %>
+					<%= mam.hidden_field :minute_id %>
 					<h5>Protokoll vom <%= l mam.object.minute.date, :format => "%d.%m.%Y" %> genehmigen:</h5>
 			  	<div class="row">
 				  	<div class="inline-field small-3 columns">
