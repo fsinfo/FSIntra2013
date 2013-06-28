@@ -58,7 +58,7 @@ class TallySheetsController < ApplicationController
   def update_list
     User.where(:id => params['new']).update_all(:on_beverage_list => true)
     User.where(:id => params['delete']).update_all(:on_beverage_list => false)
-    redirect_to tally_sheet_edit_list_url, notice: t('.successful')
+    redirect_to tally_sheet_edit_list_url, notice: t('.updated')
   end
 
   def print_users
