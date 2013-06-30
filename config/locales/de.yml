@@ -17,6 +17,7 @@ de:
     updated: '%{model} erfolgreich geändert.'
     destroyed: '%{model} erfolgreich gelöscht.'
     form_error: 'Es gab %{count} Fehler, das Formular konnte deshalb nicht gespeichert werden.'
+  tag_list: 'Tags'
 # Copied the following translation from:
 # https://github.com/svenfuchs/rails-i18n
   date:

@@ -1,7 +1,7 @@
 <%= form_for(@person, :html => {:class => "inline"}) do |f| %>
 	<% if @person.errors.any? %>
 		<div id="error_explanation">
-			<h2><%= pluralize(@person.errors.count, "error") %> prohibited this user from being saved:</h2>
+		<h2><%=t 'feedback.form_error', :count => @person.errors.count %></h2>
 			<ul>
 				<% @person.errors.full_messages.each do |msg| %>
 					<li><%= msg %></li>
@@ -25,11 +25,20 @@
 	<%= f.label :phone %>
 	<%= f.text_field :phone %>
 	<%= f.label :birthday %>
-	<%= f.date_field :birthday, :start_year => 1950, :end_year => Date.today.year %>
+	<%= f.date_field :birthday, :start_year => 1940, :end_year => Date.today.year %>
 	<%= f.label :misc %>
 	<%= f.text_area :misc %>
+	<%= f.label :tag_list, t('tag_list') %>
+	<%= f.text_field :tag_list, :id => 'tags' %>
 
 	<div class="submit">
-		<%= f.submit "Eintrag speichern", :class => 'button' %>
+		<%= f.submit :class => 'button' %>
 	</div>
 <% end %>
+
+<% content_for :scripts do %>
+	<%= javascript_include_tag 'people' %>
+<% end %>
+<script defer="defer">
+	var availableTags = [<%= raw ActsAsTaggableOn::Tag.all.map{ |t| "{label: '#{t.name}'}"}.join(', ') %> ];
+</script>

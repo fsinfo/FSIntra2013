@@ -19,7 +19,7 @@ class UsersController < PeopleController
     end
 
     def user_params
-      params.require(:user).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc)
+      params.require(:user).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc, :tag_list)
     end
 
 		def correct_user

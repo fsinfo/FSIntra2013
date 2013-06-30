@@ -4,7 +4,7 @@ de:
     vcard: vCard
     details: Details
     index:
-      headline: Adressbuch
+      headline: "Adressbuch"
       new: Neuen Kontakt anlegen
       new_entry: Neuen Eintrag anlegen
     edit:
