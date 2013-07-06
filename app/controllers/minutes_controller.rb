@@ -14,8 +14,11 @@ class MinutesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = MinutePdf.new(@minute, view_context)
-        send_data pdf.render, filename: "TODO_Protokollnamenüberlegen.pdf", type: "application/pdf", disposition: inline
+        render :pdf => "Protokoll_#{@minute.date.to_date}.pdf",
+        :template => "minutes/show",
+        :handlers => "erb",
+        :formats => "pdf"
+        # :formats => "html"
       end
     end
   end
@@ -131,7 +134,7 @@ class MinutesController < ApplicationController
         # don't approve yourself
         @approvable_minutes = Minute.approvable.where("date <= :date", :date => @minute.date).where.not(:id => @minute.id)
       else
-        @approvable_minutes = Minute.approvable.where("date <= #{Date.today}")
+        @approvable_minutes = Minute.approvable.where("date <= '#{Date.today}'")
       end
 
       @minute.minute_approve_item.minute_approve_motions.map { |x| x.minute }.inspect

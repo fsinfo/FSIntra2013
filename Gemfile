@@ -52,7 +52,14 @@ gem 'haml-rails'
 # for pdf-export
 gem 'prawn'
 gem 'prawnto'
+
+# barcodes
 gem 'barby'
+
+# for generating pdfs of html 
+# wkhtmltopdf needs to be installed and the path might be explicitly set
+# see: https://github.com/mileszs/wicked_pdf
+gem 'wicked_pdf'
 
 # for vcards
 gem 'vpim-rails', :git => 'https://github.com/fraser/vpim-rails'
