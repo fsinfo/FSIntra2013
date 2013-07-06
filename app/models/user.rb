@@ -31,6 +31,8 @@ class User < Person
 
 	has_many :minutes
 
+	has_many :attendances
+
 	def debts
 		self.tabs.unpaid.map(&:total_invoice).inject(0,:+)
 	end

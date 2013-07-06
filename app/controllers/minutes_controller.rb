@@ -151,6 +151,7 @@ class MinutesController < ApplicationController
       params.require(:minute).permit(:date,
                                      :keeper_of_the_minutes_id,
                                      :chairperson_id,
+                                     :attendee_ids,
                                      {
                                         :items_attributes => [
                                           :id,
