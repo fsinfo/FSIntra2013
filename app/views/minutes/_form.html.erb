@@ -118,24 +118,30 @@
 							<div class=>
 								<%= fm.text_area :rationale, :placeholder => "foo" %>
 							</div>
-							<div class="inline-field chosen-field">
-								<%= fm.label :mover_id, 'Antragssteller' %>
-								<% fm.text_field :mover_id, :placeholder => "Antragssteller" %>
-								<%= fm.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
+							<div class="row">
+								<div class="columns inline-field chosen-field">
+									<%= fm.label :mover_id, 'Antragssteller' %>
+									<% fm.text_field :mover_id, :placeholder => "Antragssteller" %>
+									<%= fm.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
+								</div>
 							</div>
-							<div class="row inline-field">
-								<div class="large-4 columns">
+							<div class="row">
+								<div class="small-3 columns inline-field">
 									<%= fm.label :pro %>
 									<%= fm.text_field :pro, :placeholder => "Dafür" %>
 								</div>
-								<div class="large-4 columns">
+								<div class="small-3 columns inline-field">
 									<%= fm.label :abs %>
 									<%= fm.text_field :abs, :placeholder => "Enhaltung" %>
 								</div>
-								<div class="large-4 columns">
+								<div class="small-3 columns inline-field">
 									<%= fm.label :con %>
 									<%= fm.text_field :con, :placeholder => "Dagegen" %>
 								</div>
+							  <div class="small-3 columns">
+							  	<%= fm.label :approved, :class => 'label' %>
+							  	<%= fm.check_box :approved %>
+						  	</div>
 							</div>
 							<% if fm.object.new_record? %>
 							  <button type="button" class="small button remove_motion" title="Doch nicht">-</button>
