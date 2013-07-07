@@ -43,3 +43,7 @@ de:
         pro: Dafür
         abs: Enthaltung
         con: Dagegen
+      minutes/minute_approve_motion:
+        pro: Dafür
+        abs: Enthaltung
+        con: Dagegen

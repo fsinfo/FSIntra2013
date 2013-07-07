@@ -119,24 +119,24 @@
 								<%= fm.text_area :rationale, :placeholder => "foo" %>
 							</div>
 							<div class="row">
-								<div class="columns inline-field chosen-field">
+								<div class="inline-field chosen-field large-12 columns">
 									<%= fm.label :mover_id, 'Antragssteller' %>
 									<% fm.text_field :mover_id, :placeholder => "Antragssteller" %>
 									<%= fm.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
 								</div>
 							</div>
 							<div class="row">
-								<div class="small-3 columns inline-field">
+								<div class="small-3 columns inline-field minute-motion">
 									<%= fm.label :pro %>
-									<%= fm.text_field :pro, :placeholder => "Dafür" %>
+									<%= fm.text_field :pro, :class => "", :placeholder => "Dafür" %>
 								</div>
-								<div class="small-3 columns inline-field">
+								<div class="small-3 columns inline-field minute-motion">
 									<%= fm.label :abs %>
-									<%= fm.text_field :abs, :placeholder => "Enhaltung" %>
+									<%= fm.text_field :abs, :class => "", :placeholder => "Enhaltung" %>
 								</div>
-								<div class="small-3 columns inline-field">
+								<div class="small-3 columns inline-field minute-motion">
 									<%= fm.label :con %>
-									<%= fm.text_field :con, :placeholder => "Dagegen" %>
+									<%= fm.text_field :con, :class => "", :placeholder => "Dagegen" %>
 								</div>
 							  <div class="small-3 columns">
 							  	<%= fm.label :approved, :class => 'label' %>
@@ -189,13 +189,6 @@
 					  	<%= mam.check_box :approved %>
 				  	</div>
 				  </div>
-			  	<div class="row"><p>Tagesordnung:</p>
-				  	<ol class="disc">
-					  <% mam.object.minute.items.each do |top| %> 
-							<li><%= top.title %></li>
-					  <% end %>
-						</ol>
-					</div>
 					<hr />
 				<% end %>
 			</div>
