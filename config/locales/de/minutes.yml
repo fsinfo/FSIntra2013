@@ -40,6 +40,7 @@ de:
         title: Titel
         content: Inhalt
       minutes/motion:
+        rationale: Antragstext
         pro: Dafür
         abs: Enthaltung
         con: Dagegen

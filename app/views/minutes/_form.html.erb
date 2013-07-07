@@ -115,14 +115,17 @@
 					<%= fi.fields_for :motions do |fm| %>
 						<div class="motion">
 							<h4>Antrag</h4>
-							<div class=>
-								<%= fm.text_area :rationale, :placeholder => "foo" %>
+							<div class="row">
+								<div class="inline-field columns large-12">
+									<%= fm.label :rationale %>
+									<%= fm.text_area :rationale, :placeholder => "foo" %>
+								</div>
 							</div>
 							<div class="row">
 								<div class="inline-field chosen-field large-12 columns">
 									<%= fm.label :mover_id, 'Antragssteller' %>
 									<% fm.text_field :mover_id, :placeholder => "Antragssteller" %>
-									<%= fm.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id]}, :include_blank => true %>
+									<%= fm.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id]}, { :include_blank => true }, { :style => 'width: 400px' } %>
 								</div>
 							</div>
 							<div class="row">

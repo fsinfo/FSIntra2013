@@ -1,4 +1,19 @@
 /**
+ *
+ */
+function registerNewMotion() {
+	var html = $(newMotionHTML(getActiveSection()));
+	$("section.active div.content").append(html);
+	$(".chosen-field select").chosen({ placeholder_text: "Auswählen", allow_single_deselect: true });
+  
+	// register the remove function
+	$("section.active button.remove_motion").click(function() {
+		$(this).parent(".motion").detach();
+	})
+}
+
+
+/**
  * Adds a new item after the currently displayed one.
  */
 $("#add_new_item").click(function() {
@@ -26,15 +41,7 @@ $("#add_new_item").click(function() {
   // renumber the items
   markItemOrdering()
 
-  $("section.active button.add_new_motion").click(function() {
-		var html = newMotionHTML(getActiveSection());
-		$("section.active div.content").append(html);
-
-		// register the remove function
-		$("section.active button.remove_motion").click(function() {
-			$(this).parent(".motion").detach();
-		})
-		})
+  $("section.active button.add_new_motion").click(registerNewMotion)
 
 
   // Hack, forces foundation to repaint the section tab bar
@@ -88,15 +95,7 @@ $("#move_item_to_right").click(function(){
 /**
  * TODO: Do i need documentataion?
  */
-$("button.add_new_motion").click(function() {
-	var html = newMotionHTML(getActiveSection());
-	$("section.active div.content").append(html);
-
-	// register the remove function
-	$("section.active button.remove_motion").click(function() {
-		$(this).parent(".motion").detach();
-	})
-})
+$("button.add_new_motion").click(registerNewMotion)
 
 
 getActiveSection = function() {
@@ -150,16 +149,48 @@ function markItemOrdering() {
 function newMotionHTML(index) {
 	var mi = motionLevels[index]
 	var html =  '<div class="motion">' +
-							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale">Rationale</label>' +
-							'<textarea id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][rationale]"></textarea>' +
-							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_mover_id">Antragssteller</label>' +
-							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_mover_id" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][mover_id]" type="text" />' + 
-							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_pro">Dafür</label>' +
-							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_pro" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][pro]" type="text" />' +
-							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_abs">Enthaltung</label>' +
-							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_abs" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][abs]" type="text" />' +
-							'<label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con">Dagegen</label>' +
-							'<input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][con]" type="text" />' +
+							'<div class="row">' +
+              '  <div class="inline-field large-12 columns">' +
+							'    <label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale">Antragstext</label>' +
+							'    <textarea id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_rationale" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][rationale]"></textarea>' +
+							'  </div>' +
+							'</div>' +
+
+              /* MOVER */
+              '<div class="row">' +
+              '  <div class="inline-field chosen-field large-12 columns">' +
+							'    <label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_mover_id">Antragssteller</label>' +
+							'    <select id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_mover_id" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][mover_id]" type="text" style="width: 400px">' + 
+							'      <option value=""></option>'
+	for(var i in availableUsers) {
+    html = html + '<option value="' + availableUsers[i].value + '">' + availableUsers[i].label + '</option>';
+	}
+	html = html	+ '    </select>' +
+							'  </div>' +
+							'</div>' +
+							/* /MOVER */
+
+							/* VOTES */
+							'<div class="row">' +
+							'  <div class="small-3 columns inline-field minute-motion">' +
+							'    <label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_pro">Dafür</label>' +
+							'    <input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_pro" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][pro]" type="text" />' +
+							'  </div>' +
+							'  <div class="small-3 columns inline-field minute-motion">' +
+							'    <label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_abs">Enthaltung</label>' +
+							'    <input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_abs" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][abs]" type="text" />' +
+							'  </div>' +
+							'  <div class="small-3 columns inline-field minute-motion">' +
+							'    <label for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con">Dagegen</label>' +
+							'    <input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_con" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][con]" type="text" />' +
+							'  </div>' +
+							'  <div class="small-3 columns">' +
+							'    <label class="label" for="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_approved">Approved</label>' +
+							'    <input id="minute_items_attributes_' + index + '_motions_attributes_' + mi + '_approved" name="minute[items_attributes][' + index + '][motions_attributes][' + mi + '][approved]" type="checkbox" />' +
+							'  </div>' +
+							'</div>' +
+							/* /VOTES */
+
 							'<button type="button" class="small button remove_motion" title="Doch nicht">-</button>' +
 							'</div><hr/>'
 	motionLevels[index] = motionLevels[index] + 1;
@@ -168,20 +199,6 @@ function newMotionHTML(index) {
 
 
 	$(function() {
-		$( "#name_of_keeper_of_the_minutes" ).autocomplete({
-			source: availableUsers,
-			change: function( event, ui ) {
-				$("#name_of_keeper_of_the_minutes").val(ui.item.label)
-				$("#minute_keeper_of_the_minutes_id").val(ui.item.value)
-			}
-		});
-		$("#name_of_chairperson").autocomplete({
-			source: availableUsers,
-			change: function( event, ui ) {
-				$("#name_of_chairperson").val(ui.item.label)
-				$("#minute_chairperson_id").val(ui.item.value)
-			}
-		});
 
 		// setting up redactor
 		buttons = [
