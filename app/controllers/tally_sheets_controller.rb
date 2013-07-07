@@ -63,13 +63,18 @@ class TallySheetsController < ApplicationController
 
   def print_users
     respond_to do |format|
-      format.pdf 
+      format.pdf do
+        render :pdf => "Benutzerliste.pdf"
+      end
     end
   end
 
   def print_items
+    @items = Beverage.available
     respond_to do |format|
-      format.pdf
+      format.pdf do 
+        render :pdf => "Preisliste.pdf"
+      end
     end
   end
 
@@ -108,4 +113,4 @@ class TallySheetsController < ApplicationController
     def tally_sheet_params
       params[:tabs]
     end
-end
+  end

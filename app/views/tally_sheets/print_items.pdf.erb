@@ -1,0 +1,40 @@
+<% require "barby/barcode/code_128" %>
+<% require "barby/outputter/svg_outputter" %>
+
+<% item_prefix = 'item__' %>
+<% barcode_width = 200 %>
+<% barcode_height = 50 %>
+
+<meta charset="utf-8">
+<%= wicked_pdf_stylesheet_link_tag "documents" %>
+
+<style type="text/css">
+  .barcode {
+    width: <%= barcode_width %>;
+    margin-bottom: 15px;
+    text-align: center;
+    float: left;
+    display: block;
+  }
+</style>
+
+<div class="document">
+  <% @items.each do |item| %>
+    <div class="barcode"> 
+      <% barcode = Barby::Code128B.new("#{item_prefix}#{item.id}") %>
+      <img src="data:image/svg+xml;base64,<%= Base64.encode64(barcode.to_svg({:height => barcode_height, :width => barcode_width })) %>"><br />
+      <%= item.name %>
+    </div>
+  <% end %>
+  <div style="clear: both"></div>
+  <hr>
+  <div class="barcode">
+    <img src="data:image/svg+xml;base64,<%= Base64.encode64(Barby::Code128B.new("__accept").to_svg({height: barcode_height, width: barcode_width})) %>"><br />
+    Accept
+  </div>
+    <div class="barcode">
+    <img src="data:image/svg+xml;base64,<%= Base64.encode64(Barby::Code128B.new("__decline").to_svg({height: barcode_height, width: barcode_width})) %>"><br />
+    Decline
+  </div>
+
+</div>

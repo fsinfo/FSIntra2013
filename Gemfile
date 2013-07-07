@@ -49,10 +49,6 @@ gem 'annotate'
 gem 'haml'
 gem 'haml-rails'
 
-# for pdf-export
-gem 'prawn'
-gem 'prawnto'
-
 # barcodes
 gem 'barby'
 
