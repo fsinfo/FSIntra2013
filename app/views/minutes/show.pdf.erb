@@ -1,0 +1,47 @@
+<meta charset="utf-8">
+<%= wicked_pdf_stylesheet_link_tag "documents" %>
+
+<div class="document">
+  <h1>Protokoll der FSR-Sitzung vom <%=l @minute.date.to_date %></h1>
+  <hr>
+
+  <div class="people">
+    Anwesend: <%= @minute.attendees.join(', ') %><br />
+    Entschuldigt: <%= @minute.absentees.join(', ') %><br />
+    Abwesend: <%= @minute.unexcused_absentees.join(', ') %><br />
+    Gäste: <%= @minute.guests.map(&:name).join(', ') %><br />
+    <br />
+    Sitzungsleitung: <%= @minute.chairperson %><br />
+    <br />
+    Protokoll: <%= @minute.keeper_of_the_minutes %>
+    <hr>
+  </div>
+
+  <div class="agenda">
+    <h2>Tagesordnung</h2>
+    <ol>
+      <% @minute.items.each do |item| %>
+      <li><%= item.title.html_safe %></li>
+      <% end %>
+    </ol>
+    Die Tagesordnung wird mit Stimmen angenommen.
+  </div>
+  <hr>
+
+  <div class="items">
+    <% @minute.items.each_with_index do |item,index| %>
+      <h3><%= "TOP #{index}: #{item.title.html_safe}" %></h3>
+      <p><%= item.content.html_safe %></p>
+      <% item.motions.each do |motion| %>
+        Gestellt von: <%= motion.mover %><br />
+        Über: <%= motion.amount %><br />
+        Verwendungszweck: <%= motion.rationale %><br />
+        Abstimmungsergebnis: <%= (motion.approved) ? "Angenommen" : "Abgelehnt" %>
+         <%= "mit #{motion.pro}/#{motion.abs}/#{motion.con} Stimmen" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <hr>
+  Verantwortlich für das Protokoll: <%= @minute.keeper_of_the_minutes %>
+</div>
