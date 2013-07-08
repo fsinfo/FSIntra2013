@@ -73,4 +73,8 @@ gem 'rqrcode-rails3'
 # To use debugger
 # gem 'debugger'
 
+# Tags for the people
 gem 'acts-as-taggable-on'
+
+# CanCan
+gem 'cancan'
