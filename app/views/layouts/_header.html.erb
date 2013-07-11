@@ -2,7 +2,7 @@
 	<nav class="top-bar">
 		<ul class="title-area">
 			<!-- title -->
-			<li class="name"><h1><a href="/">FSIntranet</a></h1></li>
+			<li class="name"><h1><%= link_to 'FSIntranet', root_path %></h1></li>
 			<!-- menu for linearisation -->
 			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
 		</ul>
@@ -10,29 +10,29 @@
 		<section class="top-bar-section">
 			<ul class="right">
 				<li class="active"><a href="#">Aktiv</a></li>
-				<li><%= link_to 'Protokolle', minutes_path %></li>
+				<%= menu_link_to 'Protokolle', minutes_path %>
 				<% if signed_in? %>
-					<li><%= link_to 'Adressbuch', people_path %></li>
+					<%= menu_link_to 'Adressbuch', people_path %>
 					<li class="has-dropdown">
 						<% if can? :manage, :tally_sheet %>
 							<a href="#">Kühlschrank</a>
 							<ul class="dropdown">
-								<li><%= link_to 'Eigene Rechnungen', tabs_path %></li>
-								<li><%= link_to 'Getränke', beverages_path %></li>
-								<li><%= link_to 'Benutzerliste drucken', tally_sheet_print_users_path(:format => :pdf), :target => '_blank' %>
-								<li><%= link_to 'Preisliste drucken', tally_sheet_print_items_path(:format => :pdf), :target => '_blank' %>
-								<li><%= link_to 'Strichliste', tally_sheet_path %></li>
-								<li><%= link_to 'Offene Rechnungen', unpaid_tabs_path %></li>
-								<li><%= link_to 'Strichliste verwalten', tally_sheet_edit_list_path %></li>
+								<%= menu_link_to 'Eigene Rechnungen', tabs_path %>
+								<%= menu_link_to 'Getränke', beverages_path %>
+								<%= menu_link_to 'Benutzerliste drucken', tally_sheet_print_users_path(:format => :pdf), :target => '_blank' %>
+								<%= menu_link_to 'Preisliste drucken', tally_sheet_print_items_path(:format => :pdf), :target => '_blank' %>
+								<%= menu_link_to 'Strichliste', tally_sheet_path %>
+								<%= menu_link_to 'Offene Rechnungen', unpaid_tabs_path %>
+								<%= menu_link_to 'Strichliste verwalten', tally_sheet_edit_list_path %>
 							</ul>
 						<% else %>
-							<li><%= link_to 'Rechnungen', tabs_path %></li>
+							<%= menu_link_to 'Rechnungen', tabs_path %>
 						<% end %>
 					</li>
-					<li><%= link_to 'Profil', person_path(current_user) %></li>
-					<li><%= link_to 'Logout', logout_path, :method => :delete %></li>
+					<%= menu_link_to 'Profil', person_path(current_user) %>
+					<%= menu_link_to 'Logout', logout_path, :method => :delete %>
 				<% else %>
-					<li><%= link_to 'Login', login_path %></li>
+					<%= menu_link_to 'Login', login_path %>
 				<% end %>
 			</ul>
 		</section>

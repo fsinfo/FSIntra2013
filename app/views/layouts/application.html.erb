@@ -16,7 +16,7 @@
 		<!-- Set the viewport width to device width for mobile -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+		<title><%= full_title(yield :title) %></title>
 
 		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 		<%= csrf_meta_tags %>
