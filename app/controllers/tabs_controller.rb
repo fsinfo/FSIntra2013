@@ -14,7 +14,7 @@ class TabsController < ApplicationController
 
   def update
     if @tab.update(tab_params)
-      redirect_to @tab, notice: 'Tab was successfully updated.'
+      redirect_to @tab, notice: t('feedback.updated', model: Tab.model_name.human)
     else
       render action: 'edit'
     end
@@ -48,7 +48,7 @@ class TabsController < ApplicationController
   end
 
   def unpaid
-    @tabs = Tab.unpaid.joins(:user).includes(:beverage_tabs).order('people.firstname','people.lastname') 
+    @tabs = Tab.unpaid.includes(:beverage_tabs, :user).order('people.firstname','people.lastname') 
   end
 
   private

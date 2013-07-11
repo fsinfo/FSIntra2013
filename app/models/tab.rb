@@ -10,33 +10,31 @@
 #
 
 class Tab < ActiveRecord::Base
-	STATUSES = ['paid', 'marked_as_paid', 'unpaid', 'running']
+	STATUSES = [STATUS_PAID = 'paid', STATUS_MARKED_AS_PAID = 'marked_as_paid', STATUS_UNPAID = 'unpaid', STATUS_RUNNING = 'running']
 	has_many :beverage_tabs, :dependent => :delete_all
 	belongs_to :user
 
-	scope :paid, -> { where(status: 'paid').order('created_at DESC') }
-	scope :unpaid, -> { where(status: ['marked_as_paid','unpaid']).order('created_at DESC') }
-	scope :running, -> { where(status: 'running') }
+	scope :paid, -> { where(status: Tab::STATUS_PAID) }
+	scope :unpaid, -> { where(status: [Tab::STATUS_MARKED_AS_PAID, Tab::STATUS_UNPAID]) }
+	scope :running, -> { where(status: Tab::STATUS_RUNNING) }
+	validates :status, inclusion: {in: STATUSES}
 
-	# accepts_nested_attributes_for :beverage_tabs, :reject_if => lambda { |bt| bt.count == 0 }
 	accepts_nested_attributes_for :beverage_tabs
 
-	default_scope -> { includes(:beverage_tabs) }
-
 	def paid
-		self.status = 'paid'
+		self.status = Tab::STATUS_PAID
 	end
 
 	def is_paid?
-		self.status == 'paid'
+		self.status == Tab::STATUS_PAID
 	end
 
 	def marked_as_paid
-		self.status = 'marked_as_paid'
+		self.status = Tab::STATUS_MARKED_AS_PAID
 	end
 
 	def is_marked_as_paid?
-		self.status == 'marked_as_paid'
+		self.status == Tab::STATUS_MARKED_AS_PAID
 	end
 
 	def total_invoice

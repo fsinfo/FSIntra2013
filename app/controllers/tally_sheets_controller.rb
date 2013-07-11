@@ -13,7 +13,7 @@ class TallySheetsController < ApplicationController
       tally_sheet_params.each do |key,tab_data|
         # delete the user_id from the hash so we don't iterate over it in tab_data.each
         user_id = tab_data.delete 'user_id'
-        tab = Tab.running.find_or_initialize_by(user_id: user_id)
+        tab = Tab.running.includes(:beverage_tabs).find_or_initialize_by(user_id: user_id)
 
         tab_data.each do |k, user_bts|
           user_bts.each do |k, bt_attributes|
@@ -24,7 +24,6 @@ class TallySheetsController < ApplicationController
               bt.destroy
             else
               bt.count = count
-              bt.save
             end
           end
         end
@@ -47,7 +46,7 @@ class TallySheetsController < ApplicationController
       end
       Tab.running.update_all(:status => 'unpaid')
     end
-    redirect_to root_url
+    redirect_to unpaid_tabs_path
   end
 
   def edit_list
