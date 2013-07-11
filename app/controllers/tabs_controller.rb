@@ -3,9 +3,9 @@ class TabsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @running_tab = current_user.tabs.running.first
-    @unpaid_tabs = current_user.tabs.unpaid 
-    @paid_tabs = current_user.tabs.paid
+    @running_tab = current_user.tabs.running.includes(:beverage_tabs).first
+    @unpaid_tabs = current_user.tabs.unpaid.includes(:beverage_tabs)
+    @paid_tabs = current_user.tabs.paid.includes(:beverage_tabs)
   end
 
   def show
