@@ -1,7 +1,6 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update]
   before_action :signed_in_user
-  before_action :correct_target, except: [:index, :show, :new, :create]
+  load_and_authorize_resource
 
   def index
     if params[:tag]
@@ -48,15 +47,7 @@ class PeopleController < ApplicationController
   end
 
   private
-    def set_person
-      @person = Person.find(params[:id])
-    end
-
     def person_params 
       params.require(:person).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc, :tag_list)
-    end
-
-    def correct_target
-      redirect_to root_url unless @person.type.nil? or current_user?(@person)
     end
 end

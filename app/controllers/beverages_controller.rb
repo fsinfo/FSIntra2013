@@ -1,27 +1,21 @@
 class BeveragesController < ApplicationController
-  before_action :set_beverage, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_user
-  before_action :check_permission
+  load_and_authorize_resource
 
-  # GET /beverages
   def index
     @beverages = Beverage.all
   end
 
-  # GET /beverages/1
   def show
   end
 
-  # GET /beverages/new
   def new
     @beverage = Beverage.new
   end
 
-  # GET /beverages/1/edit
   def edit
   end
 
-  # POST /beverages
   def create
     # convert_params beverage_params
     @beverage = Beverage.new(beverage_params)
@@ -33,9 +27,7 @@ class BeveragesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /beverages/1
   def update
-    # convert_params beverage_params
     if @beverage.update(beverage_params)
       redirect_to @beverage, notice: t('feedback.updated', model: Beverage.model_name.human)
     else
@@ -49,21 +41,12 @@ class BeveragesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_beverage
-      @beverage = Beverage.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def beverage_params
+      # Transform user input to match the expected format (i.e. 123,0 € => 123.0)
       params[:beverage][:capacity].gsub!(/,/,'.')
       params[:beverage][:capacity].delete!('\s*l$')
       params[:beverage][:price].gsub!(/,/,'.')
       params[:beverage][:price].delete!('€\s')
       params.require(:beverage).permit(:name, :description, :available, :price, :capacity)
-    end
-
-    def check_permission
-      redirect_to root_url unless current_user.has_group?('kuehlschrank')
     end
 end

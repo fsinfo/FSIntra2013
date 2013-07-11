@@ -1,9 +1,9 @@
 class TallySheetsController < ApplicationController
-  before_action :signed_in_user, :has_permission
+  before_action :signed_in_user
+  authorize_resource :class => false
   before_action :get_users, only: [:print_users]
   before_action :get_beverages, only: [:print_items]
   before_action :get_tabs, only: [:edit, :update, :accounting]
-  before_action :tally_sheet_params, only: :update
 
   def edit
   end
@@ -104,10 +104,6 @@ class TallySheetsController < ApplicationController
 
     def get_beverages
       @beverages = Beverage.available
-    end
-
-    def has_permission
-      redirect_to root_url, flash => {:error => 'You have no permission'} unless current_user.has_group?('kuehlschrank')
     end
 
     def tally_sheet_params

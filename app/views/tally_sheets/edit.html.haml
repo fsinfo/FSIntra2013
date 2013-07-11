@@ -25,4 +25,4 @@
                 = bf.hidden_field :price
   = submit_tag t('.save'), class: 'button', data: {disable_with: 'Saving...'}
 
-= link_to t('.accounting'), tally_sheet_accounting_path, method: 'post', class: 'button', data: {disable_with: 'Accounting...'}, confirm: t(".saved")
+= link_to t('.accounting'), tally_sheet_accounting_path, method: 'post', class: 'button', data: {disable_with: 'Accounting...', confirm: t(".saved")}

@@ -1,5 +1,3 @@
-require 'fs_ldap'
-
 module SessionsHelper
 	def login(user)
 		cookies[:remember_token] = {
