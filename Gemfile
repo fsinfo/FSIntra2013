@@ -31,10 +31,17 @@ gem 'jbuilder', '~> 1.0.1'
 gem 'quiet_assets', :group => :development
 gem 'faker', :group => :development
 
+group :test do
+  gem 'database_cleaner'
+end
+
 group :development, :test do
   gem 'capybara'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'guard-rspec'
+  gem 'spork-rails', github: 'sporkrb/spork-rails'
+  gem 'guard-spork'
 end
 
 group :development do

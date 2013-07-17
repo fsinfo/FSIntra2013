@@ -12,9 +12,9 @@
 require 'spec_helper'
 
 describe Tab do
-  it "has an invoice greater than 0" do
-    tab = FactoryGirl.build :tab, :with_beverage_tabs
-    tab.beverage_tabs = []
-    expect(tab).to be_invalid
+  it "can only be one running tab per user" do
+    tab = FactoryGirl.create :tab
+    tab2 = FactoryGirl.build :tab, user: tab.user
+    expect(tab2).to be_invalid
   end
 end

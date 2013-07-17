@@ -17,7 +17,7 @@ class Tab < ActiveRecord::Base
 	scope :paid, -> { where(status: Tab::STATUS_PAID) }
 	scope :unpaid, -> { where(status: [Tab::STATUS_MARKED_AS_PAID, Tab::STATUS_UNPAID]) }
 	scope :running, -> { where(status: Tab::STATUS_RUNNING) }
-	validates :status, inclusion: {in: STATUSES}
+	validates :status, inclusion: {in: STATUSES}, uniqueness: {scope: :user_id}
 
 	accepts_nested_attributes_for :beverage_tabs
 
