@@ -9,11 +9,9 @@ class TabsController < ApplicationController
   end
 
   def show
-    @beverage_tabs = @tab.beverage_tabs
   end
 
   def update
-    puts tab_params.inspect
     if @tab.update(tab_params)
       redirect_to @tab, notice: t('feedback.updated', model: Tab.model_name.human)
     else

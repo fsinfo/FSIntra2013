@@ -68,7 +68,7 @@ class Person < ActiveRecord::Base
 	    else
 	    	next_birthday = self.birthday.change(year: Date.today.year).to_time
 	    end
-	    return next_birthday - DateTime.now.midnight
+	    return next_birthday - Time.now
 	  else
 	  	return Float::MAX
 	  end

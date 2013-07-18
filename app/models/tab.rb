@@ -18,7 +18,6 @@ class Tab < ActiveRecord::Base
 	scope :unpaid, -> { where(status: [Tab::STATUS_MARKED_AS_PAID, Tab::STATUS_UNPAID]) }
 	scope :running, -> { where(status: Tab::STATUS_RUNNING) }
 	validates :status, inclusion: {in: STATUSES}
-	validate :only_one_running_tab_per_user, on: :create
 
 	accepts_nested_attributes_for :beverage_tabs
 
@@ -41,11 +40,4 @@ class Tab < ActiveRecord::Base
 	def total_invoice
 		self.beverage_tabs.inject(0.0) {|sum,beverage_tab| sum += beverage_tab.count * beverage_tab.price }
 	end
-
-	private
-		def only_one_running_tab_per_user
-			tabs = Tab.running.map{|tab| tab.user_id}
-			id_count = tabs.count(user_id)
-			errors.add(:status) if id_count >= 1
-		end
 end
