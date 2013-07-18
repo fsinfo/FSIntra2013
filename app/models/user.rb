@@ -20,6 +20,8 @@
 #  on_beverage_list :boolean          default(FALSE)
 #
 
+require 'fs_ldap' if ['production', 'development'].include? Rails.env
+
 class User < Person
 	before_save :create_remember_token 
 	before_validation :fill_with_ldap

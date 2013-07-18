@@ -6,7 +6,7 @@ FactoryGirl.define do
     street    'Street'
     zip       '12345'
     city      'City'
-    sequence (:email) { |n| "#{n}@fachschaft.cs.uni-kl.de" }
+    sequence (:email) { |n| "user_#{n}@fachschaft.cs.uni-kl.de" }
     phone     ''
     birthday  Date.new(1980,12,12)
     misc      'Lorem ipsum misc'

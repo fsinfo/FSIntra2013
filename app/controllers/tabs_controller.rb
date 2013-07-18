@@ -13,6 +13,7 @@ class TabsController < ApplicationController
   end
 
   def update
+    puts tab_params.inspect
     if @tab.update(tab_params)
       redirect_to @tab, notice: t('feedback.updated', model: Tab.model_name.human)
     else
@@ -53,6 +54,6 @@ class TabsController < ApplicationController
 
   private
     def tab_params
-      params.require(:tab).permit(:paid)
+      params.require(:tab).permit(:paid, :status, { :beverage_tabs_attributes => [:id, :count] } )
     end
 end

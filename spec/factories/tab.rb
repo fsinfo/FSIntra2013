@@ -5,10 +5,11 @@ FactoryGirl.define do
     trait(:running) {status Tab::STATUS_RUNNING}
 
     trait :with_beverage_tabs do
-      after :create do |tab|
+      after :build do |tab| 
         FactoryGirl.create_list :beverage_tab, 5, :tab => tab
       end
     end
-  end
 
+    trait(:invalid) { status 'invalid' }
+  end
 end
