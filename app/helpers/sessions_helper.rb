@@ -1,9 +1,11 @@
 module SessionsHelper
 	def login(user)
+		remember_token = User.new_remember_token
 		cookies[:remember_token] = {
-			:value => user.remember_token,
+			:value => remember_token,
 			:expires => 1.day.from_now
 		}
+		user.update_column(:remember_token, User.encrypt(remember_token))
 		self.current_user = user
 	end
 
@@ -12,7 +14,8 @@ module SessionsHelper
 	end
 
 	def current_user
-		@current_user ||= User.find_by(:remember_token => cookies[:remember_token])
+		remember_token = User.encrypt(cookies[:remember_token])
+		@current_user ||= User.find_by(remember_token: remember_token)
 	end
 
 	def current_user?(user)

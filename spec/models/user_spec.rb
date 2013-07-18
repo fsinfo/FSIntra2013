@@ -28,4 +28,10 @@ describe User do
     user.email = ''
     expect(user).to be_invalid
   end
+
+  it "has a unique email" do
+    user = FactoryGirl.create(:user)
+    user2 = FactoryGirl.build(:user, email: user.email)
+    expect(user2).to be_invalid
+  end
 end

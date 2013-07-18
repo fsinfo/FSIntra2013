@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :user do 
     firstname 'Firstname'
+    sequence(:loginname) { |n| "loginname_#{n}"}
     sequence(:lastname) { |n| "Lastname #{id}" }
     street    'Street'
     zip       '12345'
@@ -12,6 +13,10 @@ FactoryGirl.define do
 
     factory :user_on_beverage_list do
       on_beverage_list true
+    end
+
+    trait(:kuehlschrank) do
+      after(:build) { |user| FsLdap.add_groups(user.loginname, 'kuehlschrank') }
     end
   end
 end

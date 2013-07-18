@@ -9,6 +9,9 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'database_cleaner'
 
+  # To overwrite the LDAP stuff
+  require 'fs_ldap_stub'
+
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -44,6 +47,9 @@ Spork.prefork do
     # the seed, which is printed after each run.
     #     --seed 1234
     config.order = "random"
+
+    # To allow logins in controller_specs
+    config.include SessionsHelper, type: :controller
 
     config.before :each do
       if Capybara.current_driver == :rack_test
