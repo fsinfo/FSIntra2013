@@ -63,8 +63,17 @@ Spork.prefork do
     config.after do
       DatabaseCleaner.clean
     end
+
+    unless ENV['DRB']
+      require 'simplecov'
+      SimpleCov.start 'rails'
+    end
   end
 
   Spork.each_run do
+    if ENV['DRB']
+      require 'simplecov'
+      SimpleCov.start 'rails'
+    end
   end
 end
