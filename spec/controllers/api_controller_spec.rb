@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-# These are the constants used by the controller
-HTTP_AUTH_USER = 'username'
-HTTP_AUTH_PASSWORD = 'password'
-
 describe ApiController do
   let!(:beverage1) {FactoryGirl.create(:beverage)}
   let!(:beverage2) {FactoryGirl.create(:beverage)}
@@ -12,6 +8,7 @@ describe ApiController do
 
   context "correct authentication information" do
     include AuthHelper
+
     before(:each) do
       http_login
     end

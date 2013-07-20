@@ -65,5 +65,6 @@ Spork.each_run do
     SimpleCov.start 'rails' do
       add_filter "/lib/fs_ldap_stub.rb"
     end
+    Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f unless /api_users.rb/.match(f)}
   end
 end
