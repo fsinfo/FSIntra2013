@@ -34,15 +34,26 @@ gem 'faker', :group => :development
 group :test do
   gem 'database_cleaner'
   gem 'simplecov', :require => false
+  gem 'capybara'
+
+  # Uncomment this line on OS X.
+  # gem 'growl'
+
+  # Uncomment these lines on Linux.
+  gem 'libnotify'
+
+  # Uncomment these lines on Windows.
+  # gem 'rb-notifu'
+  # gem 'win32console'
 end
 
 group :development, :test do
-  gem 'capybara'
-  gem 'rspec-rails'
   gem 'factory_girl_rails'
+
+  gem 'rspec-rails'
   gem 'guard-rspec'
+  gem 'guard-spork', '>=1.5.0'
   gem 'spork-rails', github: 'sporkrb/spork-rails'
-  gem 'guard-spork'
 end
 
 group :development do

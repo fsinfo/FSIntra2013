@@ -34,7 +34,7 @@ class TabsController < ApplicationController
   end
 
   def mark_as_paid
-    @tab.status = 'marked_as_paid'
+    @tab.status = Tab::STATUS_MARKED_AS_PAID
     respond_to do |format|
       if @tab.save
         TabMailer.marked_as_paid_email(@tab)

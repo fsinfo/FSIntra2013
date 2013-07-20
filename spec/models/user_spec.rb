@@ -19,7 +19,6 @@
 #  updated_at       :datetime
 #  on_beverage_list :boolean          default(FALSE)
 #
-
 require 'spec_helper'
 
 describe User do
