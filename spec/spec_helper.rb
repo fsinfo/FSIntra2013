@@ -1,6 +1,9 @@
 require 'spork'
 
 Spork.prefork do
+  # To overwrite the LDAP stuff
+  require 'fs_ldap_stub'
+
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   unless ENV['DRB']
     require 'simplecov'
@@ -12,9 +15,6 @@ Spork.prefork do
   require 'rspec/rails'
   require 'rspec/autorun'
 
-  # To overwrite the LDAP stuff
-  require 'fs_ldap_stub'
-
   # Checks for pending migrations before tests are run.
   # If you are not using ActiveRecord, you can remove this line.
   ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
@@ -22,6 +22,11 @@ Spork.prefork do
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
+  # Let simplecov see all files
+  silence_warnings do
+    Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
+  end
 
   RSpec.configure do |config|
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
@@ -57,6 +62,7 @@ Spork.prefork do
       DatabaseCleaner.clean
     end
   end
+
 end
 
 Spork.each_run do
@@ -65,6 +71,8 @@ Spork.each_run do
     SimpleCov.start 'rails' do
       add_filter "/lib/fs_ldap_stub.rb"
     end
-    Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f unless /api_users.rb/.match(f)}
+    silence_warnings do
+      Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
+    end
   end
 end

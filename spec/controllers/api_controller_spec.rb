@@ -8,7 +8,6 @@ describe ApiController do
 
   context "correct authentication information" do
     include AuthHelper
-
     before(:each) do
       http_login
     end

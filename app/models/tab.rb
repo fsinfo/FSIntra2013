@@ -44,5 +44,9 @@ class Tab < ActiveRecord::Base
 
 	private
 	def only_one_running_tab_per_user
+		other = Tab.find_by(user_id: user_id, status: Tab::STATUS_RUNNING)
+		if other.present? and self != other
+			errors.add(:status, 'There can be only one running tab per user')
+		end
 	end
 end

@@ -8,27 +8,26 @@ describe TabsController do
     end
 
     describe "GET index" do
-      before :each do
-        @running_tab = FactoryGirl.create(:tab, :running, user_id: @user.id)
-        @paid_tab1 = FactoryGirl.create(:tab, :paid, user_id: @user.id)
-        @paid_tab2 = FactoryGirl.create(:tab, :paid, user_id: @user.id)
-        @unpaid_tab1 = FactoryGirl.create(:tab, :unpaid, user_id: @user.id)
-        @unpaid_tab2 = FactoryGirl.create(:tab, :unpaid, user_id: @user.id)
-      end
+      let(:running_tab) { FactoryGirl.create(:tab, :running, user_id: @user.id) }
+      let(:paid_tab1) { FactoryGirl.create(:tab, :paid, user_id: @user.id) }
+      let(:paid_tab2) { FactoryGirl.create(:tab, :paid, user_id: @user.id) }
+      let(:unpaid_tab1) { FactoryGirl.create(:tab, :unpaid, user_id: @user.id) }
+      let(:unpaid_tab2) { FactoryGirl.create(:tab, :unpaid, user_id: @user.id) }
 
       it "should assign the running_tab as @running_tab" do
+        running_tab
         get :index
-        expect(assigns(:running_tab)).to eq(@running_tab)
+        expect(assigns(:running_tab)).to eq(running_tab)
       end
 
       it "should assign the paid tabs as @paid_tabs" do
         get :index
-        expect(assigns(:paid_tabs)).to match_array([@paid_tab1, @paid_tab2])
+        expect(assigns(:paid_tabs)).to match_array([paid_tab1, paid_tab2])
       end
 
       it "should assign the unpaid tabs as @unpaid_tabs" do
         get :index
-        expect(assigns(:unpaid_tabs)).to match_array([@unpaid_tab1, @unpaid_tab2])
+        expect(assigns(:unpaid_tabs)).to match_array([unpaid_tab1, unpaid_tab2])
       end
 
     end
