@@ -14,7 +14,7 @@ class ApiController < ApplicationController
       beverages.each do |id, count|
         beverage = Beverage.available.find(id)
         beverage_tab = tab.beverage_tabs.find_or_create_by(name: beverage.name, price: beverage.price, capacity: beverage.capacity)
-        beverage_tab.count += count
+        beverage_tab.count += count.to_i
         beverage_tab.save
       end
       render :json => buy_params.to_json, status: :ok 

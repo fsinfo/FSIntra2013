@@ -14,7 +14,7 @@
 
 class Beverage < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
-	validates :name, :presence => true
+	validates :name, :presence => true, uniqueness: {scope: :price}
 	validates :price, :numericality => {:greater_than => 0}
   validates :capacity, :numericality => {:greater_than => 0}
 
