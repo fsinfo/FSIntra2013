@@ -7,6 +7,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  status     :string(255)      default("running")
+#  paid       :boolean
 #
 
 require 'spec_helper'

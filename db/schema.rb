@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130630124842) do
+ActiveRecord::Schema.define(version: 20130811143122) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20130630124842) do
     t.datetime "updated_at"
     t.integer  "keeper_of_the_minutes_id"
     t.integer  "chairperson_id"
+    t.boolean  "has_quorum"
   end
 
   create_table "minutes_attendances", force: true do |t|
@@ -134,6 +135,7 @@ ActiveRecord::Schema.define(version: 20130630124842) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status",     default: "running"
+    t.boolean  "paid"
   end
 
   create_table "taggings", force: true do |t|

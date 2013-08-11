@@ -31,9 +31,6 @@
 </div>
 
 <div class="panel">
-	<%# TODO: check if there is a quorum %>
-	<span class="label success">Beschlussfähig!</span>
-	<span class="label alert">Nicht Beschlussfähig!</span>
 	<h6>Anwesend</h6>
 	<ul class="inline-list">
 		<%# TODO: better display (comma separation or list symbol) %>
@@ -51,6 +48,12 @@
 			<li><%= u.displayed_name %> (unentschuldigt)</li>
 		<% end %>
 	</ul>
+	<% if @minute.has_quorum %>
+	<span class="label success">Beschlussfähig!</span>
+	<% else %>
+	<span class="label alert">Nicht Beschlussfähig!</span>
+	<% end %>
+
 	<h6>Gäste</h6>
 	<ul class="inline-list">
 		<% @minute.guests.each do |g| %>

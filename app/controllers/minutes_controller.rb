@@ -113,6 +113,7 @@ class MinutesController < ApplicationController
 
     def update_guests
       @minute.update_guests(params[:minute][:guests])
+      params[:minute].delete :guests
     end
 
     # This method sets the fsr members correctly.
@@ -155,6 +156,8 @@ class MinutesController < ApplicationController
                                      :keeper_of_the_minutes_id,
                                      :chairperson_id,
                                      :attendee_ids,
+                                     :guests,
+                                     :has_quorum,
                                      {
                                         :items_attributes => [
                                           :id,
