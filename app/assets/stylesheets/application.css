@@ -30,3 +30,11 @@ body {
 	top: 0;
 	z-index: 1001;
 }
+
+#footer {
+	font-size:12px;
+	background-color:#ddd;
+	height: 40px;
+	line-height: 20px;
+	text-align:center;
+}
