@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20130630124842) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
     t.integer  "count"
@@ -57,7 +54,7 @@ ActiveRecord::Schema.define(version: 20130630124842) do
     t.integer "minute_id"
   end
 
-  add_index "minutes_attendances", ["id"], name: "index_minutes_attendances_on_id", using: :btree
+  add_index "minutes_attendances", ["id"], name: "index_minutes_attendances_on_id"
 
   create_table "minutes_guests", force: true do |t|
     t.string   "name"
@@ -65,7 +62,7 @@ ActiveRecord::Schema.define(version: 20130630124842) do
     t.datetime "updated_at"
   end
 
-  add_index "minutes_guests", ["name"], name: "index_minutes_guests_on_name", unique: true, using: :btree
+  add_index "minutes_guests", ["name"], name: "index_minutes_guests_on_name", unique: true
 
   create_table "minutes_items", force: true do |t|
     t.string   "title"
@@ -112,7 +109,7 @@ ActiveRecord::Schema.define(version: 20130630124842) do
     t.boolean  "approved",   default: false
   end
 
-  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id", using: :btree
+  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id"
 
   create_table "people", force: true do |t|
     t.string   "firstname"
@@ -149,8 +146,8 @@ ActiveRecord::Schema.define(version: 20130630124842) do
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", force: true do |t|
     t.string "name"
@@ -161,7 +158,7 @@ ActiveRecord::Schema.define(version: 20130630124842) do
     t.integer "tab_id"
   end
 
-  add_index "user_tabs", ["user_id", "tab_id"], name: "index_user_tabs_on_user_id_and_tab_id", unique: true, using: :btree
+  add_index "user_tabs", ["user_id", "tab_id"], name: "index_user_tabs_on_user_id_and_tab_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "loginname"
