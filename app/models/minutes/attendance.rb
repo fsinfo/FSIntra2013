@@ -15,8 +15,8 @@
 class Minutes::Attendance < ActiveRecord::Base
 
 	# absent status 
-  STATUSES = ['', 'absent', 'unexcused']
-  validates :absent, :inclusion => { :in => STATUSES }
+	STATUSES = ['', 'absent', 'unexcused']
+	validates :absent, :inclusion => { :in => STATUSES }
 
 	validates_presence_of :minute, :message => "validates_presence_of minute -- is kaputt"
 	validates_presence_of :user, :message => "validates_presence_of user -- is kaputt"

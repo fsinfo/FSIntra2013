@@ -1,5 +1,5 @@
 <% content_for :scripts do %>
-  <%= javascript_include_tag 'minutes' %>
+	<%= javascript_include_tag 'minutes' %>
 <% end %>
 
 <%= form_for(@minute) do |f| %>
@@ -65,9 +65,8 @@
 			<tr>
 				<%# status information: percentage of present fsr members, presence of a quorum %>
 				<th class="center">anwesend: <span id="attendance-present">X</span>/<span id="attendance-total">Y</span> = <span id="attendance-percentage">Z</span>%</th>
-				<th class="text-left">
-					<span id="attendance-quorate" class="label success">Beschlussfähig!</span>
-					<span id="attendance-nohouse" class="label alert" style="display: none;">Nicht Beschlussfähig!</span>
+				<th class="text-left inline-field">
+					<%= f.label :has_quorum, "Beschlussfähig" %>
 					<%= f.check_box :has_quorum %>
 				</th>
 			</tr>
@@ -107,7 +106,7 @@
 					</div>
 					<button type="button" class="small button add_new_motion" title="Abstimmung hinzufügen">+ Abstimmung</button>
 					<% if fi.object.new_record? %>
-					  <button type="button" class="small button remove_motion" title="Doch nicht">-</button>
+						<button type="button" class="small button remove_motion" title="Doch nicht">-</button>
 					<% else %>
 						<%= fi.check_box '_destroy' %>Diesen TOP löschen?
 					<% end %>
@@ -142,13 +141,13 @@
 									<%= fm.label :con %>
 									<%= fm.text_field :con, :class => "", :placeholder => "Dagegen" %>
 								</div>
-							  <div class="small-3 columns">
-							  	<%= fm.label :approved, :class => 'label' %>
-							  	<%= fm.check_box :approved %>
-						  	</div>
+								<div class="small-3 columns">
+									<%= fm.label :approved, :class => 'label' %>
+									<%= fm.check_box :approved %>
+								</div>
 							</div>
 							<% if fm.object.new_record? %>
-							  <button type="button" class="small button remove_motion" title="Doch nicht">-</button>
+								<button type="button" class="small button remove_motion" title="Doch nicht">-</button>
 							<% else %>
 								<%= fm.label :_destroy, 'Antrag löschen?' %><%= fm.check_box '_destroy' %>
 							<% end %>
@@ -175,24 +174,24 @@
 				<%= fi.fields_for :minute_approve_motions do |mam| %>
 					<%= mam.hidden_field :minute_id %>
 					<h5>Protokoll vom <%= l mam.object.minute.date, :format => "%d.%m.%Y" %> genehmigen:</h5>
-			  	<div class="row">
-				  	<div class="inline-field small-3 columns">
-					  	<%= mam.label :pro %>
-					  	<%= mam.text_field :pro %>
-					  </div>
-					  <div class="inline-field small-3 columns">
-					  	<%= mam.label :abs %>
-					  	<%= mam.text_field :abs %>
-					  </div>
-					  <div class="inline-field small-3 columns">
-					  	<%= mam.label :con %>
-					  	<%= mam.text_field :con %>
+					<div class="row">
+						<div class="inline-field small-3 columns">
+							<%= mam.label :pro %>
+							<%= mam.text_field :pro %>
 						</div>
-					  <div class="small-3 columns">
-					  	<%= mam.label :approved, :class => 'label' %>
-					  	<%= mam.check_box :approved %>
-				  	</div>
-				  </div>
+						<div class="inline-field small-3 columns">
+							<%= mam.label :abs %>
+							<%= mam.text_field :abs %>
+						</div>
+						<div class="inline-field small-3 columns">
+							<%= mam.label :con %>
+							<%= mam.text_field :con %>
+						</div>
+						<div class="small-3 columns">
+							<%= mam.label :approved, :class => 'label' %>
+							<%= mam.check_box :approved %>
+						</div>
+					</div>
 					<hr />
 				<% end %>
 			</div>
@@ -224,9 +223,29 @@
 	// All Users .. see http://api.jqueryui.com/autocomplete/#option-source for why this way
 	var availableUsers = [ <%= raw User.all.map { |x| "{ value: #{x.id}, label: '#{x.displayed_name}' }" }.join(",") %> ];
 	var availableGuests = [ <%= raw Minutes::Guest.all.map { |x| "'#{x.name}'" }.join(",") %> ];
-  
-  /**
+	
+	/**
 	 * This counter holds the number of currently inserted items in this minute.
 	 */
 	sectionCounter = <%= @minute.items.length %>
 </script>
+
+<% content_for :joyride do %>
+	<ol class="joyride-list" data-joyride>
+		<li data-id="attendance" data-text="Weiter">
+			<p>Weiter.</p>
+		</li>
+		<li data-id="numero1" data-class="custom so-awesome" data-text="Next">
+			<h4>Stop #1</h4>
+			<p>You can control all the details for you tour stop. Any valid HTML will work inside of Joyride.</p>
+		</li>
+		<li data-id="numero2" data-button="Next" data-options="tipLocation:top;tipAnimation:fade">
+			<h4>Stop #2</h4>
+			<p>Get the details right by styling Joyride with a custom stylesheet!</p>
+		</li>
+		<li data-button="Next">
+			<h4>Stop #4</h4>
+			<p>It works as a modal too!</p>
+		</li>
+	</ol>
+<% end %>

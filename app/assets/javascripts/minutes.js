@@ -12,6 +12,10 @@ function registerNewMotion() {
 	})
 }
 
+function joyride_tutorial() {
+  $(document).foundation('joyride', 'start');
+}
+
 
 /**
  * Adds a new item after the currently displayed one.

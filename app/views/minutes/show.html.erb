@@ -1,5 +1,5 @@
 <div class="actions">
-	<h1>Protokoll <%= l @minute.date, :format => "%d.%m.%Y" %></h1>
+	<h1>Protokoll vom <%= l @minute.date, :format => "%d.%m.%Y" %></h1>
 	<%= link_to content_tag(:span, ' Zurück', :class => "icon-left-fat"), minutes_path, :class => "button small round secondary" %>
 	<%= link_to content_tag(:span, ' Bearbeiten', :class => "icon-pencil"), edit_minute_path(@minute), :class => "button small round secondary" %>
 </div>
@@ -31,35 +31,30 @@
 </div>
 
 <div class="panel">
-	<h6>Anwesend</h6>
-	<ul class="inline-list">
-		<%# TODO: better display (comma separation or list symbol) %>
-		<% @minute.attendees.each do |u| %>
-			<li><%= u.displayed_name %></li>
-		<% end %>
-	</ul>
-	<h6>Abwesend</h6>
-	<ul class="inline-list">
-		<%# TODO: better display (comma separation or list symbol) %>
-		<% @minute.absentees.each do |u| %>
-			<li><%= u.displayed_name %></li>
-		<% end %>
-		<% @minute.unexcused_absentees.each do |u| %>
-			<li><%= u.displayed_name %> (unentschuldigt)</li>
-		<% end %>
-	</ul>
-	<% if @minute.has_quorum %>
-	<span class="label success">Beschlussfähig!</span>
-	<% else %>
-	<span class="label alert">Nicht Beschlussfähig!</span>
+	<p>
+		<strong>Anwesend: </strong>
+		<%= @minute.attendees.join ", " %>
+	</p>
+	<% if @minute.absentees.count + @minute.unexcused_absentees.count > 0 %>
+		<p>
+			<strong>Abwesend: </strong>
+			<%= @minute.absentees.join ", " %>
+			<%= @minute.unexcused_absentees.join ", " %>	
+		</p>
 	<% end %>
 
-	<h6>Gäste</h6>
-	<ul class="inline-list">
-		<% @minute.guests.each do |g| %>
-			<li><%= g.name %></li>
-		<% end %>
-	</ul>
+	<p>
+	<% if @minute.has_quorum %>
+		<span class="label success">Beschlussfähig!</span>
+	<% else %>
+		<span class="label alert">Nicht Beschlussfähig!</span>
+	<% end %>
+	</p>
+
+	<p>
+		<strong>Gäste: </strong>
+		<%= @minute.guests.join ", " %>
+	</p>
 </div>
 
 <% @minute.items.each do |i| %>
