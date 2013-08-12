@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130811143122) do
+ActiveRecord::Schema.define(version: 20130812161507) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -32,85 +32,6 @@ ActiveRecord::Schema.define(version: 20130811143122) do
     t.datetime "updated_at"
     t.decimal  "capacity",    precision: 8, scale: 2
   end
-
-  create_table "invitees", id: false, force: true do |t|
-    t.integer "minute_id"
-    t.integer "user_id"
-    t.string  "absent"
-  end
-
-  create_table "minutes", force: true do |t|
-    t.datetime "date"
-    t.string   "status",                   default: "draft"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "keeper_of_the_minutes_id"
-    t.integer  "chairperson_id"
-    t.boolean  "has_quorum"
-  end
-
-  create_table "minutes_attendances", force: true do |t|
-    t.string  "absent"
-    t.integer "user_id"
-    t.integer "minute_id"
-  end
-
-  add_index "minutes_attendances", ["id"], name: "index_minutes_attendances_on_id"
-
-  create_table "minutes_guests", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "minutes_guests", ["name"], name: "index_minutes_guests_on_name", unique: true
-
-  create_table "minutes_items", force: true do |t|
-    t.string   "title"
-    t.text     "content"
-    t.integer  "minute_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "order"
-  end
-
-  create_table "minutes_minute_approve_items", force: true do |t|
-    t.integer  "order"
-    t.integer  "minute_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "minutes_minute_approve_motions", force: true do |t|
-    t.integer  "pro"
-    t.integer  "abs"
-    t.integer  "con"
-    t.integer  "minute_approve_item_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "minute_id"
-    t.boolean  "approved",               default: false
-  end
-
-  create_table "minutes_minutes_guests", id: false, force: true do |t|
-    t.integer "guest_id"
-    t.integer "minute_id"
-  end
-
-  create_table "minutes_motions", force: true do |t|
-    t.text     "rationale"
-    t.integer  "mover_id"
-    t.decimal  "amount"
-    t.integer  "pro"
-    t.integer  "abs"
-    t.integer  "con"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "item_id"
-    t.boolean  "approved",   default: false
-  end
-
-  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id"
 
   create_table "people", force: true do |t|
     t.string   "firstname"
