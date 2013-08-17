@@ -26,7 +26,7 @@ class TabsController < ApplicationController
   def pay
     @tab.paid
     @user = @tab.user
-    TabMailer.paid_email(@tab) if @tab.save
+    TabMailer.paid_email(@tab).deliver if @tab.save
     respond_to do |format|
       format.json { render :json => {:feedback => t('.paid_tab', name: @tab.user.displayed_name, total: @tab.total_invoice)} }
       format.html { redirect_to unpaid_tabs_path }
@@ -37,7 +37,7 @@ class TabsController < ApplicationController
     @tab.status = Tab::STATUS_MARKED_AS_PAID
     respond_to do |format|
       if @tab.save
-        TabMailer.marked_as_paid_email(@tab)
+        TabMailer.marked_as_paid_email(@tab).deliver
         format.js {}
         format.html {redirect_to @tab}
       else

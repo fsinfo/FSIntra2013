@@ -39,7 +39,7 @@ class TallySheetsController < ApplicationController
     ActiveRecord::Base.transaction do
       @tabs.each do |tab|
         if tab.total_invoice > 0
-          TabMailer.tab_email(tab)
+          TabMailer.tab_email(tab).deliver
         else
           tab.destroy
         end
