@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: beverages
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  description :text
+#  available   :boolean
+#  price       :decimal(8, 2)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  capacity    :decimal(8, 2)
+#
+
 require 'spec_helper'
 
 describe Beverage do

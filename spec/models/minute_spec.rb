@@ -9,6 +9,7 @@
 #  updated_at               :datetime
 #  keeper_of_the_minutes_id :integer
 #  chairperson_id           :integer
+#  has_quorum               :boolean
 #
 
 require 'spec_helper'
