@@ -75,6 +75,7 @@ gem 'barby'
 # wkhtmltopdf needs to be installed and the path might be explicitly set
 # see: https://github.com/mileszs/wicked_pdf
 gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 # for vcards
 gem 'vpim-rails', :git => 'https://github.com/fraser/vpim-rails'
