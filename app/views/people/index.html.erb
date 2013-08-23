@@ -15,10 +15,10 @@
 	</colgroup>
 	<thead>
 		<tr>
-			<th><%=t Person.human_attribute_name :firstname %></th>
-			<th><%=t Person.human_attribute_name :lastname %></th>
-			<th><%=t Person.human_attribute_name :email %></th>
-			<th><%=t Person.human_attribute_name :phone %></th>
+			<th><%= sort_link(@search, :firstname, Person.human_attribute_name(:firstname)) %></th>
+			<th><%= sort_link(@search, :lastname, Person.human_attribute_name(:lastname)) %></th>
+			<th><%= sort_link(@search, :email, Person.human_attribute_name(:email)) %></th>
+			<th><%= sort_link(@search, :phone, Person.human_attribute_name(:phone)) %></th>
 			<th><%=t 'tag_list' %> </th>
 			<th colspan="2" class="text-center"><%= t 'actions.other' %></th>
 		</tr>

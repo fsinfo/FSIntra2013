@@ -15,12 +15,12 @@
 		%col{:width => "2%"}
 		%col{:width => "2%"}
 	%thead 
-		%th= Beverage.human_attribute_name :name
-		%th= Beverage.human_attribute_name :description
-		%th.text-center= Beverage.human_attribute_name :price
-		%th.text-center= Beverage.human_attribute_name :capacity
-		%th.text-center= t '.ppl'
-		%th.text-center= Beverage.human_attribute_name :available
+		%th= sort_link(@search, :name, Beverage.human_attribute_name(:name))
+		%th= sort_link(@search, :description, Beverage.human_attribute_name(:description))
+		%th.text-center= sort_link(@search, :price, Beverage.human_attribute_name(:price))
+		%th.text-center= sort_link(@search, :capacity, Beverage.human_attribute_name(:capacity))
+		%th.text-center= t('.ppl')
+		%th.text-center= sort_link(@search, :available, Beverage.human_attribute_name(:available))
 		%th.text-center{:colspan => 2}= t('actions', count: 2)
 	%tbody
 		- @beverages.each do |beverage|

@@ -4,11 +4,11 @@ class PeopleController < ApplicationController
 
   def index
     if params[:tag]
-      @tag = params[:tag]
-      @people = Person.tagged_with(@tag)
+      @search = Person.tagged_with(params[:tag]).search(params[:q]) 
     else
-      @people = Person.all.order(:firstname,:lastname)
+      @search = Person.search(params[:q]) 
     end
+    @people = @search.result
   end
 
   def show

@@ -86,11 +86,14 @@ class TallySheetsController < ApplicationController
         get_users
         get_beverages
         @users.each do |user|
+          # Find only running tabs or initialize them if there is none
           tab = user.tabs.find_or_initialize_by(status: 'running')
           @beverage_tabs[tab.id] = []
+          # For every available beverage create a beverage_tab or find it by name,capacity and price
           @beverages.each do |beverage|
             @beverage_tabs[tab.id] << tab.beverage_tabs.find_or_initialize_by(name: beverage.name, capacity: beverage.capacity, price: beverage.price)
           end
+          # Sort the beverage_tabs so they are always in the right order and fit to the table-headers
           @beverage_tabs[tab.id].sort_by(&:name)
           @tabs << tab
         end
@@ -98,7 +101,8 @@ class TallySheetsController < ApplicationController
     end
 
     def get_users
-      @users = User.where(:on_beverage_list => true).order('firstname, lastname')
+      @search = User.where(:on_beverage_list => true).order('lastname, firstname').search(params[:q])
+      @users = @search.result
     end
 
     def get_beverages

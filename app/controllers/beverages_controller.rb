@@ -3,7 +3,8 @@ class BeveragesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @beverages = Beverage.all
+    @search = Beverage.search(params[:q])
+    @beverages = @search.result
   end
 
   def show

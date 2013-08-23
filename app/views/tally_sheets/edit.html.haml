@@ -6,9 +6,10 @@
   %table
     %thead
       %tr
-        %td 
+        %th= sort_link(@search, :lastname, Person.human_attribute_name(:lastname))
+        %th= sort_link(@search, :firstname, Person.human_attribute_name(:firstname))
         - @beverages.each do |beverage|
-          %td= "#{beverage.name} (#{beverage.price}/#{beverage.capacity})"
+          %th= "#{beverage.name} (#{beverage.price}/#{beverage.capacity})"
     %tbody 
     - @tabs.each_with_index do |tab,index|
       = fields_for 'tabs' do |form|
@@ -16,7 +17,9 @@
           = tab_form.hidden_field :user_id
           %tr
             %td 
-              = tab_form.object.user.displayed_name
+              = tab_form.object.user.lastname
+            %td 
+              = tab_form.object.user.firstname
             = tab_form.fields_for :beverage_tabs, @beverage_tabs[tab.id] do |bf| 
               %td
                 = bf.text_field :count, :class => 'text-center'

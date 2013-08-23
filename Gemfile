@@ -96,5 +96,9 @@ gem 'rqrcode-rails3'
 # Tags for the people
 gem 'acts-as-taggable-on'
 
+# Ransack for better searches (+ easy sortable columns)
+gem 'ransack'
+
+
 # CanCan
 gem 'cancan'
