@@ -11,11 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130811143122) do
+ActiveRecord::Schema.define(version: 20130909134642) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
-    t.integer  "count"
+    t.integer  "count",                              default: 0
     t.decimal  "price",      precision: 8, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -55,7 +58,7 @@ ActiveRecord::Schema.define(version: 20130811143122) do
     t.integer "minute_id"
   end
 
-  add_index "minutes_attendances", ["id"], name: "index_minutes_attendances_on_id"
+  add_index "minutes_attendances", ["id"], name: "index_minutes_attendances_on_id", using: :btree
 
   create_table "minutes_guests", force: true do |t|
     t.string   "name"
@@ -63,7 +66,7 @@ ActiveRecord::Schema.define(version: 20130811143122) do
     t.datetime "updated_at"
   end
 
-  add_index "minutes_guests", ["name"], name: "index_minutes_guests_on_name", unique: true
+  add_index "minutes_guests", ["name"], name: "index_minutes_guests_on_name", unique: true, using: :btree
 
   create_table "minutes_items", force: true do |t|
     t.string   "title"
@@ -110,7 +113,7 @@ ActiveRecord::Schema.define(version: 20130811143122) do
     t.boolean  "approved",   default: false
   end
 
-  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id"
+  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id", using: :btree
 
   create_table "people", force: true do |t|
     t.string   "firstname"
@@ -135,7 +138,6 @@ ActiveRecord::Schema.define(version: 20130811143122) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status",     default: "running"
-    t.boolean  "paid"
   end
 
   create_table "taggings", force: true do |t|
@@ -148,8 +150,8 @@ ActiveRecord::Schema.define(version: 20130811143122) do
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: true do |t|
     t.string "name"
@@ -160,7 +162,7 @@ ActiveRecord::Schema.define(version: 20130811143122) do
     t.integer "tab_id"
   end
 
-  add_index "user_tabs", ["user_id", "tab_id"], name: "index_user_tabs_on_user_id_and_tab_id", unique: true
+  add_index "user_tabs", ["user_id", "tab_id"], name: "index_user_tabs_on_user_id_and_tab_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "loginname"

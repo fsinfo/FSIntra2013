@@ -24,6 +24,7 @@ class TallySheetsController < ApplicationController
               bt.destroy
             else
               bt.count = count
+              bt.save
             end
           end
         end

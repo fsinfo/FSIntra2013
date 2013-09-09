@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  tab_id     :integer
-#  count      :integer
+#  count      :integer          default(0)
 #  price      :decimal(8, 2)
 #  created_at :datetime
 #  updated_at :datetime

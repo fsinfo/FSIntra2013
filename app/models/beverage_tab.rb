@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  tab_id     :integer
-#  count      :integer
+#  count      :integer          default(0)
 #  price      :decimal(8, 2)
 #  created_at :datetime
 #  updated_at :datetime
@@ -16,10 +16,4 @@ class BeverageTab < ActiveRecord::Base
 	belongs_to :tab
 
   validates :count, numericality: {greater_than: 0}
-
-	after_initialize :init
-
-	def init
-		self.count ||= 0
-	end
 end
