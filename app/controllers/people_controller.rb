@@ -6,7 +6,8 @@ class PeopleController < ApplicationController
     if params[:tag]
       @search = Person.tagged_with(params[:tag]).search(params[:q]) 
     else
-      @search = Person.search(params[:q]) 
+      @search = Person.search(params[:q])
+      @search.sorts = 'lastname asc' if @search.sorts.empty?
     end
     @people = @search.result
   end
