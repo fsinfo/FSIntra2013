@@ -2,7 +2,7 @@
 #   resources :$deutschername, :as => "$englishname", :controller => "$englishname"
 Fsintra::Application.routes.draw do
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users' 
-  resources :personen, except: [:destroy], :as => 'people', :controller => 'people' do
+  resources :personen, :as => 'people', :controller => 'people' do
     get 'tags/:tag', to: 'people#index', as: :tag, on: :collection
   end
   resources :rechnungen, :as => 'tabs', :controller => 'tabs' do

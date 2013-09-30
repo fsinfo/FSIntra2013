@@ -10,6 +10,7 @@ class Ability
       can :read, Person
       can :manage, Person, :type => nil
       can :manage, User, :id => user.id
+      cannot :delete, User
       can [:read, :mark_as_paid], Tab, :user_id => user.id
     end
 

@@ -4,6 +4,9 @@
 	<% if can? :edit, @person %>
 		<%= link_to content_tag(:span, t('actions.edit'), :class => "icon-pencil"), edit_person_path(@person), :class => "button small round secondary" %>
 	<% end %>
+	<% if can? :delete, @person %>
+		<%= link_to content_tag(:span, t('actions.delete'), :class => "icon-cancel-circled"), person_path(@person), :method => :delete, :confirm => t('actions.destroy_confirm'), :class => "button small round secondary" %>
+	<% end %>
 	<%= link_to content_tag(:span, t('people.vcard'), :class => "icon-vcard"), person_path(@person, :format => 'vcf'), :class => "button small round secondary" %>
 </div>
 

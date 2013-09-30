@@ -47,6 +47,11 @@ class PeopleController < ApplicationController
     end
   end
 
+  def destroy
+    @person.destroy
+    redirect_to action: 'index', notice: t('feedback.destroyed', model: Person.model_name.human) 
+  end
+
   private
     def person_params 
       params.require(:person).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc, :tag_list)
