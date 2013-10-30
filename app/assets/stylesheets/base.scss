@@ -1005,7 +1005,8 @@ $topbar-title-font-size: emCalc(20px);
 
 // Transitions and breakpoint styles
 // $topbar-transition-speed: 300ms;
-$topbar-breakpoint: 0px; // emCalc(940px); // Change to 9999px for always mobile layout
+// $topbar-breakpoint: 0px; // emCalc(940px); // Change to 9999px for always mobile layout
+$topbar-breakpoint: emCalc(940px);
 // $topbar-media-query: "only screen and (min-width "#{$topbar-breakpoint}")";
 
 
