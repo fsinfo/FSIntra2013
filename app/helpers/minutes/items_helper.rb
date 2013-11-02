@@ -1,0 +1,2 @@
+module Minutes::ItemsHelper
+end

@@ -1,0 +1,24 @@
+= form_for @minutes_minute, remote: true, :html => { :'data-type' => 'json' } do |f|
+  - if @minutes_minute.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@minutes_minute.errors.count, "error")} prohibited this minutes_minute from being saved:"
+      %ul
+        - @minutes_minute.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row.collapse
+    = f.label :date, :class => "fs-prefix"
+    = f.date_field :date, :class => "large-4 columns"
+  .row.collapse.select2-field
+    = f.label :keeper_of_the_minutes_id, :class => "fs-prefix"
+    = f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
+  .row.collapse.select2-field
+    = f.label :chairperson_id, :class => "fs-prefix"
+    = f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
+  .row.collapse
+    .columns.small-3.large-2
+      = f.label :has_quorum
+    .columns.small-9.large-10
+      = f.check_box :has_quorum
+  .actions
+    = f.submit

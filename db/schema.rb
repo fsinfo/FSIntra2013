@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130812161507) do
+ActiveRecord::Schema.define(version: 20131030171957) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -32,6 +32,65 @@ ActiveRecord::Schema.define(version: 20130812161507) do
     t.datetime "updated_at"
     t.decimal  "capacity",    precision: 8, scale: 2
   end
+
+  create_table "minute_motions", force: true do |t|
+    t.integer  "order"
+    t.integer  "mover_id"
+    t.integer  "pro"
+    t.integer  "con"
+    t.integer  "abs"
+    t.text     "rationale"
+    t.integer  "amount"
+    t.integer  "minutes_item_id"
+    t.boolean  "approved"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "minute_motions", ["minutes_item_id"], name: "index_minute_motions_on_minutes_item_id"
+  add_index "minute_motions", ["mover_id"], name: "index_minute_motions_on_mover_id"
+
+  create_table "minutes_items", force: true do |t|
+    t.date     "date"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "order"
+    t.integer  "minute_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "minutes_items", ["minute_id"], name: "index_minutes_items_on_minute_id"
+
+  create_table "minutes_minutes", force: true do |t|
+    t.date     "date"
+    t.integer  "keeper_of_the_minutes_id"
+    t.integer  "chairperson_id"
+    t.date     "released_date"
+    t.boolean  "has_quorum"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "minutes_minutes", ["chairperson_id"], name: "index_minutes_minutes_on_chairperson_id"
+  add_index "minutes_minutes", ["keeper_of_the_minutes_id"], name: "index_minutes_minutes_on_keeper_of_the_minutes_id"
+
+  create_table "minutes_motions", force: true do |t|
+    t.integer  "order"
+    t.integer  "mover_id"
+    t.integer  "pro"
+    t.integer  "con"
+    t.integer  "abs"
+    t.text     "rationale"
+    t.integer  "amount"
+    t.integer  "item_id"
+    t.boolean  "approved"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "minutes_motions", ["item_id"], name: "index_minutes_motions_on_item_id"
+  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id"
 
   create_table "people", force: true do |t|
     t.string   "firstname"

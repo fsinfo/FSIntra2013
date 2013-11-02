@@ -1,0 +1,20 @@
+-# next line is for lulz reasons
+-the_path = on_creating? ? minutes_minute_items_path(@minutes_minute) : minutes_minute_item_path(minute_id: @minutes_minute.id, id: @minutes_item.id)
+= form_for @minutes_item, url: the_path do |f|
+  - if @minutes_item.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@minutes_item.errors.count, "error")} prohibited this minutes_item from being saved:"
+      %ul
+        - @minutes_item.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :content
+    = f.text_area :content
+  .field
+    = f.label :order
+    = f.number_field :order
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,11 @@
+%hr
+%section
+  %h2= item.title
+  %p= item.content
+
+  = render partial: "minutes/motions/motion", collection: item.motions, as: :motion, locals: { item: item }
+  
+  %p
+    = link_to t('actions.edit'), edit_minutes_minute_item_path(@minutes_minute, item)
+    \|
+    = link_to t('actions.new', model: Minutes::Motion.model_name.human), new_minutes_minute_item_motion_path(@minutes_minute, item)

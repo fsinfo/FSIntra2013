@@ -1,0 +1,47 @@
+// Place all the styles related to the minutes/minutes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+span.error {
+	
+}
+
+.select2-container.error {
+	border: 1px solid #c60f13;
+	background-color: rgba(198, 15, 19, 0.1);
+}
+
+.select2-field small.error {
+	margin-top: 0;
+}
+
+.fs-prefix {
+  @include prefix-postfix-base;
+  @include prefix;
+  @include grid-column($columns:3,$float:left);
+}
+
+.fs-motion-prefix {
+  @include prefix-postfix-base;
+  @include prefix;
+  @include grid-column($columns:3,$float:left);
+  width: 50%;
+  background: #f6f6f6;
+}
+
+.fs-motion {
+  width: 50% !important;
+}
+
+.fs-motion-checkbox {
+  height: 2.3125em;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d9d9d9;
+  /*border-left: none;*/
+  /*outline: 1px solid #d9d9d9;*/
+}
+
+.field_with_errors label {
+  background-color: #FF3333;
+}

@@ -1,0 +1,103 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ */
+ @import "jquery-ui";
+ @import "fontello-embedded";
+ @import "redactor";
+ @import "chosen"; /* TODO still needed? */
+ @import "toggle-switch";
+ @import "select2";
+ 
+ @import "foundation_and_overrides";
+ @import 'concerns/forms';
+
+ @import "tabs";
+ @import 'tally_sheets';
+ @import "minutes/minutes";
+ 
+
+/* Overrides go here */
+
+body {
+	margin-top: 60px;
+}
+
+#top-bar {
+	position: fixed;
+	top: 0;
+	z-index: 1001;
+}
+
+#footer {
+	font-size:12px;
+	background-color:#ddd;
+	height: 40px;
+	line-height: 20px;
+	text-align:center;
+}
+
+table {
+	width: 100%;
+	margin-top: .5em;
+}
+
+.center {
+	text-align: center;
+}
+
+.no-linebreak {
+	white-space: nowrap;
+}
+
+.small {
+	font-size: 88%;
+}
+
+.tiny {
+	font-size: 75%;
+}
+
+.actions {
+	h1, h2, h3, h4, h5, h6 {
+		display: inline;
+		margin-right: .35em;
+	}
+	a {
+		vertical-align: middle;
+		&.small { margin-bottom: 1.75em; }
+		&.tiny { margin-bottom: 0; }
+	}
+}
+
+.user-details {
+	th { text-align: left; }
+}
+
+#notice {
+	@include alert;
+}
+
+#qrcode embed {
+	height: auto;
+}
+
+.text-success {
+	color: $success-color;
+}
+
+.text-alert {
+	color: $alert-color;
+}
+
+.text-right input[type="text"] { text-align: right; }
+.text-left input[type="text"] { text-align: left; }
+.text-center input[type="text"] { text-align: center; }

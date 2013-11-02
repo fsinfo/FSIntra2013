@@ -2,9 +2,10 @@
 # see http://edgeguides.rubyonrails.org/i18n.html
 de:
   minutes:
-    index:
-      headline: Protokollsystem
-      new: Neues Protokoll anlegen
+    minutes:
+      index:
+        headline: Protokollsystem
+        new: Neues Protokoll anlegen
     edit:
       headline: "Protokoll vom %{date} bearbeiten"
     form:
@@ -12,7 +13,6 @@ de:
     new:
       headline: Neues Protokoll anlegen
     draft: Entwurf
-    published: Veröffentlicht
 
 # --------------
 # --- Models ---
@@ -27,15 +27,19 @@ de:
         other: TOPs
       minutes/minute_approve_item:
         one: Genehmigung von Protokollen
+      minutes/motion:
+        one: Antrag
     attributes:
-      minute:
+      minutes/minute:
         date: Datum
         status: Status
         keeper_of_the_minutes: Protokollant
         chairperson: Sitzungsleitung
+        has_quorum: Beschlussfähig
         attendees: Anwesend
         absentees: Entschuldigt
         guests: Gäste
+        released_date: Veröffentlicht am
       minutes/item:
         title: Titel
         content: Inhalt
@@ -45,6 +49,8 @@ de:
         abs: Enthaltung
         con: Dagegen
         approved: Angenommen
+        mover: Antragssteller
+        amount: Betrag (nur Finanzanträge)
       minutes/minute_approve_motion:
         pro: Dafür
         abs: Enthaltung

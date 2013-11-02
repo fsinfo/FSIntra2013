@@ -10,13 +10,15 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require variables
 //= require jquery
 //= require jquery_ujs
 //= require foundation
 //= require jquery-ui
 //= require redactor_de
 //= require redactor.min
-//= require chosen.jquery.min
 //= require chosen-select
+//= require select2
+//= require minutes/minutes
 
 $(document).foundation();

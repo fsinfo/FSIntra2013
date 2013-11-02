@@ -1,5 +1,12 @@
 // Required global settings and mixins for Foundation
-@import "foundation/foundation-global";
+//@import "foundation/foundation-global";
+
+// @import "foundation/variables";
+
+//@import "foundation/components/global";
+//@import "foundation/components/buttons";
+//@import "foundation/components/forms";
+
 
 // Settings file to override Foundation variables
 
@@ -1010,7 +1017,3 @@ $topbar-breakpoint: 0px; // emCalc(940px); // Change to 9999px for always mobile
 
 
 @import 'foundation';
-@import 'global';
-@import 'forms';
-@import 'minutes';
-@import 'tally_sheets';
