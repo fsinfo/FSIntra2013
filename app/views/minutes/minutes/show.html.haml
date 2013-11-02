@@ -1,0 +1,24 @@
+%h1 Protokoll vom #{l @minutes_minute.date}
+
+- if notice
+  %p#notice= notice
+%p
+  %b= Minutes::Minute.human_attribute_name :keeper_of_the_minutes
+  = @minutes_minute.keeper_of_the_minutes
+%p
+  %b= Minutes::Minute.human_attribute_name :chairperson
+  = @minutes_minute.chairperson
+%p
+  %b= Minutes::Minute.human_attribute_name :released_date
+  = @minutes_minute.released_date
+%p
+  %b= Minutes::Minute.human_attribute_name :has_quorum
+  = @minutes_minute.has_quorum
+
+= render partial: "minutes/items/item", collection: @minutes_minute.items, as: :item
+
+= link_to t('actions.new', model: Minutes::Item.model_name.human),  new_minutes_minute_item_path(@minutes_minute)
+\|
+= link_to t('actions.edit'), edit_minutes_minute_path(@minutes_minute)
+\|
+= link_to t('actions.back'), minutes_minutes_path

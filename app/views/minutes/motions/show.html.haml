@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Order:
+  = @minutes_motion.order
+%p
+  %b Mover:
+  = @minutes_motion.mover
+%p
+  %b Pro:
+  = @minutes_motion.pro
+%p
+  %b Con:
+  = @minutes_motion.con
+%p
+  %b Abs:
+  = @minutes_motion.abs
+%p
+  %b Rationale:
+  = @minutes_motion.rationale
+%p
+  %b Amount:
+  = @minutes_motion.amount
+%p
+  %b Minutes item:
+  = @minutes_motion.minutes_item
+%p
+  %b Approved:
+  = @minutes_motion.approved
+
+= link_to t('actions.edit'), edit_minutes_motion_path(@minutes_motion)
+\|
+= link_to 'Back', minutes_motions_path

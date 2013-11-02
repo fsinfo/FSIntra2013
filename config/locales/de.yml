@@ -1,8 +1,8 @@
 de:
-  views: 
+  views:
     yep: Ja
     nope: Nein
-  actions: 
+  actions:
     one: Aktion
     other: Aktionen
     show: Anzeigen
@@ -12,6 +12,7 @@ de:
     back: Zurück
     destroy_confirm: Bist du sicher?
     search: Suchen
+    new: '%{model} anlegen'
   feedback:
     created: '%{model} erfolgreich angelegt.'
     updated: '%{model} erfolgreich geändert.'

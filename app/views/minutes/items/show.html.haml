@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Date:
+  = l @minutes_item.date
+%p
+  %b Title:
+  = @minutes_item.title
+%p
+  %b Content:
+  = @minutes_item.content
+%p
+  %b Order:
+  = @minutes_item.order
+%p
+  %b Minute:
+  = @minutes_item.minute
+
+= link_to t('actions.edit'), edit_minutes_item_path(@minutes_item)
+|
+= link_to 'Back', minutes_items_path

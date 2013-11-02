@@ -3,25 +3,29 @@
 # Table name: minutes_motions
 #
 #  id         :integer          not null, primary key
-#  rationale  :text
+#  order      :integer
 #  mover_id   :integer
-#  amount     :decimal(, )
 #  pro        :integer
-#  abs        :integer
 #  con        :integer
+#  abs        :integer
+#  rationale  :text
+#  amount     :integer
+#  item_id    :integer
+#  approved   :boolean
 #  created_at :datetime
 #  updated_at :datetime
-#  item_id    :integer
-#  approved   :boolean          default(FALSE)
 #
 # Indexes
 #
+#  index_minutes_motions_on_item_id   (item_id)
 #  index_minutes_motions_on_mover_id  (mover_id)
 #
 
 class Minutes::Motion < ActiveRecord::Base
-	belongs_to :mover, :class_name => "User"
-	belongs_to :item
+  belongs_to :mover, class_name: 'User'
+  belongs_to :item, class_name: 'Minutes::Motion'
 
-	validates_presence_of :rationale, :mover, :pro, :abs, :con
+  validates_presence_of :mover
+  validates_presence_of :rationale
+  validates_presence_of :pro, :con, :abs
 end

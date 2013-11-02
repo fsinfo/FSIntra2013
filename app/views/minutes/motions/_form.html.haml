@@ -1,0 +1,36 @@
+-# next line is for lulz reasons
+-the_path = on_creating? ? minutes_minute_item_motions_path(@minutes_minute, @minutes_item) : minutes_minute_item_motion_path(@minutes_minute, @minutes_item, @minutes_motion)
+
+= form_for @minutes_motion, url: the_path do |f|
+  - if @minutes_motion.errors.any?
+    #error_explanation
+      %h3= "#{@minutes_motion.errors.count} Fehler sind aufgetreten:"
+      %ul
+        - @minutes_motion.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row.collapse.select2-field
+    = f.label :mover, :class => "fs-prefix"
+    =# f.text_field :mover
+    = f.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px'}
+  .row.collapse
+    = f.label :rationale, :class => "fs-prefix"
+    = f.text_area :rationale, :class => "large-4 columns"
+  .row.collapse
+    = f.label :amount, :class => "fs-prefix"
+    = f.text_field :amount, :class => "large-4 columns"
+  .row.collapse
+    .columns.small-3
+      = f.label :pro , :class => "fs-motion-prefix"
+      = f.number_field :pro, :class => "fs-motion"
+    .columns.small-3
+      = f.label :con , :class => "fs-motion-prefix"
+      = f.number_field :con, :class => "fs-motion"
+    .columns.small-3
+      = f.label :abs , :class => "fs-motion-prefix"
+      = f.number_field :abs, :class => "fs-motion"
+    .columns.small-3
+      = f.label :approved, :class => "fs-motion-prefix"
+      = f.check_box :approved, :class => "fs-motion-checkbox"
+  .actions
+    = f.submit

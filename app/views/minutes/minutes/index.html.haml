@@ -1,0 +1,28 @@
+%h1= t '.headline'
+= link_to content_tag(:span, ' ' + t('.new'), :class => "icon-plus"), new_minutes_minute_path, :class => "button small round secondary"
+
+%table
+  %tr
+    %th= t Minutes::Minute.human_attribute_name :date
+    %th= t Minutes::Minute.human_attribute_name :keeper_of_the_minutes
+    %th= t Minutes::Minute.human_attribute_name :status
+    %th 
+    %th 
+    %th
+    %th
+    %th
+
+  - @minutes_minutes.each do |minutes_minute|
+    %tr
+      %td= minutes_minute.date
+      %td= minutes_minute.keeper_of_the_minutes
+      %td= minutes_minute.chairperson
+      %td= minutes_minute.released_date
+      %td= minutes_minute.has_quorum
+      %td= link_to 'Show', minutes_minute
+      %td= link_to t('actions.edit'), edit_minutes_minute_path(minutes_minute)
+      %td= link_to 'Destroy', minutes_minute, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to content_tag(:span, ' ' + t('.new'), :class => "icon-plus"), new_minutes_minute_path, :class => "button small round secondary"

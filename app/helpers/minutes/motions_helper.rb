@@ -1,0 +1,2 @@
+module Minutes::MotionsHelper
+end

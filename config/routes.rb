@@ -1,6 +1,19 @@
 # The restful routes are lazily translated using following the pattern:
 #   resources :$deutschername, :as => "$englishname", :controller => "$englishname"
 Fsintra::Application.routes.draw do
+
+  namespace :minutes do
+    resources :motions
+  end
+
+  namespace :minutes do
+    resources :minutes do 
+      resources :items do
+        resources :motions
+      end
+    end
+  end
+
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users' 
   resources :personen, :as => 'people', :controller => 'people' do
     get 'tags/:tag', to: 'people#index', as: :tag, on: :collection
