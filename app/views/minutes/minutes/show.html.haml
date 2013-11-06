@@ -1,3 +1,5 @@
+%p= link_to 'Zurück zur Protokollübersicht', minutes_minutes_path
+
 %section
   %h1 Protokoll vom #{l @minutes_minute.date}
 
@@ -26,4 +28,6 @@
 
 = render partial: "minutes/items/item", collection: @minutes_minute.items, as: :item
 
-= link_to t('actions.back'), minutes_minutes_path
+%hr
+
+%p= link_to 'Zurück zur Protokollübersicht', minutes_minutes_path

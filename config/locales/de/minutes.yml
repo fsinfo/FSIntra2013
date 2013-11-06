@@ -19,7 +19,7 @@ de:
 # --------------
   activerecord:
     models:
-      minute:
+      minutes/minute:
         one: Protokoll
         other: Protokolle
       minutes/item:
