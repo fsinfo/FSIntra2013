@@ -1,5 +1,5 @@
 class Minutes::ItemsController < ApplicationController
-  before_action :set_minutes_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_minutes_item, only: [:show, :edit, :update, :destroy, :move]
   before_action :set_minute
   respond_to :html, :js
 
@@ -62,6 +62,20 @@ class Minutes::ItemsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to minutes_items_url }
       format.json { head :no_content }
+    end
+  end
+
+  def move
+    if params[:dir] == 'down'
+      @minutes_item.move_down
+      direction = 'unten'
+    else
+      @minutes_item.move_up
+      direction = 'oben'
+    end
+
+    respond_to do |format|
+      format.html { redirect_to @minutes_minute, notice: "TOP #{@minutes_item.title} nach #{direction} verschoben." }
     end
   end
 

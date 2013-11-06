@@ -1,6 +1,7 @@
 %h1= t '.headline'
 = link_to content_tag(:span, ' ' + t('.new'), :class => "icon-plus"), new_minutes_minute_path, :class => "button small round secondary"
 
+
 %table
   %tr
     %th= t Minutes::Minute.human_attribute_name :date

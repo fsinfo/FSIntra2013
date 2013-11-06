@@ -10,11 +10,8 @@
   .field
     = f.label :title
     = f.text_field :title
-  .field
+  .field.redactor-field
     = f.label :content
     = f.text_area :content
-  .field
-    = f.label :order
-    = f.number_field :order
   .actions
-    = f.submit 'Save'
+    = f.submit

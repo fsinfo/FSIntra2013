@@ -10,6 +10,7 @@ Fsintra::Application.routes.draw do
     resources :minutes do 
       resources :items do
         resources :motions
+        put 'move', on: :member
       end
     end
   end

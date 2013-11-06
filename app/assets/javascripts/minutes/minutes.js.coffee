@@ -18,12 +18,30 @@ $(document).ready ->
     window.location.href = response.forward_to
 
   $(".select2-field select").select2()
+
+  $(".highlight-section").hover ->
+    $(this).parent().toggleClass("highlighted", 500)
+  ,->
+    $(this).parent().toggleClass("highlighted", 100)
  
   # Clear errors on submit
   $("form.new_minutes_minute").submit () -> 
     $("input.error").each clearError
     $(".select2-container.error").each clearError
     $("input[name=commit]").html("value", "Speichere " + global.spinner_image)
+
+  # Add redactor
+  buttons = [
+          'bold', 'italic', 'underline', 'deleted', '|',
+          'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+          'alignleft', 'aligncenter', 'alignright', 'justify', '|',
+          'html'
+  ]
+  $(".redactor-field textarea").redactor({
+      lang: 'de',
+      buttons: buttons,
+      minHeight: 350,
+    })
 
 clearError = () ->
   el = this

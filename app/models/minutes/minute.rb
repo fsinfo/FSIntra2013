@@ -21,7 +21,7 @@ class Minutes::Minute < ActiveRecord::Base
   belongs_to :keeper_of_the_minutes, class_name: 'User'
   belongs_to :chairperson, class_name: 'User'
 
-  has_many :items, class_name: 'Minutes::Item'
+  has_many :items, -> { order '"order" ASC' }, class_name: 'Minutes::Item'
 
   validates_presence_of :chairperson_id
   validates_presence_of :keeper_of_the_minutes_id

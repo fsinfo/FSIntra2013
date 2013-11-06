@@ -10,10 +10,10 @@
     = f.label :date, :class => "fs-prefix"
     = f.date_field :date, :class => "large-4 columns"
   .row.collapse.select2-field
-    = f.label :keeper_of_the_minutes_id, :class => "fs-prefix"
+    = f.label :keeper_of_the_minutes_id, Minutes::Minute.human_attribute_name(:keeper_of_the_minutes), :class => "fs-prefix"
     = f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
   .row.collapse.select2-field
-    = f.label :chairperson_id, :class => "fs-prefix"
+    = f.label :chairperson_id, Minutes::Minute.human_attribute_name(:chairperson), :class => "fs-prefix"
     = f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
   .row.collapse
     .columns.small-3.large-2
