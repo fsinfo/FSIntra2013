@@ -15,6 +15,9 @@
     %b= Minutes::Minute.human_attribute_name :released_date
     = @minutes_minute.released_date
   %p
+    %b= Minutes::Minute.human_attribute_name :attendants
+    = @minutes_minute.attendants.join(", ")
+  %p
     %b= Minutes::Minute.human_attribute_name :has_quorum
     = @minutes_minute.has_quorum
 

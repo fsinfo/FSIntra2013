@@ -23,6 +23,9 @@ class Minutes::Minute < ActiveRecord::Base
 
   has_many :items, -> { order '"order" ASC' }, class_name: 'Minutes::Item'
 
+  has_many :attendances
+  has_many :attendants, through: :attendances, source: :user
+
   validates_presence_of :chairperson_id
   validates_presence_of :keeper_of_the_minutes_id
   validates_presence_of :date

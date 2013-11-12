@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131030171957) do
+ActiveRecord::Schema.define(version: 20131106211227) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(version: 20131030171957) do
 
   add_index "minute_motions", ["minutes_item_id"], name: "index_minute_motions_on_minutes_item_id"
   add_index "minute_motions", ["mover_id"], name: "index_minute_motions_on_mover_id"
+
+  create_table "minutes_attendances", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "minute_id"
+    t.string  "type"
+  end
+
+  add_index "minutes_attendances", ["minute_id"], name: "index_minutes_attendances_on_minute_id"
+  add_index "minutes_attendances", ["user_id"], name: "index_minutes_attendances_on_user_id"
 
   create_table "minutes_items", force: true do |t|
     t.date     "date"

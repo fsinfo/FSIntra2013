@@ -84,6 +84,10 @@ class Minutes::MinutesController < ApplicationController
     end
 
     def minutes_minute_params
-      params.require(:minutes_minute).permit(:date, :keeper_of_the_minutes_id, :chairperson_id, :has_quorum)
+      params.require(:minutes_minute).permit(:date,
+                                             :keeper_of_the_minutes_id,
+                                             :chairperson_id,
+                                             :has_quorum,
+                                             :attendant_ids => [])
     end
 end
