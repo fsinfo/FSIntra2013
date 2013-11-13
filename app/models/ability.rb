@@ -18,8 +18,10 @@ class Ability
       can :create, Minutes::Item
       can :manage, Minutes::Item do |item|
         not item.minute or item.minute.keeper_of_the_minutes == user
-      end 
-      can :manage, Minutes::Motion, :minutes_item => { :minutes_minute => { :keeper_of_the_minutes_id => user.id } }
+      end
+      can :manage, Minutes::Motion do |motion|
+        not motion.item or motion.item.minute.keeper_of_the_minutes == user
+      end
 
       can :read, Minutes::Minute
       can :create, Minutes::Minute
