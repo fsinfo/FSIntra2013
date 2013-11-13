@@ -5,6 +5,7 @@
 #  user_id   :integer
 #  minute_id :integer
 #  type      :string(255)
+#  id        :integer          not null, primary key
 #
 # Indexes
 #
@@ -16,7 +17,4 @@
 class Minutes::Attendance < ActiveRecord::Base
   belongs_to :user
   belongs_to :minute
-
-  # self.primary_key = "user_id, minute_id"
-  # self.primary_key = [:user_id, :minute_id]
 end

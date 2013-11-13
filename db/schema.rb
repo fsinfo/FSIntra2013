@@ -13,21 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20131113150618) do
 
-  create_table "addresses_old", force: true do |t|
-    t.string  "vorname",  limit: nil
-    t.string  "nachname", limit: nil
-    t.string  "strasse",  limit: nil
-    t.string  "plz",      limit: nil
-    t.string  "ort",      limit: nil
-    t.string  "telefon",  limit: nil
-    t.string  "mobil",    limit: nil
-    t.date    "gebdat"
-    t.string  "email",    limit: nil
-    t.string  "jabber",   limit: nil
-    t.string  "icq",      limit: nil
-    t.integer "typ"
-  end
-
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
     t.integer  "count",                              default: 0
@@ -48,14 +33,32 @@ ActiveRecord::Schema.define(version: 20131113150618) do
     t.decimal  "capacity",    precision: 8, scale: 2
   end
 
+  create_table "minute_motions", force: true do |t|
+    t.integer  "order"
+    t.integer  "mover_id"
+    t.integer  "pro"
+    t.integer  "con"
+    t.integer  "abs"
+    t.text     "rationale"
+    t.integer  "amount"
+    t.integer  "minutes_item_id"
+    t.boolean  "approved"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "minute_motions", ["minutes_item_id"], name: "index_minute_motions_on_minutes_item_id"
+  add_index "minute_motions", ["mover_id"], name: "index_minute_motions_on_mover_id"
+
   create_table "minutes_attendances", force: true do |t|
     t.integer "user_id"
     t.integer "minute_id"
     t.string  "type"
   end
 
-  add_index "minutes_attendances", ["minute_id"], name: "index_minutes_attendances_on_minute_id", using: :btree
-  add_index "minutes_attendances", ["user_id"], name: "index_minutes_attendances_on_user_id", using: :btree
+  add_index "minutes_attendances", ["minute_id"], name: "index_minutes_attendances_on_minute_id"
+  add_index "minutes_attendances", ["user_id", "minute_id"], name: "index_minutes_attendances_on_user_id_and_minute_id"
+  add_index "minutes_attendances", ["user_id"], name: "index_minutes_attendances_on_user_id"
 
   create_table "minutes_items", force: true do |t|
     t.date     "date"
@@ -67,7 +70,7 @@ ActiveRecord::Schema.define(version: 20131113150618) do
     t.datetime "updated_at"
   end
 
-  add_index "minutes_items", ["minute_id"], name: "index_minutes_items_on_minute_id", using: :btree
+  add_index "minutes_items", ["minute_id"], name: "index_minutes_items_on_minute_id"
 
   create_table "minutes_minutes", force: true do |t|
     t.date     "date"
@@ -79,8 +82,8 @@ ActiveRecord::Schema.define(version: 20131113150618) do
     t.datetime "updated_at"
   end
 
-  add_index "minutes_minutes", ["chairperson_id"], name: "index_minutes_minutes_on_chairperson_id", using: :btree
-  add_index "minutes_minutes", ["keeper_of_the_minutes_id"], name: "index_minutes_minutes_on_keeper_of_the_minutes_id", using: :btree
+  add_index "minutes_minutes", ["chairperson_id"], name: "index_minutes_minutes_on_chairperson_id"
+  add_index "minutes_minutes", ["keeper_of_the_minutes_id"], name: "index_minutes_minutes_on_keeper_of_the_minutes_id"
 
   create_table "minutes_motions", force: true do |t|
     t.integer  "order"
@@ -96,18 +99,8 @@ ActiveRecord::Schema.define(version: 20131113150618) do
     t.datetime "updated_at"
   end
 
-  add_index "minutes_motions", ["item_id"], name: "index_minutes_motions_on_item_id", using: :btree
-  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id", using: :btree
-
-  create_table "oldusers", id: false, force: true do |t|
-    t.string  "name",     default: "",  null: false
-    t.string  "password", default: "*", null: false
-    t.integer "id"
-    t.integer "aktiv",    default: 0,   null: false
-    t.string  "vorname",                null: false
-    t.string  "nachname",               null: false
-    t.string  "email",                  null: false
-  end
+  add_index "minutes_motions", ["item_id"], name: "index_minutes_motions_on_item_id"
+  add_index "minutes_motions", ["mover_id"], name: "index_minutes_motions_on_mover_id"
 
   create_table "people", force: true do |t|
     t.string   "firstname"
@@ -131,9 +124,8 @@ ActiveRecord::Schema.define(version: 20131113150618) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status",     default: "running"
     t.boolean  "paid"
-    t.boolean  "marked_as_paid"
-    t.string   "status",         default: "running"
   end
 
   create_table "taggings", force: true do |t|
@@ -146,8 +138,8 @@ ActiveRecord::Schema.define(version: 20131113150618) do
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", force: true do |t|
     t.string "name"
@@ -158,7 +150,7 @@ ActiveRecord::Schema.define(version: 20131113150618) do
     t.integer "tab_id"
   end
 
-  add_index "user_tabs", ["user_id", "tab_id"], name: "index_user_tabs_on_user_id_and_tab_id", unique: true, using: :btree
+  add_index "user_tabs", ["user_id", "tab_id"], name: "index_user_tabs_on_user_id_and_tab_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "loginname"

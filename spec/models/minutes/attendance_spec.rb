@@ -5,6 +5,7 @@
 #  user_id   :integer
 #  minute_id :integer
 #  type      :string(255)
+#  id        :integer          not null, primary key
 #
 # Indexes
 #
