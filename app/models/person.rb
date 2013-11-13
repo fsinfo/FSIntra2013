@@ -37,6 +37,11 @@ class Person < ActiveRecord::Base
 		"#{self.firstname.first}. #{self.lastname}"
 	end
 
+	def Person.not_fsr
+		loginnames = FsLdap.loginnames_of_group('fsr')
+		return Person.all - User.where(:loginname => loginnames)
+	end
+
 	def to_vcard
 		begin 
 			card = Vpim::Vcard::Maker.make2 do |maker|

@@ -1,4 +1,7 @@
 class Minutes::ItemsController < ApplicationController
+  before_action :signed_in_user
+  load_and_authorize_resource
+
   before_action :set_minutes_item, only: [:show, :edit, :update, :destroy, :move]
   before_action :set_minute
   respond_to :html, :js

@@ -23,8 +23,17 @@ class Minutes::Minute < ActiveRecord::Base
 
   has_many :items, -> { order '"order" ASC' }, class_name: 'Minutes::Item'
 
-  has_many :attendances
-  has_many :attendants, through: :attendances, source: :user
+  # Attendances are defined in the 'base-join-table' attendances,
+  # which also has a column 'type'. This is used in order to
+  # distinguish between FSR attendees and guests (extendable).
+  has_many :attendances # <- delete me
+  has_many :attendants, through: :attendances, source: :user # <- delete me
+
+  has_many :fsr_attendances, -> { where type: :fsr }, class_name: 'Minutes::Attendance'
+  has_many :fsr_attendants, through: :fsr_attendances, source: :user
+
+  has_many :guest_attendances, -> { where type: :guest }, class_name: 'Minutes::Attendance'
+  has_many :guest_attendants, through: :guest_attendances, source: :user
 
   validates_presence_of :chairperson_id
   validates_presence_of :keeper_of_the_minutes_id

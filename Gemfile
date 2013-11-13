@@ -18,7 +18,11 @@ gem 'uglifier', '>= 1.0.3'
 
 gem 'zurb-foundation', '~> 4.0.0'
 
-gem 'jquery-rails'
+group :assets do
+  gem 'jquery-rails'
+  gem 'jquery-ui-rails'
+end
+
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'

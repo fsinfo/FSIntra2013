@@ -1,4 +1,7 @@
 class Minutes::MinutesController < ApplicationController
+  before_action :signed_in_user
+  load_and_authorize_resource
+
   before_action :set_minutes_minute, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json
 
@@ -26,6 +29,7 @@ class Minutes::MinutesController < ApplicationController
   # POST /minutes/minutes
   # POST /minutes/minutes.json
   def create
+    params[:minutes_minute][:keeper_of_the_minutes_id] ||= current_user.id
     @minutes_minute = Minutes::Minute.new(minutes_minute_params)
 
     if @minutes_minute.save
@@ -34,7 +38,7 @@ class Minutes::MinutesController < ApplicationController
       # Default items
       order_counter = 0
       ["Festlegung der Tagesordnung", "Mitteilungen", "Anträge", "Verschiedenes"].each do |item|
-        new_item = @minutes_minute.items.create title: item, order: order_counter
+        new_item = @minutes_minute.items.create title: item, order: order_counter, content: ''
         order_counter += 1
       end
       
@@ -88,6 +92,6 @@ class Minutes::MinutesController < ApplicationController
                                              :keeper_of_the_minutes_id,
                                              :chairperson_id,
                                              :has_quorum,
-                                             :attendant_ids => [])
+                                             :fsr_attendant_ids => [])
     end
 end

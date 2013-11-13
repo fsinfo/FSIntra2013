@@ -11,7 +11,10 @@
     = f.date_field :date, :class => "large-4 columns"
   .row.collapse.select2-field
     = f.label :keeper_of_the_minutes_id, Minutes::Minute.human_attribute_name(:keeper_of_the_minutes), :class => "fs-prefix"
-    = f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
+    - if can? :manage, Minutes::Minute
+      = f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
+    - else
+      = current_user
   .row.collapse.select2-field
     = f.label :chairperson_id, Minutes::Minute.human_attribute_name(:chairperson), :class => "fs-prefix"
     = f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
@@ -23,12 +26,56 @@
       - User.fsr.each do |u|
         %li
           = label_tag do
-            = check_box_tag 'minutes_minute[attendant_ids][]', u.id, @minutes_minute.attendant_ids.include?(u.id)
+            = check_box_tag 'minutes_minute[fsr_attendant_ids][]', u.id, @minutes_minute.fsr_attendant_ids.include?(u.id)
             = u.displayed_name
       = f.check_box :has_quorum
       = f.label :has_quorum
 
-      %strong Gäste
-      %strong{style: 'color: red'} TODO
+      %strong Gäste:
+      = f.text_area :guests, :value => @minutes_minute.guest_attendants.map{|x| x.displayed_name }.join(', ')
   .actions
     = f.submit
+
+- content_for :scripts do
+  :javascript
+    // applicable are all guests except fsr member
+    var guest_autocomplete = ["#{Person.not_fsr.map{|x| x.displayed_name }.join('", "') }"]
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+    $("textarea#minutes_minute_guests").bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).data( "ui-autocomplete" ).menu.active ) {
+          event.preventDefault();
+        }
+      }).autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            guest_autocomplete, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+
+          // Remove already present guests.
+          var the_index = guest_autocomplete.indexOf(ui.item.value)
+          guest_autocomplete.splice(the_index, 1)
+          
+          return false;
+        }
+      });
