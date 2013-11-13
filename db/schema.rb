@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131106211227) do
+ActiveRecord::Schema.define(version: 20131113150618) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20131106211227) do
   end
 
   add_index "minutes_attendances", ["minute_id"], name: "index_minutes_attendances_on_minute_id"
+  add_index "minutes_attendances", ["user_id", "minute_id"], name: "index_minutes_attendances_on_user_id_and_minute_id"
   add_index "minutes_attendances", ["user_id"], name: "index_minutes_attendances_on_user_id"
 
   create_table "minutes_items", force: true do |t|
