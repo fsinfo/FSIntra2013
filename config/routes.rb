@@ -6,10 +6,10 @@ Fsintra::Application.routes.draw do
     resources :motions
   end
 
-  namespace :minutes do
-    resources :minutes do 
-      resources :items do
-        resources :motions
+  namespace :minutes, :path => 'protokollsystem' do
+    resources :minutes, :path => 'protokolle' do 
+      resources :items, :path => 'tops' do
+        resources :motions, :path => 'antrag'
         put 'move', on: :member
       end
     end
