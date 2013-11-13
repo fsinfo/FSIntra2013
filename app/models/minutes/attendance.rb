@@ -17,5 +17,6 @@ class Minutes::Attendance < ActiveRecord::Base
   belongs_to :user
   belongs_to :minute
 
-  self.primary_key = [:user_id, :minute_id]
+  # self.primary_key = "user_id, minute_id"
+  # self.primary_key = [:user_id, :minute_id]
 end
