@@ -21,6 +21,7 @@ class Minutes::Item < ActiveRecord::Base
   has_many :motions, class_name: 'Minutes::Motion'
 
   validates_presence_of :order
+  #validate :orders_must_be_sequence TODO
 
   def move_up
     other = Minutes::Item.where(minute: minute).where(order: order-1).first
@@ -39,6 +40,23 @@ class Minutes::Item < ActiveRecord::Base
       self.order = self.order + 1
       other.save
       self.save
+    end
+  end
+
+  private 
+
+  def orders_must_be_sequence
+    # 1. collect orders
+    orders = []
+    minute.items.each do |i|
+      orders << i.order
+    end
+
+    # 2. sortem
+    orders.sort!
+
+    if orders != (0..orders.length - 1).to_a
+      errors.add :order, "is not in a decent order"
     end
   end
 end

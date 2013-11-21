@@ -32,6 +32,26 @@ class Minutes::ItemsController < ApplicationController
   # POST /minutes/items.json
   def create
     @minutes_item = @minutes_minute.items.build(minutes_item_params)
+        
+    found = false
+    @minutes_minute.items.each do |i|
+      # go forward until we find the right 
+      if i.id != params[:after_top].to_i and not found
+        puts "found is false and #{i.id} != #{params[:after_top]}"
+        next
+      end
+
+      # we have the right one
+      if i.id == params[:after_top].to_i
+        puts "found is still false but #{i.id} == #{params[:after_top]}"
+        @minutes_item.order = i.order + 1
+        found = true
+      elsif i.id != params[:after_top].to_i and not i.new_record? # order of other items + 1
+        puts "found is now true and #{i.id} != #{params[:after_top]}"
+        puts "now i set i.order from #{i.order} to #{i.order + 1}"
+        i.update_attributes order: i.order + 1
+      end
+    end
 
     respond_to do |format|
       if @minutes_item.save

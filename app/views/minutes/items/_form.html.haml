@@ -13,5 +13,9 @@
   .field.redactor-field
     = f.label :content
     = f.text_area :content
+  .field
+    %p
+      Neuen Tagesordnung nach folgendem einordnen
+      = select_tag :after_top, options_from_collection_for_select(@minutes_minute.items - [@minutes_item], "id", "title"), include_blank: false
   .actions
     = f.submit
