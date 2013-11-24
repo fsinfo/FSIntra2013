@@ -31,12 +31,12 @@ de:
         one: Antrag
     attributes:
       minutes/minute:
-        date: Datum
+        date: Sitzungsdatum
         status: Status
         keeper_of_the_minutes: Protokollant
         chairperson: Sitzungsleitung
         has_quorum: Beschlussfähig
-        attendees: Anwesend
+        attendees: Anwesenheit
         absentees: Entschuldigt
         guests: Gäste
         released_date: Veröffentlicht am

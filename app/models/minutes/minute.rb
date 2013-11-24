@@ -10,6 +10,7 @@
 #  has_quorum               :boolean
 #  created_at               :datetime
 #  updated_at               :datetime
+#  guests                   :text
 #
 # Indexes
 #

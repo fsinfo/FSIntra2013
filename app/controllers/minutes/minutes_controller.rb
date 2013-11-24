@@ -3,6 +3,7 @@ class Minutes::MinutesController < ApplicationController
   load_and_authorize_resource
 
   before_action :set_minutes_minute, only: [:show, :edit, :update, :destroy]
+  before_action :trim_guests, only: [:update, :create]
   respond_to :html, :json
 
   # GET /minutes/minutes
@@ -62,7 +63,7 @@ class Minutes::MinutesController < ApplicationController
   def update
     respond_to do |format|
       if @minutes_minute.update(minutes_minute_params)
-        format.html { redirect_to @minutes_minute, notice: 'Minute was successfully updated.' }
+        format.html { redirect_to @minutes_minute, notice: 'Protokoll erfolgreich bearbeitet.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -91,7 +92,13 @@ class Minutes::MinutesController < ApplicationController
       params.require(:minutes_minute).permit(:date,
                                              :keeper_of_the_minutes_id,
                                              :chairperson_id,
+                                             :guests,
                                              :has_quorum,
                                              :fsr_attendant_ids => [])
+    end
+
+    # If someone forgets to remove the last ", "
+    def trim_guests
+      params[:minutes_minute][:guests] = params[:minutes_minute][:guests].chomp(", ")
     end
 end

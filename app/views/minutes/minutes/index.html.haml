@@ -6,17 +6,17 @@
   %tr
     %th= t Minutes::Minute.human_attribute_name :date
     %th= t Minutes::Minute.human_attribute_name :keeper_of_the_minutes
-    %th= t Minutes::Minute.human_attribute_name :status
+    %th= t Minutes::Minute.human_attribute_name :chairperson
     %th Veröffentlicht am
     %th Beschlussfähig
     %th{colspan: 3} Aktionen
 
   - @minutes_minutes.each do |minutes_minute|
     %tr
-      %td= minutes_minute.date
+      %td= ldate minutes_minute.date
       %td= minutes_minute.keeper_of_the_minutes
       %td= minutes_minute.chairperson
-      %td= minutes_minute.released_date
+      %td= ldate minutes_minute.released_date
       %td= minutes_minute.has_quorum
       %td= link_to t('actions.show'), minutes_minute
       %td= link_to t('actions.edit'), edit_minutes_minute_path(minutes_minute)

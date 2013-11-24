@@ -14,10 +14,13 @@
     - if can? :manage, Minutes::Minute
       = f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
     - else
-      = current_user
+      .fixed_field= @minutes_minute.keeper_of_the_minutes || current_user.to_s
   .row.collapse.select2-field
     = f.label :chairperson_id, Minutes::Minute.human_attribute_name(:chairperson), :class => "fs-prefix"
     = f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
+  .row.collapse
+    = f.label :has_quorum, :class => "fs-prefix"
+    = f.check_box :has_quorum
   .row.collapse
     = f.label :attendees, :class => "fs-prefix"
     .large-4.columns
@@ -28,11 +31,9 @@
           = label_tag do
             = check_box_tag 'minutes_minute[fsr_attendant_ids][]', u.id, @minutes_minute.fsr_attendant_ids.include?(u.id)
             = u.displayed_name
-      = f.check_box :has_quorum
-      = f.label :has_quorum
 
       %strong Gäste:
-      = f.text_area :guests, :value => @minutes_minute.guest_attendants.map{|x| x.displayed_name }.join(', ')
+      = f.text_area :guests #, :value => @minutes_minute.guest_attendants.map{|x| x.displayed_name }.join(', ')
   .actions
     = f.submit
 
@@ -46,6 +47,16 @@
     function extractLast( term ) {
       return split( term ).pop();
     }
+
+    // Remove these guests from autocomplete that are
+    // allready in
+    var guest_str = $("textarea#minutes_minute_guests").val();
+    var guest_arr = guest_str.split( /,\s*/ );
+    for(i in guest_arr) {
+      var the_index = guest_autocomplete.indexOf(guest_arr[i]);
+      guest_autocomplete.splice(the_index, 1);
+    }
+
     $("textarea#minutes_minute_guests").bind( "keydown", function( event ) {
         if ( event.keyCode === $.ui.keyCode.TAB &&
             $( this ).data( "ui-autocomplete" ).menu.active ) {

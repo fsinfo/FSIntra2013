@@ -17,4 +17,8 @@ module ApplicationHelper
   def on_creating?
     action_name == 'new' or action_name == 'create'
   end
+
+  def ldate(date)
+    date ? l(date) : t("–")
+  end
 end

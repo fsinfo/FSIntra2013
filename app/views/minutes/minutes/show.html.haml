@@ -18,6 +18,9 @@
     %b= Minutes::Minute.human_attribute_name :attendants
     = @minutes_minute.fsr_attendants.join(", ")
   %p
+    %b= Minutes::Minute.human_attribute_name :guests
+    = @minutes_minute.guests
+  %p
     %b= Minutes::Minute.human_attribute_name :has_quorum
     = @minutes_minute.has_quorum
 
