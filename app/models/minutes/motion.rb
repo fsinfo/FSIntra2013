@@ -36,6 +36,7 @@ class Minutes::Motion < ActiveRecord::Base
   #   m.currency
   #   # => '99,98 €'
   def amount_in_currency
+    return unless amount
   	a = amount / 100
   	b = amount % 100
   	b = "0#{b}" if b < 10
