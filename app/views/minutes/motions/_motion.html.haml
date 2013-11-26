@@ -10,4 +10,4 @@
     <br />
     = link_to t('actions.edit'), edit_minutes_minute_item_motion_path(@minutes_minute, item, motion), class: 'highlight-section'
     \|
-    = link_to t('actions.destroy'), motion, :method => :delete, :data => { :confirm => t('actions.destroy_confirm') }
+    = link_to t('actions.destroy'), minutes_minute_item_motion_path(@minutes_minute, item, motion), :method => :delete, :data => { :confirm => t('actions.destroy_confirm') }

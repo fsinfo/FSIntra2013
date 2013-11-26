@@ -46,7 +46,7 @@ class Minutes::MotionsController < ApplicationController
   def update
     respond_to do |format|
       if @minutes_motion.update(minutes_motion_params)
-        format.html { redirect_to @minutes_minute, notice: 'Motion was successfully updated.' }
+        format.html { redirect_to @minutes_minute, notice: t('feedback.updated', :model => Minutes::Motion.model_name.human) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -60,7 +60,7 @@ class Minutes::MotionsController < ApplicationController
   def destroy
     @minutes_motion.destroy
     respond_to do |format|
-      format.html { redirect_to minutes_motions_url }
+      format.html { redirect_to @minutes_minute, notice: t('feedback.destroyed', :model => Minutes::Motion.model_name.human) }
       format.json { head :no_content }
     end
   end
