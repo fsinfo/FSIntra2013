@@ -1,10 +1,10 @@
 class MinuteMailer < ActionMailer::Base
-  default from: 'intranet@fachschaft.cs.uni-kl.de'
+  default from: 's_wolff09@fachschaft.cs.uni-kl.de'
   default to: 'fsinfo@fachschaft.cs.uni-kl.de'
   
   def send_draft minute, user
     @minutes_minute = minute
-    mail(subject: "Protokoll der FSR-Sitzung vom #{l @minutes_minute.date} [ENTWURF]")
+    mail(from: "#{minute.keeper_of_the_minutes.loginname}@fachschaft.cs.uni-kl.de", subject: "Protokoll der FSR-Sitzung vom #{l @minutes_minute.date} [ENTWURF]")
   end
 
   private
