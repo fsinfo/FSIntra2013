@@ -1,6 +1,6 @@
 class MinuteMailer < ActionMailer::Base
   default from: 'm_hoffmann09@cs.uni-kl.de'
-  default to: 'fsinfo@fachschaft.cs.uni-kl.de'
+  default to: 'm_hoffmann09@cs.uni-kl.de'
   default sender: 'm_hoffmann09@cs.uni-kl.de'
 
   def send_draft minute, user
