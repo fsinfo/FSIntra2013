@@ -11,6 +11,7 @@
 #  created_at               :datetime
 #  updated_at               :datetime
 #  guests                   :text
+#  draft_sent_date          :date
 #
 # Indexes
 #

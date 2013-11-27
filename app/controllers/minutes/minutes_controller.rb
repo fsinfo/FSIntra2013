@@ -83,6 +83,7 @@ class Minutes::MinutesController < ApplicationController
   end
 
   def send_draft
+    @minutes_minute.update_attributes({ draft_sent_date: Date.today })
     MinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
     respond_to do |format|
       format.html { redirect_to @minutes_minute, notice: 'Entwurf erfolgreich verschickt.' }
