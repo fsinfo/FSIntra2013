@@ -109,3 +109,6 @@ gem 'ransack'
 
 # CanCan
 gem 'cancan'
+
+# Script that takes html strings and generates markdown.
+gem 'reverse_markdown'

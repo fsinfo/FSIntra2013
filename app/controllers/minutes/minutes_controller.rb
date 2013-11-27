@@ -83,9 +83,9 @@ class Minutes::MinutesController < ApplicationController
   end
 
   def send_draft
-    MinuteMailer.send_draft(@minutes_minute).deliver
+    MinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
     respond_to do |format|
-      format.html { redirect_to @minutes_minute }
+      format.html { redirect_to @minutes_minute, notice: 'Entwurf erfolgreich verschickt.' }
       format.json { head :no_content }
     end
   end

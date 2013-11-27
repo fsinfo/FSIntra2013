@@ -17,7 +17,7 @@
     %dt= Minutes::Minute.human_attribute_name :guests
     %dd= @minutes_minute.guests
     %dt= Minutes::Minute.human_attribute_name :has_quorum
-    %dd= @minutes_minute.has_quorum
+    %dd= @minutes_minute.has_quorum? ? t('views.yep') : t('views.nope')
 
   %ul.button-group.highlight-section
     %li
