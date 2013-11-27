@@ -63,6 +63,11 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+
+  # This gem is intentionally not in the Gemfile, since the 
+  # mailcatcher website recommends to install it via
+  # gem install mailcatcher
+  # gem 'mailcatcher'
 end
 
 gem 'net-ldap'
