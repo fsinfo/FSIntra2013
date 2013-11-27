@@ -4,12 +4,12 @@ class MinuteMailer < ActionMailer::Base
   
   def send_draft minute, user
     @minutes_minute = minute
-    mail(from: "#{minute.keeper_of_the_minutes.loginname}@fachschaft.cs.uni-kl.de", subject: "Protokoll der FSR-Sitzung vom #{l @minutes_minute.date} [ENTWURF]")
+    mail(from: get_email_with_name(user), subject: "Protokoll der FSR-Sitzung vom #{l @minutes_minute.date} [ENTWURF]")
   end
 
   private
   
   def get_email_with_name(user)
-    "#{user.displayed_name} <#{user.email}>"
+    "#{user.displayed_name} <#{minute.keeper_of_the_minutes.loginname}@fachschaft.cs.uni-kl.de>"
   end
 end
