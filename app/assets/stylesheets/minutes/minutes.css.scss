@@ -56,3 +56,11 @@ span.error {
   line-height: 2.3125em;
   border: 1px solid #d9d9d9;
 }
+
+dl dt {
+  @include grid-column($columns:3,$float:left);
+}
+
+dl dd {
+  @include grid-column($columns:9,$float:left);
+}

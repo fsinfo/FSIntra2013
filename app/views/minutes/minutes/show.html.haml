@@ -5,24 +5,19 @@
 
   - if notice
     %p#notice= notice
-  %p
-    %b= Minutes::Minute.human_attribute_name :keeper_of_the_minutes
-    = @minutes_minute.keeper_of_the_minutes
-  %p
-    %b= Minutes::Minute.human_attribute_name :chairperson
-    = @minutes_minute.chairperson
-  %p
-    %b= Minutes::Minute.human_attribute_name :released_date
-    = @minutes_minute.released_date
-  %p
-    %b= Minutes::Minute.human_attribute_name :attendants
-    = @minutes_minute.fsr_attendants.join(", ")
-  %p
-    %b= Minutes::Minute.human_attribute_name :guests
-    = @minutes_minute.guests
-  %p
-    %b= Minutes::Minute.human_attribute_name :has_quorum
-    = @minutes_minute.has_quorum
+  %dl
+    %dt= Minutes::Minute.human_attribute_name :keeper_of_the_minutes
+    %dd= @minutes_minute.keeper_of_the_minutes
+    %dt= Minutes::Minute.human_attribute_name :chairperson
+    %dd= @minutes_minute.chairperson
+    %dt= Minutes::Minute.human_attribute_name :released_date
+    %dd= ldate @minutes_minute.released_date
+    %dt= Minutes::Minute.human_attribute_name :attendants
+    %dd= @minutes_minute.fsr_attendants.join(", ")
+    %dt= Minutes::Minute.human_attribute_name :guests
+    %dd= @minutes_minute.guests
+    %dt= Minutes::Minute.human_attribute_name :has_quorum
+    %dd= @minutes_minute.has_quorum
 
   %ul.button-group.highlight-section
     %li
