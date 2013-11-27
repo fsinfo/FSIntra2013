@@ -10,6 +10,6 @@ class MinuteMailer < ActionMailer::Base
   private
   
   def get_email_with_name(user)
-    "#{user.displayed_name} <#{minute.keeper_of_the_minutes.loginname}@fachschaft.cs.uni-kl.de>"
+    "#{user.displayed_name} <#{user.loginname}@fachschaft.cs.uni-kl.de>"
   end
 end
