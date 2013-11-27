@@ -2,7 +2,7 @@ class Minutes::MinutesController < ApplicationController
   before_action :signed_in_user
   load_and_authorize_resource
 
-  before_action :set_minutes_minute, only: [:show, :edit, :update, :destroy]
+  before_action :set_minutes_minute, only: [:show, :edit, :update, :destroy, :send_draft]
   before_action :trim_guests, only: [:update, :create]
   respond_to :html, :json
 
@@ -78,6 +78,14 @@ class Minutes::MinutesController < ApplicationController
     @minutes_minute.destroy
     respond_to do |format|
       format.html { redirect_to minutes_minutes_url }
+      format.json { head :no_content }
+    end
+  end
+
+  def send_draft
+    MinuteMailer.send_draft(@minutes_minute).deliver
+    respond_to do |format|
+      format.html { redirect_to @minutes_minute }
       format.json { head :no_content }
     end
   end

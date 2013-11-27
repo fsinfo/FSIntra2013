@@ -12,6 +12,7 @@ Fsintra::Application.routes.draw do
         resources :motions, :path => 'antrag'
         put 'move', on: :member
       end
+      put 'send_draft', on: :member
     end
   end
 

@@ -14,7 +14,7 @@ class Ability
       can [:read, :mark_as_paid], Tab, :user_id => user.id
 
       # Minutes
-      can [:update], Minutes::Minute, :keeper_of_the_minutes_id => user.id
+      can [:update, :send_draft], Minutes::Minute, :keeper_of_the_minutes_id => user.id
       can :create, Minutes::Item
       can :manage, Minutes::Item do |item|
         not item.minute or item.minute.keeper_of_the_minutes == user
