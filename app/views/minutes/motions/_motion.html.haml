@@ -8,7 +8,7 @@
     <br />
     Dafür: #{motion.pro}, enthaltung: #{motion.abs}, dagegen: #{motion.con} – Der Antrag ist <strong>#{motion.approved? ? '' : 'nicht'}</strong> angenommen.
     <br />
-    - if can? :manage, @miuntes_minute
+    - if can? :update, @miuntes_minute
       = link_to t('actions.edit'), edit_minutes_minute_item_motion_path(@minutes_minute, item, motion), class: 'highlight-section'
       \|
       = link_to t('actions.destroy'), minutes_minute_item_motion_path(@minutes_minute, item, motion), :method => :delete, :data => { :confirm => t('actions.destroy_confirm') }

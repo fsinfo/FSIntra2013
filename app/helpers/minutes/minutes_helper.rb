@@ -1,2 +1,3 @@
 module Minutes::MinutesHelper
+	
 end

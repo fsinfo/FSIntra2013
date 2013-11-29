@@ -5,17 +5,13 @@
 
   = render partial: "minutes/motions/motion", collection: item.motions, as: :motion, locals: { item: item }
   
-  - if can? :manage, @miuntes_minute
+  - if can? :update, @minutes_minute
     %ul.button-group.highlight-section
       %li
-        %button.small.button{ type: "button", title: "Nach oben schieben"}
-          = link_to '⇧', move_minutes_minute_item_path(@minutes_minute, item, dir: 'up'), method: :put
+        = link_to small_button('⇧', "Nach oben schieben"), move_minutes_minute_item_path(@minutes_minute, item, dir: 'up'), method: :put
       %li
-        %button.small.button{ type: "button", title: "Bearbeiten"}
-          = link_to t('actions.edit'), edit_minutes_minute_item_path(@minutes_minute, item)
+        = link_to small_button(t('actions.edit')), edit_minutes_minute_item_path(@minutes_minute, item)
       %li
-        %button.small.button{ type: "button", title: "Antrag hinzufügen"}
-          = link_to t('actions.new', model: Minutes::Motion.model_name.human), new_minutes_minute_item_motion_path(@minutes_minute, item)
+        = link_to small_button(t('actions.new', model: Minutes::Motion.model_name.human)), new_minutes_minute_item_motion_path(@minutes_minute, item)
       %li
-        %button.small.button{ type: "button", title: "Nach unten schieben"}
-          = link_to '⇩', move_minutes_minute_item_path(@minutes_minute, item, dir: 'down'), method: :put
+        = link_to small_button('⇩', "Nach unten schieben"), move_minutes_minute_item_path(@minutes_minute, item, dir: 'down'), method: :put

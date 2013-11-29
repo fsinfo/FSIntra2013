@@ -19,19 +19,18 @@
     %dt= Minutes::Minute.human_attribute_name :has_quorum
     %dd= @minutes_minute.has_quorum? ? t('views.yep') : t('views.nope')
 
-  - if can? :manage, @miuntes_minute
+  - if can? :update, @minutes_minute
     %ul.button-group.highlight-section
       %li
-        %button.small.button{ type: "button", title: "Bearbeiten"}
-          = link_to t('actions.edit'), edit_minutes_minute_path(@minutes_minute)
+        = link_to small_button(t('actions.edit')), edit_minutes_minute_path(@minutes_minute)
+
       %li
-        %button.small.button{ type: "button", title: "Antrag hinzufügen"}
-          = link_to t('actions.new', model: Minutes::Item.model_name.human),  new_minutes_minute_item_path(@minutes_minute)
+        = link_to small_button(t('actions.new', model: Minutes::Item.model_name.human)),  new_minutes_minute_item_path(@minutes_minute)
 
 = render partial: "minutes/items/item", collection: @minutes_minute.items, as: :item
 
 %hr
 
-- if can? :manage, @miuntes_minute
+- if can? :send_draft, @miuntes_minute
   %p= link_to 'Entwurf verschicken', send_draft_minutes_minute_path(@minutes_minute), method: :put
 %p= link_to 'Zurück zur Protokollübersicht', minutes_minutes_path

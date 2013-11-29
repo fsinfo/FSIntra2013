@@ -21,4 +21,10 @@ module ApplicationHelper
   def ldate(date)
     date ? l(date) : t("–")
   end
+
+  # %button.small.button{ type: "button", title: "Bearbeiten
+  def small_button text, *title
+    title = text unless title
+    content_tag :button, text, class: "small button", type: "button", title: title
+  end
 end
