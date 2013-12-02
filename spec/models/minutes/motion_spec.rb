@@ -15,11 +15,6 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-# Indexes
-#
-#  index_minutes_motions_on_item_id   (item_id)
-#  index_minutes_motions_on_mover_id  (mover_id)
-#
 
 require 'spec_helper'
 

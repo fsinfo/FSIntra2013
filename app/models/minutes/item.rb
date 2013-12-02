@@ -11,10 +11,6 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-# Indexes
-#
-#  index_minutes_items_on_minute_id  (minute_id)
-#
 
 class Minutes::Item < ActiveRecord::Base
   belongs_to :minute, class_name: 'Minutes::Minute'

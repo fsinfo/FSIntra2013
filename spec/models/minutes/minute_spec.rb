@@ -13,11 +13,6 @@
 #  guests                   :text
 #  draft_sent_date          :date
 #
-# Indexes
-#
-#  index_minutes_minutes_on_chairperson_id            (chairperson_id)
-#  index_minutes_minutes_on_keeper_of_the_minutes_id  (keeper_of_the_minutes_id)
-#
 
 require 'spec_helper'
 
