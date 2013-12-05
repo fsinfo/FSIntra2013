@@ -18,4 +18,5 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 /config/initializers/api_users.rb
+/config/initializers/secret_token.rb
 /config/database.yml

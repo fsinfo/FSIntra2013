@@ -65,6 +65,8 @@ group :development do
   # mailcatcher website recommends to install it via
   # gem install mailcatcher
   # gem 'mailcatcher'
+
+  gem 'brakeman', :require => false
 end
 
 gem 'net-ldap'
