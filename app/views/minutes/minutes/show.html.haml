@@ -31,6 +31,6 @@
 
 %hr
 
-- if can? :send_draft, @miuntes_minute
-  %p= link_to 'Entwurf verschicken', send_draft_minutes_minute_path(@minutes_minute), method: :put
+- if can? :send_draft, @minutes_minute
+  %p= link_to small_button('Entwurf verschicken'), send_draft_minutes_minute_path(@minutes_minute), method: :put
 %p= link_to 'Zurück zur Protokollübersicht', minutes_minutes_path
