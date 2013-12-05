@@ -83,7 +83,7 @@ class Minutes::ItemsController < ApplicationController
   def destroy
     @minutes_item.destroy
     respond_to do |format|
-      format.html { redirect_to minutes_items_url }
+      format.html { redirect_to @minutes_minute, notice: 'Item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -14,4 +14,6 @@
       %li
         = link_to small_button(t('actions.new', model: Minutes::Motion.model_name.human)), new_minutes_minute_item_motion_path(@minutes_minute, item)
       %li
+        = link_to small_button(t('actions.destroy')), minutes_minute_item_path(@minutes_minute, item), :method => :delete, :data => { :confirm => t('actions.destroy_confirm') }
+      %li
         = link_to small_button('⇩', "Nach unten schieben"), move_minutes_minute_item_path(@minutes_minute, item, dir: 'down'), method: :put
