@@ -4,7 +4,7 @@ namespace :db do
     50.times do |n|
       fname = Faker::Name.first_name
       lname = Faker::Name.last_name
-      email = "#{fname}_#{lname}@cs.uni-kl.de"
+      email = "#{n}@test.de"
       User.create!( firstname: fname,
         lastname: lname,
         email: email,
@@ -19,7 +19,7 @@ namespace :db do
     50.times do |n|
       fname = Faker::Name.first_name
       lname = Faker::Name.last_name
-      email = "#{fname}_#{lname}@cs.uni-kl.de"
+      email = "#{n+50}@test.de"
       Person.create!( firstname: fname,
         lastname: lname,
         email: email,
