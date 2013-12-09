@@ -3,7 +3,7 @@ class TallySheetsController < ApplicationController
   authorize_resource :class => false
   before_action :get_users, only: [:print_users]
   before_action :get_beverages, only: [:print_items]
-  before_action :get_tabs, only: [:edit, :update, :accounting]
+  before_action :get_tabs, only: [:edit, :update]
 
   def edit
   end
@@ -37,16 +37,22 @@ class TallySheetsController < ApplicationController
   # send mails where the tabs' invoice is greater than 0.0
   # remove tabs that have an invoice == 0
   def accounting
+    # delete empty tabs 
+    @tabs = Tab.running
     ActiveRecord::Base.transaction do
       @tabs.each do |tab|
-        if tab.total_invoice > 0
-          TabMailer.tab_email(tab).deliver
-        else
-          tab.destroy
-        end
+        tab.destroy unless tab.total_invoice > 0
       end
-      Tab.running.update_all(:status => 'unpaid')
     end
+
+    # change status from running to unpaid
+    Tab.running.update_all(:status => Tab::STATUS_UNPAID)
+
+    # send a mail for every unpaid tab
+    Tab.unpaid.each do |tab|
+      TabMailer.tab_email(tab).deliver
+    end
+
     redirect_to unpaid_tabs_path
   end
 
