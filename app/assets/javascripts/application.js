@@ -20,5 +20,6 @@
 //= require chosen-select
 //= require select2
 //= require minutes/minutes
+//= require tally_sheets
 
 $(document).foundation();
