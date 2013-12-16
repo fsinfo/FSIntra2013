@@ -16,7 +16,8 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'uglifier', '>= 1.0.3'
 
-gem 'zurb-foundation', '~> 4.0.0'
+# gem 'zurb-foundation', '~> 4.0.0'
+gem 'foundation-rails'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

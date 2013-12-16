@@ -22,4 +22,6 @@
 //= require minutes/minutes
 //= require tally_sheets
 
-$(document).foundation();
+$(function() {
+  $(document).foundation();
+});
