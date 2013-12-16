@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131127190933) do
+ActiveRecord::Schema.define(version: 20131216213337) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -33,23 +33,6 @@ ActiveRecord::Schema.define(version: 20131127190933) do
     t.decimal  "capacity",    precision: 8, scale: 2
   end
 
-  create_table "minute_motions", force: true do |t|
-    t.integer  "order"
-    t.integer  "mover_id"
-    t.integer  "pro"
-    t.integer  "con"
-    t.integer  "abs"
-    t.text     "rationale"
-    t.integer  "amount"
-    t.integer  "minutes_item_id"
-    t.boolean  "approved"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "minute_motions", ["minutes_item_id"], name: "index_minute_motions_on_minutes_item_id"
-  add_index "minute_motions", ["mover_id"], name: "index_minute_motions_on_mover_id"
-
   create_table "minutes_attendances", force: true do |t|
     t.integer "user_id"
     t.integer "minute_id"
@@ -57,7 +40,6 @@ ActiveRecord::Schema.define(version: 20131127190933) do
   end
 
   add_index "minutes_attendances", ["minute_id"], name: "index_minutes_attendances_on_minute_id"
-  add_index "minutes_attendances", ["user_id", "minute_id"], name: "index_minutes_attendances_on_user_id_and_minute_id"
   add_index "minutes_attendances", ["user_id"], name: "index_minutes_attendances_on_user_id"
 
   create_table "minutes_items", force: true do |t|
@@ -120,6 +102,7 @@ ActiveRecord::Schema.define(version: 20131127190933) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "on_beverage_list", default: false
+    t.string   "cached_tag_list"
   end
 
   create_table "tabs", force: true do |t|
@@ -127,7 +110,6 @@ ActiveRecord::Schema.define(version: 20131127190933) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status",     default: "running"
-    t.boolean  "paid"
   end
 
   create_table "taggings", force: true do |t|
