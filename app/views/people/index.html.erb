@@ -4,7 +4,7 @@
 	<%= link_to content_tag(:span, t('.new_entry'), :class => "icon-plus"), new_person_path, :class => "button small round secondary" %>
 </div>
 
-<% cache(cache_key_for_people) do %>
+<% cache_if(params[:tag].nil?, cache_key_for_people) do %>
 <table>
 	<colgroup>
 		<col width="24%">
