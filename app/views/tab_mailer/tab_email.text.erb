@@ -8,7 +8,7 @@ Getränk	Anzahl	Kosten	Gesamt
 <%= bt.name %>	<%= bt.count %>	<%= bt.price %>	<%= bt.price * bt.count %>
 <% end %>
 			
-Gesamtkosten: <%= @tab.total_invoice %>
+Gesamtkosten: <%= number_to_currency(@tab.total_invoice) %>
 
 Bitte bezahle möglichst bald.
 
