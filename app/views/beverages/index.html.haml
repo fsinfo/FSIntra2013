@@ -5,7 +5,7 @@
 - if notice
 	%p#notice= notice
 
-%table
+%table#beverages
 	%colgroup
 		%col{:width => "30%"}
 		%col{:width => "28%"}
@@ -13,15 +13,14 @@
 		%col{:width => "8%"}
 		%col{:width => "15%"}
 		%col{:width => "2%"}
-		%col{:width => "2%"}
 	%thead 
-		%th= sort_link(@search, :name, Beverage.human_attribute_name(:name))
-		%th= sort_link(@search, :description, Beverage.human_attribute_name(:description))
-		%th.text-center= sort_link(@search, :price, Beverage.human_attribute_name(:price))
-		%th.text-center= sort_link(@search, :capacity, Beverage.human_attribute_name(:capacity))
+		%th= Beverage.human_attribute_name(:name)
+		%th= Beverage.human_attribute_name(:description)
+		%th.text-center= Beverage.human_attribute_name(:price)
+		%th.text-center= Beverage.human_attribute_name(:capacity)
 		%th.text-center= t('.ppl')
-		%th.text-center= sort_link(@search, :available, Beverage.human_attribute_name(:available))
-		%th.text-center{:colspan => 2}= t('actions', count: 2)
+		%th.text-center= Beverage.human_attribute_name(:available)
+		%th.text-center= t('actions', count: 2)
 	%tbody
 		- @beverages.each do |beverage|
 			%tr 
@@ -37,5 +36,10 @@
 					- else
 						%span.icon-cancel-circled.no-linebreak.text-alert &nbsp;
 						=t 'views.nope'
-				%td.text-center.no-linebreak= link_to content_tag(:span, t('actions.edit'), :class => "icon-pencil"), edit_beverage_path(beverage)
-				%td.text-center.no-linebreak= link_to content_tag(:span, t('actions.destroy'), :class => "icon-cancel"), beverage_path(beverage), :method => :delete, data: { confirm: t('actions.destroy_confirm') }
+				%td.text-center.no-linebreak 
+					= link_to(content_tag(:span, t('actions.edit'), class: "icon-pencil"), edit_beverage_path(beverage))
+					= link_to(content_tag(:span, t('actions.destroy'), class: "icon-cancel"), beverage_path(beverage), method: :delete, data: { confirm: t('actions.destroy_confirm') })
+
+- content_for :scripts do
+	= javascript_include_tag "beverages"
+

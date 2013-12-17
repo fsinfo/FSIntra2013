@@ -5,23 +5,23 @@
 </div>
 
 <% cache_if(params[:tag].nil?, cache_key_for_people) do %>
-<table>
+
+<table id="people" data-source="<%= people_url(format: "json") %>">
 	<colgroup>
 		<col width="24%">
 		<col width="24%">
 		<col width="24%">
 		<col width="24%">
 		<col width="2%">
-		<col width="2%">
 	</colgroup>
 	<thead>
 		<tr>
-			<th><%= sort_link(@search, :firstname, Person.human_attribute_name(:firstname)) %></th>
-			<th><%= sort_link(@search, :lastname, Person.human_attribute_name(:lastname)) %></th>
-			<th><%= sort_link(@search, :email, Person.human_attribute_name(:email)) %></th>
-			<th><%= sort_link(@search, :phone, Person.human_attribute_name(:phone)) %></th>
+			<th><%= Person.human_attribute_name(:firstname) %></th>
+			<th><%= Person.human_attribute_name(:lastname) %></th>
+			<th><%= Person.human_attribute_name(:email) %></th>
+			<th><%= Person.human_attribute_name(:phone) %></th>
 			<th><%=t 'tag_list' %> </th>
-			<th colspan="2" class="text-center"><%= t 'actions.other' %></th>
+			<th class="text-center"><%= t 'actions.other' %></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -35,8 +35,6 @@
 					<td><%= render_tag_list person.cached_tag_list %></td>
 					<td class="center no-linebreak">
 						<%= link_to content_tag(:span, t('people.details'), :class => "icon-info-circled"), person_path(person) %>
-					</td>
-					<td class="center no-linebreak">
 						<%= link_to content_tag(:span, t('people.vcard'), :class => "icon-vcard"), person_path(person, :format => 'vcf')  %>
 					</td>
 				</tr>
@@ -44,4 +42,8 @@
 		<% end %>
 	</tbody>
 </table>
+<% end %>
+
+<% content_for :scripts do %>
+	<%= javascript_include_tag 'people' %>
 <% end %>

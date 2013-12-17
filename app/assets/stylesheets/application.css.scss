@@ -18,6 +18,9 @@
  @import "select2";
  
  @import "foundation_and_overrides";
+ // @import "dataTables/jquery.dataTables";
+ @import "dataTables/jquery.dataTables.foundation";
+
  @import 'concerns/forms';
 
  @import "tabs";

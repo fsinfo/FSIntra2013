@@ -7,3 +7,6 @@
   =label_tag("delete", t('.delete'))
   =select_tag("delete",options_for_select(@delete_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'select2-field')
   =submit_tag t('.save')
+  
+- content_for :scripts do
+  = javascript_include_tag "tally_sheets"

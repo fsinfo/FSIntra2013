@@ -19,8 +19,10 @@
 //= require redactor.min
 //= require chosen-select
 //= require select2
+//= require dataTables/jquery.dataTables
+//= require dataTables/jquery.dataTables.foundation
+//= require dataTables/extras/FixedHeader
 //= require minutes/minutes
-//= require tally_sheets
 
 $(function() {
   $(document).foundation();

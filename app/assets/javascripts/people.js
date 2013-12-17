@@ -1,4 +1,9 @@
 $(function() {
+    $("#people").dataTable({
+      "aaSorting": [[ 1, "asc" ]],
+      "aoColumnDefs" : [ {'bSortable' : false,'aTargets' : [ 5 ]} ] 
+    });
+
     // don't navigate away from the field on tab when selecting an item
     $("#tags").bind( "keydown", function( event ) {
       if ( event.keyCode === $.ui.keyCode.TAB && $( this ).data( "ui-autocomplete" ).menu.active ) {
@@ -27,7 +32,8 @@ $(function() {
         return false;
       }
     });
-  });
+});
+
 function split( val ) {
   return val.split( /,\s*/ );
 }
