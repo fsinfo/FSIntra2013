@@ -59,7 +59,7 @@
 		</tr>
 		<tr>
 			<th><%= t 'tag_list' %></th>
-			<td><%= render_tag_list @person.tag_list %></td>
+			<td><%= render_tag_list @person.cached_tag_list %></td>
 		</tr>
 		<tr>
 			<th><%= t 'people.qrcode' %></th>
