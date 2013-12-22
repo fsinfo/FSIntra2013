@@ -19,10 +19,4 @@
 					%input.button{:type => "submit", :value => t('actions.search')}
 	%div.small-12.large-6.column
 		%div.panel
-			%h4= Person.human_attribute_name :birthday, count: 2
-			%ul
-				- @birthday_people.each do |bp|
-					- if bp.birthday
-						%li
-							= link_to bp.displayed_name, person_path(bp)
-							= "(#{l bp.birthday, :format => :short}, #{distance_of_time_in_words (bp.time_to_next_birthday)})"
+			=render 'people/birthdays', :people => @birthday_people

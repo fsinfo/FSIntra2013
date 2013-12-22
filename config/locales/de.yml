@@ -92,8 +92,7 @@ de:
         other: fast %{count} Jahre
       half_a_minute: eine halbe Minute
       less_than_x_minutes:
-        # one: weniger als eine Minute
-        one: heute
+        one: weniger als eine Minute
         other: weniger als %{count} Minuten
       less_than_x_seconds:
         one: weniger als eine Sekunde
@@ -102,9 +101,9 @@ de:
         one: mehr als ein Jahr
         other: mehr als %{count} Jahre
       x_days:
-        # one: ein Tag
+        zero: heute
         one: morgen
-        other: ! '%{count} Tage'
+        other: ! 'in %{count} Tagen'
       x_minutes:
         one: eine Minute
         other: ! '%{count} Minuten'

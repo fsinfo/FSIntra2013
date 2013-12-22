@@ -65,15 +65,11 @@ class Person < ActiveRecord::Base
 		end
 	end
 
-	def time_to_next_birthday
+	def days_to_next_birthday
 		if self.birthday
-		    dif = (self.birthday.change(year: Date.today.year) - Date.today)
-		    if dif < 0 
-		    	next_birthday = self.birthday.change(year: Date.today.next_year.year).next_day.to_time
-		    else
-		    	next_birthday = self.birthday.change(year: Date.today.year).next_day.to_time
-		    end
-		    return next_birthday - Time.now
+			bday = Date.new(Date.today.year, birthday.month, birthday.day)
+			bday += 1.year if Date.today > bday
+		    return (bday - Date.today).to_i
 		else
 		  	return Float::MAX
 		end
