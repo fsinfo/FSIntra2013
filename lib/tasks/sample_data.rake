@@ -31,15 +31,15 @@ namespace :db do
         city: 'Kaiserslautern'
         )
     end
-    Beverage.create!( name: 'Spezi', capacity: 0.5, price: 0.6, available: true )
-    Beverage.create!( name: 'Apfelsaftschorle', capacity: 0.7, price: 0.7, available: true )
-    Beverage.create!( name: 'Wasser', capacity: 0.7, price: 0.4, available: true )
-    Beverage.create!( name: 'Bier', capacity: 0.5, price: 0.85, available: true )
-    Beverage.create!( name: 'Braumeister Limonade', capacity: 0.5, price: 0.9, available: true )
-    Beverage.create!( name: 'Red Bull', capacity: 0.33, price: 1.0, available: true )
-    Beverage.create!( name: 'Mate', capacity: 0.5, price: 1.0, available: true )
-    Beverage.create!( name: 'Braumeister Limonade', capacity: 0.33, price: 0.8, available: true )
-    Beverage.create!( name: 'Spezial 1', capacity: 0.5, price: 0.85, available: false )
-    Beverage.create!( name: 'Spezial 2', capacity: 0.5, price: 0.85, available: false )
+    Beverage.create!( name: 'Spezi', capacity: 0.5, price: 60, available: true )
+    Beverage.create!( name: 'Apfelsaftschorle', capacity: 0.7, price: 70, available: true )
+    Beverage.create!( name: 'Wasser', capacity: 0.7, price: 40, available: true )
+    Beverage.create!( name: 'Bier', capacity: 0.5, price: 85, available: true )
+    Beverage.create!( name: 'Braumeister Limonade', capacity: 0.5, price: 90, available: true )
+    Beverage.create!( name: 'Red Bull', capacity: 0.33, price: 100, available: true )
+    Beverage.create!( name: 'Mate', capacity: 0.5, price: 100, available: true )
+    Beverage.create!( name: 'Braumeister Limonade', capacity: 0.33, price: 80, available: true )
+    Beverage.create!( name: 'Spezial 1', capacity: 0.5, price: 85, available: false )
+    Beverage.create!( name: 'Spezial 2', capacity: 0.5, price: 85, available: false )
   end
 end

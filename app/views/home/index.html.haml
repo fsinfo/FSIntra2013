@@ -6,7 +6,7 @@
 	%div.small-12.large-12.columns
 		%div.panel
 			%h4= t 'tabs.index.running_tab'
-			=render 'tabs/running_tab',:tab => @running_tab
+			=render 'tabs/running_tab', :tab => @running_tab
 			%h4= t 'tabs.index.unpaid_tabs'
 			=render 'tabs/tabs', :tabs => @unpaid_tabs
 %div.row

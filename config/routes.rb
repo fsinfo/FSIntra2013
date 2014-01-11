@@ -22,6 +22,7 @@ Fsintra::Application.routes.draw do
   end
   resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
     get 'offen'  => 'tabs#unpaid', :on => :collection, :as => 'unpaid'
+    get 'detail' => 'tabs#detail', :on => :member
     # get 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
     put 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
     # FIXME put or post? one of them must be wrong (as rake says...)
@@ -31,12 +32,11 @@ Fsintra::Application.routes.draw do
   end
 
 # Tally sheet
-  get '/tally_sheet' => 'tally_sheets#edit'
-  put '/tally_sheet/update' => 'tally_sheets#update'
+  get '/tally_sheet' => 'tally_sheets#index'
   post '/tally_sheet/abrechnung' => 'tally_sheets#accounting'
   post '/tally_sheet/accounting' => 'tally_sheets#accounting'
-  get '/tally_sheet/edit_list' => 'tally_sheets#edit_list'
-  post '/tally_sheet/update_list' => 'tally_sheets#update_list'
+  get '/tally_sheet/edit' => 'tally_sheets#edit'
+  post '/tally_sheet/update' => 'tally_sheets#update'
   get '/tally_sheet/print_users' => 'tally_sheets#print_users'
   get '/tally_sheet/print_items' => 'tally_sheets#print_items'
 

@@ -17,7 +17,6 @@ class TabMailer < ActionMailer::Base
 	def tab_email(tab)
 		@user = tab.user
 		@tab = tab
-		@beverage_tabs = tab.beverage_tabs
 		to = get_email_with_name(@user)
 		mail(
 			from: KuehlschrankMail,

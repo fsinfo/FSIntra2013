@@ -29,9 +29,6 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'quiet_assets', :group => :development
-gem 'faker', :group => :development
-
 group :test do
   gem 'database_cleaner'
   gem 'simplecov', :require => false
@@ -62,6 +59,9 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+  gem 'quiet_assets'
+  gem 'faker'
+  gem 'rest-client'
 
   # This gem is intentionally not in the Gemfile, since the 
   # mailcatcher website recommends to install it via

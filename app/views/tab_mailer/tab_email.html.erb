@@ -13,12 +13,12 @@
 </tr>
 </thead>
 <tbody>
-<% @beverage_tabs.each do |bt| %>
+<% @tab.grouped_beverage_tabs.each do |bt| %>
 <tr>
-	<td><%= bt.name %></td>
-	<td><%= bt.count %></td>
-	<td><%= bt.price %></td>
-	<td><%= bt.price * bt.count %></td>
+	%td= bt[0][0]
+	%td.text-center= bt[1]
+	%td.text-center= number_to_currency bt[0][2]
+	%td.text-center= number_to_currency(bt[0][2] * bt[1])
 </tr>
 <% end %>
 </tbody>
@@ -28,5 +28,5 @@
 
 <p>Bitte bezahle möglichst bald.</p>
 
-<p>Viele Grüße 
+<p>Viele Grüße <br/>
 Der Kühlschrank</p>

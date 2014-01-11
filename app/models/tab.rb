@@ -7,7 +7,6 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  status     :string(255)      default("running")
-#  paid       :boolean
 #
 
 class Tab < ActiveRecord::Base
@@ -21,7 +20,13 @@ class Tab < ActiveRecord::Base
 	validates :status, inclusion: {in: STATUSES}
 	validate :only_one_running_tab_per_user
 
+	before_save :delete_empty_beverage_tabs
+
 	accepts_nested_attributes_for :beverage_tabs
+
+	def is_running?
+		self.status == Tab::STATUS_RUNNING
+	end
 
 	def paid
 		self.status = Tab::STATUS_PAID
@@ -43,11 +48,21 @@ class Tab < ActiveRecord::Base
 		self.beverage_tabs.inject(0.0) {|sum,beverage_tab| sum += beverage_tab.count * beverage_tab.price }
 	end
 
+	def grouped_beverage_tabs
+		self.beverage_tabs.group(:name, :capacity, :price).sum(:count)
+	end
+
 	private
 	def only_one_running_tab_per_user
 		other = Tab.find_by(user_id: user_id, status: Tab::STATUS_RUNNING)
 		if other.present? and self != other and self.status == Tab::STATUS_RUNNING
 			errors.add(:status, 'There can be only one running tab per user')
+		end
+	end
+
+	def delete_empty_beverage_tabs
+		self.beverage_tabs.each do |bt|
+			bt.destroy if bt.count == 0
 		end
 	end
 end

@@ -1,16 +1,16 @@
 de:
   tally_sheets:
-    edit:
+    index:
       headline: Strichliste bearbeiten
       save: Strichliste speichern
       accounting: Rechnungen verschicken
       saved: Strichliste schon gespeichert?
-    edit_list:
+    edit:
       new: Zur Strichliste hinzufügen
       delete: Von Strichliste entfernen
       save: Aktualisieren
       chosen:
         placeholder: Wähle Personen    
-    update_list:
+    update:
       updated: Strichliste erfolgreich aktualisiert
   tally_sheet: Strichliste

@@ -22,7 +22,7 @@
 								<%= menu_link_to 'Preisliste drucken', tally_sheet_print_items_path(:format => :pdf), :target => '_blank' %>
 								<%= menu_link_to 'Strichliste', tally_sheet_path %>
 								<%= menu_link_to 'Offene Rechnungen', unpaid_tabs_path %>
-								<%= menu_link_to 'Strichliste verwalten', tally_sheet_edit_list_path %>
+								<%= menu_link_to 'Strichliste verwalten', tally_sheet_edit_path %>
 							</ul>
 						<% else %>
 							<%= menu_link_to 'Rechnungen', tabs_path %>

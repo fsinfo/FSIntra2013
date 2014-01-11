@@ -1,0 +1,28 @@
+%table
+	%colgroup
+		%col{:width => "40%"}
+		%col{:width => "20%"}
+		%col{:width => "10%"}
+		%col{:width => "20%"}
+		%col{:width => "10%"}
+	%thead 
+		%th Getränk
+		%th.text-center Anzahl
+		%th.text-center Kosten pro Stück
+		%th.text-center Wann
+		%th.text-right Kosten gesamt
+	%tbody
+		- tab.beverage_tabs.each do |bt|
+			%tr
+				%td= bt.name
+				%td.text-center= bt.count
+				%td.text-center
+					= number_to_currency bt.price
+				%td.text-center
+					= l bt.created_at, format: :short
+				%td.text-right
+					= number_to_currency (bt.price * bt.count)
+		%tr 
+			%th.text-left{:colspan => "4"} Gesamtkosten
+			%th.text-right
+				= number_to_currency tab.total_invoice

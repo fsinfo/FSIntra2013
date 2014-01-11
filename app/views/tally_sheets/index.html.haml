@@ -1,0 +1,28 @@
+%h1=t '.headline'
+- if notice
+  %p#notice= notice
+
+%table
+  %thead
+    %tr
+      %th= Person.human_attribute_name(:lastname)
+      %th= Person.human_attribute_name(:firstname)
+      - @beverage_tabs.each do |beverage|
+        / %th= {}"#{beverage[0]} (#{number_to_currency beverage[1]}/#{number_to_currency beverage[2]})"
+        %th= "#{beverage.name} (#{number_to_currency beverage.price}/#{beverage.capacity})"
+  %tbody 
+  - @users.each do |user|
+    %tr
+      %td
+        =user.lastname
+      %td
+        =user.firstname
+      - unless user.tabs.running.first.nil?
+        - @beverage_tabs.each do |bt|
+          %td.text-center
+            = @tabs.find_by(user: user).beverage_tabs.where(name: bt.name, price: bt.price, capacity: bt.capacity).sum(:count)
+      - else
+        - @beverage_tabs.each do 
+          %td.text-center 0 
+
+= link_to t('.accounting'), tally_sheet_accounting_path, method: 'post', class: 'button', data: {disable_with: 'Accounting...', confirm: t("actions.destroy_confirm")}

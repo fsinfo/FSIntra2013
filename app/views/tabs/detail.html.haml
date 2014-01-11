@@ -1,17 +1,15 @@
--if notice
-	%p#notice=notice
-
 %div.actions
 	%h1
-		=t '.headline', date: l(@tab.created_at, format: :date_only)
+		=t 'tabs.show.headline', date: l(@tab.created_at, format: :date_only)
 	= link_to content_tag(:span, ' ' + t('actions.back'), :class=> "icon-left-fat"), tabs_path, :class => "button small round secondary"
 	- if can? :edit, @tab 
 		= link_to content_tag(:span, ' ' + t('actions.edit'), :class=> "icon-pencil"), edit_tab_path(@tab), :class => "button small round secondary"
 	- unless @tab.is_running?
 		- if @tab.is_paid?
-			.button.small.round.secondary.success=t('.is_paid')
+			.button.small.round.secondary.success=t('tabs.show.is_paid')
 		- elsif !@tab.is_marked_as_paid?
-			= link_to t('.mark_as_paid'), mark_as_paid_tab_path(@tab), id: 'mark_tab_as_paid', :class=> 'button small round secondary', :remote => true, :method => :put
+			= link_to t('tabs.show.mark_as_paid'), mark_as_paid_tab_path(@tab), id: 'mark_tab_as_paid', :class=> 'button small round secondary', :remote => true, :method => :put
 		- else
 			= render('marked_as_paid')
-= render @tab
+
+= render 'detailed_tab', tab: @tab

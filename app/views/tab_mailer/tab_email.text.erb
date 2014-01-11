@@ -4,8 +4,8 @@ die neue Getränkerechnung ist hier:
 <%= tab_url(@tab) %>
 
 Getränk	Anzahl	Kosten	Gesamt
-<% @beverage_tabs.each do |bt| %>
-<%= bt.name %>	<%= bt.count %>	<%= bt.price %>	<%= bt.price * bt.count %>
+<% @tab.grouped_beverage_tabs.each do |bt| %>
+<%= bt[0][0] %> <%= bt[1] %> <%= number_to_currency bt[0][2] %> <%= number_to_currency(bt[0][2] * bt[1]) %>
 <% end %>
 			
 Gesamtkosten: <%= number_to_currency(@tab.total_invoice) %>

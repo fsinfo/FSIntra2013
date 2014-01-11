@@ -10,6 +10,7 @@
 			%th.text-center=t '.quantity'
 			%th.text-center=t '.expense'
 			%th.text-right=t '.sum'
+			%th.text-right=t 'actions', count: 2
 		%tbody
 			= f.fields_for :beverage_tabs do |fi|
 				%tr

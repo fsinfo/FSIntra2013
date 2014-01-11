@@ -13,9 +13,11 @@ class ApiController < ApplicationController
       tab = Tab.running.find_or_create_by(user_id: user.id)
       beverages.each do |id, count|
         beverage = Beverage.available.find(id)
-        beverage_tab = tab.beverage_tabs.find_or_create_by(name: beverage.name, price: beverage.price, capacity: beverage.capacity)
-        beverage_tab.count += count.to_i
-        beverage_tab.save
+        beverage_tab = BeverageTab.create(name: beverage.name, price: beverage.price, capacity: beverage.capacity, count: count)
+        tab.beverage_tabs << beverage_tab
+        unless beverage_tab.save 
+          puts beverage_tab.errors.inspect
+        end
       end
       render :json => buy_params.to_json, status: :ok 
     rescue Exception => e

@@ -14,6 +14,4 @@
 
 class BeverageTab < ActiveRecord::Base
 	belongs_to :tab
-
-  validates :count, numericality: {greater_than: 0}
 end

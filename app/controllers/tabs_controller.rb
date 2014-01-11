@@ -11,6 +11,9 @@ class TabsController < ApplicationController
   def show
   end
 
+  def detail
+  end
+
   def update
     if @tab.update(tab_params)
       redirect_to @tab, notice: t('feedback.updated', model: Tab.model_name.human)
@@ -31,6 +34,10 @@ class TabsController < ApplicationController
       format.json { render :json => {:feedback => t('.paid_tab', name: @tab.user.displayed_name, total: @tab.total_invoice)} }
       format.html { redirect_to unpaid_tabs_path }
     end
+  end
+
+  def destroy_beverage_tab
+    
   end
 
   def mark_as_paid

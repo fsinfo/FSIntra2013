@@ -1,31 +1,12 @@
-%h1=t '.headline'
-- if notice
-  %p#notice= notice
+-if notice
+  %p#notice=notice
 
-= form_tag tally_sheet_update_path, :method => 'put' do
-  %table
-    %thead
-      %tr
-        %th= sort_link(@search, :lastname, Person.human_attribute_name(:lastname))
-        %th= sort_link(@search, :firstname, Person.human_attribute_name(:firstname))
-        - @beverages.each do |beverage|
-          %th= "#{beverage.name} (#{beverage.price}/#{beverage.capacity})"
-    %tbody 
-    - @tabs.each_with_index do |tab,index|
-      = fields_for 'tabs' do |form|
-        = form.fields_for index.to_s,tab do |tab_form|
-          = tab_form.hidden_field :user_id
-          %tr
-            %td 
-              = tab_form.object.user.lastname
-            %td 
-              = tab_form.object.user.firstname
-            = tab_form.fields_for :beverage_tabs, @beverage_tabs[tab.id] do |bf| 
-              %td
-                = bf.text_field :count, :class => 'text-center'
-                = bf.hidden_field :name
-                = bf.hidden_field :capacity
-                = bf.hidden_field :price
-  = submit_tag t('.save'), class: 'button', data: {disable_with: 'Saving...'}
-
-= link_to t('.accounting'), tally_sheet_accounting_path, method: 'post', class: 'button', data: {disable_with: 'Accounting...', confirm: t(".saved")}
+=form_tag({controller: "tally_sheets", action: "update"}) do
+  =label_tag("new", t('.new'))
+  =select_tag("new",options_for_select(@new_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'select2-field')
+  =label_tag("delete", t('.delete'))
+  =select_tag("delete",options_for_select(@delete_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'select2-field')
+  =submit_tag t('.save')
+  
+- content_for :scripts do
+  = javascript_include_tag "tally_sheets"
