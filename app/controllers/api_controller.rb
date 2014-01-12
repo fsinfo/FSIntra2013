@@ -15,9 +15,8 @@ class ApiController < ApplicationController
         beverage = Beverage.available.find(id)
         beverage_tab = BeverageTab.create(name: beverage.name, price: beverage.price, capacity: beverage.capacity, count: count)
         tab.beverage_tabs << beverage_tab
-        unless beverage_tab.save 
-          puts beverage_tab.errors.inspect
-        end
+        
+        raise Exception unless beverage_tab.save
       end
       render :json => buy_params.to_json, status: :ok 
     rescue Exception => e

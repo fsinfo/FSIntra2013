@@ -13,6 +13,7 @@ $ ->
   #     set_loading
   #   .bind 'ajax:success', (event, xhr, status) ->
   #     $(this).replaceWith('<a class="button small success round secondary disabled">Habe ich bereits als bezahlt markiert</>')
+  $("#paid").dataTable({"bFilter": false, "bLengthChange": false})
 
 set_loading = () ->
   # TODO: do something?

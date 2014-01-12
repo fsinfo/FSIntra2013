@@ -3,9 +3,25 @@ class TallySheetsController < ApplicationController
   authorize_resource :class => false
   before_action :get_users, only: [:print_users]
   before_action :get_beverages, only: [:print_items]
-  before_action :prepare_tally_sheet, only: [:index]
 
   def index 
+    @tabs = Tab.running
+    @beverage_tabs = BeverageTab.where(tab_id: @tabs).group(:name, :price, :capacity)
+    @users = User.includes(:tabs).where(tabs: {status: Tab::STATUS_RUNNING}) | User.where(on_beverage_list: true)
+    @data = {}
+    @users.each do |user|
+      tab = @tabs.find_by(user: user)
+      @data[user] = []
+      unless tab.nil?
+        @beverage_tabs.each_with_index do |bt,j|
+          @data[user][j] = tab.beverage_tabs.where(name: bt.name, price: bt.price, capacity: bt.capacity).sum(:count)
+        end
+      else
+        @beverage_tabs.each_with_index do |bt,j|
+          @data[user][j] = 0
+        end
+      end
+    end
   end
 
   # send mails where the tabs' invoice is greater than 0.0
@@ -59,12 +75,6 @@ class TallySheetsController < ApplicationController
   end
 
   private
-    def prepare_tally_sheet
-      @tabs = Tab.running
-      @beverage_tabs = BeverageTab.where(tab_id: @tabs).group(:name, :price, :capacity)
-      @users = User.where(on_beverage_list: true)
-    end
-
     def get_users
       @search = User.where(:on_beverage_list => true).order('lastname, firstname').search(params[:q])
       @users = @search.result

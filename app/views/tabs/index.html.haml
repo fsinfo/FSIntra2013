@@ -7,3 +7,6 @@
 = render 'tabs', :tabs => @unpaid_tabs
 %h4= t '.paid_tabs'
 = render 'tabs', :tabs => @paid_tabs
+
+-content_for :scripts do 
+	= javascript_include_tag 'tabs'

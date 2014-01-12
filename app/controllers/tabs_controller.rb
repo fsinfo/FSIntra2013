@@ -28,11 +28,12 @@ class TabsController < ApplicationController
 
   def pay
     @tab.paid
-    @user = @tab.user
-    TabMailer.paid_email(@tab).deliver if @tab.save
-    respond_to do |format|
-      format.json { render :json => {:feedback => t('.paid_tab', name: @tab.user.displayed_name, total: @tab.total_invoice)} }
-      format.html { redirect_to unpaid_tabs_path }
+    if @tab.save
+      TabMailer.paid_email(@tab).deliver 
+      respond_to do |format|
+        format.json { render :json => {:feedback => t('.paid_tab', name: @tab.user.displayed_name, total: @tab.total_invoice)} }
+        format.html { redirect_to unpaid_tabs_path }
+      end
     end
   end
 
@@ -54,7 +55,7 @@ class TabsController < ApplicationController
   end
 
   def unpaid
-    @tabs = Tab.unpaid.includes(:beverage_tabs, :user).order('people.firstname','people.lastname') 
+    @tabs = Tab.unpaid.includes(:beverage_tabs, :user)
   end
 
   private

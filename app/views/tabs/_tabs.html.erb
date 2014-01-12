@@ -1,5 +1,5 @@
 <% if tabs.any? %>
-<table>
+<table <%= "id=#{tabs.first.status}" %>>
   <colgroup>
   <col width = "60%">
   <col width = "40%">
@@ -18,7 +18,7 @@
   </tr>
   <% end %>
   <tr>
-    <td class="text-left"><%= t '.total' %></td>
+    <td><%= t '.total' %></td>
     <td class="text-right"><%= number_to_currency (tabs.map(&:total_invoice).inject(0,:+)) %></td>
   </tr>
 </tbody>
