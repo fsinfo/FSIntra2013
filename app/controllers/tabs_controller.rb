@@ -55,7 +55,7 @@ class TabsController < ApplicationController
   end
 
   def unpaid
-    @tabs = Tab.unpaid.includes(:beverage_tabs, :user)
+    @tabs = Tab.unpaid.includes(:user, :beverage_tabs).order("people.lastname")
   end
 
   private
