@@ -11,7 +11,7 @@ class Ability
       can :manage, Person, :type => nil
       can :manage, User, :id => user.id
       cannot :delete, User
-      can [:read, :mark_as_paid], Tab, :user_id => user.id
+      can [:read, :mark_as_paid, :detail], Tab, :user_id => user.id
       can :edit, Tab, {:user_id => user.id, :status => Tab::STATUS_RUNNING}
 
       # Minutes
