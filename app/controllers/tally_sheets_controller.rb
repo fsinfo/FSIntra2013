@@ -6,7 +6,7 @@ class TallySheetsController < ApplicationController
 
   def index 
     @tabs = Tab.running
-    @beverage_tabs = BeverageTab.where(tab_id: @tabs).group(:name, :price, :capacity)
+    @beverage_tabs = BeverageTab.where(tab_id: @tabs).select(:name, :price, :capacity).distinct
     @users = User.includes(:tabs).where(tabs: {status: Tab::STATUS_RUNNING}) | User.where(on_beverage_list: true)
     @data = {}
     @users.each do |user|
