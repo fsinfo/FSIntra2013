@@ -1,7 +1,6 @@
 <h2>Hi <%= @user.displayed_name %>,</h2>
 
-<p>die neue Getränkerechnung ist hier:
-<%= tab_url(@tab) %></p>
+<p>die neue <%= link_to 'Getränkerechnung', tab_url(@tab) %> ist hier:</p>
 
 <table>
 <thead>
@@ -16,7 +15,7 @@
 <% @tab.grouped_beverage_tabs.each do |bt| %>
 <tr>
 	<td><%= bt[0][0] %></td>
-	<td class="text-center"<%= bt[1] %></td>
+	<td class="text-center"><%= bt[1] %></td>
 	<td class="text-center"><%= number_to_currency bt[0][2] %></td>
 	<td class="text-center"><%= number_to_currency(bt[0][2] * bt[1]) %></td>
 </tr>
