@@ -1,0 +1,40 @@
+%h4 Stats
+#chart_container
+    #y_axis
+    #chart
+
+-content_for :scripts do
+    :javascript
+        var palette = new Rickshaw.Color.Palette();
+        var data = #{@stat_data.to_json}
+        var time = new Rickshaw.Fixtures.Time();
+        var hours = time.unit('hour');
+
+        data.map(function(item){item['color'] = palette.color()});
+
+        var graph = new Rickshaw.Graph( {
+            element: document.querySelector("#chart"),
+            renderer: 'line',
+            series: data
+        } );
+        var x_axis = new Rickshaw.Graph.Axis.Time( { 
+            graph: graph,
+            timeUnit: hours
+        } );
+        var y_axis = new Rickshaw.Graph.Axis.Y( {
+                graph: graph,
+                orientation: 'left',
+                element: document.getElementById('y_axis')
+        } );
+
+        graph.render();    
+
+        var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+            graph: graph,
+            formatter: function(series, x, y) {
+                var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
+                var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+                var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
+                return content;
+            }
+        } );

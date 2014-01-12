@@ -22,6 +22,7 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.foundation
 //= require dataTables/extras/FixedHeader
+//= require rickshaw_with_d3
 //= require minutes/minutes
 
 $(function() {
