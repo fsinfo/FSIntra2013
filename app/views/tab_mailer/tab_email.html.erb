@@ -15,10 +15,10 @@
 <tbody>
 <% @tab.grouped_beverage_tabs.each do |bt| %>
 <tr>
-	%td= bt[0][0]
-	%td.text-center= bt[1]
-	%td.text-center= number_to_currency bt[0][2]
-	%td.text-center= number_to_currency(bt[0][2] * bt[1])
+	<td><%= bt[0][0] %></td>
+	<td class="text-center"<%= bt[1] %></td>
+	<td class="text-center"><%= number_to_currency bt[0][2] %></td>
+	<td class="text-center"><%= number_to_currency(bt[0][2] * bt[1]) %></td>
 </tr>
 <% end %>
 </tbody>
