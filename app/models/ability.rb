@@ -29,11 +29,11 @@ class Ability
     end
 
     # Additional abilities for users with group 'kuehlschrank'
-    if user.has_group? 'kuehlschrank' or Rails.env == "development"
-      can :manage, Beverage
-      can :manage, Tab
-      cannot :edit, Tab, :status => Tab::STATUS_PAID
-      can :manage, :tally_sheet
-    end
+    # if user.has_group? 'kuehlschrank' or Rails.env == "development"
+    #   can :manage, Beverage
+    #   can :manage, Tab
+    #   cannot :edit, Tab, :status => Tab::STATUS_PAID
+    #   can :manage, :tally_sheet
+    # end
   end
 end

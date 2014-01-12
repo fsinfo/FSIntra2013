@@ -1,6 +1,9 @@
 %div{:class => 'actions'}
 	%h1=t('.greeting', name: current_user.firstname)
 
+-if alert
+	%div.alert-box.notice.warning=alert
+
 %br
 %div.row
 	%div.small-12.large-12.columns
