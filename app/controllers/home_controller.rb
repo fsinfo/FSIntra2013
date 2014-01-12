@@ -6,7 +6,6 @@ class HomeController < ApplicationController
     @running_tab = current_user.tabs.running.includes(:beverage_tabs).first
     @unpaid_tabs = current_user.tabs.unpaid.includes(:beverage_tabs) 
     @birthday_people = Person.all.sort_by(&:days_to_next_birthday).first(5)
-
   end
 
   private
@@ -26,12 +25,10 @@ class HomeController < ApplicationController
         b.each do |k,v|
           tmp_array << {x: k, y: v}
         end
+        tmp_array.sort_by!{ |k,v| k[:x] } 
         tmp_hash[:data] = tmp_array
         tmp_hash[:name] = name
         @stat_data << tmp_hash
       end
-
-      puts '####'
-      puts @stat_data.inspect
     end
 end
