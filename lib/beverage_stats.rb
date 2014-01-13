@@ -18,7 +18,7 @@ class BeverageStats
     end
 
     # bring the data in the correct format for rickshaw
-    return rickshaw_format(bt_data)
+    return dygraph_format(bt_data)
   end
 
   def self.get_daily_stats(n_days)
@@ -39,11 +39,11 @@ class BeverageStats
     end
 
     # bring the data in the correct format for rickshaw
-    return rickshaw_format(bt_data)
+    return dygraph_format(bt_data)
   end
 
   private
-  # Prepares an array with every step (1.hour) in the range
+  # Prepares an array with every step as timestamps in the range
   def self.prepare_array(start_time, step)
     ary = []
     ts = start_time
@@ -53,6 +53,31 @@ class BeverageStats
       ts += step
     end
     return ary
+  end
+
+  # Result should look like:
+  # [
+  #   [x1, val1, val2, val3]
+  #   [x2, val1, val2, val3]
+  # ],
+  # {
+  #   labels: ["x", "name1", "name2"]
+  # }
+  # input: 
+  # bt_data: {"Name" => {timestamp => count, timestamp2 => count2}}
+  def self.dygraph_format(bt_data)
+    puts bt_data.inspect
+    res_data = {}
+    res_data[:labels] = ['x']
+    tmp_hsh = {}
+    bt_data.each do |name, ts_values|
+      ts_values.each do |ts,count|
+        (tmp_hsh[ts] ||= [] ) << count
+      end
+      res_data[:labels] << name
+    end
+    res_data[:data] = tmp_hsh.map {|k,v| [k,v].flatten}
+    return res_data
   end
 
   def self.rickshaw_format(bt_data)
