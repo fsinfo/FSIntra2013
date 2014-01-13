@@ -1,21 +1,29 @@
-%h4 Stats
-#chart_container
-    #y_axis
-    #chart
+.row
+    .small-12.large-6.column
+        .panel
+            %h4 Daily stats
+            .chart_container
+                #daily_y_axis.y_axis
+                #daily_chart.chart
+
+    .small-12.large-6.column
+        .panel
+            %h4 Hourly stats
+            .chart_container
+                #hourly_y_axis.y_axis
+                #hourly_chart.chart
 
 -content_for :scripts do
     :javascript
         var palette = new Rickshaw.Color.Palette();
-        var data = #{@stat_data.to_json}
-        var time = new Rickshaw.Fixtures.Time();
-        var hours = time.unit('hour');
+        var daily_data = #{@daily_stat_data.to_json}
 
-        data.map(function(item){item['color'] = palette.color()});
+        daily_data.map(function(item){item['color'] = palette.color()});
 
         var graph = new Rickshaw.Graph( {
-            element: document.querySelector("#chart"),
+            element: document.querySelector("#daily_chart"),
             renderer: 'line',
-            series: data
+            series: daily_data
         } );
         var x_axis = new Rickshaw.Graph.Axis.Time( { 
             graph: graph,
@@ -23,7 +31,7 @@
         var y_axis = new Rickshaw.Graph.Axis.Y( {
                 graph: graph,
                 orientation: 'left',
-                element: document.getElementById('y_axis')
+                element: document.getElementById('daily_y_axis')
         } );
 
         graph.render();    
@@ -37,3 +45,34 @@
                 return content;
             }
         } );
+
+        var hourly_data = #{@hourly_stat_data.to_json}
+
+        hourly_data.map(function(item){item['color'] = palette.color()});
+
+        var graph = new Rickshaw.Graph( {
+            element: document.querySelector("#hourly_chart"),
+            renderer: 'line',
+            series: hourly_data
+        } );
+        var x_axis = new Rickshaw.Graph.Axis.Time( { 
+            graph: graph,
+        } );
+        var y_axis = new Rickshaw.Graph.Axis.Y( {
+                graph: graph,
+                orientation: 'left',
+                element: document.getElementById('hourly_y_axis')
+        } );
+
+        graph.render();    
+
+        var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+            graph: graph,
+            formatter: function(series, x, y) {
+                var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
+                var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+                var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
+                return content;
+            }
+        } );
+

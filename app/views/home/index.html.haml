@@ -15,7 +15,6 @@
 %div.row
 	%div.small-12.large-6.column
 		%div.panel
-			=render 'tabs/stats', :stat_data => @stat_data
-	%div.small-12.large-6.column
-		%div.panel
 			=render 'people/birthdays', :people => @birthday_people
+.row
+	=render 'tabs/stats', :stat_data => @stat_data
