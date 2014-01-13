@@ -18,7 +18,7 @@ class BeverageStats
     end
 
     # bring the data in the correct format for rickshaw
-    return rickshaw_format(bt_data)
+    return flotr2_format(bt_data)
   end
 
   def self.get_daily_stats(n_days)
@@ -39,7 +39,7 @@ class BeverageStats
     end
 
     # bring the data in the correct format for rickshaw
-    return rickshaw_format(bt_data)
+    return flotr2_format(bt_data)
   end
 
   private
@@ -53,6 +53,22 @@ class BeverageStats
       ts += step
     end
     return ary
+  end
+
+  # gets: {"Name": {ts1: count1, ts2: count2}}
+  # wanted: [{data: [[ts, count], [ts, count]], label: 'Name'}, {data: ...}]
+  def self.flotr2_format(bt_data)
+    stat_data = []
+    bt_data.each do |name,b|
+      tmp_hash = {}
+      tmp_hash[:data] = []
+      b.each do |k,v|
+        tmp_hash[:data] << [k,v]
+      end
+      tmp_hash[:label] = name
+      stat_data << tmp_hash
+    end
+    return stat_data
   end
 
   def self.rickshaw_format(bt_data)
