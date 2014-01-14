@@ -12,7 +12,7 @@ class Ability
       can :manage, User, :id => user.id
       cannot :delete, User
       can [:read, :mark_as_paid, :detail], Tab, :user_id => user.id
-      can :edit, Tab, {:user_id => user.id, :status => Tab::STATUS_RUNNING}
+      can [:edit, :update], Tab, {:user_id => user.id, :status => Tab::STATUS_RUNNING}
 
       # Minutes
       can [:update, :send_draft], Minutes::Minute, :keeper_of_the_minutes_id => user.id
@@ -29,11 +29,11 @@ class Ability
     end
 
     # Additional abilities for users with group 'kuehlschrank'
-    if user.has_group? 'kuehlschrank' or Rails.env == "development"
-      can :manage, Beverage
-      can :manage, Tab
-      cannot :edit, Tab, :status => Tab::STATUS_PAID
-      can :manage, :tally_sheet
-    end
+#    if user.has_group? 'kuehlschrank' or Rails.env == "development"
+#      can :manage, Beverage
+#      can :manage, Tab
+#      cannot :edit, Tab, :status => Tab::STATUS_PAID
+#      can :manage, :tally_sheet
+#    end
   end
 end
