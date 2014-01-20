@@ -35,5 +35,8 @@ class Ability
       cannot :edit, Tab, :status => Tab::STATUS_PAID
       can :manage, :tally_sheet
     end
+
+    # Minutes' CEO's abilities
+    can :manage, [Minutes::Minute, Minutes::Motion, Minutes::Item] if user.has_group? 'protokolle'
   end
 end

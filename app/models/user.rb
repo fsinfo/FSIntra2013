@@ -18,6 +18,7 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #  on_beverage_list :boolean          default(FALSE)
+#  cached_tag_list  :string(255)
 #
 
 require 'fs_ldap' if ['production', 'development'].include? Rails.env

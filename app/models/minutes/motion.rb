@@ -15,6 +15,11 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
+# Indexes
+#
+#  index_minutes_motions_on_item_id   (item_id)
+#  index_minutes_motions_on_mover_id  (mover_id)
+#
 
 class Minutes::Motion < ActiveRecord::Base
   belongs_to :mover, class_name: 'User'
