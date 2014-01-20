@@ -1,113 +1,82 @@
-.small-12.large-10.column
-    .panel
-        %h4 Daily stats
-        .chart_container
-            #daily_y_axis.y_axis
+.row
+    .small-12.large-10.column
+        .panel
+            %h4 Daily stats
             #daily_chart.chart
-        %h4 Hourly stats
-        .chart_container
-            #hourly_y_axis.y_axis
+            %br
+            #daily_slider
+    .small-12.large-2.column
+        #daily_legend.rickshaw_legend
+.row
+    .small-12.large-10.column
+        .panel
+            %h4 Hourly stats
             #hourly_chart.chart
-.small-2.large-2.column
-    .panel
-        %h4 Chart style
-        %form#offset_form.toggler
-            %input#lines{type:"radio", name:"offset", value:"lines"}
-            %label.lines{for: "lines"} lines
             %br
-            %input#stack{type:"radio", name:"offset", value:"zero"}
-            %label.stack{for:"stack"} stack
-            %br
-            %input#bar{type:"radio", name:"offset", value:"bar", checked: true}
-            %label.bar{for:"bar"} bar
+            #hourly_slider
+    .small-12.large-2.column
+        #hourly_legend.rickshaw_legend
+
 
 -content_for :scripts do
     :javascript
-        var palette = new Rickshaw.Color.Palette();
+        function renderGraph(name, data) {
+            var palette = new Rickshaw.Color.Palette({scheme: 'colorwheel'});
 
-        // DAILY GRAPH
-        var daily_data = #{@daily_stat_data.to_json}
+            for(var i in data) {
+                data[i]['color'] = palette.color(i);
+            }
 
-        daily_data.map(function(item){item['color'] = palette.color()});
+            var graph = new Rickshaw.Graph( {
+                element: document.getElementById(name+'_chart'),
+                renderer: 'bar',
+                series: data
+            } );
 
-        var graph = new Rickshaw.Graph( {
-            element: document.querySelector("#daily_chart"),
-            renderer: 'bar',
-            series: daily_data
-        } );
-        var x_axis = new Rickshaw.Graph.Axis.Time( { 
-            graph: graph,
-        } );
-        var y_axis = new Rickshaw.Graph.Axis.Y( {
+            var x_axis = new Rickshaw.Graph.Axis.Time( { 
                 graph: graph,
-                orientation: 'left',
-                element: document.getElementById('daily_y_axis')
-        } );
+            } );
 
-        graph.render();    
+            var y_axis = new Rickshaw.Graph.Axis.Y( {
+                    graph: graph,
+            } );
 
-        var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-            graph: graph,
-            formatter: function(series, x, y) {
-                var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
-                var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-                var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
-                return content;
-            }
-        } );
+            graph.render();    
 
-        // HOURLY GRAPH
-        var hourly_data = #{@hourly_stat_data.to_json}
+            var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+                graph: graph,
+                formatter: function(series, x, y) {
+                    var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+                    var content = swatch + series.name + ": " + parseInt(y);
+                    return content;
+                }
+            });
 
-        hourly_data.map(function(item){item['color'] = palette.color()});
+            var legend = new Rickshaw.Graph.Legend({
+                graph: graph,
+                element: document.getElementById(name+'_legend')
+            });
 
-        var hourly_graph = new Rickshaw.Graph( {
-            element: document.querySelector("#hourly_chart"),
-            renderer: 'bar',
-            series: hourly_data
-        } );
-        var x_axis = new Rickshaw.Graph.Axis.Time( { 
-            graph: hourly_graph,
-        } );
-        var y_axis = new Rickshaw.Graph.Axis.Y( {
-                graph: hourly_graph,
-                orientation: 'left',
-                element: document.getElementById('hourly_y_axis')
-        } );
+            var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
+                graph: graph,
+                legend: legend
+            });
 
-        hourly_graph.render();    
+            var toggle = new Rickshaw.Graph.Behavior.Series.Toggle({
+                graph: graph,
+                legend: legend
+            });
 
-        var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-            graph: hourly_graph,
-            formatter: function(series, x, y) {
-                var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
-                var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-                var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
-                return content;
-            }
-        } );
+            var order = new Rickshaw.Graph.Behavior.Series.Order({
+                graph: graph,
+                legend: legend
+            });
 
-        var offsetForm = document.getElementById('offset_form');
+            var slider = new Rickshaw.Graph.RangeSlider({
+                    graph: graph,
+                    element: $('#'+name+'_slider')
+            });
+        }
 
-        offsetForm.addEventListener('change', function(e) {
-                var offsetMode = e.target.value;
-                if (offsetMode == 'bar') {
-                    hourly_graph.setRenderer('bar');
-                    hourly_graph.offset = 'zero';
-                    graph.setRenderer('bar');
-                    graph.offset = 'zero';
-                } else if (offsetMode == 'lines') {
-                        hourly_graph.setRenderer('line');
-                        hourly_graph.offset = 'zero';
-                        graph.setRenderer('line');
-                        graph.offset = 'zero';
-                } else {
-                        hourly_graph.setRenderer('stack');
-                        hourly_graph.offset = offsetMode;
-                        graph.setRenderer('stack');
-                        graph.offset = offsetMode;
-                }       
-                graph.render();
-                hourly_graph.render();
-
-        }, false);
+        renderGraph('hourly', #{@hourly_stat_data.to_json})
+        renderGraph('daily', #{@daily_stat_data.to_json})
