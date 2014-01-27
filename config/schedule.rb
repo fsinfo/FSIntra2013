@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "log/whenver.log"
+set :output, "log/whenever.log"
 
 every :sunday, :at => '7 pm' do
   rake 'tabs:send_unpaid_mails'
