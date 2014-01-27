@@ -26,6 +26,9 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # For Charts
 gem 'rickshaw_rails'
 
+# Handling cron
+gem 'whenever', require: false
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 
