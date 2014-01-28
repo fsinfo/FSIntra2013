@@ -11,6 +11,7 @@
       <% @beverage_tabs.each do |beverage| %>
         <th><%= "#{beverage.name} (#{number_to_currency beverage.price}/#{number_to_human beverage.capacity, units: 'beverages.capacity'})" %></th>
       <% end %>
+      <th><%= t('actions', count: 2) %></th>
     </tr>
   </thead>
   <tbody >
@@ -18,9 +19,10 @@
     <tr>
       <td><%= user.lastname %></td>
       <td><%= user.firstname %></td>
-      <% @data[user].each do |count| %>
+      <% @data[user][:beverage_tabs].each do |count| %>
         <td class="text-center"><%= count %></td>
       <% end %>
+      <td><%= link_to_if(@data[user][:tab], t('actions.edit'), edit_tab_path(@data[user][:tab])) %></td>
     </tr>
   <% end %>
   </tbody>

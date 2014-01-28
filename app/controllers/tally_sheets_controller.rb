@@ -11,14 +11,15 @@ class TallySheetsController < ApplicationController
     @data = {}
     @users.each do |user|
       tab = @tabs.find_by(user: user)
-      @data[user] = []
+      @data[user] = {tab: tab}
+      @data[user][:beverage_tabs] = []
       unless tab.nil?
         @beverage_tabs.each_with_index do |bt,j|
-          @data[user][j] = tab.beverage_tabs.where(name: bt.name, price: bt.price, capacity: bt.capacity).sum(:count)
+          @data[user][:beverage_tabs][j] = tab.beverage_tabs.where(name: bt.name, price: bt.price, capacity: bt.capacity).sum(:count)
         end
       else
         @beverage_tabs.each_with_index do |bt,j|
-          @data[user][j] = 0
+          @data[user][:beverage_tabs][j] = 0
         end
       end
     end
