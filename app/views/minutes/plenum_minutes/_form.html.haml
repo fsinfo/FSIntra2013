@@ -1,9 +1,9 @@
-= form_for @minutes_minute, :html => { :'data-type' => 'json' } do |f|
-  - if @minutes_minute.errors.any?
+= form_for @plenum_minute, :html => { :'data-type' => 'json' } do |f|
+  - if @plenum_minute.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@minutes_minute.errors.count, "error")} prohibited this minutes_minute from being saved:"
+      %h2= "#{pluralize(@plenum_minute.errors.count, "error")} prohibited this plenum_minute from being saved:"
       %ul
-        - @minutes_minute.errors.full_messages.each do |msg|
+        - @plenum_minute.errors.full_messages.each do |msg|
           %li= msg
 
   .row.collapse
@@ -14,13 +14,13 @@
     - if can? :manage, Minutes::Minute
       = f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
     - else
-      .fixed_field= @minutes_minute.keeper_of_the_minutes || current_user.to_s
+      .fixed_field= @plenum_minute.keeper_of_the_minutes || current_user.to_s
   .row.collapse.select2-field
     = f.label :chairperson_id, Minutes::Minute.human_attribute_name(:chairperson), :class => "fs-prefix"
     = f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
   .row.collapse
     = f.label :attendees, :class => "fs-prefix"
-    = f.text_area :guests #, :value => @minutes_minute.guest_attendants.map{|x| x.displayed_name }.join(', ')
+    = f.text_area :guests #, :value => @plenum_minute.guest_attendants.map{|x| x.displayed_name }.join(', ')
   .actions
     = f.submit
 
