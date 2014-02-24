@@ -21,7 +21,7 @@
 #  cached_tag_list  :string(255)
 #
 
-require 'fs_ldap' if ['production', 'development'].include? Rails.env
+if Rails.env == 'production' then require 'fs_ldap' else require 'fs_ldap_stub' end
 
 class User < Person
 	before_save :create_remember_token 

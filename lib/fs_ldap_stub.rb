@@ -1,13 +1,17 @@
+# A stub for the ldap
+# It is mainly for testing the layout/ability to to things
+# with certain groups. 
+# Authenticate returns true always.
 class FsLdap
   @groups = Hash.new {|h,k| h[k]=[]}
   @users = Hash.new {|h,k| h[k]=[]}
 
   def self.get_lastname(loginname)
-    User.find_by(loginname: loginname).lastname
+    loginname
   end
 
   def self.get_firstname(loginname)
-    User.find_by(loginname: loginname).firstname
+    loginname
   end
 
   def self.loginnames_of_group(group)
@@ -33,4 +37,10 @@ class FsLdap
       @users[loginname].uniq!
     end
   end
+
+  # Add the users to the groups here
+  self.add_groups('kuehlschrank', 'kuehlschrank')
+  self.add_groups('protokolle', 'protokolle')
+  self.add_groups('it', 'it')
+  self.add_groups('kuehlprot', 'kuehlschrank', 'protokolle')
 end
