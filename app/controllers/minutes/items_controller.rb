@@ -31,6 +31,10 @@ class Minutes::ItemsController < ApplicationController
   # POST /minutes/items
   # POST /minutes/items.json
   def create
+    # If this is the first item in the minute
+    if @minutes_minute.items == []
+      params[:minutes_item][:order] = 0
+    end
     @minutes_item = @minutes_minute.items.build(minutes_item_params)
         
     found = false
@@ -40,7 +44,6 @@ class Minutes::ItemsController < ApplicationController
         puts "found is false and #{i.id} != #{params[:after_top]}"
         next
       end
-
       # we have the right one
       if i.id == params[:after_top].to_i
         puts "found is still false but #{i.id} == #{params[:after_top]}"
