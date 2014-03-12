@@ -22,6 +22,6 @@
 
 require 'spec_helper'
 
-describe Minutes::Minute do
+describe Minutes::PlenumMinute do
   pending "add some examples to (or delete) #{__FILE__}"
 end

@@ -1,7 +1,7 @@
 %p= link_to 'Zurück zur Protokollübersicht', minutes_minutes_path
 
 %section
-  %h1 Protokoll vom #{l @minutes_minute.date}
+  %h1 #{t @minutes_minute.class.model_name.human} vom #{l @minutes_minute.date}
 
   - if notice
     %p#notice= notice

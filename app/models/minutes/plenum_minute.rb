@@ -20,8 +20,5 @@
 #  index_minutes_minutes_on_keeper_of_the_minutes_id  (keeper_of_the_minutes_id)
 #
 
-require 'spec_helper'
-
-describe Minutes::Minute do
-  pending "add some examples to (or delete) #{__FILE__}"
+class Minutes::PlenumMinute < Minutes::Minute
 end

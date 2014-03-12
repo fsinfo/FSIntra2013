@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131216213337) do
+ActiveRecord::Schema.define(version: 20140312131928) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20131216213337) do
     t.datetime "updated_at"
     t.text     "guests"
     t.date     "draft_sent_date"
+    t.string   "type"
   end
 
   add_index "minutes_minutes", ["chairperson_id"], name: "index_minutes_minutes_on_chairperson_id"
