@@ -12,6 +12,7 @@
 #  updated_at               :datetime
 #  guests                   :text
 #  draft_sent_date          :date
+#  type                     :string(255)
 #
 # Indexes
 #

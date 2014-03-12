@@ -14,7 +14,7 @@ Fsintra::Application.routes.draw do
       end
       put 'send_draft', on: :member
     end
-    resources :plenum_minutes, :path => 'vv-protokolle', only: [:new, :create, :update]
+    resources :plenum_minutes, :path => 'vv-protokolle', only: [:new, :create, :update, :edit, :show]
   end
 
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users' 

@@ -6,6 +6,7 @@ de:
       index:
         headline: Protokollsystem
         new: Neues Protokoll anlegen
+        new-plenum: Vollversammlungsprotokoll anlegen
     edit:
       headline: "Protokoll vom %{date} bearbeiten"
     form:
@@ -29,6 +30,9 @@ de:
         one: Genehmigung von Protokollen
       minutes/motion:
         one: Antrag
+      minutes/plenum_minute:
+        one: Vollversammlungsprotokoll
+        other: Vollversammlungsprotokoll
     attributes:
       minutes/minute:
         date: Sitzungsdatum

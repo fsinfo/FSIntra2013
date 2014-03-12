@@ -12,7 +12,9 @@
 
   - @minutes_minutes.each do |minutes_minute|
     %tr
-      %td= link_to ldate(minutes_minute.date), minutes_minute
+      %td
+        = link_to ldate(minutes_minute.date), minutes_minute
+        = minutes_minute.type == 'Minutes::PlenumMinute' ? '[VV]' : ''
       %td= minutes_minute.keeper_of_the_minutes
       %td= minutes_minute.chairperson
       %td= ldate minutes_minute.released_date
@@ -21,4 +23,4 @@
 %br
 
 = link_to content_tag(:span, ' ' + t('.new'), :class => "icon-plus"), new_minutes_minute_path, :class => "button small round secondary"
-= link_to "Hoho", new_minutes_plenum_minute_path
+= link_to content_tag(:span, ' ' + t('.new-plenum'), :class => "icon-plus"), new_minutes_plenum_minute_path, :class => "button small round secondary"
