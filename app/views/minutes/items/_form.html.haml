@@ -17,6 +17,6 @@
     .field
       %p
         Neuen Tagesordnung nach folgendem einordnen
-        = select_tag :after_top, options_from_collection_for_select(@minutes_minute.items - [@minutes_item], "id", "title"), include_blank: false
+        = select_tag :after_top, options_from_collection_for_select(@minutes_minute.items - [@minutes_item], "order", "title"), include_blank: false
   .actions
     = f.submit

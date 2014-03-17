@@ -34,30 +34,23 @@ class Minutes::ItemsController < ApplicationController
     # If this is the first item in the minute
     if @minutes_minute.items == []
       params[:minutes_item][:order] = 0
+      params[:after_top] = -1
     end
     @minutes_item = @minutes_minute.items.build(minutes_item_params)
-        
-    found = false
-    @minutes_minute.items.each do |i|
-      # go forward until we find the right 
-      if i.id != params[:after_top].to_i and not found
-        puts "found is false and #{i.id} != #{params[:after_top]}"
-        next
-      end
-      # we have the right one
-      if i.id == params[:after_top].to_i
-        puts "found is still false but #{i.id} == #{params[:after_top]}"
-        @minutes_item.order = i.order + 1
-        found = true
-      elsif i.id != params[:after_top].to_i and not i.new_record? # order of other items + 1
-        puts "found is now true and #{i.id} != #{params[:after_top]}"
-        puts "now i set i.order from #{i.order} to #{i.order + 1}"
-        i.update_attributes order: i.order + 1
-      end
-    end
+
+    @minutes_item.order = params[:after_top].to_i + 1
+    adjust_items_by 1, params[:after_top].to_i
 
     respond_to do |format|
-      if @minutes_item.save
+      if ActiveRecord::Base.transaction do
+          puts "Starting Transaction with #{@updated_items.count} items"
+          puts " Neues Item: #{@minutes_item.order}"
+          @minutes_item.save
+          @updated_items.each do |i|
+            puts "  Verschobenes Item #{i.title}: #{i.order}"
+            i.save
+          end
+        end
         format.html { redirect_to @minutes_minute, notice: 'Item was successfully created.' }
         format.json { render action: 'show', status: :created, location: @minutes_minute }
       else
@@ -84,7 +77,14 @@ class Minutes::ItemsController < ApplicationController
   # DELETE /minutes/items/1
   # DELETE /minutes/items/1.json
   def destroy
-    @minutes_item.destroy
+    # adjust later items
+    adjust_items_by -1, @minutes_item.order
+
+    ActiveRecord::Base.transaction do
+      puts "Starting Transaction with #{@updated_items.count} items"
+      @minutes_item.destroy!
+      @updated_items.each{|i| i.save! ; puts "#{i.title} saved"}
+    end
     respond_to do |format|
       format.html { redirect_to @minutes_minute, notice: 'Item was successfully destroyed.' }
       format.json { head :no_content }
@@ -118,5 +118,25 @@ class Minutes::ItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def minutes_item_params
       params.require(:minutes_item).permit(:date, :title, :content, :order, :minute_id)
+    end
+
+    # All items with order <= start are left
+    # All items wit horder > start are incremented by amount
+    # 
+    def adjust_items_by amount, start
+      puts "==============="
+      puts "adjust_items_by"
+      puts "==============="
+      puts "amount: #{amount}; start: #{start}"
+
+      @updated_items = []
+      @minutes_minute.items.each do |i|
+        puts "* #{i.title} -- #{i.order}"
+        if not i.new_record? and i.order > start
+          puts "  updated"
+          i.order += amount
+          @updated_items << i
+        end
+      end
     end
 end

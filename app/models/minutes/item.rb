@@ -21,7 +21,7 @@ class Minutes::Item < ActiveRecord::Base
   has_many :motions, class_name: 'Minutes::Motion'
 
   validates_presence_of :order
-  #validate :orders_must_be_sequence TODO
+  #validate :orders_must_be_sequence # TODO
 
   def move_up
     other = Minutes::Item.where(minute: minute).where(order: order-1).first
