@@ -13,6 +13,7 @@ Fsintra::Application.routes.draw do
         put 'move', on: :member
       end
       put 'send_draft', on: :member
+      put 'publish', on: :member
     end
     resources :plenum_minutes, :path => 'vv-protokolle', only: [:new, :create, :update, :edit, :show]
   end

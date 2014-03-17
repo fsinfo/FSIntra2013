@@ -2,7 +2,7 @@ class Minutes::MinutesController < ApplicationController
   before_action :signed_in_user
   load_and_authorize_resource
 
-  before_action :set_minutes_minute, only: [:show, :edit, :update, :destroy, :send_draft]
+  before_action :set_minutes_minute, only: [:show, :edit, :update, :destroy, :send_draft, :publish]
   before_action :trim_guests, only: [:update, :create]
   respond_to :html, :json
 
@@ -87,6 +87,18 @@ class Minutes::MinutesController < ApplicationController
     MinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
     respond_to do |format|
       format.html { redirect_to @minutes_minute, notice: 'Entwurf erfolgreich verschickt.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def publish
+    puts "\n\n**************\n\n"
+    puts "PUBLISh"
+    puts "\n\n**************\n\n"
+    @minutes_minute.update_attributes({ released_date: Date.today })
+    MinuteMailer.publish(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+    respond_to do |format|
+      format.html { redirect_to @minutes_minute, notice: 'Protokoll erfolgreich verschickt.' }
       format.json { head :no_content }
     end
   end

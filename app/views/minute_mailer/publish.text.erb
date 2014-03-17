@@ -1,0 +1,42 @@
+==============================================
+== Protokoll der FSR-Sitzung vom <%= l @minutes_minute.date%> ==
+==============================================
+
+Sitzungsleitung: <%= @minutes_minute.chairperson %>
+
+Protokoll: <%= @minutes_minute.keeper_of_the_minutes %>
+
+Anwesend: <%= @minutes_minute.fsr_attendants.join(", ") %>
+
+Beschlussfähig: <%= @minutes_minute.has_quorum? ? t('views.yep') : t('views.nope') %>
+
+Gäste: <%= @minutes_minute.guests %>
+
+----------------------------------------------
+
+Tagesordnung:
+<% @minutes_minute.items.each do |i| %>
+  <%= i.order %>. <%= i.title %>
+<% end %>
+
+
+<% @minutes_minute.items.each do |i| %>
+TOP <%= i.order %>. <%= i.title %>
+<%= '='*(6 + (i.order/10 + 1) + i.title.length) %>
+<%= ReverseMarkdown.parse i.content %>
+<% if i.motions.count > 0 %>
+
+Anträge zu diesem TOP
+---------------------
+<% i.motions.each do |m| %>
+**<%= m.mover %>**:
+<%= m.rationale %>
+<% if m.amount_in_currency %> 
+Betrag: <%= m.amount_in_currency %>
+<% end %>
+Dafür: <%= m.pro %>, enthaltung: <%= m.abs %>, dagegen: <%= m.con %> – Der Antrag ist <%= m.approved? ? '' : 'nicht ' %>angenommen.
+
+<% end %>
+<% end %>
+
+<% end %>
