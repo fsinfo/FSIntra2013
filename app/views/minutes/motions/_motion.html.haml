@@ -7,7 +7,7 @@
     = motion.amount_in_currency
     <br />
     - if motion.apparent_majority?
-      Angenommen mit <strong>augenscheinlicher Mehrheit #{motion.approved? ? '' : 'nicht'}</strong> angenommen.
+      Mit <strong>augenscheinlicher Mehrheit #{motion.approved? ? '' : 'nicht'}</strong> angenommen.
     - else
       Dafür: #{motion.pro}, enthaltung: #{motion.abs}, dagegen: #{motion.con} – Der Antrag ist <strong>#{motion.approved? ? '' : 'nicht'}</strong> angenommen.
     <br />
