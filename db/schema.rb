@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140312131928) do
+ActiveRecord::Schema.define(version: 20140320112935) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20140312131928) do
     t.boolean  "approved"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "apparent_majority"
   end
 
   add_index "minutes_motions", ["item_id"], name: "index_minutes_motions_on_item_id"

@@ -2,18 +2,19 @@
 #
 # Table name: minutes_motions
 #
-#  id         :integer          not null, primary key
-#  order      :integer
-#  mover_id   :integer
-#  pro        :integer
-#  con        :integer
-#  abs        :integer
-#  rationale  :text
-#  amount     :integer
-#  item_id    :integer
-#  approved   :boolean
-#  created_at :datetime
-#  updated_at :datetime
+#  id                :integer          not null, primary key
+#  order             :integer
+#  mover_id          :integer
+#  pro               :integer
+#  con               :integer
+#  abs               :integer
+#  rationale         :text
+#  amount            :integer
+#  item_id           :integer
+#  approved          :boolean
+#  created_at        :datetime
+#  updated_at        :datetime
+#  apparent_majority :boolean
 #
 # Indexes
 #

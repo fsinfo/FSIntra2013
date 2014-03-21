@@ -55,6 +55,7 @@ de:
         approved: Angenommen
         mover: Antragssteller
         amount: Betrag (nur Finanzanträge)
+        apparent_majority: Augenscheinliche Mehrheit
       minutes/minute_approve_motion:
         pro: Dafür
         abs: Enthaltung

@@ -21,17 +21,22 @@
     %strong Angabe in Cent!
     = f.text_field :amount, :class => "large-4 columns"
   .row.collapse
-    .columns.small-3
-      = f.label :pro , :class => "fs-motion-prefix"
-      = f.number_field :pro, :class => "fs-motion"
-    .columns.small-3
-      = f.label :con , :class => "fs-motion-prefix"
-      = f.number_field :con, :class => "fs-motion"
-    .columns.small-3
-      = f.label :abs , :class => "fs-motion-prefix"
-      = f.number_field :abs, :class => "fs-motion"
-    .columns.small-3
-      = f.label :approved, :class => "fs-motion-prefix"
-      = f.check_box :approved, :class => "fs-motion-checkbox"
+    .row
+      .columns.small-4
+        = f.label :pro , :class => "fs-motion-prefix"
+        = f.number_field :pro, :class => "fs-motion"
+      .columns.small-4
+        = f.label :con , :class => "fs-motion-prefix"
+        = f.number_field :con, :class => "fs-motion"
+      .columns.small-4
+        = f.label :abs , :class => "fs-motion-prefix"
+        = f.number_field :abs, :class => "fs-motion"
+    .row
+      .columns.small-6
+        = f.label :apparent_majority, :class => "fs-motion-prefix"
+        = f.check_box :apparent_majority, :class => "fs-motion-checkbox"
+      .columns.small-6
+        = f.label :approved, :class => "fs-motion-prefix"
+        = f.check_box :approved, :class => "fs-motion-checkbox"
   .actions
     = f.submit

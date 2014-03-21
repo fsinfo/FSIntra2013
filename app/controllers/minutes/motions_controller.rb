@@ -78,6 +78,6 @@ class Minutes::MotionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def minutes_motion_params
-      params.require(:minutes_motion).permit(:order, :mover_id, :pro, :con, :abs, :rationale, :amount, :minutes_item_id, :approved)
+      params.require(:minutes_motion).permit(:order, :mover_id, :pro, :con, :abs, :rationale, :amount, :minutes_item_id, :approved, :apparent_majority)
     end
 end
