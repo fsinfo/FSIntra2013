@@ -84,7 +84,13 @@ class Minutes::MinutesController < ApplicationController
 
   def send_draft
     @minutes_minute.update_attributes({ draft_sent_date: Date.today })
-    MinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+
+    if @minutes_minute.type == "Minutes::PlenumMinute"
+      PlenumMinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+    else
+      MinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+    end
+    
     respond_to do |format|
       format.html { redirect_to @minutes_minute, notice: 'Entwurf erfolgreich verschickt.' }
       format.json { head :no_content }
@@ -92,11 +98,14 @@ class Minutes::MinutesController < ApplicationController
   end
 
   def publish
-    puts "\n\n**************\n\n"
-    puts "PUBLISh"
-    puts "\n\n**************\n\n"
     @minutes_minute.update_attributes({ released_date: Date.today })
-    MinuteMailer.publish(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+
+    if @minutes_minute.type == "Minutes::PlenumMinute"
+      PlenumMinuteMailer.publish(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+    else
+      MinuteMailer.publish(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+    end
+
     respond_to do |format|
       format.html { redirect_to @minutes_minute, notice: 'Protokoll erfolgreich verschickt.' }
       format.json { head :no_content }
