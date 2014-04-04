@@ -35,7 +35,11 @@ Anträge zu diesem TOP
 <% if m.amount_in_currency %> 
 Betrag: <%= m.amount_in_currency %>
 <% end %>
-Dafür: <%= m.pro %>, enthaltung: <%= m.abs %>, dagegen: <%= m.con %> – Der Antrag ist <%= m.approved? ? '' : 'nicht ' %>angenommen.
+<% if motion.apparent_majority? %>
+Mit augenscheinlicher Mehrheit <% unless motion.approved? %>nicht <% end %>angenommen.
+<% else %>
+Dafür: <%= m.pro %>, enthalten: <%= m.abs %>, dagegen: <%= m.con %> – Der Antrag ist <%= m.approved? ? '' : 'nicht ' %>angenommen.
+<% end %>
 
 <% end %>
 <% end %>
