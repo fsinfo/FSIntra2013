@@ -77,7 +77,7 @@ class Minutes::MinutesController < ApplicationController
   def destroy
     @minutes_minute.destroy
     respond_to do |format|
-      format.html { redirect_to minutes_minutes_url }
+      format.html { redirect_to minutes_minutes_url, notice: 'Protokoll erfolgreich gelöscht.' }
       format.json { head :no_content }
     end
   end

@@ -1,0 +1,4 @@
+- if can? :destroy, @minutes_minute
+  = link_to small_button('Löschen'), minutes_minute_path(@minutes_minute), method: :delete, :data => { :confirm => t('actions.destroy_confirm') }
+- else
+  Protokoll ausversehen angelegt? Sag dem Protokollreferent bescheid.
