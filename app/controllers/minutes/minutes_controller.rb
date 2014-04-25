@@ -9,7 +9,7 @@ class Minutes::MinutesController < ApplicationController
   # GET /minutes/minutes
   # GET /minutes/minutes.json
   def index
-    @minutes_minutes = Minutes::Minute.all
+    @minutes_minutes = Minutes::Minute.order(date: :desc)
   end
 
   # GET /minutes/minutes/1
