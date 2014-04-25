@@ -55,7 +55,7 @@
 		</tr>
 		<tr>
 			<th><%=t Person.human_attribute_name :misc %></th>
-			<td><%= @person.misc %></td>
+			<td><%= simple_format @person.misc %></td>
 		</tr>
 		<tr>
 			<th><%= t 'tag_list' %></th>
