@@ -1,0 +1,17 @@
+%li
+  Protokoll vom #{l approvement.minute.date}
+  - if approvement.approved? 
+    %strong angenommen
+  - else 
+    %strong nicht angenommen
+  mit
+  - if approvement.apparent_majority?
+    augenscheinlicher Mehrheit
+  - else
+    = approvement.pro
+    \:
+    = approvement.abs
+    \:
+    = approvement.con
+  - if can? :update, approvement
+    = link_to 'Edit', edit_minutes_minute_approvement_path(@minutes_minute, approvement)

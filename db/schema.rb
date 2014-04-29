@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320112935) do
+ActiveRecord::Schema.define(version: 20140427125524) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -32,6 +32,21 @@ ActiveRecord::Schema.define(version: 20140320112935) do
     t.datetime "updated_at"
     t.decimal  "capacity",    precision: 8, scale: 2
   end
+
+  create_table "minutes_approvements", force: true do |t|
+    t.integer  "minute_id"
+    t.integer  "approved_minute_id"
+    t.integer  "pro"
+    t.integer  "con"
+    t.integer  "abs"
+    t.boolean  "apparent_majority"
+    t.boolean  "approved"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "minutes_approvements", ["approved_minute_id"], name: "index_minutes_approvements_on_approved_minute_id"
+  add_index "minutes_approvements", ["minute_id"], name: "index_minutes_approvements_on_minute_id"
 
   create_table "minutes_attendances", force: true do |t|
     t.integer "user_id"

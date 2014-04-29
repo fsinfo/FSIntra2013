@@ -25,6 +25,7 @@ class Minutes::Minute < ActiveRecord::Base
   belongs_to :chairperson, class_name: 'User'
 
   has_many :items, -> { order '"order" ASC' }, class_name: 'Minutes::Item'
+  has_many :approvements
 
   # Attendances are defined in the 'base-join-table' attendances,
   # which also has a column 'type'. This is used in order to
@@ -33,6 +34,10 @@ class Minutes::Minute < ActiveRecord::Base
   has_many :fsr_attendants, through: :fsr_attendances, source: :user
   has_many :guest_attendances, -> { where type: :guest }, class_name: 'Minutes::Attendance'
   has_many :guest_attendants, through: :guest_attendances, source: :user
+
+  # Convenient way of accessing minutes that are not approved yet # TODO ... where approved = true
+  scope :not_approved, -> { where("id NOT IN (SELECT approved_minute_id FROM minutes_approvements)") }
+  scope :approvable, -> { not_approved.where('released_date IS NOT NULL')}
 
   validates_presence_of :chairperson_id
   validates_presence_of :keeper_of_the_minutes_id

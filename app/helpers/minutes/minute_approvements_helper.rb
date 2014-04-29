@@ -1,0 +1,2 @@
+module Minutes::MinuteApprovementsHelper
+end

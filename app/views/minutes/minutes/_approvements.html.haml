@@ -1,0 +1,11 @@
+%h2 Annahme von früheren Protokollen
+
+
+%ul
+  = render partial: "minutes/approvements/approvement", collection: @minutes_minute.approvements, as: :approvement
+
+- if Minutes::Minute.approvable != []
+  Protokolle zu folgenden Sitzungen sind veröffentlicht, aber nicht genehmigt:
+  = Minutes::Minute.approvable.map{|x| l x.date }.join ", "
+  %br
+  = link_to small_button('Neues Protokoll annehmen'), new_minutes_minute_approvement_path(@minutes_minute)

@@ -7,11 +7,12 @@ Fsintra::Application.routes.draw do
   end
 
   namespace :minutes, :path => 'protokollsystem' do
-    resources :minutes, :path => 'protokolle' do 
+    resources :minutes, :path => 'protokolle' do
       resources :items, :path => 'tops' do
         resources :motions, :path => 'antrag'
         put 'move', on: :member
       end
+      resources :approvements, :path => 'angenommen'
       put 'send_draft', on: :member
       put 'publish', on: :member
     end

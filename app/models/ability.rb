@@ -23,6 +23,9 @@ class Ability
       can :manage, Minutes::Motion do |motion|
         not motion.item or motion.item.minute.keeper_of_the_minutes == user
       end
+      can :manage, Minutes::Approvement do |approvement|
+        not approvement.minute or approvement.minute.keeper_of_the_minutes == user
+      end
 
       can :read, Minutes::Minute
       can :create, Minutes::Minute
