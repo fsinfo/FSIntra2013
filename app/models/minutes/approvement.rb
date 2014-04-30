@@ -21,6 +21,7 @@
 
 class Minutes::Approvement < ActiveRecord::Base
   belongs_to :minute
+  belongs_to :approved_minute, class_name: "Minutes::Minute"
   validate :vote_presence
 
 

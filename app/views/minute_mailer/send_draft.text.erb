@@ -19,7 +19,10 @@ Tagesordnung:
 <% @minutes_minute.items.each do |i| %>
   <%= i.order %>. <%= i.title %>
 <% end %>
+<% @minutes_minute.approvements.each do |a| %>
 
+Protokoll vom <%= l a.approved_minute.date %> mit <% if a.apparent_majority %>augenscheinlicher Mehrheit<% else %><%= a.pro %> : <%= a.abs %> : <%= a.con %><% end %><% unless a.approved %> nicht<% end %> angenommen
+<% end %>
 
 <% @minutes_minute.items.each do |i| %>
 TOP <%= i.order %>. <%= i.title %>
@@ -35,8 +38,8 @@ Anträge zu diesem TOP
 <% if m.amount_in_currency %> 
 Betrag: <%= m.amount_in_currency %>
 <% end %>
-<% if motion.apparent_majority? %>
-Mit augenscheinlicher Mehrheit <% unless motion.approved? %>nicht <% end %>angenommen.
+<% if m.apparent_majority? %>
+Der Antrag ist mit augenscheinlicher Mehrheit <% unless m.approved? %>nicht <% end %>angenommen.
 <% else %>
 Dafür: <%= m.pro %>, enthalten: <%= m.abs %>, dagegen: <%= m.con %> – Der Antrag ist <%= m.approved? ? '' : 'nicht ' %>angenommen.
 <% end %>
