@@ -21,6 +21,21 @@ class Minutes::PlenumMinutesController < Minutes::MinutesController
     end
   end
 
+  # PATCH/PUT /minutes/minutes/1
+  # PATCH/PUT /minutes/minutes/1.json
+  def update
+    respond_to do |format|
+      if @plenum_minute.update(minutes_plenum_minute_params)
+        format.html { redirect_to @plenum_minute, notice: 'Protokoll erfolgreich bearbeitet.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @plenum_minute.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
   private
     def set_minutes_minute
       @minutes_minute = Minutes::PlenumMinute.find(params[:id])
