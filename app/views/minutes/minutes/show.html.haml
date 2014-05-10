@@ -22,7 +22,7 @@
   - if can? :update, @minutes_minute
     %ul.button-group.highlight-section
       %li
-        = link_to small_button(t('actions.edit')), edit_minutes_minute_path(@minutes_minute)
+        = link_to small_button(t('actions.edit')), edit_polymorphic_path(@minutes_minute)
       %li
         = link_to small_button(t('actions.new', model: Minutes::Item.model_name.human)),  new_minutes_minute_item_path(@minutes_minute)
 
