@@ -7,6 +7,8 @@ de:
         headline: Protokollsystem
         new: Neues Protokoll anlegen
         new-plenum: Vollversammlungsprotokoll anlegen
+      public:
+        headline: Sitzungsprotokolle
     edit:
       headline: "Protokoll vom %{date} bearbeiten"
     form:

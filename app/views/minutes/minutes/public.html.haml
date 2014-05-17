@@ -1,0 +1,7 @@
+%h1= t '.headline'
+
+%p
+  Hier findest du Protokolle der Fachschaftsratssitzungen und Vollversammlungen der Fachschaft Informatik.
+  Bei Fragen oder Anregungen wende dich bitte an protokolle[at]fachschaft.cs.uni-kl.de.
+
+= render partial: 'minute_table', locals: {minutes: @minutes}

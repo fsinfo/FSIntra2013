@@ -2,23 +2,14 @@
 = link_to content_tag(:span, ' ' + t('.new'), :class => "icon-plus"), new_minutes_minute_path, :class => "button small round secondary"
 
 
-%table
-  %tr
-    %th= t Minutes::Minute.human_attribute_name :date
-    %th= t Minutes::Minute.human_attribute_name :keeper_of_the_minutes
-    %th= t Minutes::Minute.human_attribute_name :chairperson
-    %th Veröffentlicht am
-    %th Beschlussfähig
+%h2 Nicht veröffentlicht
+= render partial: 'minute_table', locals: {minutes: @open_minutes}
 
-  - @minutes_minutes.each do |minutes_minute|
-    %tr
-      %td
-        = link_to ldate(minutes_minute.date), minutes_minute
-        = minutes_minute.type == 'Minutes::PlenumMinute' ? '[VV]' : ''
-      %td= minutes_minute.keeper_of_the_minutes
-      %td= minutes_minute.chairperson
-      %td= ldate minutes_minute.released_date
-      %td= quorum_line minutes_minute
+%h2 Veröffentlicht
+= render partial: 'minute_table', locals: {minutes: @released_minutes}
+
+%h2 Genehmigt
+= render partial: 'minute_table', locals: {minutes: @accepted_minutes}
 
 %br
 

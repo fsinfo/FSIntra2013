@@ -35,9 +35,16 @@ class Minutes::Minute < ActiveRecord::Base
   has_many :guest_attendances, -> { where type: :guest }, class_name: 'Minutes::Attendance'
   has_many :guest_attendants, through: :guest_attendances, source: :user
 
-  # Convenient way of accessing minutes that are not approved yet # TODO ... where approved = true
+  # These scopes reflect the lifecycle of a minute.
+  # If a minute is created, it stars being _open_ and a
+  # draft can be sent for approval.
+  # At some time the keeper of this minute _releases_ it.
+  # In the next board meeting this minute can be _accepted_.
+  # Maybe in some future time this could be encoded into a db field.
   scope :not_approved, -> { where("id NOT IN (SELECT approved_minute_id FROM minutes_approvements)") }
-  scope :approvable, -> { not_approved.where('released_date IS NOT NULL')}
+  scope :open, -> { not_approved.where("released_date IS NULL") }
+  scope :released, -> { not_approved.where("released_date IS NOT NULL") }
+  scope :accepted, -> { where("id IN (SELECT approved_minute_id FROM minutes_approvements)") }
 
   validates_presence_of :chairperson_id
   validates_presence_of :keeper_of_the_minutes_id

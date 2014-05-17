@@ -8,10 +8,10 @@
           %li= msg
           
   = f.label :approved_minute
-  = f.select(:approved_minute_id, Minutes::Minute.approvable.map { |m| [m.date, m.id] })
+  = f.select(:approved_minute_id, Minutes::Minute.released.map { |m| [m.date, m.id] })
 
   .row
-    .columns.small-4
+    .columns.small-4  
       = f.label :pro , :class => "fs-motion-prefix"
       = f.number_field :pro, :class => "fs-motion"
     .columns.small-4

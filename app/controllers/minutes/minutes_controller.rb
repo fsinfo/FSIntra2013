@@ -9,7 +9,13 @@ class Minutes::MinutesController < ApplicationController
   # GET /minutes/minutes
   # GET /minutes/minutes.json
   def index
-    @minutes_minutes = Minutes::Minute.order(date: :desc)
+    @open_minutes = Minutes::Minute.includes(:keeper_of_the_minutes, :chairperson).open.order(date: :desc)
+    @released_minutes = Minutes::Minute.includes(:keeper_of_the_minutes, :chairperson).released.order(date: :desc)
+    @accepted_minutes = Minutes::Minute.includes(:keeper_of_the_minutes, :chairperson).accepted.order(date: :desc)
+  end
+
+  def public
+    @minutes = Minutes::Minute.includes(:keeper_of_the_minutes, :chairperson).accepted.order(date: :desc)
   end
 
   # GET /minutes/minutes/1
@@ -115,7 +121,7 @@ class Minutes::MinutesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_minutes_minute
-      @minutes_minute = Minutes::Minute.find(params[:id])
+      @minutes_minute = Minutes::Minute.includes(items: [motions: [:mover]]).find(params[:id])
     end
 
     def minutes_minute_params

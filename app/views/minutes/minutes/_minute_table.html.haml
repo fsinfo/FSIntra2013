@@ -1,0 +1,17 @@
+%table
+  %tr
+    %th= t Minutes::Minute.human_attribute_name :date
+    %th= t Minutes::Minute.human_attribute_name :keeper_of_the_minutes
+    %th= t Minutes::Minute.human_attribute_name :chairperson
+    %th Veröffentlicht am
+    %th Beschlussfähig
+
+  - minutes.each do |minutes_minute|
+    %tr
+      %td
+        = link_to ldate(minutes_minute.date), minutes_minute
+        = minutes_minute.type == 'Minutes::PlenumMinute' ? '[VV]' : ''
+      %td= minutes_minute.keeper_of_the_minutes
+      %td= minutes_minute.chairperson
+      %td= ldate minutes_minute.released_date
+      %td= quorum_line minutes_minute

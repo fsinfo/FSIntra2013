@@ -17,6 +17,8 @@ Fsintra::Application.routes.draw do
       put 'publish', on: :member
     end
     resources :plenum_minutes, :path => 'vv-protokolle', only: [:new, :create, :update, :edit, :show]
+
+    get 'public' => 'minutes#public'
   end
 
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users' 
