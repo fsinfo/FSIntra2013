@@ -3,6 +3,8 @@ de:
     qrcode: QR Code
     vcard: vCard
     details: Details
+    show:
+      last_edited: "Bearbeitet am: "
     index:
       headline: "Adressbuch"
       new: Neuen Kontakt anlegen
@@ -30,7 +32,7 @@ de:
         zip: Postleitzahl
         city: Ort
         email: E-Mail
-        birthday: 
+        birthday:
           one: Geburtstag
           other: Geburtstage
         misc: Sonstiges
