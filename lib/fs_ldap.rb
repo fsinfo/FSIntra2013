@@ -22,7 +22,7 @@ class FsLdap
 
   def self.groups_of_loginname(loginname)
     filter = Net::LDAP::Filter.eq('memberUid', loginname)
-    return LDAP.search(:base => BASE, :filter => filter, :attributes => ['cn']).flat_map(&:cn)
+    return loginname ? LDAP.search(:base => BASE, :filter => filter, :attributes => ['cn']).flat_map(&:cn) : []
   end
 
   def self.authenticate(loginname, password)
