@@ -13,9 +13,13 @@
     %dt= Minutes::Minute.human_attribute_name :released_date
     %dd= ldate @minutes_minute.released_date
     %dt= Minutes::Minute.human_attribute_name :attendants
-    %dd= @minutes_minute.fsr_attendants.join(", ")
+    %dd
+      = @minutes_minute.fsr_attendants.join(", ")
+      &nbsp;
     %dt= Minutes::Minute.human_attribute_name :guests
-    %dd= @minutes_minute.guests
+    %dd
+      = @minutes_minute.guests
+      &nbsp;
     %dt= Minutes::Minute.human_attribute_name :has_quorum
     %dd= @minutes_minute.has_quorum? ? t('views.yep') : t('views.nope')
 

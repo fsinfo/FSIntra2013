@@ -4,4 +4,10 @@
   Hier findest du Protokolle der Fachschaftsratssitzungen und Vollversammlungen der Fachschaft Informatik.
   Bei Fragen oder Anregungen wende dich bitte an protokolle[at]fachschaft.cs.uni-kl.de.
 
-= render partial: 'minute_table', locals: {minutes: @minutes}
+%ul
+  - @minutes.each do |m|
+    %li
+      = m.type == 'Minutes::PlenumMinute' ? 'Vollversammlung' : 'FSR-Sitzung'
+      vom
+      %strong
+        = link_to ldate(m.date), minutes_public_minute_path(m)

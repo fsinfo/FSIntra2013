@@ -1,6 +1,6 @@
 class Minutes::MinutesController < ApplicationController
-  before_action :signed_in_user
-  load_and_authorize_resource
+  before_action :signed_in_user, except: [:public, :public_show]
+  load_and_authorize_resource except: [:public, :public_show]
 
   before_action :set_minutes_minute, only: [:show, :edit, :update, :destroy, :send_draft, :publish]
   before_action :trim_guests, only: [:update, :create]
@@ -15,7 +15,12 @@ class Minutes::MinutesController < ApplicationController
   end
 
   def public
-    @minutes = Minutes::Minute.includes(:keeper_of_the_minutes, :chairperson).accepted.order(date: :desc)
+    @minutes = Minutes::Minute.accepted.order(date: :desc)
+  end
+
+  def public_show
+    @minutes_minute = Minutes::Minute.includes(items: [motions: [:mover]]).find(params[:id])
+    render 'show'
   end
 
   # GET /minutes/minutes/1

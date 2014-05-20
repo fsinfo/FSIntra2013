@@ -18,7 +18,9 @@ Fsintra::Application.routes.draw do
     end
     resources :plenum_minutes, :path => 'vv-protokolle', only: [:new, :create, :update, :edit, :show]
 
+    # Exporting
     get 'public' => 'minutes#public'
+    get 'public/:id' => 'minutes#public_show', as: 'public_minute'
   end
 
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users' 

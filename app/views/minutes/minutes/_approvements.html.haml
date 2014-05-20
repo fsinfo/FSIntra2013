@@ -8,4 +8,5 @@
   Protokolle zu folgenden Sitzungen sind veröffentlicht, aber nicht genehmigt:
   = Minutes::Minute.released.map{|x| l x.date }.join ", "
   %br
-  = link_to small_button('Neues Protokoll annehmen'), new_minutes_minute_approvement_path(@minutes_minute)
+  - if can? :update, @minutes_minute
+    = link_to small_button('Neues Protokoll annehmen'), new_minutes_minute_approvement_path(@minutes_minute)
