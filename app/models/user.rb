@@ -39,7 +39,7 @@ class User < Person
 	end
 
 	def User.authenticate(loginname,password)
-		user = User.find_or_create_by(:loginname => loginname) if FsLdap.authenticate(loginname,password)
+		user = User.find_or_create_by(:loginname => loginname.downcase) if FsLdap.authenticate(loginname.downcase, password)
 	end
 
 	# LDAP-Gruppen: fsinfo, it, ewoche, ausland, kasse, kai, fete, 
