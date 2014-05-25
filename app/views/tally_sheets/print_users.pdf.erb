@@ -6,24 +6,41 @@
 <% barcode_height = 50 %>
 
 <meta charset="utf-8">
-<%= wicked_pdf_stylesheet_link_tag "documents" %>
 
 <style type="text/css">
   .barcode {
     margin-bottom: 15px;
     width: <%= barcode_width %>;
+    display: inline-block;
     text-align: center;
-    float: left;
-    display: block;
+  }
+  .avatar {
+    vertical-align: top;
+    width: 20px;
+    line-height: 50px;
+    height: 50px;
+    margin-top: 10px;
+    margin-right: 10px;
+    display: inline-block;
+  }
+
+  .user {
+    display: inline-block;
+    width: 49%;
   }
 </style>
 
-<div class="document">
+<div>
   <% @users.each do |user| %>
-    <div class="barcode"> 
+  <div class="user">
+    <div class="avatar">
+      <%= image_tag gravatar_url(user, barcode_height) %>
+    </div>
+    <div class="barcode">
       <% barcode = Barby::Code128B.new("#{user_prefix}#{user.loginname}") %>
       <img src="data:image/svg+xml;base64,<%= Base64.encode64(barcode.to_svg({height: barcode_height, width: barcode_width})) %>"><br />
       <%= user.displayed_name %>
     </div>
+  </div>
   <% end %>
 </div>
