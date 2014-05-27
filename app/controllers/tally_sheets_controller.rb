@@ -4,7 +4,7 @@ class TallySheetsController < ApplicationController
   before_action :get_users, only: [:print_users]
   before_action :get_beverages, only: [:print_items]
 
-  def index 
+  def index
     @tabs = Tab.running
     @beverage_tabs = BeverageTab.where(tab_id: @tabs).select(:name, :price, :capacity).distinct
     @users = User.includes(:tabs).where(tabs: {status: Tab::STATUS_RUNNING}) | User.where(on_beverage_list: true)
@@ -28,7 +28,7 @@ class TallySheetsController < ApplicationController
   # send mails where the tabs' invoice is greater than 0.0
   # remove tabs that have an invoice == 0
   def accounting
-    # delete empty tabs 
+    # delete empty tabs
     @tabs = Tab.running
     ActiveRecord::Base.transaction do
       @tabs.each do |tab|
@@ -69,7 +69,7 @@ class TallySheetsController < ApplicationController
   def print_items
     @items = Beverage.available
     respond_to do |format|
-      format.pdf do 
+      format.pdf do
         render :pdf => "Preisliste.pdf"
       end
     end

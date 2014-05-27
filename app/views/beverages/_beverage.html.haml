@@ -25,5 +25,8 @@
 			%tr
 				%th=t Beverage.human_attribute_name :available
 				%td= beverage.available
+			%tr
+				%th=t Beverage.human_attribute_name :image
+				%td=image_tag  beverage.image.url(:large)
 
 	= link_to t('actions.edit'), edit_beverage_path(beverage)

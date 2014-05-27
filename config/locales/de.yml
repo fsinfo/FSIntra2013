@@ -2,6 +2,7 @@ de:
   views:
     yep: Ja
     nope: Nein
+    upload_new: Hochladen...
   actions:
     one: Aktion
     other: Aktionen
@@ -32,7 +33,7 @@ de:
     - Fr
     - Sa
     abbr_month_names:
-    - 
+    -
     - Jan
     - Feb
     - Mär
@@ -59,7 +60,7 @@ de:
       short: ! '%e. %b'
       without_year: ! '%e. %B'
     month_names:
-    - 
+    -
     - Januar
     - Februar
     - März

@@ -50,6 +50,6 @@ class BeveragesController < ApplicationController
       params[:beverage][:price].delete!('€\s')
       params[:beverage][:external_price].gsub!(/,/,'.')
       params[:beverage][:external_price].delete!('€\s')
-      params.require(:beverage).permit(:name, :description, :available, :price, :external_price, :capacity)
+      params.require(:beverage).permit(:name, :description, :available, :price, :external_price, :capacity, :image)
     end
 end

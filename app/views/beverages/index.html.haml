@@ -7,13 +7,16 @@
 
 %table#beverages
 	%colgroup
-		%col{:width => "30%"}
-		%col{:width => "28%"}
-		%col{:width => "15%"}
-		%col{:width => "8%"}
-		%col{:width => "15%"}
-		%col{:width => "2%"}
+		%col{:width => "7%"}
+		%col{:width => "26%"}
+		%col{:width => "24%"}
+		%col{:width => "12%"}
+		%col{:width => "12%"}
+		%col{:width => "5%"}
+		%col{:width => "12%"}
+		%col{:width => "1%"}
 	%thead
+		%th= Beverage.human_attribute_name(:image)
 		%th= Beverage.human_attribute_name(:name)
 		%th= Beverage.human_attribute_name(:description)
 		%th.text-center= Beverage.human_attribute_name(:price)
@@ -25,6 +28,7 @@
 	%tbody
 		- @beverages.each do |beverage|
 			%tr
+				%td.text-center=image_tag  beverage.image.url(:small)
 				%th.text-left= beverage.name
 				%td= beverage.description
 				%td.text-center= number_to_currency(beverage.price)
