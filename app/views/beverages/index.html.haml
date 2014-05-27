@@ -13,20 +13,22 @@
 		%col{:width => "8%"}
 		%col{:width => "15%"}
 		%col{:width => "2%"}
-	%thead 
+	%thead
 		%th= Beverage.human_attribute_name(:name)
 		%th= Beverage.human_attribute_name(:description)
 		%th.text-center= Beverage.human_attribute_name(:price)
+		%th.text-center= Beverage.human_attribute_name(:external_price)
 		%th.text-center= Beverage.human_attribute_name(:capacity)
 		%th.text-center= t('.ppl')
 		%th.text-center= Beverage.human_attribute_name(:available)
 		%th.text-center= t('actions', count: 2)
 	%tbody
 		- @beverages.each do |beverage|
-			%tr 
+			%tr
 				%th.text-left= beverage.name
 				%td= beverage.description
 				%td.text-center= number_to_currency(beverage.price)
+				%td.text-center= number_to_currency(beverage.external_price)
 				%td.text-center= number_to_human(beverage.capacity, units: 'beverages.capacity')
 				%td= number_to_currency(beverage.price/beverage.capacity)
 				%td.text-center
@@ -36,7 +38,7 @@
 					- else
 						%span.icon-cancel-circled.no-linebreak.text-alert &nbsp;
 						=t 'views.nope'
-				%td.text-center.no-linebreak 
+				%td.text-center.no-linebreak
 					= link_to(content_tag(:span, t('actions.edit'), class: "icon-pencil"), edit_beverage_path(beverage))
 					= link_to(content_tag(:span, t('actions.destroy'), class: "icon-cancel"), beverage_path(beverage), method: :delete, data: { confirm: t('actions.destroy_confirm') })
 

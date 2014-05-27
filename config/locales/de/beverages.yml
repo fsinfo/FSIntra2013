@@ -25,6 +25,7 @@ de:
       beverage:
         name: Name
         price: Preis
+        external_price: Externer Preis
         description: Beschreibung
         available: Verfügbar?
         capacity: Inhalt

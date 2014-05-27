@@ -7,20 +7,23 @@
 			%tr
 				%th=t Beverage.human_attribute_name :name
 				%td= beverage.name
-			%tr 
+			%tr
 				%th=t Beverage.human_attribute_name :description
 				%td= beverage.description
 			%tr
 				%th=t Beverage.human_attribute_name :price
 				%td= number_to_currency(beverage.price)
 			%tr
+				%th=t Beverage.human_attribute_name :external_price
+				%td= number_to_currency(beverage.external_price)
+			%tr
 				%th=t Beverage.human_attribute_name :capacity
 				%td= number_to_human(beverage.capacity, :units => 'beverages.capacity')
-			%tr 
+			%tr
 				%th= t 'beverages.index.ppl'
 				%td= number_to_currency(beverage.price/beverage.capacity)
 			%tr
 				%th=t Beverage.human_attribute_name :available
 				%td= beverage.available
 
-	= link_to t('actions.edit'), edit_beverage_path(beverage) 
+	= link_to t('actions.edit'), edit_beverage_path(beverage)

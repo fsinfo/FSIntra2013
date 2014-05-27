@@ -69,7 +69,7 @@ group :development do
   gem 'faker'
   gem 'rest-client'
 
-  # This gem is intentionally not in the Gemfile, since the 
+  # This gem is intentionally not in the Gemfile, since the
   # mailcatcher website recommends to install it via
   # gem install mailcatcher
   # gem 'mailcatcher'
@@ -85,7 +85,7 @@ gem 'haml-rails'
 # barcodes
 gem 'barby'
 
-# for generating pdfs of html 
+# for generating pdfs of html
 # wkhtmltopdf needs to be installed and the path might be explicitly set
 # see: https://github.com/mileszs/wicked_pdf
 gem 'wicked_pdf'
@@ -119,3 +119,6 @@ gem 'cancan'
 
 # Script that takes html strings and generates markdown.
 gem 'reverse_markdown'
+
+# Storing Avatars
+gem "paperclip", "~> 4.1"

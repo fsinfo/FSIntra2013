@@ -24,6 +24,9 @@
 		<%= f.label :price %>
 		<%= f.text_field :price, :value=>number_to_currency(f.object.price) %>
 
+		<%= f.label :external_price %>
+		<%= f.text_field :external_price, :value=>number_to_currency(f.object.external_price) %>
+
 		<%= f.label :available %>
 		<div class="toggle-wrapper">
 			<label class="checkbox toggle fsintra" onclick="" style="width: 100%; height: 100%;">
@@ -36,7 +39,7 @@
 				<a class="slide-button"></a>
 			</label>
 		</div>
-		
+
 		<div class="submit">
 			<%= f.submit :class => "button" %>
 		</div>
