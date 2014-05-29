@@ -75,6 +75,16 @@ class TallySheetsController < ApplicationController
     end
   end
 
+  def print_price_list
+    @items = Beverage.available
+    respond_to do |format|
+      format.pdf do
+        render :pdf => "Preisliste_Aushang.pdf"
+      end
+    end
+  end
+
+
   private
     def get_users
       @search = User.where(:on_beverage_list => true).order('lastname, firstname').search(params[:q])

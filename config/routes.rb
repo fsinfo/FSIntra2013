@@ -46,6 +46,7 @@ Fsintra::Application.routes.draw do
   post '/tally_sheet/update' => 'tally_sheets#update'
   get '/tally_sheet/print_users' => 'tally_sheets#print_users'
   get '/tally_sheet/print_items' => 'tally_sheets#print_items'
+  get '/tally_sheet/print_price_list' => 'tally_sheets#print_price_list'
 
 # API
   get '/api/items' => 'api#items'
