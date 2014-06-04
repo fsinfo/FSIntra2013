@@ -11,7 +11,7 @@
 		- if @tab.is_paid?
 			.button.small.round.secondary.success=t('.is_paid')
 		- elsif !@tab.is_marked_as_paid?
-			= link_to t('.mark_as_paid'), mark_as_paid_tab_path(@tab), id: 'mark_tab_as_paid', :class=> 'button small round secondary', :remote => true, :method => :put
+			= button_to t('.mark_as_paid'), mark_as_paid_tab_path(@tab), id: 'mark_tab_as_paid', :class=> 'button small round secondary', :remote => true, :method => :put
 		- else
 			= render('marked_as_paid')
 = render @tab
