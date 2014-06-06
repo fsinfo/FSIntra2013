@@ -1,0 +1,83 @@
+
+$navi-distance: 10px !default;
+$navi-background: $turquoise !default;
+$navi-color: #fff !default;
+$navi-background-hover: hover-of($turquoise) !default;
+$navi-color-hover: color-of(hover-of($turquoise)) !default;
+$navi-height: 70px !default;
+$navi-separator-color: $bodybgcolor !default;
+$navi-logo-height: image-height("logo.png") !default;
+
+@mixin nav-button {
+	color: $navi-color;
+	background: $navi-background;
+	&:hover {
+		color: $navi-color-hover;
+		background: $navi-background-hover;
+	}
+	border: none;
+	border-left: 1px solid $navi-separator-color;
+	// font-family: $navi-font-family;
+	height: $navi-height;
+	line-height: $navi-height;
+	@include border-radius(0);
+	@include text-shadow(none);
+}
+
+#navi {
+	@include row("nested");
+	@extend .navbar;
+	margin-top: $navi-distance;
+	background: $navi-background;
+	color: $navi-color;
+
+	& > h1 {
+		@include column(4);
+		@extend .logo;
+		padding: 0 10px;
+
+		$img-margin: ($navi-height - $navi-logo-height) / 2;
+		@if ($img-margin > 0) {
+			img { margin-top: $img-margin; }
+		}
+	}
+
+	&, & h1, & a, & li {
+		min-height: $navi-height;
+		line-height: $navi-height;
+	}
+
+	& > ul {
+		@include column(8);
+		background: inherit;
+		@include box-shadow(none);
+		@include respond(all-phones) { margin-top: 1px; } // vertical seperation for mobile dropdown menu
+
+		li a, li:hover a {
+			@include nav-button;
+			@include respond(all-phones) { border-left: none; } // no horizontal separation for mobile menu
+		}
+
+		@include respond(all-phones) {
+			top: $navi-height;
+			visibility: hidden;
+			&.active {
+				@include box-shadow(none);
+				visibility: visible;
+			}
+
+			li {
+				@include transition-duration(0);
+			}
+		}
+	}
+
+	& > a.toggle.btn {
+		top: 0;
+		right: 0;
+		@include nav-button;
+		width: $navi-height + 10px;
+	}
+
+
+}

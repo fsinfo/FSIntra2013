@@ -10,21 +10,16 @@ gem 'pg'
 # in production environments by default.
 gem 'sass-rails',   '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
+gem 'compass-rails'
+gem 'modular-scale'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
 gem 'uglifier', '>= 1.0.3'
 
-# gem 'zurb-foundation', '~> 4.0.0'
-gem 'foundation-rails'
-
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
-
-# For Charts
-gem 'rickshaw_rails'
 
 # Handling cron
 gem 'whenever', require: false
@@ -62,7 +57,7 @@ end
 
 group :development do
 	gem 'bullet'
-  gem 'better_errors'
+  #gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'quiet_assets'
@@ -112,7 +107,6 @@ gem 'acts-as-taggable-on'
 
 # Ransack for better searches (+ easy sortable columns)
 gem 'ransack'
-
 
 # CanCan
 gem 'cancan'

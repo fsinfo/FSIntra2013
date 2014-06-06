@@ -1,0 +1,60 @@
+//$form-text-input-color: #555;
+
+
+$line-and-height    : height-calc($norm);
+
+$spacing            : $gutter-in-px;
+$small-spacing      : $gutter-in-px/2;
+
+$color              : $black;
+$bgcolor            : $white;
+$bodybgcolor        : rgb(0,157,158);
+
+$turquoise          : #3bbec0;
+$blue               : #67b0d1;
+$green              : #50dd8b; // #60cd9b
+$red                : #e87352;
+$yellow             : #ebc85e;
+$brown              : #a48b60;
+$grey               : #f1f1f1;
+
+$turquoise-hover    : #60cacc;
+$blue-hover         : lighten($blue, 10%);
+$green-hover        : lighten($green, 10%);
+$red-hover          : lighten($red, 10%);
+$yellow-hover       : lighten($yellow, 10%);
+$brown-hover        : lighten($brown, 10%);
+$grey-hover         : lighten($grey, 10%);
+
+$border-color       : darken($default-color, 10%);
+
+
+@function color-of($color) {
+	@if $color == $turquoise { @return $black; }
+	@else if $color == $turquoise-hover { @return $white; }
+	@else if $color == $blue { @return $black; }
+	@else if $color == $blue-hover { @return $black; }
+	@else if $color == $green { @return $black; }
+	@else if $color == $green-hover { @return $black; }
+	@else if $color == $red { @return $black; }
+	@else if $color == $red-hover { @return $black; }
+	@else if $color == $yellow { @return $white; }
+	@else if $color == $yellow-hover { @return $white; }
+	@else if $color == $brown { @return $white; }
+	@else if $color == $brown-hover { @return $white; }
+	@else if $color == $grey { @return $white; }
+	@else if $color == $grey-hover { @return $white; }
+	@else { @return $white; }
+}
+
+@function hover-of($color) {
+	@if $color == $turquoise { @return $turquoise-hover; }
+	@else if $color == $blue { @return $blue-hover; }
+	@else if $color == $green { @return $green-hover; }
+	@else if $color == $red { @return $red-hover; }
+	@else if $color == $yellow { @return $yellow-hover; }
+	@else if $color == $brown { @return $brown-hover; }
+	@else if $color == $grey { @return $grey-hover; }
+	@else { @return $grey-hover; }
+}
+

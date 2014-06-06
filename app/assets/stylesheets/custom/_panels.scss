@@ -1,0 +1,20 @@
+
+@mixin panel($padding: $spacing) {
+	@include row("nested");
+	background: $bgcolor;
+	padding: $padding;
+	margin-bottom: $spacing;
+}
+
+@mixin shout {
+	@include panel($small-spacing);
+}
+
+.panel { @include panel; }
+.shout { @include shout; }
+
+.live {
+	@include shout;
+	@extend .field;
+	overflow: visible;
+}

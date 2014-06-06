@@ -1,0 +1,10 @@
+
+.label {
+	@include border-radius(0);
+
+	&.payed { @extend .success; }
+	&.yes { @extend .success; }
+	&.no { @extend .danger; }
+	&.accpeted { @extend .success; }
+	&.denied { @extend .danger; }
+}

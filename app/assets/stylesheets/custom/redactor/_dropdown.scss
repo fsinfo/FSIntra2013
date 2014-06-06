@@ -1,0 +1,37 @@
+/** THIS IS NOT IN USE **/
+
+// maybe to do: style this properly
+// maybe to do: delete this if no longer needed -> we should be able to do without this
+.redactor_dropdown {
+	// font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+	top: 28px;
+	left: 0;
+	z-index: 2004;
+	position: absolute;
+	width: 200px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	// font-size: 13px;
+	// -webkit-box-shadow: 0 2px 4px #ccc;
+	// -moz-box-shadow: 0 2px 4px #ccc;
+	// box-shadow: 0 2px 4px #ccc;
+	line-height: 21px;
+	padding: 10px;
+}
+.redactor_separator_drop {
+	border-top: 1px solid #ddd;
+	padding: 0 !important;
+	line-height: 0;
+	font-size: 0;
+}
+.redactor_dropdown a {
+	display: block;
+	color: #000;
+	padding: 3px 5px;
+	text-decoration: none;
+}
+.redactor_dropdown a:hover {
+	color: #444 !important;
+	text-decoration: none;
+	background-color: #dde4ef;
+}

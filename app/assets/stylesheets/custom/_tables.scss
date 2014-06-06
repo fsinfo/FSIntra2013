@@ -1,0 +1,120 @@
+
+$table-color: $color !default;
+$table-breakpoint-small: all-phones !default;
+$table-breakpoint-medium: tablets !default;
+$qr-width: 100px;
+$qr-width-toggle: 300px;
+
+@mixin qr-entry {
+	.qr {
+		max-width: $qr-width;
+		&.active { max-width: $qr-width-toggle; }
+		img { width: 100%; }
+		span {
+			display: block;
+			margin-top: -10px; // TODO: why this hackin'?
+			text-align: center;
+			font-size: $small;
+			@include line-and-height(height-calc($small));
+		}
+	}
+}
+
+@mixin detail-table {
+	@include panel;
+
+	.entry {
+		@include row("nested");
+		padding-bottom: $med;
+		line-height: $line-and-height - 2px;
+		.key{
+			@include column(4);
+			@include respond(desktop) { text-align: right; }
+		}
+		.value {
+			@include column(8);
+			font-weight: $font-weight-semibold;
+		}
+		@include qr-entry;
+	}
+}
+
+.detail-table { @include detail-table; }
+
+
+
+@mixin list-table {
+	display: table; @extend table;
+	border: $small-spacing solid white;
+
+	.thead { display: table-header-group; @extend thead; }
+	.tbody { display: table-row-group; @extend tbody; }
+	.tfoot { display: table-footer-group; @extend tfoot; }
+
+	.tr { display: table-row; @extend tr; }
+	.td { display: table-cell; @extend td; }
+	.th { display: table-cell; @extend th; }
+
+	.td, .th {
+		&:first-child { text-align: left; }
+		&:last-child { text-align: right; }
+		&.center { text-align: center; }
+		&.left { text-align: left; }
+		&.right { text-align: right; }
+	}
+
+	.td, .th {
+		// produce width-classes: w-5, w10, ..., w-95
+		@for $w from 1 through 20 {
+			&.w-#{$w*5} { width: $w*5%; }
+		}
+		// visibility/respond classes
+		&.hide { display: none; }
+		&.hide-small { @include respond($table-breakpoint-small) { display: none; }}
+		&.hide-medium { @extend .hide-small; @include respond($table-breakpoint-medium) { display: none; }}
+	}
+
+	.thead .th/*, .tfoot .th*/ {
+		background: $bgcolor;
+		color: $color;
+		border: none;
+		@include line-and-height(height-calc($med));
+	}
+
+	.tbody .tr {
+		background: $bgcolor;
+		color: $table-color;
+		cursor: pointer;
+		&:hover {
+			background: $yellow;
+			color: $black;
+		}
+		.td {
+			font-size: $norm;
+			font-weight: $font-weight-regular;
+			color: inherit;
+			background: inherit;
+			border: none;
+		}
+		&.footer .td { font-weight: $font-weight-bold; }
+	}
+
+	h2 {
+		display: table-header-group;
+		@include line-and-height(height-calc($large));
+		background: $bgcolor;
+		border: none;
+		color: $color;
+	}
+}
+
+.list-table { @include list-table; }
+
+.list-table-head {
+	// TODO: why dost thou hack?
+	$hack-spacing: ($spacing + $small-spacing)/2;
+	padding: $small-spacing $hack-spacing 0 $hack-spacing;
+	margin-bottom: 0;
+	background: $bgcolor;
+	h2, h3 { padding-bottom: 0; }
+}

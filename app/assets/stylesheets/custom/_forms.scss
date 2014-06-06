@@ -1,0 +1,102 @@
+
+@mixin slider-checkbox($color-yes: $black, $bg-yes: $green,
+					   $color-no: $black, $bg-no: $red) {
+	label {
+		@inlcude line-and-height($line-and-height);
+		@include row("nested");
+		position: relative;
+		width: 100%;
+		margin-left: 0;
+		border: 1px solid $border-color;
+
+		input { display: none; }
+		div {
+			height: 100%;
+			width: 50%;
+			float: left;
+			position: relative;
+			z-index: 2;
+			text-align: center;
+		}
+		a {
+			position: absolute;
+			top: -1px;
+			left: -1px;
+			width: 50%;
+			height: $line-and-height;
+			display: block;
+			z-index: 1;
+			color: $color-no;
+			background-color: $bg-no;
+			@include border-radius(0);
+			@include transition(all 0.3s ease-out);
+		}
+		input:checked ~ a {
+			left: 50%;
+			margin-left: 1px;
+			color: $color-yes;
+			background-color: $bg-yes;
+			@include transition(all 0.3s ease-out);
+		}
+	}
+}
+
+@mixin formfield {
+	@include row("nested");
+	overflow: visible;
+	& > input, & > textarea { @extend .input; }
+	textarea { @extend .textarea; }
+	& > label {
+		@include column(3);
+		@include line-and-height($line-and-height);
+	}
+	& > input, & > textarea, & > .nested {
+		@include column(9);
+	}
+	&.triple > input { @include column(3); }
+	& > .slider {
+		@extend .nested;
+		@include slider-checkbox;
+		label { @include line-and-height($line-and-height); }
+	}
+}
+
+form .field {
+	// overriding some Gumby defauls
+	@include border-radius(0);
+	.input,
+	input,
+	&.prepend .input,
+	&.append .input,
+	&.prepend.append input,
+	&.prepend.append input:first-child,
+	&.prepend.append input:last-child,
+	&.prepend *:first-child,
+	&.append *:last-child {
+		@include border-radius(0);
+	}
+
+	textarea, .textarea {
+		@include transition-property(height);
+  		@include transition-duration(1s);
+		height: $line-and-height*1 !important;
+		&:focus { height: $line-and-height*4 !important; }
+	}
+
+	input, .input, textarea, .textarea {
+		&:focus { border: 1px solid $turquoise; }
+		&.no-focus:focus { border: none; }
+		&.no-border, &.no-border:focus { border: none; }
+	}
+
+	// hacking os specific file widget
+	input[type="file"] {
+		border: none;
+		margin-left: 0;
+		line-height: 1em;
+		padding-top: .5em;
+	}
+
+	// add our own field styles
+	@include formfield;
+}

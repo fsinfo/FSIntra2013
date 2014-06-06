@@ -1,0 +1,40 @@
+
+@mixin button($bg: $turquoise, $size: 100%, $margin: false) {
+	@extend .btn, .primary, .medium;
+	background: $bg;
+	border-color: $bg;
+	color: color-of($bg);
+	&:hover {
+		background: hover-of($bg);
+		color: color-of(hover-of($bg));
+	}
+	width: $size;
+	cursor: pointer;
+	outline: none;
+
+	@if ($margin) { margin: $margin; }
+}
+
+.button { @include button($margin: 10px 0 0 0); } // TODO: apply Gumby hardcoding, done
+
+
+@mixin buttonbar($num) {
+	.#{number-as-word($num)}.buttons {
+		@include shout;
+		&.nested {
+			@include panel(0);
+			&:last-child { margin-bottom: 0; }
+		}
+		a {
+			@include button;
+			@include column(12/$num);
+			@include respond(all-phones) {
+				margin-top: $small-spacing;
+			}
+		}
+	}	
+}
+
+@for $i from 1 through 4 {
+	@include buttonbar($i);
+}

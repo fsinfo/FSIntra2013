@@ -1,0 +1,50 @@
+
+$tile-color-one: $red !default;
+$tile-color-two: $brown !default;
+$tile-color-three: $yellow !default;
+$tile-color-four: $green !default;
+
+
+@mixin tile-style($name, $color) {
+	&.#{$name} {
+		background: $color;
+		color: color-of($color);
+		&:hover {
+			background: hover-of($color);
+			color: color-of(hover-of($color));
+		}
+	}
+}
+
+@mixin tile-elem($size) {
+
+}
+
+.landing-tiles {
+	@include row("nested");
+
+	a {
+		@include column(6);
+		@include tile-style("tile1", $tile-color-one);
+		@include tile-style("tile2", $tile-color-two);
+		@include tile-style("tile3", $tile-color-three);
+		@include tile-style("tile4", $tile-color-four);
+		text-align: center;
+		margin-bottom: $spacing;
+
+		h1 {
+			font-size: $reallybig;
+			@include line-and-height(height-calc($xxxlarge*1.5));
+			padding: 0;
+			padding-top: 20px;
+		}
+
+		h3 {
+			font-size: $xlarge;
+			// @include line-and-height(height-calc($xlarge));
+			height: height-calc($xlarge);
+			vertical-align: top;
+			padding: 0;
+		}
+	}
+}

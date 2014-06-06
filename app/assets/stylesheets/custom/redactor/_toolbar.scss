@@ -1,0 +1,45 @@
+
+.redactor_toolbar {
+	position: relative;
+	list-style: none;
+	background: $grey;
+	overflow: hidden;
+	height: height-calc($norm);
+	border-bottom: 1px solid $border-color;
+
+	li {
+		float: left /*!important*/;
+		// margin: 0 !important;
+		padding: 4px 1px 1px 5px;
+		// padding-right: 0;
+		list-style: none;
+		outline: none;
+
+		&.redactor_separator {
+			height: height-calc($norm);
+			border-left: 1px solid $border-color;
+			border-right: none;
+			padding: 0;
+			margin: 0 2px 0 3px;
+		}
+
+		a {
+			width: 27px;
+			height: 27px;
+			display: block;
+			cursor: pointer;
+			zoom: 1;
+			outline: none;
+			text-decoration: none;
+			@include toolbar_background;
+			background-repeat: no-repeat;
+			background-position: 0;
+
+			&:hover, &:active, &.redactor_act {
+				border-color: $border-color;
+				background-color: $border-color;
+				outline: none;
+			}
+		}
+	}
+}

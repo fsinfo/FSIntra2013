@@ -1,0 +1,73 @@
+
+.redactor_box {
+	position: relative;
+	border: 1px solid $border-color;
+	overflow: visible;
+	margin-bottom: 10px;
+	&.active { border-color: $turquoise; }
+}
+
+.redactor_box textarea {
+	overflow: auto;
+	resize: none;
+	margin: 0;
+	padding: 0;
+	display: block;
+	position: relative;
+	z-index: 1004;
+	outline: none;
+	border: none;
+	width: 100%;
+}
+
+.redactor_editor {
+	&, &:focus, div, p, ul, ol{
+		color: $form-text-input-color;
+		font-size: $norm;
+		line-height: height-calc($norm);
+	}
+
+	&, &:focus {
+		position: relative;
+		outline: none;
+		padding: $small-spacing;
+		overflow: auto;
+		white-space: normal;
+	}
+
+	b { font-weight: bold; }
+	i { font-style: italic; }
+	div, p, ul, ol {
+		margin: 0;
+		border: none;
+	}
+	ul, ol {
+		padding-left: 2em ;
+		ul, ol {
+			padding: 0;
+			padding-left: 2em;
+		}
+	}
+	ul, ul li {
+		list-style: square outside;
+		list-style-type: square;
+	}
+
+	// styles for visual structure
+	&.redactor_editor_wym {
+		background: #f6f6f6 !important;
+		padding: 5px 15px !important;
+
+		div, p, ul, ol {
+			background-color: #fff !important;
+			border: 1px solid #e4e4e4 !important;
+			padding: 10px !important;
+			margin: 10px 0 !important;
+		}
+		ul, ol {
+			padding-left: 2em !important;
+		}
+	}
+}
+
+

@@ -1,0 +1,14 @@
+
+.modal {
+	.content { min-height: 150px; }
+	.close {
+		color: $turquoise;
+		i { margin: 0 3px; }
+	}
+	.close:hover {
+		color: $white;
+		background: $turquoise;
+		@include border-radius(100px);
+	}
+	b { font-weight: $font-weight-bold; }
+}

@@ -1,0 +1,93 @@
+
+$util-bg: tint($grey, 10%) !default;
+$util-border-color: shade($grey, 5%) !default;
+$util-font-size: ($small + $norm + $norm)/3 !default;
+
+@mixin minute-panel {
+	@include panel;
+	&.with-utils { margin-bottom: 0; }
+}
+
+
+.minute-meta {
+	@include minute-panel;
+
+	.entry {
+		@include row("nested");
+		line-height: $line-and-height - 2px;
+		.name { @include column(4); }
+		.value { @include column(8); }
+	}
+}
+
+
+.minute-toplist {
+	@include minute-panel;
+	ol {
+		margin-top: .5em;
+		a:hover { text-decoration: underline; }
+	}
+}
+
+
+.minute-top {
+	@include minute-panel;
+	.content {
+		// content styles
+		text-align: justify;
+		@include hyphenation;
+		:last-child { margin-bottom: 0; }
+		ol, ul { list-style-position: inside; }
+		a:hover { text-decoration: underline; }
+	}
+}
+
+
+.minute-request {
+	border: 1px solid $util-border-color;
+	margin-top: $spacing;
+	padding: $small-spacing/2 $small-spacing;
+
+	// content styles
+	.from { font-style: italic; }
+	.title, .howmuchisthefish {
+		font-weight: $font-weight-semibold;
+	}
+	.description {
+		text-align: justify;
+		@include hyphenation;
+	}
+	.edit {
+		float: right;
+		margin-left: 5px;
+		font-size: $util-font-size;
+		color: $turquoise;
+		&:hover { text-decoration: underline; }
+	}
+}
+
+
+@mixin util-link {
+	color: $black;
+	background: inherit;
+	font-size: $util-font-size;
+	height: height-calc($util-font-size);
+	line-height: height-calc($util-font-size);
+	border: none;
+	padding: 0 8px;
+	margin-left: 5px;
+
+	&:hover {
+		background: $turquoise;
+		color: black;
+	}
+}
+
+.utils {
+	background: $util-bg;
+	border-top: 1px solid $util-border-color;
+	text-align: right;
+	padding: 0 $small-spacing;
+	margin-bottom: $spacing;
+	a { @include util-link; }
+}

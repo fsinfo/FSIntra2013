@@ -13,18 +13,9 @@
 //= require variables
 //= require jquery
 //= require jquery_ujs
-//= require foundation
 //= require jquery-ui
+//= require selectize.min
+//= require selectnize
 //= require redactor_de
 //= require redactor.min
-//= require chosen-select
-//= require select2
-//= require dataTables/jquery.dataTables
-//= require dataTables/jquery.dataTables.foundation
-//= require dataTables/extras/FixedHeader
-//= require rickshaw_with_d3
 //= require minutes/minutes
-
-$(function() {
-  $(document).foundation();
-});
