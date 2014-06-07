@@ -121,9 +121,6 @@ GEM
       childprocess (>= 0.2.3)
       guard (>= 1.1)
       spork (>= 0.8.4)
-    gumby-framework (0.0.1)
-      jquery-rails
-      modernizr-rails
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -302,7 +299,6 @@ DEPENDENCIES
   faker
   guard-rspec
   guard-spork (>= 1.5.0)
-  gumby-framework
   haml
   haml-rails
   jbuilder (~> 1.2)
@@ -310,6 +306,7 @@ DEPENDENCIES
   jquery-ui-rails
   libnotify
   meta_request
+  modernizr-rails
   modular-scale
   net-ldap
   paperclip (~> 4.1)

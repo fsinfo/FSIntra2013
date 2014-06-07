@@ -6,6 +6,7 @@ $navi-background-hover: hover-of($turquoise) !default;
 $navi-color-hover: color-of(hover-of($turquoise)) !default;
 $navi-height: 70px !default;
 $navi-separator-color: $bodybgcolor !default;
+// FIXME: why u logo?
 $navi-logo-height: image-height("logo.png") !default;
 
 @mixin nav-button {

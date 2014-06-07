@@ -12,7 +12,8 @@ gem 'sass-rails',   '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'compass-rails'
 gem 'modular-scale'
-gem 'gumby-framework'
+gem 'modernizr-rails'
+# gem 'gumby-framework', github: 'ryancheu/gumby-framework'
 # gem 'gumby-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
