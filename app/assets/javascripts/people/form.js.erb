@@ -1,0 +1,3 @@
+$('#__tags__').selectnice("tags", {
+  tags: <%= Person.tag_counts.pluck(:name) %>
+});

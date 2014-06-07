@@ -1,14 +1,10 @@
-<div id="top-bar" class="contain-to-grid">
-	<nav class="top-bar" data-topbar>
-		<ul class="title-area">
-			<!-- title -->
-			<li class="name"><h1><%= link_to 'FSIntranet', root_path %></h1></li>
-			<!-- menu for linearisation -->
-			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-		</ul>
-
-		<section class="top-bar-section">
-			<ul class="right">
+<div id="navi">
+				<!-- page logo and home link -->
+		<h1><a href="/"><img src="/static/img/logo.png" gumby-retina=""></a></h1>
+		<!-- mobiles: display foldable menu -->
+		<a class="toggle btn" gumby-trigger="#navi > ul" href="#"><i class="icon-menu"></i></a>
+		<!-- navi elements -->
+			<ul>
 				<% if signed_in? %>
 					<%= menu_link_to 'Protokolle', minutes_minutes_path %>
 				<% else %>
@@ -16,29 +12,10 @@
 				<% end %>
 				<% if signed_in? %>
 					<%= menu_link_to 'Adressbuch', people_path %>
-					<li class="has-dropdown">
-						<% if can? :manage, :tally_sheet %>
-							<a href="#">Kühlschrank</a>
-							<ul class="dropdown">
-								<%= menu_link_to 'Eigene Rechnungen', tabs_path %>
-								<%= menu_link_to 'Getränke', beverages_path %>
-								<%= menu_link_to 'Benutzerliste drucken', tally_sheet_print_users_path(:format => :pdf), :target => '_blank' %>
-								<%= menu_link_to 'Preisliste drucken', tally_sheet_print_items_path(:format => :pdf), :target => '_blank' %>
-								<%= menu_link_to 'Preisliste Aushang drucken', tally_sheet_print_price_list_path(:format => :pdf), :target => '_blank' %>
-								<%= menu_link_to 'Strichliste', tally_sheet_path %>
-								<%= menu_link_to 'Offene Rechnungen', unpaid_tabs_path %>
-								<%= menu_link_to 'Strichliste verwalten', tally_sheet_edit_path %>
-							</ul>
-						<% else %>
-							<%= menu_link_to 'Rechnungen', tabs_path %>
-						<% end %>
-					</li>
+					<%= menu_link_to 'Getränke', beverages_path %>
 					<%= menu_link_to 'Profil', person_path(current_user) %>
 					<%= menu_link_to 'Logout', logout_path, :method => :delete %>
 				<% else %>
 					<%= menu_link_to 'Login', login_path %>
 				<% end %>
-			</ul>
-		</section>
-	</nav>
 </div>

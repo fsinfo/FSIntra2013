@@ -1,0 +1,4 @@
+	$('#livesearch').selectnice("live", {
+		tags: <%= Person.tag_counts.to_a.map{|t| t.name} %>,
+		objs: ".list-table .tbody .tr"
+	});

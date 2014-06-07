@@ -24,13 +24,13 @@
 	</head>
 
 	<body>
-		<%= render 'layouts/header' %>
-		<div id="content" class="row">
-			<div class="small-12 large-12 columns">
-				<%= yield %>
+		<div id="body-wrapper">
+			<div id="main">
+				<%= render 'layouts/header' %>
+					<%= yield %>
+				</div>
 			</div>
 		</div>
-		<%= render 'layouts/footer' %>
 		<%= javascript_include_tag "application" , "data-turbolinks-track" => true %>
 		<%= yield :scripts %>
 		<%= yield :joyride %>

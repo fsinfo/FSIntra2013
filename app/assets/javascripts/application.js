@@ -19,4 +19,3 @@
 //= require selectnice
 //= require redactor_de
 //= require redactor.min
-//= require minutes/minutes

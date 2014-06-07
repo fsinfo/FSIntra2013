@@ -1,0 +1,20 @@
+<div class="landing-tiles">
+  <%= link_to(minutes_minutes_path, class: 'tile1') do %>
+    <h1><i class="icon-docs"></i></h1>
+    <h3>Protokollliste</h3>
+  <% end %>
+  <%= link_to(tabs_path, class: 'tile2') do %>
+    <h1><%= number_to_currency(current_user.debts) %></h1>
+    <h3>offene Rechnungen</h3>
+  <% end %>
+</div>
+<div class="landing-tiles">
+  <%= link_to(minutes_minutes_path, class: 'tile3') do %>
+    <h1><i class="icon-doc-text"></i></h1>
+    <h3>Protokoll schreiben</h3>
+  <% end %>
+  <%= link_to(tabs_path, class: 'tile4') do %>
+    <h1><i class="icon-user"></i></h1>
+    <h3>Addressbuch</h3>
+  <% end %>
+</div>

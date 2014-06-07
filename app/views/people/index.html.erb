@@ -1,49 +1,35 @@
-<div class="actions">
-	<h1><%=t '.headline' %></h1>
-	<%= link_to content_tag(:span, @tag, :class => "icon-cancel-1"), people_path, :class => "button small round secondary" if @tag %>
-	<%= link_to content_tag(:span, t('.new_entry'), :class => "icon-plus"), new_person_path, :class => "button small round secondary" %>
+<h1><%=t '.headline' %></h1>
+
+<div class="one buttons">
+	<%= link_to('Kontakt hinzufügen', new_person_path) %>
 </div>
 
-<% cache_if(params[:tag].nil?, cache_key_for_people) do %>
+<div class="live"><input id="livesearch"></div>
 
-<table id="people" data-source="<%= people_url(format: "json") %>">
-	<colgroup>
-		<col width="24%">
-		<col width="24%">
-		<col width="24%">
-		<col width="24%">
-		<col width="2%">
-	</colgroup>
-	<thead>
-		<tr>
-			<th><%= Person.human_attribute_name(:firstname) %></th>
-			<th><%= Person.human_attribute_name(:lastname) %></th>
-			<th><%= Person.human_attribute_name(:email) %></th>
-			<th><%= Person.human_attribute_name(:phone) %></th>
-			<th><%=t 'tag_list' %> </th>
-			<th class="text-center"><%= t 'actions.other' %></th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @people.each do |person| %>
-			<% cache(person) do %>
-				<tr> 
-					<td><%= person.firstname %></td>
-					<td><%= person.lastname %></td>
-					<td><%= person.email %></td>
-					<td><%= person.phone %></td>
-					<td><%= render_tag_list person.cached_tag_list %></td>
-					<td class="center no-linebreak">
-						<%= link_to content_tag(:span, t('people.details'), :class => "icon-info-circled"), person_path(person) %>
-						<%= link_to content_tag(:span, t('people.vcard'), :class => "icon-vcard"), person_path(person, :format => 'vcf')  %>
-					</td>
-				</tr>
+<% cache_if(params[:tag].nil?, cache_key_for_people) do %>
+	<div class="list-table">
+		<div class="thead">
+			<div class="tr">
+				<div class="th w-25">Vorname</div>
+				<div class="th w-25">Nachname</div>
+				<div class="th w-20 hide-medium">Telefon</div>
+				<div class="th w-30 hide-small">eMail</div>
+			</div>
+		</div>
+		<div class="tbody">
+			<% @people.each do |person| %>
+				<% cache(person) do %>
+					<%= link_to(person, class: 'tr') do %>
+						<div class="hide"><%= person.tag_list %></div>
+						<div class="td w-25"><%= person.firstname %></div>
+						<div class="td w-25"><%= person.lastname %></div>
+						<div class="td w-20 hide-medium"><%= person.phone %></div>
+						<div class="td w-35 hide-small"><%= person.email %></div>
+					<% end %>
+				<% end %>
 			<% end %>
-		<% end %>
-	</tbody>
-</table>
 <% end %>
 
 <% content_for :scripts do %>
-	<%= javascript_include_tag 'people' %>
+	<%= javascript_include_tag 'people.js' %>
 <% end %>

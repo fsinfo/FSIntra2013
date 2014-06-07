@@ -1,4 +1,6 @@
-<%= form_for(@person, :html => {:class => "inline"}) do |f| %>
+
+
+<%= form_for(@person, :html => {:class => "panel"}) do |f| %>
 	<% if @person.errors.any? %>
 		<div id="error_explanation">
 		<h2><%=t 'feedback.form_error', :count => @person.errors.count %></h2>
@@ -10,35 +12,55 @@
 		</div>
 	<% end %>
 
-	<%= f.label :firstname %>
-	<%= f.text_field :firstname %>
-	<%= f.label :lastname %>
-	<%= f.text_field :lastname %>
-	<%= f.label :street %>
-	<%= f.text_field :street %>
-	<%= f.label :zip %>
-	<%= f.text_field :zip %>
-	<%= f.label :city %>
-	<%= f.text_field :city %>
-	<%= f.label :email %>
-	<%= f.text_field :email %>
-	<%= f.label :phone %>
-	<%= f.text_field :phone %>
-	<%= f.label :birthday %>
-	<%= f.date_field :birthday, :start_year => 1940, :end_year => Date.today.year %>
-	<%= f.label :misc %>
-	<%= f.text_area :misc %>
-	<%= f.label :tag_list, t('tag_list') %>
-	<%= f.text_field :tag_list, :id => 'tags' %>
-
-	<div class="submit">
-		<%= f.submit :class => 'button' %>
+	<div class="field">
+		<%= f.label :firstname %>
+		<%= f.text_field :firstname %>
 	</div>
+	<div class="field">
+		<%= f.label :lastname %>
+		<%= f.text_field :lastname %>
+	</div>
+	<div class="field">
+		<%= f.label :street %>
+		<%= f.text_field :street %>
+	</div>
+	<div class="field">
+		<%= f.label :zip %>
+		<%= f.text_field :zip %>
+	</div>
+	<div class="field">
+		<%= f.label :city %>
+		<%= f.text_field :city %>
+	</div>
+	<div class="field">
+		<%= f.label :email %>
+		<%= f.text_field :email %>
+	</div>
+	<div class="field">
+		<%= f.label :phone %>
+		<%= f.text_field :phone %>
+	</div>
+	<div class="field">
+		<%= f.label :birthday %>
+		<%= f.date_field :birthday, :start_year => 1940, :end_year => Date.today.year %>
+	</div>
+	<div class="field">
+		<%= f.label :misc %>
+		<%= f.text_area :misc %>
+	</div>
+	<div class="field">
+		<%= f.label :tag_list, t('tag_list') %>
+		<div class="nested">
+			<%= f.text_field :tag_list, :id => '__tags__' %>
+		</div>
+	</div>
+	<%= f.submit :class => 'button' %>
 <% end %>
 
 <% content_for :scripts do %>
-	<%= javascript_include_tag 'people' %>
+	<script type="text/javascript">
+		$('#__tags__').selectnice("tags", {
+			tags: <%= raw Person.tag_counts.pluck(:name).to_a %>
+		});
+	</script>
 <% end %>
-<script defer="defer">
-	var availableTags = [<%= raw ActsAsTaggableOn::Tag.all.map{ |t| "{label: '#{t.name}'}"}.join(', ') %> ];
-</script>
