@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require selectize.min
-//= require selectnize
+//= require selectnice
 //= require redactor_de
 //= require redactor.min
 //= require minutes/minutes
