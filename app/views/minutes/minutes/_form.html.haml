@@ -1,4 +1,4 @@
-= form_for @minutes_minute, :html => { :'data-type' => 'json' } do |f|
+= form_for @minutes_minute, :html => { class: 'panel', :'data-type' => 'json' } do |f|
   - if @minutes_minute.errors.any?
     #error_explanation
       %h2= "#{pluralize(@minutes_minute.errors.count, "error")} prohibited this minutes_minute from being saved:"
@@ -6,88 +6,46 @@
         - @minutes_minute.errors.full_messages.each do |msg|
           %li= msg
 
-  .row.collapse
-    = f.label :date, :class => "fs-prefix"
-    = f.date_field :date, :class => "large-4 columns"
-  .row.collapse.select2-field
-    = f.label :keeper_of_the_minutes_id, Minutes::Minute.human_attribute_name(:keeper_of_the_minutes), :class => "fs-prefix"
-    - if can? :manage, Minutes::Minute
-      = f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
-    - else
-      .fixed_field= @minutes_minute.keeper_of_the_minutes || current_user.to_s
-  .row.collapse.select2-field
-    = f.label :chairperson_id, Minutes::Minute.human_attribute_name(:chairperson), :class => "fs-prefix"
-    = f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
-  .row.collapse
-    = f.label :has_quorum, :class => "fs-prefix"
-    = f.check_box :has_quorum
-  .row.collapse
-    = f.label :attendees, :class => "fs-prefix"
-    .large-4.columns
-      %strong FSR Mitglieder:
-      %ul
-      - User.fsr.each do |u|
-        %li
-          = label_tag do
-            = check_box_tag 'minutes_minute[fsr_attendant_ids][]', u.id, @minutes_minute.fsr_attendant_ids.include?(u.id)
-            = u.displayed_name
+  .field
+    = f.label :date
+    = f.date_field :date
+  .field
+    = f.label :keeper_of_the_minutes_id, Minutes::Minute.human_attribute_name(:keeper_of_the_minutes)
+    .nested
+      - if can? :manage, Minutes::Minute
+        = f.select :keeper_of_the_minutes_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
+      - else
+        .fixed_field= @minutes_minute.keeper_of_the_minutes || current_user.to_s
+  .field
+    = f.label :chairperson_id, Minutes::Minute.human_attribute_name(:chairperson)
+    .nested
+      = f.select :chairperson_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px' }
+  .field
+    = f.label :has_quorum
+    .slider
+      %label{'for' => 'minutes_minute_has_quorum'}
+        = f.check_box :has_quorum
+        %a
+        %div
+          Nein
+        %div
+          Ja
+  .field
+    = f.label :attendees
+    .nested
+      - the_options = options_for_select(User.fsr.collect {|fsr_member| [fsr_member.displayed_name, fsr_member.id] }, @minutes_minute.fsr_attendant_ids)
+      = select_tag("minutes_minute[fsr_attendant_ids][]", the_options, {:multiple=>true, :size=>5})
+  .field
+    = f.label :guests
+    .nested
+      = f.text_field :guests
 
-      %strong Gäste:
-      = f.text_area :guests #, :value => @minutes_minute.guest_attendants.map{|x| x.displayed_name }.join(', ')
-  .actions
-    = f.submit
+  = f.submit 'Änderungen übernehmen', :class => 'button'
+
 
 - content_for :scripts do
   :javascript
-    // applicable are all guests except fsr member
-    var guest_autocomplete = ["#{Person.not_fsr.map{|x| x.displayed_name }.join('", "') }"]
-    function split( val ) {
-      return val.split( /,\s*/ );
-    }
-    function extractLast( term ) {
-      return split( term ).pop();
-    }
-
-    // Remove these guests from autocomplete that are
-    // allready in
-    var guest_str = $("textarea#minutes_minute_guests").val();
-    var guest_arr = guest_str.split( /,\s*/ );
-    for(i in guest_arr) {
-      var the_index = guest_autocomplete.indexOf(guest_arr[i]);
-      guest_autocomplete.splice(the_index, 1);
-    }
-
-    $("textarea#minutes_minute_guests").bind( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).data( "ui-autocomplete" ).menu.active ) {
-          event.preventDefault();
-        }
-      }).autocomplete({
-        minLength: 0,
-        source: function( request, response ) {
-          // delegate back to autocomplete, but extract the last term
-          response( $.ui.autocomplete.filter(
-            guest_autocomplete, extractLast( request.term ) ) );
-        },
-        focus: function() {
-          // prevent value inserted on focus
-          return false;
-        },
-        select: function( event, ui ) {
-          var terms = split( this.value );
-          // remove the current input
-          terms.pop();
-          // add the selected item
-          terms.push( ui.item.value );
-          // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          this.value = terms.join( ", " );
-
-          // Remove already present guests.
-          var the_index = guest_autocomplete.indexOf(ui.item.value)
-          guest_autocomplete.splice(the_index, 1)
-          
-          return false;
-        }
-      });
-    $("#new_minute_tour").joyride()
+    $("#minutes_minute_keeper_of_the_minutes_id").selectnice("single", {}, {create: true});
+    $("#minutes_minute_chairperson_id").selectnice("single");
+    $("#minutes_minute_fsr_attendant_ids_").selectnice("multiple");
+    $("#minutes_minute_guests").selectnice("tags");

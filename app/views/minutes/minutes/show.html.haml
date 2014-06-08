@@ -1,24 +1,14 @@
 %h1 #{t @minutes_minute.class.model_name.human} vom #{l @minutes_minute.date}
 
-.two.buttons
-  = link_to 'Entwurf verschicken', '#', class: 'switch', 'gumby-trigger' => '#draftcon'
-  = link_to 'Veröffentlichen', '#', class: 'switch', 'gumby-trigger' => '#publishcon'
-
-
+- if can? :send_draft, @minutes_minute
+  .two.buttons
+    = link_to 'Entwurf verschicken', '#', class: 'switch', 'gumby-trigger' => '#draftcon'
+    = link_to 'Veröffentlichen', '#', class: 'switch', 'gumby-trigger' => '#publishcon'
 
 = render partial: 'meta'
 = render partial: 'toplist'
 
 = render partial: 'approvements'
 = render partial: "minutes/items/item", collection: @minutes_minute.items, as: :item
-
-%hr
-
-- if can? :send_draft, @minutes_minute
-  %p
-    = link_to small_button('Entwurf verschicken'), send_draft_minutes_minute_path(@minutes_minute), method: :put
-    = link_to small_button('Veröffentlichen'), publish_minutes_minute_path(@minutes_minute), method: :put
-    = render partial: "delete_button"
-%p= link_to 'Zurück zur Protokollübersicht', minutes_minutes_path
 
 = render partial: 'modals'

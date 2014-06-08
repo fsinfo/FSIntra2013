@@ -1,6 +1,6 @@
 -# next line is for lulz reasons
 -the_path = on_creating? ? minutes_minute_items_path(@minutes_minute) : minutes_minute_item_path(minute_id: @minutes_minute.id, id: @minutes_item.id)
-= form_for @minutes_item, url: the_path do |f|
+= form_for @minutes_item, url: the_path, :html => { class: 'panel'} do |f|
   - if @minutes_item.errors.any?
     #error_explanation
       %h2= "#{pluralize(@minutes_item.errors.count, "error")} prohibited this minutes_item from being saved:"
@@ -10,13 +10,22 @@
   .field
     = f.label :title
     = f.text_field :title
-  .field.redactor-field
-    = f.label :content
-    = f.text_area :content
   - if on_creating?
     .field
-      %p
-        Neuen Tagesordnung nach folgendem einordnen
+      = label_tag 'position_after'
+      .nested
         = select_tag :after_top, options_from_collection_for_select(@minutes_minute.items - [@minutes_item], "order", "title"), include_blank: false
-  .actions
-    = f.submit
+
+ 
+  = f.text_area :content, class: 'redactor'
+  = f.submit 'Änderung übernehmen', :class => 'button'
+
+- content_for :scripts do
+  :javascript
+    $("#after_top").selectnice("single");
+    $('.redactor').redactor({
+      lang: 'de',
+      autoresize: false,
+      minHeight: 400,
+      buttons: ['bold', 'italic', 'underline', '|', 'unorderedlist', 'orderedlist', 'outdent', 'indent'],
+    });

@@ -46,6 +46,13 @@ class Minutes::Minute < ActiveRecord::Base
   scope :released, -> { not_approved.where("released_date IS NOT NULL") }
   scope :accepted, -> { where("id IN (SELECT approved_minute_id FROM minutes_approvements)") }
 
+  # By default every minute has as first item 'agenda aggreement'
+  # and as second item 'approvement of previous minutes'
+  # This methods enriches the stored items by those two.
+  def item_titles
+    ['Festlegung der Tagesordnung', 'Genehmigung von Protokollen'] + items.pluck(:title)
+  end
+
   validates_presence_of :chairperson_id
   validates_presence_of :keeper_of_the_minutes_id
   validates_presence_of :date

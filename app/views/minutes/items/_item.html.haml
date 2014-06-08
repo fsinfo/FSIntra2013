@@ -1,6 +1,7 @@
+%a{'name' => "top#{item.full_order}"}
 .minute-top.with-utils{'id' => "top#{item}"}
   %h2
-    = "TOP #{item.order}:"
+    = "TOP #{item.full_order}:"
     = item.title
   .content
     = item.content.html_safe

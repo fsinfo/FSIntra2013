@@ -43,6 +43,13 @@ class Minutes::Item < ActiveRecord::Base
     end
   end
 
+  # By default every minute has as first item 'agenda aggreement'
+  # and as second item 'approvement of previous minutes'
+  # This methods enriches the stored items
+  def full_order
+    order + 2
+  end
+
   private 
 
   def orders_must_be_sequence
