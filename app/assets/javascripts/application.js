@@ -19,3 +19,4 @@
 //= require selectnice
 //= require redactor_de
 //= require redactor.min
+//= require gumby.min
