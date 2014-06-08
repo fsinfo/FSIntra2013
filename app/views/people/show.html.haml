@@ -1,0 +1,87 @@
+- if (can? :edit, @person) and (can? :delete, @person)
+	.three.buttons
+		= link_to t('actions.edit'), edit_person_path(@person)
+		= link_to t('actions.delete'), '#', :class => "switch", "gumby-trigger" => "#confirm-deletion"
+		= link_to t('people.vcard'), person_path(@person, :format => 'vcf')
+- if (can? :edit, @person) and not (can? :delete, @person)
+	.two.buttons
+		= link_to t('actions.edit'), edit_person_path(@person)
+		= link_to t('people.vcard'), person_path(@person, :format => 'vcf')
+
+
+- if notice
+	%p#notice
+		= notice
+
+%span.last-edited
+	= t '.last_edited'
+	= l @person.updated_at.to_date, format: :default
+
+
+.detail-table
+	.entry
+		.key
+			= t Person.human_attribute_name :firstname
+		.value
+			= @person.firstname
+	.entry
+		.key
+			= t Person.human_attribute_name :lastname
+		.value
+			= @person.lastname
+	.entry
+		.key
+			= t Person.human_attribute_name :email
+		.value
+			= @person.email
+	.entry
+		.key
+			= t Person.human_attribute_name :phone
+		.value
+			= @person.phone
+	.entry
+		.key
+			= t Person.human_attribute_name :birthday
+		.value
+			= l(@person.birthday, format: :without_year) unless @person.birthday.nil?
+	.entry
+		.key
+			= t Person.human_attribute_name :address
+		.value
+			= @person.street
+			%br
+			= @person.zip
+			= @person.city
+	.entry
+		.key
+			= t Person.human_attribute_name :misc
+		.value
+			= simple_format @person.misc
+	.entry
+		.key
+			= t 'people.qrcode'
+		.value
+			.qr.toggle
+				= tag 'embed', :src => person_path(@person, :format => 'svg')
+				%span
+					Click to enlarge
+	.entry
+		.key
+			= t 'tag_list'
+		.value
+			= render_tag_list @person.cached_tag_list
+
+
+.modal#confirm-deletion
+	.content
+		<a class="close switch" gumby-trigger="|#confirm-deletion"><i class="icon-cancel" /></i></a>
+		
+		.row
+			.ten.columns.centered.text-center
+				%h2 Sicher?
+				%p
+					Möchtest du
+					%b
+						= @person
+					wirklich unwiderruflich löschen?
+				= link_to t('actions.delete'),  person_path(@person), :method => :delete, :class => "switch", "gumby-trigger" => "|#confirm-deletion"
