@@ -1,7 +1,7 @@
 -# next line is for lulz reasons
 -the_path = on_creating? ? minutes_minute_item_motions_path(@minutes_minute, @minutes_item) : minutes_minute_item_motion_path(@minutes_minute, @minutes_item, @minutes_motion)
 
-= form_for @minutes_motion, url: the_path do |f|
+= form_for @minutes_motion, url: the_path, :html => { class: 'panel'} do |f|
   - if @minutes_motion.errors.any?
     #error_explanation
       %h3= "#{@minutes_motion.errors.count} Fehler sind aufgetreten:"
@@ -9,34 +9,33 @@
         - @minutes_motion.errors.full_messages.each do |msg|
           %li= msg
 
-  .row.collapse.select2-field
-    = f.label :mover, :class => "fs-prefix"
-    =# f.text_field :mover
-    = f.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }, { :style => 'width: 400px'}
-  .row.collapse
-    = f.label :rationale, :class => "fs-prefix"
-    = f.text_area :rationale, :class => "large-4 columns"
-  .row.collapse
-    = f.label :amount, :class => "fs-prefix"
-    %strong Angabe in Cent!
-    = f.text_field :amount, :class => "large-4 columns"
-  .row.collapse
-    .row
-      .columns.small-4
-        = f.label :pro , :class => "fs-motion-prefix"
-        = f.number_field :pro, :class => "fs-motion"
-      .columns.small-4
-        = f.label :con , :class => "fs-motion-prefix"
-        = f.number_field :con, :class => "fs-motion"
-      .columns.small-4
-        = f.label :abs , :class => "fs-motion-prefix"
-        = f.number_field :abs, :class => "fs-motion"
-    .row
-      .columns.small-6
-        = f.label :apparent_majority, :class => "fs-motion-prefix"
-        = f.check_box :apparent_majority, :class => "fs-motion-checkbox"
-      .columns.small-6
-        = f.label :approved, :class => "fs-motion-prefix"
-        = f.check_box :approved, :class => "fs-motion-checkbox"
-  .actions
-    = f.submit
+  .field
+    = f.label :mover
+    .nested
+      = f.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }
+  .field
+    = f.label :amount
+    = f.text_field :amount, 'placeholder' => 'nur für Finanzanträge'
+  .field
+    = f.label :rationale
+    = f.text_area :rationale
+  .field
+    = f.label :approved
+    .slider
+      %label{'for' => 'minutes_motion_approved'}
+        = f.check_box :approved
+        %a
+        %div
+          Nein
+        %div
+          Ja    
+  .triple.field
+    = f.label 'Abstrimmung'
+    = f.number_field :pro, 'placeholder' => 'dafür'
+    = f.number_field :con, 'placeholder' => 'dagegen'
+    = f.number_field :abs, 'placeholder' => 'enthalten'
+  = f.submit :class => 'button'
+
+- content_for :scripts do
+  :javascript
+    $("#minutes_motion_mover_id").selectnice("single", {}, {create: true});

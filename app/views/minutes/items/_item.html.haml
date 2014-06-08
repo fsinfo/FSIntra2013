@@ -6,6 +6,8 @@
   .content
     = item.content.html_safe
 
+  = render partial: "minutes/motions/motion", collection: @minutes_minute.items, as: :item
+
   - # {% include 'minutes/view/request.html' %}
   - # {% include 'minutes/view/request.html' %}
 
