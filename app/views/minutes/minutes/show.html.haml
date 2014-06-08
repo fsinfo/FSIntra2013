@@ -1,37 +1,15 @@
-%p= link_to 'Zurück zur Protokollübersicht', minutes_minutes_path
+%h1 #{t @minutes_minute.class.model_name.human} vom #{l @minutes_minute.date}
 
-%section
-  %h1 #{t @minutes_minute.class.model_name.human} vom #{l @minutes_minute.date}
+.two.buttons
+  = link_to 'Entwurf verschicken', '#', class: 'switch', 'gumby-trigger' => '#draftcon'
+  = link_to 'Veröffentlichen', '#', class: 'switch', 'gumby-trigger' => '#publishcon'
 
-  - if notice
-    %p#notice= notice
-  %dl
-    %dt= Minutes::Minute.human_attribute_name :keeper_of_the_minutes
-    %dd= @minutes_minute.keeper_of_the_minutes
-    %dt= Minutes::Minute.human_attribute_name :chairperson
-    %dd= @minutes_minute.chairperson
-    %dt= Minutes::Minute.human_attribute_name :released_date
-    %dd= ldate @minutes_minute.released_date
-    %dt= Minutes::Minute.human_attribute_name :attendants
-    %dd
-      = @minutes_minute.fsr_attendants.join(", ")
-      &nbsp;
-    %dt= Minutes::Minute.human_attribute_name :guests
-    %dd
-      = @minutes_minute.guests
-      &nbsp;
-    %dt= Minutes::Minute.human_attribute_name :has_quorum
-    %dd= @minutes_minute.has_quorum? ? t('views.yep') : t('views.nope')
 
-  - if can? :update, @minutes_minute
-    %ul.button-group.highlight-section
-      %li
-        = link_to small_button(t('actions.edit')), edit_polymorphic_path(@minutes_minute)
-      %li
-        = link_to small_button(t('actions.new', model: Minutes::Item.model_name.human)),  new_minutes_minute_item_path(@minutes_minute)
+
+= render partial: 'meta'
+= render partial: 'toplist'
 
 = render partial: 'approvements'
-
 = render partial: "minutes/items/item", collection: @minutes_minute.items, as: :item
 
 %hr
@@ -42,3 +20,5 @@
     = link_to small_button('Veröffentlichen'), publish_minutes_minute_path(@minutes_minute), method: :put
     = render partial: "delete_button"
 %p= link_to 'Zurück zur Protokollübersicht', minutes_minutes_path
+
+= render partial: 'modals'

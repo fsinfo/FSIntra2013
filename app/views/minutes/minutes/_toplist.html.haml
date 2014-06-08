@@ -1,0 +1,10 @@
+.minute-toplist.with-utils
+	%h2
+		Tagesordnung
+	%ol
+		- @minutes_minute.items.each do |i|
+			%li
+				%a{'href' => i.order}
+					= i.title
+.utils
+	= link_to t('actions.new', model: Minutes::Item.model_name.human),  new_minutes_minute_item_path(@minutes_minute)

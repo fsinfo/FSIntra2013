@@ -1,0 +1,13 @@
+-# = render partial: '/shared/modal', locals: {id: "fo", headline: "of", text: "ff", link_text="oo"}
+.modal{'id' => "#{id}"}
+	.content
+		%a.close.switch{'gumby-trigger' => "|##{id}"}
+			%i.icon-cancel
+		.row
+			.ten.columns.centered.text-center
+				%h2
+					= headline
+				%p
+					= text
+				%a.button.switch{'href' => '#', 'gumby-trigger' => "|##{id}"}
+					= link_text

@@ -1,19 +1,14 @@
-%hr
-%section
-  %h2= item.title
-  %p= item.content.html_safe
+.minute-top.with-utils{'id' => "top#{item}"}
+  %h2
+    = "TOP #{item.order}:"
+    = item.title
+  .content
+    = item.content.html_safe
 
-  = render partial: "minutes/motions/motion", collection: item.motions, as: :motion, locals: { item: item }
-  
-  - if can? :update, @minutes_minute
-    %ul.button-group.highlight-section
-      %li
-        = link_to small_button('⇧', "Nach oben schieben"), move_minutes_minute_item_path(@minutes_minute, item, dir: 'up'), method: :put
-      %li
-        = link_to small_button(t('actions.edit')), edit_minutes_minute_item_path(@minutes_minute, item)
-      %li
-        = link_to small_button(t('actions.new', model: Minutes::Motion.model_name.human)), new_minutes_minute_item_motion_path(@minutes_minute, item)
-      %li
-        = link_to small_button(t('actions.destroy')), minutes_minute_item_path(@minutes_minute, item), :method => :delete, :data => { :confirm => t('actions.destroy_confirm') }
-      %li
-        = link_to small_button('⇩', "Nach unten schieben"), move_minutes_minute_item_path(@minutes_minute, item, dir: 'down'), method: :put
+  - # {% include 'minutes/view/request.html' %}
+  - # {% include 'minutes/view/request.html' %}
+
+.utils
+  = link_to t('actions.new', model: Minutes::Motion.model_name.human), new_minutes_minute_item_motion_path(@minutes_minute, item)
+  = link_to t('actions.destroy'), '#', 'gumby-trigger' => '#topdel'
+  = link_to t('actions.edit'), edit_minutes_minute_item_path(@minutes_minute, item)

@@ -1,17 +1,23 @@
-%table
-  %tr
-    %th= t Minutes::Minute.human_attribute_name :date
-    %th= t Minutes::Minute.human_attribute_name :keeper_of_the_minutes
-    %th= t Minutes::Minute.human_attribute_name :chairperson
-    %th Veröffentlicht am
-    %th Beschlussfähig
-
+.list-table
+  .thead
+    .tr
+      .th.w-25.left
+        = t Minutes::Minute.human_attribute_name :date
+      .th.w-25.center
+        = t Minutes::Minute.human_attribute_name :keeper_of_the_minutes
+      .th.w-25.center
+        = t Minutes::Minute.human_attribute_name :chairperson
+      .th.w-25.center
+        Entwurf
   - minutes.each do |minutes_minute|
-    %tr
-      %td
-        = link_to ldate(minutes_minute.date), minutes_minute
-        = minutes_minute.type == 'Minutes::PlenumMinute' ? '[VV]' : ''
-      %td= minutes_minute.keeper_of_the_minutes
-      %td= minutes_minute.chairperson
-      %td= ldate minutes_minute.released_date
-      %td= quorum_line minutes_minute
+    .tbody
+      %a.tr{href: minutes_minute_path(minutes_minute)}
+        .td.w-25.left
+          = ldate(minutes_minute.date)
+          = minutes_minute.type == 'Minutes::PlenumMinute' ? '[VV]' : ''
+        .td.w-25.center
+          = minutes_minute.keeper_of_the_minutes
+        .td.w-25.center
+          = minutes_minute.chairperson
+        .td.w-25.center
+          = ldate minutes_minute.released_date

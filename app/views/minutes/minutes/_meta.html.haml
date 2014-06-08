@@ -1,0 +1,46 @@
+.minute-meta.with-utils
+	%h2
+		Meta
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :keeper_of_the_minutes
+		.value
+			= @minutes_minute.keeper_of_the_minutes
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :chairperson
+		.value
+			= @minutes_minute.chairperson
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :released_date
+		.value
+			= ldate @minutes_minute.released_date
+	.entry
+		.name
+			Genehmigt (TODO)
+		.value
+			%span.label.no Nein
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :has_quorum
+		.value
+			- if @minutes_minute.has_quorum?
+				%span.label.yes 
+					= t('views.yep')
+			- else
+				%span.label.no
+					= t('views.nope')
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :attendants
+		.value
+			= @minutes_minute.fsr_attendants.join(", ")
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :guests
+		.value
+			= @minutes_minute.guests
+
+.utils
+	= link_to t('actions.edit'), edit_polymorphic_path(@minutes_minute)
