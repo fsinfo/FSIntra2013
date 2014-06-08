@@ -1,0 +1,19 @@
+#navi
+	%h1
+		= link_to (image_tag 'logo.png', {'gumby-retina' => ''}), root_path
+
+	%a.toggle.btn{'gumby-trigger' => '#navi > ul', 'href' => '#'}
+		%i.icon-menu
+
+	%ul
+		- if signed_in?
+			= menu_link_to 'Protokolle', minutes_minutes_path
+		- else
+			= menu_link_to 'Protokolle', minutes_public_path
+		- if signed_in?
+			= menu_link_to 'Adressbuch', people_path
+			= menu_link_to 'Getränke', beverages_path
+			= menu_link_to 'Profil', person_path(current_user)
+			= menu_link_to 'Logout', logout_path, :method => :delete
+		- else
+			= menu_link_to 'Login', login_path
