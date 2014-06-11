@@ -92,6 +92,7 @@ gem 'wkhtmltopdf-binary'
 # for vcards
 gem 'vpim-rails', :git => 'https://github.com/fraser/vpim-rails'
 gem 'rqrcode-rails3'
+gem 'mini_magick'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

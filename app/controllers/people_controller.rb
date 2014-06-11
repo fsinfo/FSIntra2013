@@ -4,7 +4,7 @@ class PeopleController < ApplicationController
 
   def index
     if params[:tag]
-      @search = Person.tagged_with(params[:tag]).search(params[:q]) 
+      @search = Person.tagged_with(params[:tag]).search(params[:q])
     else
       @search = Person.search(params[:q])
       @search.sorts = 'lastname asc' if @search.sorts.empty?
@@ -13,12 +13,13 @@ class PeopleController < ApplicationController
   end
 
   def show
-    respond_to do |format| 
+    respond_to do |format|
       format.html
-      format.vcf do 
+      format.vcf do
         send_data @person.to_vcard, :filename => "#{@person.id} - #{@person.displayed_name}.vcf"
       end
       format.svg  { render :qrcode => @person.to_vcard, :level => :h, :unit => 1, :offset => 5 }
+      format.png { render qrcode: @person.to_vcard }
     end
   end
 
@@ -49,11 +50,11 @@ class PeopleController < ApplicationController
 
   def destroy
     @person.destroy
-    redirect_to action: 'index', notice: t('feedback.destroyed', model: Person.model_name.human) 
+    redirect_to action: 'index', notice: t('feedback.destroyed', model: Person.model_name.human)
   end
 
   private
-    def person_params 
+    def person_params
       params.require(:person).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc, :tag_list)
     end
 end
