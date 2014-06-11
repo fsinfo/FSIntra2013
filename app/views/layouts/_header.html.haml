@@ -12,7 +12,7 @@
 			= menu_link_to 'Protokolle', minutes_public_path
 		- if signed_in?
 			= menu_link_to 'Adressbuch', people_path
-			= menu_link_to 'Getränke', beverages_path
+			= menu_link_to 'Getränke', tabs_path
 			= menu_link_to 'Profil', person_path(current_user)
 			= menu_link_to 'Logout', logout_path, :method => :delete
 		- else

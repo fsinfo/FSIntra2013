@@ -1,23 +1,22 @@
-= link_to("Mehr details", detail_tab_path(tab))
-%table
-	%colgroup
-		%col{:width => "40%"}
-		%col{:width => "20%"}
-		%col{:width => "20%"}
-		%col{:width => "20%"}
-	%thead 
-		%th Getränk
-		%th.text-center Anzahl
-		%th.text-center Kosten pro Stück
-		%th.text-right Kosten gesamt
-	%tbody
+.list-table
+	.thead
+		.tr
+			.th.w-45.left Produkt
+			.th.w-20.center Anzahl
+			.th.w-20.center Stückpreis
+			.th.w-15.right Summe
+	.tbody
 		- tab.grouped_beverage_tabs.each do |bt|
-			%tr
-				%td= bt[0][0]
-				%td.text-center= bt[1]
-				%td.text-center= number_to_currency bt[0][2]
-				%td.text-right= number_to_currency(bt[0][2] * bt[1])
-		%tr 
-			%th.text-left{:colspan => "3"} Gesamtkosten
-			%th.text-right
-				= number_to_currency tab.total_invoice
+			.tr
+				.td.w-45.left= bt[0][0]
+				.td.w-20.center= bt[1]
+				.td.w-20.center= number_to_currency bt[0][2]
+				.td.w-15.right= number_to_currency(bt[0][2] * bt[1])
+		.tr.footer
+			.td.w-45.left
+			.td.w-20.center
+			.td.w-20.center
+				- if @tab.is_paid?
+					%span.label.payed{title: "Von dir als bezahlt markiert - muss noch vom Getränkereferent bestätigt werden."}
+						bezahlt
+			.td.w-15.right= number_to_currency tab.total_invoice

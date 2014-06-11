@@ -12,3 +12,16 @@ body {
 		@include row;
 	}
 }
+
+html.no-js {
+	background: #da34e2;
+	font-size: 24pt;
+	text-align: center;
+	font-family: "Comic Sans", "Open Sans", sans;
+	body {
+		display: none;
+	}
+	&::before {
+		content: 'Please activate JavaScript'
+	}
+}

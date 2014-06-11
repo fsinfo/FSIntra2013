@@ -60,7 +60,11 @@
 <% content_for :scripts do %>
 	<script type="text/javascript">
 		$('#user_tag_list').selectnice("tags", {
-			tags: <%= raw Person.tag_counts.pluck(:name).to_a %>
+			tags: <%= raw Person.tag_counts.pluck(:name) %>
+		});
+		// FIXME: the same form for two models => sucks
+		$('#person_tag_list').selectnice("tags", {
+			tags: <%= raw Person.tag_counts.pluck(:name) %>
 		});
 	</script>
 <% end %>

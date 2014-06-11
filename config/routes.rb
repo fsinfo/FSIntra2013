@@ -23,13 +23,14 @@ Fsintra::Application.routes.draw do
     get 'public/:id' => 'minutes#public_show', as: 'public_minute'
   end
 
-  resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users' 
+  resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users'
   resources :personen, :as => 'people', :controller => 'people' do
     get 'tags/:tag', to: 'people#index', as: :tag, on: :collection
   end
   resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
     get 'offen'  => 'tabs#unpaid', :on => :collection, :as => 'unpaid'
     get 'detail' => 'tabs#detail', :on => :member
+    get 'laufend' => 'tabs#running', :on => :collection, :as => 'running'
     # get 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
     put 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
     # FIXME put or post? one of them must be wrong (as rake says...)

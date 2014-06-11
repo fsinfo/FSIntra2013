@@ -25,14 +25,14 @@
 			@include panel(0);
 			&:last-child { margin-bottom: 0; }
 		}
-		a {
+		a, button {
 			@include button;
 			@include column(12/$num);
 			@include respond(all-phones) {
 				margin-top: $small-spacing;
 			}
 		}
-	}	
+	}
 }
 
 @for $i from 1 through 4 {

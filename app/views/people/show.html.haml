@@ -1,3 +1,5 @@
+%h1= @person.displayed_name
+
 - if (can? :edit, @person) and (can? :delete, @person)
 	.three.buttons
 		= link_to t('actions.edit'), edit_person_path(@person)
@@ -75,7 +77,7 @@
 .modal#confirm-deletion
 	.content
 		<a class="close switch" gumby-trigger="|#confirm-deletion"><i class="icon-cancel" /></i></a>
-		
+
 		.row
 			.ten.columns.centered.text-center
 				%h2 Sicher?

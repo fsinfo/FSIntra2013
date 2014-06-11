@@ -1,33 +1,27 @@
-%div.actions
-	%h1 Alle offenen Rechnungen
+%h1 Alle offenen Rechnungen
 
-%div#ajax-feedback
+.live
+	%input#livesearch
 
-%table
-	%colgroup
-		%col{:width => "30%"}
-		%col{:width => "43%"}
-		%col{:width => "25%"}
-		%col{:width => "2%"}
-	%thead
-		%th Datum
-		%th Benutzer
-		%th.text-center Betrag
-		%th.text-center Aktion
-	%tbody
+.list-table
+	.thead
+		.tr
+			.th.w-50 Name
+			.th.w-20.right
+			.th.w-20.center Datum
+			.th.w-10= number_to_currency @sum
+	.tbody
 		- @tabs.each do |tab|
-			%tr{:id => "tab_row_#{tab.id}", class: ('marked_as_paid' if tab.is_marked_as_paid?)}
-				%td
-					= link_to(l(tab.created_at, format: :date_only), tab_path(tab))
-				%td
-					= tab.user.displayed_name
-				%td.text-center
-					= number_to_currency tab.total_invoice
-				%td.text-center.no-linebreak
-					= button_to('Hat bezahlt', is_paid_tab_path(tab), :method => :put, :remote => true, :form_class => 'tab_paid', :class => 'tab_paid', form: {data:{"id" => tab.id}})
-		%tr
-			%td Gesamt
-			%td
-			%td.text-center= number_to_currency @sum
-- content_for :scripts do
-	= javascript_include_tag 'tabs'
+			= link_to(tab_path(tab), class: 'tr') do
+				.td.w-50= tab.user.displayed_name
+				.td.w-20.right
+					%span.label.payed{title: 'Als bezahlt markiert.'} bezahlt
+				.td.w-20.center= l(tab.created_at, format: :date_only)
+				.td.w-10= number_to_currency tab.total_invoice
+
+-content_for :scripts do
+	:javascript
+		$('#livesearch').selectnice("live", {
+			tags: #{@users},
+			objs: ".list-table .tbody .tr"
+		});

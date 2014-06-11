@@ -1,5 +1,7 @@
 <% if tab.nil? or tab.total_invoice == 0.0 %>
-  <%=t '.nothing_on_tab' %>
+  <div class="list-table">
+    <%=t '.nothing_on_tab' %>
+  </div>
 <% else %>
   <%= render tab %>
 <% end %>

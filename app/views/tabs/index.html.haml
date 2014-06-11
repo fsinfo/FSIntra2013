@@ -1,12 +1,26 @@
-%div.actions
-	%h1= t '.headline'
+%h1= t '.headline'
 
-%h4= t '.running_tab' 
-= render 'running_tab', :tab => @running_tab
-%h4= t '.unpaid_tabs'
-= render 'tabs', :tabs => @unpaid_tabs
-%h4= t '.paid_tabs'
-= render 'tabs', :tabs => @paid_tabs
+- if can? :manage, Beverage
+	.list-table-head
+		%h2 Admin
+	.panel
+		.three.nested.buttons
+			=link_to "Getränkeliste", beverages_path
+			=link_to "offene Rechnungen", unpaid_tabs_path
+			=link_to "laufende Rechnungen", running_tabs_path
+		.three.nested.buttons
+			=link_to "Preisliste", tally_sheet_print_price_list_path(format: :pdf)
+			=link_to "Benutzerliste", tally_sheet_print_users_path(format: :pdf)
+			=link_to "Produktliste", tally_sheet_print_items_path(format: :pdf)
 
--content_for :scripts do 
-	= javascript_include_tag 'tabs'
+.list-table-head
+	%h2= t '.running_tab'
+= render 'running_tab', tab: @running_tab
+
+.list-table-head
+	%h2= t '.unpaid_tabs'
+= render 'tabs', tabs: @unpaid_tabs
+
+.list-table-head
+	%h2= t '.paid_tabs'
+= render 'tabs', tabs: @paid_tabs

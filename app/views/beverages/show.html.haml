@@ -1,0 +1,43 @@
+%h1=@beverage.name
+
+.two.buttons
+	=link_to(t('actions.edit'), edit_beverage_path(@beverage))
+	%a.switch{:'gumby-trigger' => '#confirm-deletion'}
+		=t('actions.destroy')
+
+.detail-table
+	.entry
+		.key=t Beverage.human_attribute_name :name
+		.value= @beverage.name
+	.entry
+		.key=t Beverage.human_attribute_name :description
+		.value= @beverage.description
+	.entry
+		.key=t Beverage.human_attribute_name :price
+		.value= number_to_currency(@beverage.price)
+	.entry
+		.key=t Beverage.human_attribute_name :external_price
+		.value= number_to_currency(@beverage.external_price)
+	.entry
+		.key=t Beverage.human_attribute_name :capacity
+		.value= number_to_human(@beverage.capacity, :units => 'beverages.capacity')
+	.entry
+		.key= t 'beverages.index.ppl'
+		.value= number_to_currency(@beverage.price/@beverage.capacity)
+	.entry
+		.key=t Beverage.human_attribute_name :available
+		.value= @beverage.available
+	.entry
+		.key=t Beverage.human_attribute_name :image
+		.value=image_tag  @beverage.image.url(:large)
+
+.modal#confirm-deletion
+	.content
+		%a.close.switch{'gumby-trigger' => '|#confirm-deletion'}
+			%i.icon-cancel
+		.row
+			.ten.columns.centered.text-center
+				%h2 Sicher?
+				%p Möchtest du <b>#{@beverage.name}</b> wirklich unwiderruflich löschen?
+				%p.button
+					=link_to(t('.destroy'), beverage_path(@beverage), method: :delete)

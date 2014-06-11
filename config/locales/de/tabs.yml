@@ -9,7 +9,7 @@ de:
     running_tab:
       nothing_on_tab: Noch nichts auf der Rechnung
     tabs:
-      no_tabs: Keine 
+      no_tabs: Keine
       total: Gesamt
       amount: Betrag
     pay:
@@ -23,7 +23,11 @@ de:
       headline: "Rechnung vom %{date}"
       is_paid: "Ist bezahlt"
       mark_as_paid: Als bezahlt markieren
-    edit: 
+    detail:
+      headline: "Rechnung vom %{date}"
+      is_paid: "Ist bezahlt"
+      mark_as_paid: Als bezahlt markieren
+    edit:
       headline: "Rechnung bearbeiten"
     form:
       quantity: Anzahl

@@ -1,0 +1,32 @@
+=form_for @beverage, html: {class: 'panel'} do |f|
+	.field
+		= f.label :name
+		= f.text_field :name
+	.field
+		= f.label :description
+		= f.text_area :description
+	.field
+		= f.label :capacity
+		= f.text_field :capacity
+	.field
+		= f.label :price
+		= f.text_field :price
+	.field
+		= f.label :external_price
+		= f.text_field :external_price
+	.field
+		= f.label :available
+		.slider
+			= f.label :available do
+				= f.check_box :available
+				%a
+				%div Nein
+				%div Ja
+	.field
+		= f.label :image
+		-if @beverage.image_file_name?
+			= @beverage.image_file_name
+		.nested
+			= f.file_field :image, :class => "upload"
+
+	= f.submit class: 'button'

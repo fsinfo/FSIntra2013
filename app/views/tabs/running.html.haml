@@ -1,0 +1,12 @@
+%h1 Alle laufenden Rechnungen
+.live
+  %input#livesearch
+
+= render 'tabs', tabs: @tabs
+
+-content_for :scripts do
+  :javascript
+    $('#livesearch').selectnice("live", {
+      tags: #{@users},
+      objs: ".list-table .tbody .tr"
+    });

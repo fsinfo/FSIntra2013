@@ -1,15 +1,31 @@
-%div.actions
-	%h1
-		=t 'tabs.show.headline', date: l(@tab.created_at, format: :date_only)
-	= link_to content_tag(:span, ' ' + t('actions.back'), :class=> "icon-left-fat"), tabs_path, :class => "button small round secondary"
-	- if can? :edit, @tab 
-		= link_to content_tag(:span, ' ' + t('actions.edit'), :class=> "icon-pencil"), edit_tab_path(@tab), :class => "button small round secondary"
-	- unless @tab.is_running?
-		- if @tab.is_paid?
-			.button.small.round.secondary.success=t('tabs.show.is_paid')
-		- elsif !@tab.is_marked_as_paid?
-			= link_to t('tabs.show.mark_as_paid'), mark_as_paid_tab_path(@tab), id: 'mark_tab_as_paid', :class=> 'button small round secondary', :remote => true, :method => :put
-		- else
-			= render('marked_as_paid')
+%h1= t '.headline', date: l(@tab.created_at, format: :date_only)
 
-= render 'detailed_tab', tab: @tab
+- unless @tab.is_paid?
+	.one.buttons
+		= link_to t('.mark_as_paid'), mark_as_paid_tab_path(@tab), method: :put, class: 'button'
+
+.list-table
+	.thead
+		.tr
+			.th.w-25.left Produkt
+			.th.w-20.center Datum
+			.th.w-20.center Anzahl
+			.th.w-20.center Stückpreis
+			.th.w-15.right Summe
+	.tbody
+		- @tab.beverage_tabs.each do |bt|
+			.tr
+				.td.w-25.left= bt.name
+				.td.w-20.center= bt.count
+				.td.w-20.center= number_to_currency bt.price
+				.td.w-20.center= l bt.created_at, format: :short
+				.td.w-15.right= number_to_currency (bt.price * bt.count)
+		.tr.footer
+			.td.w-25.left
+			.td.w-20.center
+			.td.w-20.center
+			.td.w-20.center
+				- if @tab.is_paid?
+					%span.label.payed{title: "Von dir als bezahlt markiert - muss noch vom Getränkereferent bestätigt werden."}
+						bezahlt
+			.td.w-15.right= number_to_currency @tab.total_invoice

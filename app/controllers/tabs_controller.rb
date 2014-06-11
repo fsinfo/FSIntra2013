@@ -3,9 +3,9 @@ class TabsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @running_tab = current_user.tabs.running.includes(:beverage_tabs).first
-    @unpaid_tabs = current_user.tabs.unpaid.includes(:beverage_tabs)
-    @paid_tabs = current_user.tabs.paid.includes(:beverage_tabs)
+    @running_tab = current_user.tabs.running.first
+    @unpaid_tabs = current_user.tabs.unpaid
+    @paid_tabs = current_user.tabs.paid
   end
 
   def show
@@ -56,8 +56,14 @@ class TabsController < ApplicationController
 
   def unpaid
     @tabs = Tab.unpaid.includes(:user, :beverage_tabs).order("people.lastname")
+		@users = User.includes(:tabs).where(tabs: {status: Tab::STATUS_UNPAID}).distinct.map{|u| u.to_s} + ['bezahlt']
 		@sum = @tabs.inject(0.0) {|sum, tab| sum += tab.total_invoice}
   end
+
+	def running
+		@tabs = Tab.running
+		@users = User.includes(:tabs).where(tabs: {status: Tab::STATUS_UNPAID}).distinct.map{|u| u.to_s}
+	end
 
   private
     def tab_params
