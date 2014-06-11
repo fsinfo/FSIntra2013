@@ -49,9 +49,9 @@
 		<%= f.text_area :misc %>
 	</div>
 	<div class="field">
-		<%= f.label :tag_list, t('tag_list') %>
+		<%= f.label :tag_list %>
 		<div class="nested">
-			<%= f.text_field :tag_list, :id => '__tags__' %>
+			<%= f.text_field :tag_list, value: @person.tag_list.join(",") %>
 		</div>
 	</div>
 	<%= f.submit :class => 'button' %>
@@ -59,7 +59,7 @@
 
 <% content_for :scripts do %>
 	<script type="text/javascript">
-		$('#__tags__').selectnice("tags", {
+		$('#user_tag_list').selectnice("tags", {
 			tags: <%= raw Person.tag_counts.pluck(:name).to_a %>
 		});
 	</script>
