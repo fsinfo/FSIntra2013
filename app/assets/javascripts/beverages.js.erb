@@ -1,0 +1,6 @@
+$(function() {
+  $('#livesearch').selectnice("live", {
+    tags: <%= Beverage.pluck(:name) %>,
+    objs: ".list-table .tbody .tr"
+  });
+});

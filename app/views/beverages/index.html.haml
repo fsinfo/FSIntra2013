@@ -1,51 +1,37 @@
 %div{:class => 'actions'}
 	%h1=t '.headline'
-	= link_to content_tag(:span, ' ' + t('.new'), :class=> "icon-plus"),new_beverage_path, :class => "button small round secondary"
+	-# = link_to content_tag(:span, ' ' + t('.new'), :class=> "icon-plus"), new_beverage_path, :class => "button small round secondary"
+	.one.buttons
+		= link_to t('.new'), new_beverage_path
+
+	.live
+		%input#livesearch
 
 - if notice
 	%p#notice= notice
 
-%table#beverages
-	%colgroup
-		%col{:width => "7%"}
-		%col{:width => "26%"}
-		%col{:width => "24%"}
-		%col{:width => "12%"}
-		%col{:width => "12%"}
-		%col{:width => "5%"}
-		%col{:width => "12%"}
-		%col{:width => "1%"}
-	%thead
-		%th= Beverage.human_attribute_name(:image)
-		%th= Beverage.human_attribute_name(:name)
-		%th= Beverage.human_attribute_name(:description)
-		%th.text-center= Beverage.human_attribute_name(:price)
-		%th.text-center= Beverage.human_attribute_name(:external_price)
-		%th.text-center= Beverage.human_attribute_name(:capacity)
-		%th.text-center= t('.ppl')
-		%th.text-center= Beverage.human_attribute_name(:available)
-		%th.text-center= t('actions', count: 2)
-	%tbody
+.list-table
+	.thead
+		.tr
+			.th.w-10.left= Beverage.human_attribute_name(:image)
+			.th.w-20.center= Beverage.human_attribute_name(:name)
+			.th.w-10.center= Beverage.human_attribute_name(:capacity)
+			.th.w-20.center= Beverage.human_attribute_name(:available)
+			.th.w-20.right= Beverage.human_attribute_name(:price)
+			.th.w-20.right= Beverage.human_attribute_name(:external_price)
+	.tbody
 		- @beverages.each do |beverage|
-			%tr
-				%td.text-center=image_tag  beverage.image.url(:small)
-				%th.text-left= beverage.name
-				%td= beverage.description
-				%td.text-center= number_to_currency(beverage.price)
-				%td.text-center= number_to_currency(beverage.external_price)
-				%td.text-center= number_to_human(beverage.capacity, units: 'beverages.capacity')
-				%td= number_to_currency(beverage.price/beverage.capacity)
-				%td.text-center
+			=link_to(edit_beverage_path(beverage), class: 'tr') do
+				.td.w-10.center=image_tag  beverage.image.url(:small)
+				.td.w-20.left= beverage.name
+				.td.w-10.center= number_to_human(beverage.capacity, units: 'beverages.capacity')
+				.td.w-20.center
 					- if beverage.available
-						%span.icon-ok-circled.no-linebreak.text-success &nbsp;
-						=t 'views.yep'
+						%i.icon-check
 					- else
-						%span.icon-cancel-circled.no-linebreak.text-alert &nbsp;
-						=t 'views.nope'
-				%td.text-center.no-linebreak
-					= link_to(content_tag(:span, t('actions.edit'), class: "icon-pencil"), edit_beverage_path(beverage))
-					= link_to(content_tag(:span, t('actions.destroy'), class: "icon-cancel"), beverage_path(beverage), method: :delete, data: { confirm: t('actions.destroy_confirm') })
+						%i.icon-cancel
+				.td.w-20.right= number_to_currency(beverage.price)
+				.td.w-20.right= number_to_currency(beverage.external_price)
 
 - content_for :scripts do
 	= javascript_include_tag "beverages"
-
