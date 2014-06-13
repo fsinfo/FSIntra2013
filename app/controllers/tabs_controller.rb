@@ -29,7 +29,7 @@ class TabsController < ApplicationController
   def pay
     @tab.paid
     if @tab.save
-      TabMailer.paid_email(@tab).deliver 
+      TabMailer.paid_email(@tab).deliver
       respond_to do |format|
         format.json { render :json => {:feedback => t('.paid_tab', name: @tab.user.displayed_name, total: @tab.total_invoice)} }
         format.html { redirect_to unpaid_tabs_path }
@@ -38,7 +38,7 @@ class TabsController < ApplicationController
   end
 
   def destroy_beverage_tab
-    
+
   end
 
   def mark_as_paid
@@ -56,6 +56,7 @@ class TabsController < ApplicationController
 
   def unpaid
     @tabs = Tab.unpaid.includes(:user, :beverage_tabs).order("people.lastname")
+		@sum = @tabs.inject(0.0) {|sum, tab| sum += tab.total_invoice}
   end
 
   private

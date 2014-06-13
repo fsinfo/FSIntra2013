@@ -45,7 +45,7 @@ class Tab < ActiveRecord::Base
 	end
 
 	def total_invoice
-		self.beverage_tabs.inject(0.0) {|sum,beverage_tab| sum += beverage_tab.count * beverage_tab.price }
+		self.beverage_tabs.sum("count * price")
 	end
 
 	def grouped_beverage_tabs
