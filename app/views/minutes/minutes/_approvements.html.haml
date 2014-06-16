@@ -1,11 +1,14 @@
-%h2 Annahme von früheren Protokollen
+%a{'name' => "top2"}
+.minute-top.with-utils{'id' => "top2"}
+  %h2 Annahme von früheren Protokollen
 
 
-%ul
-  = render partial: "minutes/approvements/approvement", collection: @minutes_minute.approvements, as: :approvement
+  %ul
+    = render partial: "minutes/approvements/approvement", collection: @minutes_minute.approvements, as: :approvement
 
-- if (can? :update, @minutes_minute) and (Minutes::Minute.released != [])
-  Protokolle zu folgenden Sitzungen sind veröffentlicht, aber nicht genehmigt:
-  = Minutes::Minute.released.map{|x| l x.date }.join ", "
-  %br
+
+.utils
+  - if (can? :update, @minutes_minute) and (Minutes::Minute.released != [])
     = link_to small_button('Neues Protokoll annehmen'), new_minutes_minute_approvement_path(@minutes_minute)
+  - else
+    Nichts zum Annehmen
