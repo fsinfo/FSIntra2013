@@ -6,12 +6,20 @@
   .content
     = item.content.html_safe
 
-  = render partial: "minutes/motions/motion", collection: @minutes_minute.items, as: :item
-
-  - # {% include 'minutes/view/request.html' %}
-  - # {% include 'minutes/view/request.html' %}
+  = render partial: "minutes/motions/motion", collection: item.motions, as: :motion, locals: {item: item}
 
 .utils
   = link_to t('actions.new', model: Minutes::Motion.model_name.human), new_minutes_minute_item_motion_path(@minutes_minute, item)
-  = link_to t('actions.destroy'), '#', 'gumby-trigger' => '#topdel'
+  = link_to t('actions.destroy'), '#', 'gumby-trigger' => "\#topdel#{item.id}", class: 'switch'
   = link_to t('actions.edit'), edit_minutes_minute_item_path(@minutes_minute, item)
+
+
+.modal{'id' => "topdel#{item.id}"}
+  .content
+    %a.close.switch{'gumby-trigger' => "|\#topdel#{item.id}"}
+      %i.icon-cancel
+    .row
+      .ten.columns.centered.text-centetr
+        %h2 Sicher?
+        %p Möchtest du diesen Antrag wirklich unwiederruflich löschen?
+        = link_to t('actions.destroy'), minutes_minute_item_path(@minutes_minute, item), :method => :delete, class: 'button switch', 'gumby-trigger' => "|\#topdel#{item.id}"

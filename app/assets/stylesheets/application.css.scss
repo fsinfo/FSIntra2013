@@ -9,3 +9,15 @@
 @import "var/settings";
 @import "fonts";
 @import "custom";
+
+
+
+form .field > .slider label {
+	a.grey, input:checked ~ a.grey {
+		background-color: #CEEDCD;	
+	}
+}
+
+form .input:disabled {
+	background-color:#F1F1F1;
+}

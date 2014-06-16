@@ -33,11 +33,6 @@
 					= t('views.nope')
 	.entry
 		.name
-			= Minutes::Minute.human_attribute_name :attendants
-		.value
-			= @minutes_minute.fsr_attendants.join(", ")
-	.entry
-		.name
 			= Minutes::Minute.human_attribute_name :guests
 		.value
 			= @minutes_minute.guests

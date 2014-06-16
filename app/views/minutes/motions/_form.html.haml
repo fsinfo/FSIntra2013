@@ -28,14 +28,47 @@
         %div
           Nein
         %div
-          Ja    
+          Ja
+  .field
+    = f.label 'Modus'
+    .slider
+      %label{}
+        = f.check_box :apparent_majority
+        %a.grey
+        %div
+          Abstimmung
+        %div
+          Augensch. Mehrheit
   .triple.field
-    = f.label 'Abstrimmung'
-    = f.number_field :pro, 'placeholder' => 'dafür'
-    = f.number_field :con, 'placeholder' => 'dagegen'
-    = f.number_field :abs, 'placeholder' => 'enthalten'
+    = f.label 'Abstimmung'
+    - disabled = @minutes_motion.apparent_majority? ? { 'disabled' => 'disabled' } : {}
+    = f.number_field :pro, disabled.merge('placeholder' => 'dafür')
+    = f.number_field :con, disabled.merge('placeholder' => 'dagegen')
+    = f.number_field :abs, disabled.merge('placeholder' => 'enthalten')
   = f.submit :class => 'button'
 
 - content_for :scripts do
   :javascript
     $("#minutes_motion_mover_id").selectnice("single", {}, {create: true});
+
+    old = [0,0,0]
+    $("#minutes_motion_apparent_majority").change(function(e) {
+      // for a better user experience, the old values are stored
+      forms = [
+        $("#minutes_motion_pro"),
+        $("#minutes_motion_con"),
+        $("#minutes_motion_abs")
+      ]
+      if(e.target.checked) {
+        for(i in forms) {
+          forms[i].attr("disabled", "disabled")
+          old[i] = forms[i].val()
+          forms[i].val("")
+        }
+      } else {
+        for(i in forms) {
+          forms[i].removeAttr("disabled")
+          forms[i].val(old[i])
+        }
+      }
+    })

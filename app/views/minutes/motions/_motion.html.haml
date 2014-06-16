@@ -1,17 +1,34 @@
-%section.motion
-  %p
-    %strong= motion.mover
-    <br />
-    = motion.rationale
-    <br />
+.minute-request
+  %span.title Antrag
+  %span.from (von #{motion.mover})
+  \:
+  %span.howmuchisthefish
     = motion.amount_in_currency
-    <br />
-    - if motion.apparent_majority?
-      Mit <strong>augenscheinlicher Mehrheit #{motion.approved? ? '' : 'nicht'}</strong> angenommen.
+  .description
+    = motion.rationale
+  %span.label{class: "#{motion.approved? ? 'yes' : 'no'}"}
+    - if motion.approved?
+      Angenommen
     - else
-      Dafür: #{motion.pro}, enthaltung: #{motion.abs}, dagegen: #{motion.con} – Der Antrag ist <strong>#{motion.approved? ? '' : 'nicht'}</strong> angenommen.
-    <br />
-    - if can? :update, @minutes_minute
-      = link_to t('actions.edit'), edit_minutes_minute_item_motion_path(@minutes_minute, item, motion), class: 'highlight-section'
-      \|
-      = link_to t('actions.destroy'), minutes_minute_item_motion_path(@minutes_minute, item, motion), :method => :delete, :data => { :confirm => t('actions.destroy_confirm') }
+      Abgelehnt
+    \- 
+    - if motion.apparent_majority?
+      Augenscheinliche Mehrheit
+    - else
+      #{motion.pro} / #{motion.abs} / #{motion.con}
+
+
+
+  - if can? :update, @minutes_minute
+    = link_to t('actions.edit'), edit_minutes_minute_item_motion_path(@minutes_minute, item, motion), class: 'edit'
+    = link_to t('actions.destroy'), '#', class: 'edit switch', 'gumby-trigger' => "\#requestdel#{motion.id}"
+
+.modal{'id' => "requestdel#{motion.id}"}
+  .content
+    %a.close.switch{'gumby-trigger' => "|\#requestdel#{motion.id}"}
+      %i.icon-cancel
+    .row
+      .ten.columns.centered.text-centetr
+        %h2 Sicher?
+        %p Möchtest du diesen Antrag wirklich unwiederruflich löschen?
+        = link_to t('actions.destroy'), minutes_minute_item_motion_path(@minutes_minute, item, motion), :method => :delete, class: 'button switch', 'gumby-trigger' => "|\#requestdel#{motion.id}"
