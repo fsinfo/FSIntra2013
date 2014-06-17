@@ -15,6 +15,7 @@
 			= link_to(tab_path(tab), class: 'tr') do
 				.td.w-50= tab.user.displayed_name
 				.td.w-20.right
+				- if tab.is_paid?
 					%span.label.payed{title: 'Als bezahlt markiert.'} bezahlt
 				.td.w-20.center= l(tab.created_at, format: :date_only)
 				.td.w-10= number_to_currency tab.total_invoice
