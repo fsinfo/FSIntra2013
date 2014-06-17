@@ -2,14 +2,14 @@
   - if tabs.any?
     .thead
       .tr
-        .th.w-40= t '.total'
-        .th.w-40
+        .th.w-60= t '.total'
+        .th.w-30
         .th.w-20= number_to_currency(tabs.inject(0.0) {|sum, t| sum += t.total_invoice})
     .tbody
       - tabs.each do |tab|
         = link_to(tab_path(tab), class: 'tr') do
-          .td.w-40= l(tab.created_at, format: :date_only)
-          .td.w-40.right
+          .td.w-60= tab.user
+          .td.w-30.right= l(tab.created_at, format: :date_only)
           .td.w-20= number_to_currency(tab.total_invoice)
   - else
     = t 'activerecord.models.tab', count: 0
