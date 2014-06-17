@@ -24,8 +24,10 @@ class Minutes::Minute < ActiveRecord::Base
   belongs_to :keeper_of_the_minutes, class_name: 'User'
   belongs_to :chairperson, class_name: 'User'
 
-  has_many :items, -> { order '"order" ASC' }, class_name: 'Minutes::Item'
-  has_many :approvements
+  has_many :items, -> { order '"order" ASC' }, class_name: 'Minutes::Item', dependent: :destroy
+  
+  has_many :approvements, dependent: :destroy
+  has_one :approving, inverse_of: :approved_minute, class_name: 'Minutes::Approvement', foreign_key: :approved_minute_id
 
   # Attendances are defined in the 'base-join-table' attendances,
   # which also has a column 'type'. This is used in order to
@@ -51,6 +53,11 @@ class Minutes::Minute < ActiveRecord::Base
   # This methods enriches the stored items by those two.
   def item_titles
     ['Festlegung der Tagesordnung', 'Genehmigung von Protokollen'] + items.pluck(:title)
+  end
+
+  def approved_date
+    m = Minutes::Approvement.where(approved_minute_id: self.id).first
+    m.minute.date
   end
 
   validates_presence_of :chairperson_id

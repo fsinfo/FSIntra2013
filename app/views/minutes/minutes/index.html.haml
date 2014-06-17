@@ -6,10 +6,12 @@
 
 .list-table-head
 	%h2 Nicht veröffentlicht
-	= render partial: 'minute_table', locals: {minutes: @open_minutes}
+= render partial: 'minute_table', locals: {minutes: @open_minutes, extra_date: 'draft_sent_data'}
+
 .list-table-head
 	%h2 Veröffentlicht
-	= render partial: 'minute_table', locals: {minutes: @released_minutes}
+= render partial: 'minute_table', locals: {minutes: @released_minutes, extra_date: 'released_date'}
+
 .list-table-head
 	%h2 Genehmigt
-	= render partial: 'minute_table', locals: {minutes: @accepted_minutes}
+= render partial: 'minute_table', locals: {minutes: @accepted_minutes, extra_date: 'approved_date'}

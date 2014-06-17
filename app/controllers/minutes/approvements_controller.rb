@@ -26,6 +26,9 @@ class Minutes::ApprovementsController < ApplicationController
   end
 
   def update
+    params[:minutes_approvement][:pro] ||= ""
+    params[:minutes_approvement][:con] ||= ""
+    params[:minutes_approvement][:abs] ||= ""
     respond_to do |format|
       if @minutes_approvement.update(minutes_approvement_params)
         format.html { redirect_to @minutes_minute, notice: 'Item was successfully updated.' }

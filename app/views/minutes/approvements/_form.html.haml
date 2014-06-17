@@ -1,31 +1,68 @@
 -the_path = on_creating? ? minutes_minute_approvements_path(@minutes_minute) : minutes_minute_approvement_path(minute_id: @minutes_minute.id, id: @minutes_approvement.id)
-= form_for @minutes_approvement, url: the_path, :html => { :'data-type' => 'json' } do |f|
+= form_for @minutes_approvement, url: the_path, :html => { class: 'panel', :'data-type' => 'json' } do |f|
   - if @minutes_approvement.errors.any?
     #error_explanation
       %h2= "#{pluralize(@minutes_approvement.errors.count, "error")} prohibited this minutes_approvement from being saved:"
       %ul
         - @minutes_approvement.errors.full_messages.each do |msg|
           %li= msg
-          
-  = f.label :approved_minute
-  = f.select(:approved_minute_id, Minutes::Minute.released.map { |m| [m.date, m.id] })
+  
+  .field
+    = f.label :approved_minute
+    .nested
+      = f.select(:approved_minute_id, Minutes::Minute.released.map { |m| [(l m.date), m.id] })
 
-  .row
-    .columns.small-4  
-      = f.label :pro , :class => "fs-motion-prefix"
-      = f.number_field :pro, :class => "fs-motion"
-    .columns.small-4
-      = f.label :con , :class => "fs-motion-prefix"
-      = f.number_field :con, :class => "fs-motion"
-    .columns.small-4
-      = f.label :abs , :class => "fs-motion-prefix"
-      = f.number_field :abs, :class => "fs-motion"
-  .row
-    .columns.small-6
-      = f.label :apparent_majority, :class => "fs-motion-prefix"
-      = f.check_box :apparent_majority, :class => "fs-motion-checkbox"
-    .columns.small-6
-      = f.label :approved, :class => "fs-motion-prefix"
-      = f.check_box :approved, :class => "fs-motion-checkbox"
 
-  = f.submit
+  .field
+    = f.label :approved
+    .slider
+      %label{'for' => 'minutes_approvement_approved'}
+        = f.check_box :approved
+        %a
+        %div
+          Nein
+        %div
+          Ja
+  .field
+    = f.label 'Modus'
+    .slider
+      %label{}
+        = f.check_box :apparent_majority
+        %a.grey
+        %div
+          Abstimmung
+        %div
+          Augensch. Mehrheit
+  .triple.field
+    = f.label 'Abstimmung'
+    - disabled = @minutes_approvement.apparent_majority? ? { 'disabled' => 'disabled' } : {}
+    = f.number_field :pro, disabled.merge('placeholder' => 'dafür')
+    = f.number_field :con, disabled.merge('placeholder' => 'dagegen')
+    = f.number_field :abs, disabled.merge('placeholder' => 'enthalten')
+  = f.submit :class => 'button'
+
+- content_for :scripts do
+  :javascript
+    $("#minutes_approvement_approved_minute_id").selectnice("single", {}, {create: true});
+
+    $("#minutes_approvement_apparent_majority").change(function(e) {
+      // for a better user experience, the old values are stored
+      forms = [
+        $("#minutes_approvement_pro"),
+        $("#minutes_approvement_con"),
+        $("#minutes_approvement_abs")
+      ]
+      if(e.target.checked) {
+        for(i in forms) {
+          forms[i].attr("disabled", "disabled")
+          forms[i].attr("data-old", forms[i].attr("value"))
+          forms[i].attr("value", "")
+        }
+      } else {
+        for(i in forms) {
+          forms[i].removeAttr("disabled")
+          var val = forms[i].attr("data-old")
+          forms[i].attr("value", val)
+        }
+      }
+    })

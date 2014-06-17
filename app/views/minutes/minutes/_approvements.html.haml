@@ -1,6 +1,6 @@
 %a{'name' => "top2"}
 .minute-top.with-utils{'id' => "top2"}
-  %h2 Annahme von früheren Protokollen
+  %h2 TOP 2: Annahme von früheren Protokollen
 
 
   %ul
@@ -9,6 +9,6 @@
 
 .utils
   - if (can? :update, @minutes_minute) and (Minutes::Minute.released != [])
-    = link_to small_button('Neues Protokoll annehmen'), new_minutes_minute_approvement_path(@minutes_minute)
+    = link_to "Neues Protokoll annehmen (#{Minutes::Minute.released.count} offen)", new_minutes_minute_approvement_path(@minutes_minute)
   - else
     Nichts zum Annehmen

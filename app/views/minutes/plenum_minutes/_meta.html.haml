@@ -1,0 +1,46 @@
+.minute-meta.with-utils
+	%h2
+		Meta
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :keeper_of_the_minutes
+		.value
+			= @minutes_minute.keeper_of_the_minutes
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :chairperson
+		.value
+			= @minutes_minute.chairperson
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :released_date
+		.value
+			= ldate @minutes_minute.released_date
+	- unless @minutes_minute.approving == nil
+		.entry
+			.name
+				= Minutes::Minute.human_attribute_name :approved_date
+			.value
+				%span.label.no Nein
+	.entry
+		.name
+			= Minutes::Minute.human_attribute_name :guests
+		.value
+			= @minutes_minute.guests
+
+.utils
+	- if can? :destroy, @minutes_minute
+		= link_to t('actions.destroy'), '#', class: 'switch', 'gumby-trigger' => '#destroythisminute'
+	- if can? :update, @minutes_minute
+		= link_to t('actions.edit'), edit_polymorphic_path(@minutes_minute)
+
+- if can? :destroy, @minutes_minute
+	.modal#destroythisminute
+		.content
+			%a.close.switch{'gumby-trigger' => '|#destroythisminute'}
+			%i.icon-cancel
+			.row
+				.ten.columns.centered.text-centetr
+					%h2 Sicher?
+					%p Möchtest du dieses Protokoll wirklich löschen?
+					= link_to 'Löschen', minutes_minute_path(@minutes_minute), method: :delete, class: 'button switch', 'gumby-trigger' => '|#destroythisminute'

@@ -1,0 +1,40 @@
+
+@mixin flash-panel {
+	@include panel;
+	&.with-utils { margin-bottom: 0; }
+}
+
+#flash {
+	@include flash-panel;
+	
+	background: $blue;
+
+	h2 {
+		color: $grey;
+	}
+
+	.entry {
+		@include row("nested");
+		line-height: $line-and-height - 2px;
+		.name { @include column(4); }
+		.value { @include column(8); }
+	}
+
+	a.close {
+		position: relative;
+		margin-top: 10px;
+		margin-right: 10px;
+		cursor: pointer;
+		color: $red;
+
+		i {
+			margin: 0 3px;
+		}
+	}
+
+	a.close:hover {
+		color: $white;
+		background: $red;
+		@include border-radius(100px);
+	}
+}

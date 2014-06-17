@@ -46,6 +46,8 @@ de:
         absentees: Entschuldigt
         guests: Gäste
         released_date: Veröffentlicht am
+        draft_sent_date: Entwurf verschickt am
+        approved_date: Genehmigt am
       minutes/item:
         title: Titel
         content: Inhalt

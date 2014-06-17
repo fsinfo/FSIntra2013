@@ -8,10 +8,15 @@
       .th.w-25.center
         = t Minutes::Minute.human_attribute_name :chairperson
       .th.w-25.center
-        Entwurf
+        - if extra_date == 'draft_sent_data'
+          Entwurf versendet
+        - elsif extra_date == 'released_date'
+          Veröffentlicht
+        - elsif extra_date == 'approved_date'
+          Angenommen
   - minutes.each do |minutes_minute|
     .tbody
-      %a.tr{href: minutes_minute_path(minutes_minute)}
+      %a.tr{href: polymorphic_url(minutes_minute)}
         .td.w-25.left
           = ldate(minutes_minute.date)
           = minutes_minute.type == 'Minutes::PlenumMinute' ? '[VV]' : ''
@@ -20,4 +25,9 @@
         .td.w-25.center
           = minutes_minute.chairperson
         .td.w-25.center
-          = ldate minutes_minute.released_date
+          - if extra_date == 'draft_sent_data'
+            = ldate minutes_minute.draft_sent_date
+          - elsif extra_date == 'released_date'
+            = ldate minutes_minute.released_date
+          - elsif extra_date == 'approved_date'
+            = ldate minutes_minute.approved_date

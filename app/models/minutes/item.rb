@@ -18,7 +18,7 @@
 
 class Minutes::Item < ActiveRecord::Base
   belongs_to :minute, class_name: 'Minutes::Minute'
-  has_many :motions, class_name: 'Minutes::Motion'
+  has_many :motions, class_name: 'Minutes::Motion', dependent: :destroy
 
   validates_presence_of :order
   #validate :orders_must_be_sequence # TODO
@@ -47,7 +47,8 @@ class Minutes::Item < ActiveRecord::Base
   # and as second item 'approvement of previous minutes'
   # This methods enriches the stored items
   def full_order
-    order + 2
+    offset = minute.type == nil ? 3 : 2
+    order + offset
   end
 
   private 

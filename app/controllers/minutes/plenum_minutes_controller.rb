@@ -14,7 +14,7 @@ class Minutes::PlenumMinutesController < Minutes::MinutesController
 
     if @plenum_minute.save
       @forward = url_for [:edit, @plenum_minute]      
-      @plenum_minute.items.create title: 'Festlegung der Tagesordnung', order: 0, content: ''
+      @plenum_minute.items.create title: 'Mitteilungen', order: 0, content: ''
       respond_with(@plenum_minute, status: :created, :location => @plenum_minute)
     else
       respond_with(@plenum_minute, status: :unprocessable_entity)

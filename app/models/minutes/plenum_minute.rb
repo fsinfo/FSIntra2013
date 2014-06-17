@@ -21,4 +21,8 @@
 #
 
 class Minutes::PlenumMinute < Minutes::Minute
+
+  def item_titles
+    ['Genehmigung von Protokollen'] + items.pluck(:title)
+  end
 end

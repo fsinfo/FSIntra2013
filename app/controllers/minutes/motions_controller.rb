@@ -44,6 +44,9 @@ class Minutes::MotionsController < ApplicationController
   # PATCH/PUT /minutes/motions/1
   # PATCH/PUT /minutes/motions/1.json
   def update
+    params[:minutes_motion][:pro] ||= ""
+    params[:minutes_motion][:con] ||= ""
+    params[:minutes_motion][:abs] ||= ""
     respond_to do |format|
       if @minutes_motion.update(minutes_motion_params)
         format.html { redirect_to @minutes_minute, notice: t('feedback.updated', :model => Minutes::Motion.model_name.human) }

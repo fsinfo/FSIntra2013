@@ -1,0 +1,10 @@
+- unless flash.empty?
+  #flash
+    -#%a.close{'gumby-trigger' => '|#flash'}
+    -#  %i.icon-cancel
+    -#
+    %h2 Information
+    %ul
+      - flash.each do |name, msg|
+        %li{class: name}
+          = msg

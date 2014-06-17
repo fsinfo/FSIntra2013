@@ -24,7 +24,6 @@ class Minutes::Approvement < ActiveRecord::Base
   belongs_to :approved_minute, class_name: "Minutes::Minute"
   validate :vote_presence
 
-
   private
 
   # Checks that either pro, con and abs are set, or the apparent_majority flag is set.

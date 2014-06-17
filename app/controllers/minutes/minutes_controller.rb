@@ -49,7 +49,7 @@ class Minutes::MinutesController < ApplicationController
 
       # Default items
       order_counter = 0
-      ["Festlegung der Tagesordnung", "Mitteilungen", "Anträge", "Verschiedenes"].each do |item|
+      ["Mitteilungen", "Verschiedenes"].each do |item|
         @minutes_minute.items.create title: item, order: order_counter, content: ''
         order_counter += 1
       end
