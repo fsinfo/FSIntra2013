@@ -18,9 +18,12 @@ class Ability
 
       # Keeper of the minutes abilities
       can [:update, :send_draft, :publish], Minutes::Minute, :keeper_of_the_minutes_id => user.id
-      can :manage, Minutes::Item, minute: {:keeper_of_the_minutes_id => user.id}
+      can :manage, Minutes::Item, minute: {:keeper_of_the_minutes_id => user.id }
       can :manage, Minutes::Motion, item: { minute: {:keeper_of_the_minutes_id => user.id} }
       can :manage, Minutes::Approvement, minute: {:keeper_of_the_minutes_id => user.id}
+      can :create, Minutes::Item
+      can :create, Minutes::Motion
+      can :create, Minutes::Approvement
 
       # Everybody's rules
       can :create, Minutes::Minute
