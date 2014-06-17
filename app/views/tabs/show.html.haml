@@ -5,7 +5,7 @@
 		= link_to t('.is_paid'), is_paid_tab_path(@tab), method: :put
 - else
 	- if can? :edit, @tab
-		- if @tab.is_paid?
+		- if @tab.is_paid? or @tab.is_running?
 			.one.buttons
 				= link_to 'Details anzeigen', detail_tab_path(@tab)
 		- else
