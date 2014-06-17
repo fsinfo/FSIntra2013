@@ -5,11 +5,13 @@
 		= link_to t('actions.edit'), edit_person_path(@person)
 		= link_to t('actions.delete'), '#', :class => "switch", "gumby-trigger" => "#confirm-deletion"
 		= link_to t('people.vcard'), person_path(@person, :format => 'vcf')
-- if (can? :edit, @person) and not (can? :delete, @person)
+- elsif (can? :edit, @person) and not (can? :delete, @person)
 	.two.buttons
 		= link_to t('actions.edit'), edit_person_path(@person)
 		= link_to t('people.vcard'), person_path(@person, :format => 'vcf')
-
+- else
+	.one.buttons
+		= link_to t('people.vcard'), person_path(@person, :format => 'vcf')
 
 - if notice
 	%p#notice

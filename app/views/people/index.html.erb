@@ -19,7 +19,7 @@
 		<div class="tbody">
 			<% @people.each do |person| %>
 				<% cache(person) do %>
-					<%= link_to(person, class: 'tr') do %>
+					<%= link_to(person_path(person), class: 'tr') do %>
 						<div class="hide"><%= person.tag_list %></div>
 						<div class="td w-25"><%= person.firstname %></div>
 						<div class="td w-25"><%= person.lastname %></div>
