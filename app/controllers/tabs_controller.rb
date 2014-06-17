@@ -62,7 +62,7 @@ class TabsController < ApplicationController
 
 	def running
 		@tabs = Tab.running
-		@users = User.includes(:tabs).where(tabs: {status: Tab::STATUS_UNPAID}).distinct.map{|u| u.to_s}
+		@users = User.includes(:tabs).where(tabs: {status: Tab::STATUS_RUNNING}).distinct.map{|u| u.to_s}
 	end
 
   private
