@@ -1,16 +1,13 @@
 %h1= t '.headline', date: l(@tab.created_at, format: :date_only)
-- if can? :manage, :tally_sheet
+- if @tab.is_unpaid?
 	.two.buttons
 		= link_to 'Details anzeigen', detail_tab_path(@tab)
-		= link_to t('.is_paid'), is_paid_tab_path(@tab), method: :put
+		- if can? :manage, :tally_sheet
+			= link_to t('.is_paid'), is_paid_tab_path(@tab), method: :put
+		- elsif can? :mark_as_paid, @tab
+			= link_to t('.mark_as_paid'), mark_as_paid_tab_path(@tab), method: :put
 - else
-	- if can? :edit, @tab
-		- if @tab.is_paid? or @tab.is_running?
-			.one.buttons
-				= link_to 'Details anzeigen', detail_tab_path(@tab)
-		- else
-			.two.buttons
-				= link_to 'Details anzeigen', detail_tab_path(@tab)
-				= link_to t('.mark_as_paid'), mark_as_paid_tab_path(@tab), method: :put
+	.one.buttons
+		= link_to 'Details anzeigen', detail_tab_path(@tab)
 
 = render @tab

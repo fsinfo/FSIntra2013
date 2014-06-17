@@ -28,6 +28,10 @@ class Tab < ActiveRecord::Base
 		self.status == Tab::STATUS_RUNNING
 	end
 
+	def is_unpaid?
+		self.status == Tab::STATUS_UNPAID
+	end
+
 	def paid
 		self.status = Tab::STATUS_PAID
 	end
