@@ -24,7 +24,7 @@
 if Rails.env == 'production' then require 'fs_ldap' else require 'fs_ldap_stub' end
 
 class User < Person
-	before_save :create_remember_token 
+	before_save :create_remember_token
 	before_validation :fill_with_ldap
 	validates :email, :format => { :with => /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\z/i }, uniqueness: true
 
@@ -35,15 +35,15 @@ class User < Person
 	has_many :attendances
 
 	def debts
-		self.tabs.unpaid.map(&:total_invoice).inject(0,:+)
+		self.tabs.where(status: [Tab::STATUS_PAID, Tab::STATUS_UNPAID]).map(&:total_invoice).inject(0,:+)
 	end
 
 	def User.authenticate(loginname,password)
 		user = User.find_or_create_by(:loginname => loginname.downcase) if FsLdap.authenticate(loginname.downcase, password)
 	end
 
-	# LDAP-Gruppen: fsinfo, it, ewoche, ausland, kasse, kai, fete, 
-	#								fsk, pr, hh, sprecher, fsl, kuehlschrank, datenschutz, vlu, pa, stupa, protokolle, fbr, 
+	# LDAP-Gruppen: fsinfo, it, ewoche, ausland, kasse, kai, fete,
+	#								fsk, pr, hh, sprecher, fsl, kuehlschrank, datenschutz, vlu, pa, stupa, protokolle, fbr,
 	#								fit, events, homepage, kommunikation, fsr, ausleihe, oe
 	def has_group?(group)
 		FsLdap.groups_of_loginname(self.loginname).include?(group)
@@ -63,7 +63,7 @@ class User < Person
 		Digest::SHA1.hexdigest(token.to_s)
 	end
 
-	private 
+	private
 		def create_remember_token
 			self.remember_token = User.encrypt(User.new_remember_token)
 		end
