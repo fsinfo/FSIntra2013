@@ -14,21 +14,17 @@ class Ability
       can [:read, :mark_as_paid, :detail], Tab, :user_id => user.id
       can [:edit, :update], Tab, {:user_id => user.id, :status => Tab::STATUS_RUNNING}
 
-      # Minutes
-      can [:update, :send_draft, :publish], Minutes::Minute, :keeper_of_the_minutes_id => user.id
-      can :create, Minutes::Item
-      can :manage, Minutes::Item do |item|
-        not item.minute or item.minute.keeper_of_the_minutes == user
-      end
-      can :manage, Minutes::Motion do |motion|
-        not motion.item or motion.item.minute.keeper_of_the_minutes == user
-      end
-      can :manage, Minutes::Approvement do |approvement|
-        not approvement.minute or approvement.minute.keeper_of_the_minutes == user
-      end
+      ## Minutes
 
-      can :read, Minutes::Minute
+      # Keeper of the minutes abilities
+      can [:update, :send_draft, :publish], Minutes::Minute, :keeper_of_the_minutes_id => user.id
+      can :manage, Minutes::Item, minute: {:keeper_of_the_minutes_id => user.id}
+      can :manage, Minutes::Motion, item: { minute: {:keeper_of_the_minutes_id => user.id} }
+      can :manage, Minutes::Approvement, minute: {:keeper_of_the_minutes_id => user.id}
+
+      # Everybody's rules
       can :create, Minutes::Minute
+      can :read, Minutes::Minute
     end
 
     # Additional abilities for users with group 'kuehlschrank'

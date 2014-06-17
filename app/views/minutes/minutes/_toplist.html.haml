@@ -7,4 +7,5 @@
 				%a{'href' => "#top#{index}"}
 					= item
 .utils
-	= link_to t('actions.new', model: Minutes::Item.model_name.human),  new_minutes_minute_item_path(@minutes_minute)
+	- if can? :update, @minutes_minute
+		= link_to t('actions.new', model: Minutes::Item.model_name.human),  new_minutes_minute_item_path(@minutes_minute)

@@ -6,9 +6,9 @@
   %ul
     = render partial: "minutes/approvements/approvement", collection: @minutes_minute.approvements, as: :approvement
 
-
 .utils
-  - if (can? :update, @minutes_minute) and (Minutes::Minute.released != [])
-    = link_to "Neues Protokoll annehmen (#{Minutes::Minute.released.count} offen)", new_minutes_minute_approvement_path(@minutes_minute)
-  - else
-    Nichts zum Annehmen
+  - if can? :update, @minutes_minute
+    - if (can? :update, @minutes_minute) and (Minutes::Minute.released != [])
+      = link_to "Neues Protokoll annehmen (#{Minutes::Minute.released.count} offen)", new_minutes_minute_approvement_path(@minutes_minute)
+    - else
+      Nichts zum Annehmen
