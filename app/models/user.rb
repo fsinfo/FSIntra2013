@@ -35,7 +35,7 @@ class User < Person
 	has_many :attendances
 
 	def debts
-		self.tabs.where(status: [Tab::STATUS_PAID, Tab::STATUS_UNPAID]).map(&:total_invoice).inject(0,:+)
+		self.tabs.where(status: [Tab::STATUS_RUNNING, Tab::STATUS_UNPAID]).map(&:total_invoice).inject(0,:+)
 	end
 
 	def User.authenticate(loginname,password)
