@@ -24,7 +24,7 @@
 
 class Minutes::Motion < ActiveRecord::Base
   belongs_to :mover, class_name: 'User'
-  belongs_to :item, class_name: 'Minutes::Motion'
+  belongs_to :item, class_name: 'Minutes::Item'
 
   validates_presence_of :mover
   validates_presence_of :rationale
