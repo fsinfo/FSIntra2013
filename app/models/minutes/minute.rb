@@ -44,7 +44,7 @@ class Minutes::Minute < ActiveRecord::Base
   # At some time the keeper of this minute _releases_ it.
   # In the next board meeting this minute can be _accepted_.
   # Maybe in some future time this could be encoded into a db field.
-  scope :not_approved, -> { where("id NOT IN (SELECT approved_minute_id FROM minutes_approvements)") }
+  scope :not_approved, -> { where("approved_date IS NULL") }
   scope :open, -> { not_approved.where("released_date IS NULL") }
   scope :released, -> { not_approved.where("released_date IS NOT NULL") }
   scope :accepted, -> { where "approved_date IS NOT NULL" }
