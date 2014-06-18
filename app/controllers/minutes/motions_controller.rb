@@ -45,6 +45,7 @@ class Minutes::MotionsController < ApplicationController
   # PATCH/PUT /minutes/motions/1
   # PATCH/PUT /minutes/motions/1.json
   def update
+    params[:minutes_motion][:amount] ||= ""
     params[:minutes_motion][:pro] ||= ""
     params[:minutes_motion][:con] ||= ""
     params[:minutes_motion][:abs] ||= ""
@@ -88,7 +89,7 @@ class Minutes::MotionsController < ApplicationController
     def convert_currency_to_cent
       # compute cent value
       str = params[:minutes_motion][:amount].to_s
-      if matches = str.match(/(?<integral>\d+)((\.|,)(?<fractional>\d\d))?/)
+      if matches = str.match(/(?<integral>\d+)((\.|,)(?<fractional>\d\d))?€?/)
         params[:minutes_motion][:amount] = (matches[:integral].to_i * 100) + matches[:fractional].to_i
       else
         params[:minutes_motion][:amount] = ""

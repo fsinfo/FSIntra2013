@@ -15,7 +15,7 @@
       = f.select :mover_id, User.all.collect {|p| [p.displayed_name, p.id] }, { :include_blank => true }
   .field
     = f.label :amount
-    = f.text_field :amount, 'placeholder' => 'nur für Finanzanträge'
+    = f.text_field :amount, 'value' => @minutes_motion.amount_in_currency,'placeholder' => 'nur für Finanzanträge'
   .field
     = f.label :rationale
     = f.text_area :rationale, type: :text
