@@ -1,6 +1,6 @@
 %li
-  Protokoll vom #{l approvement.approved_minute.date}
-  - if approvement.approved? 
+  #{approvement.approved_minute.type == 'Minutes::PlenumMinute' ? '[VV]' : ''} Protokoll vom #{l approvement.approved_minute.date}
+  - if approvement.approved?
     %strong angenommen
   - else 
     %strong nicht angenommen
