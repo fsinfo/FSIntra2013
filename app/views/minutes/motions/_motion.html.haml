@@ -15,7 +15,8 @@
     - if motion.apparent_majority?
       Augenscheinliche Mehrheit
     - else
-      #{motion.pro} / #{motion.abs} / #{motion.con}
+      %span.ttip{'data-tooltip' => 'Dafür / Dagegen / Enthaltung'}
+        #{motion.pro} / #{motion.con} / #{motion.abs}
 
 
 
