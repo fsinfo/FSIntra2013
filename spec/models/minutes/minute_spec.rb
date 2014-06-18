@@ -13,6 +13,7 @@
 #  guests                   :text
 #  draft_sent_date          :date
 #  type                     :string(255)
+#  approved_date            :date
 #
 # Indexes
 #

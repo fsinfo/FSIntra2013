@@ -14,4 +14,17 @@
     \:
     = approvement.con
   - if can? :update, approvement
-    = link_to 'Edit', edit_minutes_minute_approvement_path(@minutes_minute, approvement)
+    = link_to 'Bearbeiten', edit_minutes_minute_approvement_path(@minutes_minute, approvement)
+  - if can? :destroy, approvement
+    = link_to 'Löschen', '#', 'gumby-trigger' => "\#approvdel#{approvement.id}", class: 'switch'
+
+- if can? :destroy, approvement
+  .modal{'id' => "approvdel#{approvement.id}"}
+    .content
+      %a.close.switch{'gumby-trigger' => "|\#approvdel#{approvement.id}"}
+        %i.icon-cancel
+      .row
+        .ten.columns.centered.text-centetr
+          %h2 Sicher?
+          %p Möchtest du diese Protokollgenehmigung wirklich löschen?
+          = link_to 'Löschen', minutes_minute_approvement_path(@minutes_minute, approvement), method: :delete, class: 'button switch', 'gumby-trigger' => "|\#approvdel#{approvement.id}"

@@ -24,7 +24,19 @@ class Minutes::Approvement < ActiveRecord::Base
   belongs_to :approved_minute, class_name: "Minutes::Minute"
   validate :vote_presence
 
+  after_save :set_approved_date
+  before_destroy :unset_approved_date
+
+
   private
+
+  def set_approved_date
+    approved_minute.update approved_date: minute.date if approved?
+  end
+
+  def unset_approved_date
+    approved_minute.update approved_date: nil
+  end
 
   # Checks that either pro, con and abs are set, or the apparent_majority flag is set.
   def vote_presence

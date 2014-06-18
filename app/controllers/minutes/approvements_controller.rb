@@ -1,6 +1,7 @@
 class Minutes::ApprovementsController < ApplicationController
   before_action :set_minute
   before_action :set_minutes_approvement, only: [:show, :edit, :update, :destroy]
+  authorize_resource
 
   def new
   	@minutes = Minutes::Minute.not_approved
@@ -8,7 +9,6 @@ class Minutes::ApprovementsController < ApplicationController
   end
 
   def edit
-
   end
 
   def create
@@ -22,6 +22,14 @@ class Minutes::ApprovementsController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @minutes_approvement.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @minutes_approvement.destroy
+    respond_to do |format|
+      format.html { redirect_to @minutes_minute, notice: 'Irgendwas erfolgreich gelöscht.' }
+      format.json { head :no_content }
     end
   end
 

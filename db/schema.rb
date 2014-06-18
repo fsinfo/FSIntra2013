@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140427125524) do
+ActiveRecord::Schema.define(version: 20140618123204) do
 
   create_table "beverage_tabs", force: true do |t|
     t.integer  "tab_id"
@@ -27,10 +27,15 @@ ActiveRecord::Schema.define(version: 20140427125524) do
     t.string   "name"
     t.text     "description"
     t.boolean  "available"
-    t.decimal  "price",       precision: 8, scale: 2
+    t.decimal  "price",              precision: 8, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "capacity",    precision: 8, scale: 2
+    t.decimal  "capacity",           precision: 8, scale: 2
+    t.decimal  "external_price",     precision: 8, scale: 2
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "minutes_approvements", force: true do |t|
@@ -80,6 +85,7 @@ ActiveRecord::Schema.define(version: 20140427125524) do
     t.text     "guests"
     t.date     "draft_sent_date"
     t.string   "type"
+    t.date     "approved_date"
   end
 
   add_index "minutes_minutes", ["chairperson_id"], name: "index_minutes_minutes_on_chairperson_id"

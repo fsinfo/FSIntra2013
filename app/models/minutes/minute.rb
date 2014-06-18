@@ -13,6 +13,7 @@
 #  guests                   :text
 #  draft_sent_date          :date
 #  type                     :string(255)
+#  approved_date            :date
 #
 # Indexes
 #
@@ -46,18 +47,13 @@ class Minutes::Minute < ActiveRecord::Base
   scope :not_approved, -> { where("id NOT IN (SELECT approved_minute_id FROM minutes_approvements)") }
   scope :open, -> { not_approved.where("released_date IS NULL") }
   scope :released, -> { not_approved.where("released_date IS NOT NULL") }
-  scope :accepted, -> { where("id IN (SELECT approved_minute_id FROM minutes_approvements)") }
+  scope :accepted, -> { where "approved_date IS NOT NULL" }
 
   # By default every minute has as first item 'agenda aggreement'
   # and as second item 'approvement of previous minutes'
   # This methods enriches the stored items by those two.
   def item_titles
     ['Festlegung der Tagesordnung', 'Genehmigung von Protokollen'] + items.pluck(:title)
-  end
-
-  def approved_date
-    m = Minutes::Approvement.where(approved_minute_id: self.id).first
-    m.minute.date
   end
 
   validates_presence_of :chairperson_id
