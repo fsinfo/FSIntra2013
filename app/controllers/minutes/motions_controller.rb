@@ -4,6 +4,7 @@ class Minutes::MotionsController < ApplicationController
   
   before_action :set_minutes_motion, only: [:show, :edit, :update, :destroy]
   before_action :set_minute_and_item
+  before_action :convert_currency_to_cent, only: [:create, :update]
 
   # GET /minutes/motions
   # GET /minutes/motions.json
@@ -82,5 +83,15 @@ class Minutes::MotionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def minutes_motion_params
       params.require(:minutes_motion).permit(:order, :mover_id, :pro, :con, :abs, :rationale, :amount, :minutes_item_id, :approved, :apparent_majority)
+    end
+
+    def convert_currency_to_cent
+      # compute cent value
+      str = params[:minutes_motion][:amount].to_s
+      if matches = str.match(/(?<integral>\d+)((\.|,)(?<fractional>\d\d))?/)
+        params[:minutes_motion][:amount] = (matches[:integral].to_i * 100) + matches[:fractional].to_i
+      else
+        params[:minutes_motion][:amount] = ""
+      end
     end
 end

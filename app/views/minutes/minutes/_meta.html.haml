@@ -24,7 +24,7 @@
       .name
         = Minutes::Minute.human_attribute_name :approved_date
       .value
-        = ldate @minutes_minute.approving.minute.date 
+        = ldate @minutes_minute.approved_date 
   .entry
     .name
       = Minutes::Minute.human_attribute_name :has_quorum
