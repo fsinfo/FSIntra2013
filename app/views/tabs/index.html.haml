@@ -4,8 +4,10 @@
 	.list-table-head
 		%h2 Admin
 	.panel
-		.three.nested.buttons
+		.two.nested.buttons
 			=link_to "Getränkeliste", beverages_path
+			=link_to "Benutzer hinzufügen/streichen", tally_sheet_edit_path
+		.two.nested.buttons
 			=link_to "offene Rechnungen", unpaid_tabs_path
 			=link_to "laufende Rechnungen", running_tabs_path
 		.three.nested.buttons

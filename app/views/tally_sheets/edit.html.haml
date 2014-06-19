@@ -1,12 +1,14 @@
--if notice
-  %p#notice=notice
+%h2 Benutzer hinzufügen/streichen
 
-=form_tag({controller: "tally_sheets", action: "update"}) do
-  =label_tag("new", t('.new'))
-  =select_tag("new",options_for_select(@new_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'select2-field')
-  =label_tag("delete", t('.delete'))
-  =select_tag("delete",options_for_select(@delete_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true, :class => 'select2-field')
-  =submit_tag t('.save')
-  
+.panel
+  =form_tag({controller: "tally_sheets", action: "update"}) do
+    =label_tag("new", t('.new'))
+    =select_tag("new",options_for_select(@new_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true)
+    =label_tag("delete", t('.delete'))
+    =select_tag("delete",options_for_select(@delete_candidates.map{|u| [u.displayed_name, u.id]}), :include_blank => true, :multiple => true)
+    =submit_tag t('.save')
+
 - content_for :scripts do
-  = javascript_include_tag "tally_sheets"
+  :javascript
+    $("#new").selectnice("multiple");
+    $("#delete").selectnice("multiple");
