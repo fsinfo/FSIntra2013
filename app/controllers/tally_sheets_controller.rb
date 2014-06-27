@@ -25,28 +25,6 @@ class TallySheetsController < ApplicationController
     end
   end
 
-  # send mails where the tabs' invoice is greater than 0.0
-  # remove tabs that have an invoice == 0
-  def accounting
-    # delete empty tabs
-    @tabs = Tab.running
-    ActiveRecord::Base.transaction do
-      @tabs.each do |tab|
-        tab.destroy unless tab.total_invoice > 0
-      end
-    end
-
-    # change status from running to unpaid
-    Tab.running.update_all(:status => Tab::STATUS_UNPAID)
-
-    # send a mail for every unpaid tab
-    Tab.unpaid.each do |tab|
-      TabMailer.tab_email(tab).deliver
-    end
-
-    redirect_to unpaid_tabs_path
-  end
-
   def edit
     @new_candidates = User.all.where(:on_beverage_list => false)
     @delete_candidates = User.all.where(:on_beverage_list => true)
