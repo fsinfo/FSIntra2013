@@ -4,8 +4,8 @@ class TabsController < ApplicationController
 
   def index
     @running_tab = current_user.tabs.running.first
-    @unpaid_tabs = current_user.tabs.unpaid
-    @paid_tabs = current_user.tabs.paid
+    @unpaid_tabs = current_user.tabs.includes(:user).unpaid
+    @paid_tabs = current_user.tabs.includes(:user).paid
   end
 
   def show
@@ -16,7 +16,7 @@ class TabsController < ApplicationController
 
   def update
     if @tab.update(tab_params)
-      redirect_to @tab, notice: t('feedback.updated', model: Tab.model_name.human)
+      redirect_to tabs_path, notice: t('feedback.updated', model: Tab.model_name.human)
     else
       render action: 'edit'
     end
@@ -24,6 +24,7 @@ class TabsController < ApplicationController
 
   def edit
     @beverage_tabs = @tab.beverage_tabs
+		@beverages = Beverage.available
   end
 
   def pay
@@ -38,7 +39,6 @@ class TabsController < ApplicationController
   end
 
   def destroy_beverage_tab
-
   end
 
   def mark_as_paid

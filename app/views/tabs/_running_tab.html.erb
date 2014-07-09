@@ -3,5 +3,10 @@
     <%=t '.nothing_on_tab' %>
   </div>
 <% else %>
+  <% if can? :edit, tab %>
+  <div class="one buttons">
+    <%=link_to "Bearbeiten", edit_tab_path(tab) %>
+  </div>
+  <% end %>
   <%= render tab %>
 <% end %>

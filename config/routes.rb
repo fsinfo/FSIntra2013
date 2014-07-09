@@ -37,6 +37,7 @@ Fsintra::Application.routes.draw do
     #post 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
     put 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member, :as => 'mark_as_paid'
     # get 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member, :as => 'mark_as_paid'
+    post 'add_beverage/:beverage_id' => 'beverage_tabs#create', :as => 'add_beverage'
   end
 
 # Tally sheet
