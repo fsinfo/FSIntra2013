@@ -38,6 +38,10 @@ class User < Person
 		self.tabs.unpaid.map(&:total_invoice).inject(0,:+)
 	end
 
+	def running_tab
+		self.tabs.find_by(status: Tab::STATUS_RUNNING)
+	end
+
 	def User.authenticate(loginname,password)
 		user = User.find_or_create_by(:loginname => loginname.downcase) if FsLdap.authenticate(loginname.downcase, password)
 	end

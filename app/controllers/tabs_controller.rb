@@ -11,6 +11,11 @@ class TabsController < ApplicationController
   def show
   end
 
+	def new
+		current_user.tabs << Tab.new(status: Tab::STATUS_RUNNING) if current_user.running_tab == nil
+		redirect_to action: 'index'
+	end
+
   def detail
   end
 

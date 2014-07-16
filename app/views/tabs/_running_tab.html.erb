@@ -1,6 +1,9 @@
-<% if tab.nil? or tab.total_invoice == 0.0 %>
+<% if tab.nil? %>
   <div class="list-table">
     <%=t '.nothing_on_tab' %>
+  </div>
+  <div class="one buttons">
+    <%= link_to "Rechnung anlegen", new_tab_path %>
   </div>
 <% else %>
   <% if can? :edit, tab %>
