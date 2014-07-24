@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 gem 'sqlite3'
-gem 'pg'
+#gem 'pg'
 
 # Gems used only for assets and not required
 # in production environments by default.
