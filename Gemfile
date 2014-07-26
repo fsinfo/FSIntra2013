@@ -3,8 +3,9 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-gem 'sqlite3'
-#gem 'pg'
+group :production do
+  gem 'pg'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -56,6 +57,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'guard-spork', '>=1.5.0'
   gem 'spork-rails', github: 'sporkrb/spork-rails'
+  gem 'sqlite3'
 end
 
 group :development do
