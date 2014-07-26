@@ -2,14 +2,18 @@
   - if tabs.any?
     .thead
       .tr
-        .th.w-60= t '.total'
-        .th.w-30
-        .th.w-20= number_to_currency(tabs.inject(0.0) {|sum, t| sum += t.total_invoice})
+        .th.w-50= t '.total'
+        .th.w-20
+        .th.w-20.center Datum
+        .th.w-10= number_to_currency(tabs.inject(0.0) {|sum, t| sum += t.total_invoice})
     .tbody
       - tabs.each do |tab|
         = link_to(tab_path(tab), class: 'tr') do
-          .td.w-60= tab.user
-          .td.w-30.right= l(tab.created_at, format: :date_only)
-          .td.w-20= number_to_currency(tab.total_invoice)
+          .td.w-50= tab.user
+          .td.w-20.right
+            - if tab.is_marked_as_paid?
+              %span.label.payed{title: 'Als bezahlt markiert.'} bezahlt
+          .td.w-20.center= l(tab.created_at, format: :date_only)
+          .td.w-10= number_to_currency(tab.total_invoice)
   - else
     = t 'activerecord.models.tab', count: 0
