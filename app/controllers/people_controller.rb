@@ -53,8 +53,26 @@ class PeopleController < ApplicationController
     redirect_to action: 'index', notice: t('feedback.destroyed', model: Person.model_name.human)
   end
 
+  def edit_tags
+    @person = Person.find(params[:person_id])
+  end
+
+  def update_tags
+    @person = Person.find(params[:person_id])
+    if @person.update(tag_params)
+      redirect_to person_path(@person), notice: t('feedback.updated', :model => Person.model_name.human)
+    else
+      @person = @user
+      render action: 'edit_tags'
+    end
+  end
+
   private
     def person_params
       params.require(:person).permit(:firstname, :lastname, :street, :zip, :city, :email, :phone, :birthday, :misc, :tag_list)
+    end
+
+    def tag_params
+      params.require(:user).permit(:tag_list)
     end
 end

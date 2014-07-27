@@ -1,0 +1,17 @@
+%h1=@person
+= form_for(@person, url: {controller: 'people', action: 'update_tags'}, html: {class: "panel"}) do |f|
+  .field
+    = f.label :tag_list
+    .nested
+      = f.text_field :tag_list, value: @person.tag_list.join(",")
+  = f.submit :class => 'button' 
+
+- content_for :scripts do 
+  :javascript
+    $('#user_tag_list').selectnice("tags", {
+      tags: #{raw Person.tag_counts.pluck(:name)}
+    });
+    // FIXME: the same form for two models => sucks
+    $('#person_tag_list').selectnice("tags", {
+      tags: #{raw Person.tag_counts.pluck(:name)}
+    });

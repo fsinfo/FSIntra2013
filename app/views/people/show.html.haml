@@ -9,13 +9,13 @@
 	.two.buttons
 		= link_to t('actions.edit'), edit_person_path(@person)
 		= link_to t('people.vcard'), person_path(@person, :format => 'vcf')
-- else
+- elsif (can? :edit_tags, @person)
+	.two.buttons
+		= link_to t('actions.edit'), person_edit_tags_path(@person)
+		= link_to t('people.vcard'), person_path(@person, :format => 'vcf')
+-else
 	.one.buttons
 		= link_to t('people.vcard'), person_path(@person, :format => 'vcf')
-
-- if notice
-	%p#notice
-		= notice
 
 %span.last-edited
 	= t '.last_edited'

@@ -25,6 +25,8 @@ Fsintra::Application.routes.draw do
 
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users'
   resources :personen, :as => 'people', :controller => 'people' do
+    get 'edit_tags', to: 'people#edit_tags'
+    patch 'update_tags', to: 'people#update_tags'
     get 'tags/:tag', to: 'people#index', as: :tag, on: :collection
   end
   resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
