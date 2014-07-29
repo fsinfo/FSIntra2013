@@ -5,7 +5,7 @@ namespace :tabs do
 	task :send_unpaid_mails => :environment do
 		week_ago = 1.week.ago
 	    Tab.where(status: Tab::STATUS_UNPAID).where("updated_at < ?", week_ago).each do |tab|
-	      TabMailer.tab_email(tab).deliver
+	      TabMailer.reminder_email(tab).deliver
 	    end
 	end
 
@@ -21,10 +21,11 @@ namespace :tabs do
 		end
 
 		# change status from running to unpaid
+		@new_tabs = Tab.running.all
 		Tab.running.update_all(:status => Tab::STATUS_UNPAID)
 
 		# send a mail for every unpaid tab
-		Tab.unpaid.each do |tab|
+		@new_tabs.each do |tab|
 			TabMailer.tab_email(tab).deliver
 		end
 	end

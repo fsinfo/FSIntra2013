@@ -19,8 +19,7 @@
 			.td
 			.td
 			.td.right
-				= "%.2f" % @tab.total_invoice
-				&euro;
+				= number_to_currency(@tab.total_invoice)
 
 	.one.buttons
 		= f.submit nil, :class => "button"
@@ -36,4 +35,4 @@
 		.tr
 			.td.w-50=b.name
 			.td.w-20.center=number_to_currency(b.price)
-			.td.w-10.center=link_to 'Hinzufügen', tab_add_beverage_path(@tab, b), method: :post
+			.td.w-10.center=link_to 'Hinzufügen', add_beverage_tab_path(@tab, b), method: :post

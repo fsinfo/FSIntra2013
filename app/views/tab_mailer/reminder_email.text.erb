@@ -1,0 +1,16 @@
+Hi <%= @user.displayed_name %>,
+
+du hast noch einen offene Rechnung vom <%= l(@tab.updated_at, format: :date_only) %>:
+<%= tab_url(@tab) %>
+
+Getränk			Anzahl	Kosten	Gesamt
+<% @tab.grouped_beverage_tabs.each do |bt| %>
+<%= '%-16.16s' % bt[0][0] %>	<%= bt[1] %>	<%= number_to_currency bt[0][2] %>	<%= number_to_currency(bt[0][2] * bt[1]) %>
+<% end %>
+
+Gesamtkosten:				<%= number_to_currency(@tab.total_invoice) %>
+
+Bitte bezahle möglichst bald.
+
+Viele Grüße
+Der Kühlschrank

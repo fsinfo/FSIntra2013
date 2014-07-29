@@ -10,12 +10,12 @@
 #
 
 class Tab < ActiveRecord::Base
-	STATUSES = [STATUS_PAID = 'paid', STATUS_MARKED_AS_PAID = 'marked_as_paid', STATUS_UNPAID = 'unpaid', STATUS_RUNNING = 'running']
+	STATUSES = [STATUS_PAID = 'paid', STATUS_UNPAID = 'unpaid', STATUS_RUNNING = 'running']
 	has_many :beverage_tabs, :dependent => :delete_all
 	belongs_to :user
 
 	scope :paid, -> { where(status: Tab::STATUS_PAID) }
-	scope :unpaid, -> { where(status: [Tab::STATUS_MARKED_AS_PAID, Tab::STATUS_UNPAID]) }
+	scope :unpaid, -> { where(status: Tab::STATUS_UNPAID) }
 	scope :running, -> { where(status: Tab::STATUS_RUNNING) }
 	validates :status, inclusion: {in: STATUSES}
 	validate :only_one_running_tab_per_user
@@ -38,14 +38,6 @@ class Tab < ActiveRecord::Base
 
 	def is_paid?
 		self.status == Tab::STATUS_PAID
-	end
-
-	def marked_as_paid
-		self.status = Tab::STATUS_MARKED_AS_PAID
-	end
-
-	def is_marked_as_paid?
-		self.status == Tab::STATUS_MARKED_AS_PAID
 	end
 
 	def total_invoice

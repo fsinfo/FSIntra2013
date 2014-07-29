@@ -16,10 +16,7 @@
 			.td.w-45.left
 			.td.w-20.center
 			.td.w-20.center
-				- if tab.is_marked_as_paid?
-					%span.label.payed{title: "Von dir als bezahlt markiert - muss noch vom Getränkereferent bestätigt werden."}
-						bezahlt
-				- elsif tab.is_paid?
+				- if tab.is_paid?
 					%span.label.payed{title: "Ist als bezahlt eingetragen."}
 						bezahlt
 			.td.w-15.right= number_to_currency tab.total_invoice

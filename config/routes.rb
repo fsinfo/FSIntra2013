@@ -24,28 +24,28 @@ Fsintra::Application.routes.draw do
   end
 
   resources :benutzer, except: [:destroy, :new, :create], :as => 'users', :controller => 'users'
+
   resources :personen, :as => 'people', :controller => 'people' do
     get 'edit_tags', to: 'people#edit_tags'
     patch 'update_tags', to: 'people#update_tags'
     get 'tags/:tag', to: 'people#index', as: :tag, on: :collection
   end
+
   resources :rechnungen, :as => 'tabs', :controller => 'tabs' do
-    get 'offen'  => 'tabs#unpaid', :on => :collection, :as => 'unpaid'
-    get 'detail' => 'tabs#detail', :on => :member
-    get 'laufend' => 'tabs#running', :on => :collection, :as => 'running'
-    # get 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
-    put 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
-    # FIXME put or post? one of them must be wrong (as rake says...)
-    #post 'ist_bezahlt' => 'tabs#pay', :on => :member, :as => 'is_paid'
-    put 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member, :as => 'mark_as_paid'
-    # get 'als_bezahlt_markieren' => 'tabs#mark_as_paid', :on => :member, :as => 'mark_as_paid'
-    post 'add_beverage/:beverage_id' => 'beverage_tabs#create', :as => 'add_beverage'
+    collection do
+      get 'offen'  => 'tabs#unpaid', :as => 'unpaid'
+      get 'laufend' => 'tabs#running', :as => 'running'
+    end
+
+    member do
+      put 'is_paid' => 'tabs#pay'
+      get 'detail' => 'tabs#detail'
+      post 'add_beverage/:beverage_id' => 'tabs#add_beverage', :as => 'add_beverage'
+    end
   end
 
 # Tally sheet
   get '/tally_sheet' => 'tally_sheets#index'
-  post '/tally_sheet/abrechnung' => 'tally_sheets#accounting'
-  post '/tally_sheet/accounting' => 'tally_sheets#accounting'
   get '/tally_sheet/edit' => 'tally_sheets#edit'
   post '/tally_sheet/update' => 'tally_sheets#update'
   get '/tally_sheet/print_users' => 'tally_sheets#print_users'
@@ -57,8 +57,8 @@ Fsintra::Application.routes.draw do
   put '/api/buy' => 'api#buy'
 
   resources :getraenke, :as => 'beverages', :controller => 'beverages'
-  resources :sessions, only: [:new, :create, :destroy]
 
+  resources :sessions, only: [:new, :create, :destroy]
   get '/login' => 'sessions#new'
   delete '/logout' => 'sessions#destroy'
 

@@ -2,10 +2,9 @@
 - if @tab.is_unpaid?
 	.two.buttons
 		= link_to 'Details anzeigen', detail_tab_path(@tab)
-		- if can? :manage, :tally_sheet
+		- if can? :pay, @tab
 			= link_to t('.is_paid'), is_paid_tab_path(@tab), method: :put
-		- elsif can? :mark_as_paid, @tab
-			= link_to t('.mark_as_paid'), mark_as_paid_tab_path(@tab), method: :put
+
 - else
 	.one.buttons
 		= link_to 'Details anzeigen', detail_tab_path(@tab)

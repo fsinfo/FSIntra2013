@@ -1,0 +1,31 @@
+<h2>Hi <%= @user.displayed_name %>,</h2>
+
+<p>du hast noch eine <%= link_to 'offene Rechnung', tab_url(@tab) %> vom <%= l(@tab.updated_at, format: :date_only) %>:</p>
+
+<table>
+<thead>
+<tr>
+	<th>Getränk</th>
+	<th>Anzahl</th>
+	<th>Kosten</th>
+	<th>Gesamt</th>
+</tr>
+</thead>
+<tbody>
+<% @tab.grouped_beverage_tabs.each do |bt| %>
+<tr>
+	<td><%= bt[0][0] %></td>
+	<td class="text-center"><%= bt[1] %></td>
+	<td class="text-center"><%= number_to_currency bt[0][2] %></td>
+	<td class="text-center"><%= number_to_currency(bt[0][2] * bt[1]) %></td>
+</tr>
+<% end %>
+</tbody>
+</table>
+
+<p>Gesamtkosten: <%= number_to_currency(@tab.total_invoice) %></p>
+
+<p>Bitte bezahle möglichst bald.</p>
+
+<p>Viele Grüße <br/>
+Der Kühlschrank</p>

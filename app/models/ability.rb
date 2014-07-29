@@ -12,8 +12,9 @@ class Ability
       can :manage, User, :id => user.id
       can [:edit_tags, :update_tags], User
       cannot :delete, User
-      can [:read, :mark_as_paid, :detail], Tab, :user_id => user.id
-      can [:create, :edit, :update], Tab, {:user_id => user.id, :status => Tab::STATUS_RUNNING}
+      can [:read, :detail], Tab, :user_id => user.id
+      can :pay, Tab, {:user_id => user.id, :status => Tab::STATUS_UNPAID }
+      can [:create, :edit, :update, :add_beverage], Tab, {:user_id => user.id, :status => Tab::STATUS_RUNNING}
       can [:create], BeverageTab
 
       ## Minutes

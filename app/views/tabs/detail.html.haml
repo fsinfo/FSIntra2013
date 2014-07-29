@@ -1,12 +1,8 @@
 %h1= t '.headline', date: l(@tab.created_at, format: :date_only)
 
-- if can?(:manage, :tally_sheet) and (@tab.is_unpaid? or @tab.is_marked_as_paid?)
+- if can? :pay, @tab
 	.one.buttons
 		= link_to t('.is_paid'), is_paid_tab_path(@tab), method: :put
-- else
-	- if can?(:mark_as_paid, @tab) and @tab.is_unpaid?
-		.one.buttons
-			= link_to t('.mark_as_paid'), mark_as_paid_tab_path(@tab), method: :put
 
 .list-table
 	.thead
@@ -29,10 +25,7 @@
 			.td.w-20.center
 			.td.w-20.center
 			.td.w-20.center
-				- if @tab.is_marked_as_paid?
-					%span.label.payed{title: "Von dir als bezahlt markiert - muss noch vom Getränkereferent bestätigt werden."}
-						bezahlt
-				- elsif @tab.is_paid?
+				- if @tab.is_paid?
 					%span.label.payed{title: "Ist als bezahlt eingetragen."}
 						bezahlt
 			.td.w-15.right= number_to_currency @tab.total_invoice

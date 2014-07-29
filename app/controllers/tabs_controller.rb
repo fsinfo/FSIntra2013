@@ -12,8 +12,9 @@ class TabsController < ApplicationController
   end
 
 	def new
-		current_user.tabs << Tab.new(status: Tab::STATUS_RUNNING) if current_user.running_tab == nil
-		redirect_to action: 'index'
+		tab = Tab.new(status: Tab::STATUS_RUNNING) if current_user.running_tab == nil
+		current_user.tabs << tab
+		redirect_to edit_tab_path(tab)
 	end
 
   def detail
@@ -35,29 +36,21 @@ class TabsController < ApplicationController
   def pay
     @tab.paid
     if @tab.save
-      TabMailer.paid_email(@tab).deliver
-      respond_to do |format|
-        format.json { render :json => {:feedback => t('.paid_tab', name: @tab.user.displayed_name, total: @tab.total_invoice)} }
-        format.html { redirect_to unpaid_tabs_path }
-      end
+      redirect_to @tab
+		else
+			render @tab
     end
   end
 
-  def destroy_beverage_tab
-  end
-
-  def mark_as_paid
-    @tab.marked_as_paid
-    respond_to do |format|
-      if @tab.save
-        TabMailer.marked_as_paid_email(@tab).deliver
-        format.js {}
-        format.html {redirect_to @tab}
-      else
-        format.html {render :edit}
-      end
-    end
-  end
+	def add_beverage
+			@beverage = Beverage.find(params[:beverage_id])
+			@tab.beverage_tabs << BeverageTab.create(count: 1, name: @beverage.name, capacity: @beverage.capacity, price: @beverage.price)
+			if @tab.save
+				redirect_to edit_tab_path(@tab), notice: t('feedback.updated', model: Tab.model_name.human)
+			else
+				redirect_to edit_tab_path(@tab)
+			end
+	end
 
   def unpaid
     @tabs = Tab.unpaid.includes(:user, :beverage_tabs).order("people.lastname")
