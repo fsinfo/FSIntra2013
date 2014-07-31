@@ -47,7 +47,8 @@ class Minutes::Item < ActiveRecord::Base
   # and as second item 'approvement of previous minutes'
   # This methods enriches the stored items
   def full_order
-    offset = minute.type == nil ? 3 : 2
+    #offset = minute.type == nil ? 3 : 2
+    offset = minute.legacy? ? 1 : 3
     order + offset
   end
 

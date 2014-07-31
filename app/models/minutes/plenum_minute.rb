@@ -24,6 +24,7 @@
 class Minutes::PlenumMinute < Minutes::Minute
 
   def item_titles
-    ['Genehmigung von Protokollen'] + items.pluck(:title)
+    prefix = legacy? ? [] : ['Genehmigung von Protokollen']
+    prefix + items.pluck(:title)
   end
 end

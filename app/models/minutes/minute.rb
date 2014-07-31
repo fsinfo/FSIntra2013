@@ -53,10 +53,16 @@ class Minutes::Minute < ActiveRecord::Base
   # and as second item 'approvement of previous minutes'
   # This methods enriches the stored items by those two.
   def item_titles
-    ['Festlegung der Tagesordnung', 'Genehmigung von Protokollen'] + items.pluck(:title)
+    legacy? ? items.pluck(:title) : ['Festlegung der Tagesordnung', 'Genehmigung von Protokollen'] + items.pluck(:title)
   end
 
   validates_presence_of :chairperson_id
   validates_presence_of :keeper_of_the_minutes_id
   validates_presence_of :date
+
+  # All minutes from a meeting before 06.06.2014 are considered legacy.
+  # These minutes have no default prefixes and this is schade.
+  def legacy?
+    date < Date.new(2014, 06, 06)
+  end
 end
