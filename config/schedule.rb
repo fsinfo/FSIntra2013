@@ -21,7 +21,7 @@
 
 set :output, "log/whenever.log"
 
-every :sunday, :at => '7 pm' do
+every 1.week, :at => '6 pm' do
   rake 'tabs:send_unpaid_mails'
 end
 
