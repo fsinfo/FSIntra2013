@@ -38,8 +38,16 @@ class User < Person
 		self.tabs.unpaid.map(&:total_invoice).inject(0,:+)
 	end
 
+	def running_debts
+		(self.running_tab) ? self.running_tab.total_invoice : 0.0
+	end
+
 	def running_tab
 		self.tabs.find_by(status: Tab::STATUS_RUNNING)
+	end
+
+	def email_md5
+		Digest::MD5.hexdigest(self.email.downcase)
 	end
 
 	def User.authenticate(loginname,password)
