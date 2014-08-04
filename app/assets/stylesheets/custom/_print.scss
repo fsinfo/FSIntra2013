@@ -1,0 +1,46 @@
+/* THIS IS TEH GRÆT PRINT CSS */
+
+@include respond("print") {
+  .hide_on_printer {
+    display: none !important;
+  }
+
+  #printPageFooter {
+    counter-increment: page;
+    content: counter(page);
+  }
+
+  /* clearing of paddings and margins */
+  body {
+    margin: 1cm 0.81cm 1cm 1cm;
+  }
+  .minute-meta, .minute-toplist, .minute-top {
+    padding: 0;
+  }
+
+  /* font adjustments */
+  body {
+    font-size: 12px;
+    font-family: serif;
+  }
+  .minute-top h2 {
+    font-size: 1.4rem;
+  }
+  #main h1 {
+    font-size: 2rem;
+  }
+  div.minute-meta div.entry {
+    line-height: 20px;
+    background-color: yellow
+  }
+  .minute-toplist li {
+    padding: 0;
+  }
+  .content p {
+    font-family: serif;
+  }
+}
+
+@page {
+  marks: cross;
+}

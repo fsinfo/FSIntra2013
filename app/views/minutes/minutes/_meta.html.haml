@@ -46,7 +46,7 @@
     .value
       = @minutes_minute.guests
 
-.utils
+.utils.hide_on_printer
   - if can? :destroy, @minutes_minute
     = link_to t('actions.destroy'), '#', class: 'switch', 'gumby-trigger' => '#destroythisminute'
   - if can? :update, @minutes_minute

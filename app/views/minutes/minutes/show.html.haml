@@ -1,7 +1,7 @@
 %h1 #{t @minutes_minute.class.model_name.human} vom #{l @minutes_minute.date}
 
 - if can? :send_draft, @minutes_minute
-  .two.buttons
+  .two.buttons.hide_on_printer
     = link_to 'Entwurf verschicken', '#', class: 'switch', 'gumby-trigger' => '#draftcon'
     = link_to 'Veröffentlichen', '#', class: 'switch', 'gumby-trigger' => '#publishcon'
 
@@ -14,6 +14,7 @@
 
 = render partial: "minutes/items/item", collection: @minutes_minute.items, as: :item
 
+#printPageFooter
 
 - if can? :send_draft, @minutes_minute
   .modal#draftcon

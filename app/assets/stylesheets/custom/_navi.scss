@@ -79,6 +79,4 @@ $navi-logo-height: image-height("logo.png") !default;
 		@include nav-button;
 		width: $navi-height + 10px;
 	}
-
-
 }
