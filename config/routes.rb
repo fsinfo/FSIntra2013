@@ -55,6 +55,7 @@ Fsintra::Application.routes.draw do
 # API
   get '/api/items' => 'api#items'
   put '/api/buy' => 'api#buy'
+  get 'api/user/:name' => 'api#user'
 
   resources :getraenke, :as => 'beverages', :controller => 'beverages'
 

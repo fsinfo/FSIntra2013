@@ -29,7 +29,16 @@ class ApiController < ApplicationController
   def items
     @beverages = Beverage.available
     respond_to do |format|
-      format.json { render :json => @beverages.to_json}
+      format.json { render :json => @beverages.to_json(methods: :image_url)}
+    end
+  end
+
+  # expect params[:user] => {:name => 'name'}
+  def user
+    name = params[:name]
+    user = User.find_by(loginname: name, on_beverage_list: true)
+    respond_to do |format|
+      format.json { render :json => user.to_json(only: [], methods: [:email_md5, :debts, :running_debts]) }
     end
   end
 
