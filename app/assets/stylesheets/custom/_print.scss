@@ -6,8 +6,17 @@
   }
 
   #printPageFooter {
+    @include row();
+
     counter-increment: page;
     content: counter(page);
+  }
+
+  #printPageFooter::before {
+    content: "Protokollant: ___________________"
+  }
+  #printPageFooter::after {
+    content: "Sitzungsleitung: ___________________"
   }
 
   /* clearing of paddings and margins */
@@ -39,6 +48,8 @@
   .content p {
     font-family: serif;
   }
+
+
 }
 
 @page {
