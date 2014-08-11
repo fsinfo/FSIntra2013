@@ -16,7 +16,7 @@ class Minutes::ApprovementsController < ApplicationController
 
     respond_to do |format|
       if @minutes_approvement.save
-        format.html { redirect_to @minutes_minute, notice: 'Item was successfully created.' }
+        format.html { redirect_to @minutes_minute, notice: t('feedback.created', model: Minutes::Approvement.model_name.human) }
         format.json { render action: 'show', status: :created, location: @minutes_minute }
       else
         format.html { render action: 'new' }
@@ -28,7 +28,7 @@ class Minutes::ApprovementsController < ApplicationController
   def destroy
     @minutes_approvement.destroy
     respond_to do |format|
-      format.html { redirect_to @minutes_minute, notice: 'Irgendwas erfolgreich gelöscht.' }
+      format.html { redirect_to @minutes_minute, notice: t('feedback.destroyed', model: Minutes::Approvement.model_name.human) }
       format.json { head :no_content }
     end
   end
@@ -39,7 +39,7 @@ class Minutes::ApprovementsController < ApplicationController
     params[:minutes_approvement][:abs] ||= ""
     respond_to do |format|
       if @minutes_approvement.update(minutes_approvement_params)
-        format.html { redirect_to @minutes_minute, notice: 'Item was successfully updated.' }
+        format.html { redirect_to @minutes_minute, notice: t('feedback.updated', model: Minutes::Approvement.model_name.human) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

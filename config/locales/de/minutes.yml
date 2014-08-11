@@ -42,7 +42,7 @@ de:
         keeper_of_the_minutes: Protokollant
         chairperson: Sitzungsleitung
         has_quorum: Beschlussfähig
-        attendees: Anwesenheit
+        fsr_attendants: Anwesenheit FSR
         absentees: Entschuldigt
         guests: Gäste
         released_date: Veröffentlicht am

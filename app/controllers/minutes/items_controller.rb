@@ -51,7 +51,7 @@ class Minutes::ItemsController < ApplicationController
             i.save
           end
         end
-        format.html { redirect_to @minutes_minute, notice: 'Item was successfully created.' }
+        format.html { redirect_to @minutes_minute, notice: t('feedback.created', model: Minutes::Item.model_name.human) }
         format.json { render action: 'show', status: :created, location: @minutes_minute }
       else
         format.html { render action: 'new' }
@@ -65,7 +65,7 @@ class Minutes::ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @minutes_item.update(minutes_item_params)
-        format.html { redirect_to @minutes_minute, notice: 'Item was successfully updated.' }
+        format.html { redirect_to @minutes_minute, notice: t('feedback.updated', model: Minutes::Item.model_name.human) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -86,7 +86,7 @@ class Minutes::ItemsController < ApplicationController
       @updated_items.each{|i| i.save! ; puts "#{i.title} saved"}
     end
     respond_to do |format|
-      format.html { redirect_to @minutes_minute, notice: 'Item was successfully destroyed.' }
+      format.html { redirect_to @minutes_minute, notice: t('feedback.destroyed', model: Minutes::Item.model_name.human) }
       format.json { head :no_content }
     end
   end
