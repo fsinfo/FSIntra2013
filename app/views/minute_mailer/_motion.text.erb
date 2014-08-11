@@ -1,0 +1,12 @@
+
+
+**<%= m.mover %>**:
+<%= m.rationale %>
+<% if m.amount_in_currency %> 
+Betrag: <%= m.amount_in_currency %>
+<% end %>
+<% if m.apparent_majority? %>
+Der Antrag ist mit augenscheinlicher Mehrheit <% unless m.approved? %>nicht <% end %>angenommen.
+<% else %>
+Dafür: <%= m.pro %>, enthalten: <%= m.abs %>, dagegen: <%= m.con %> – Der Antrag ist <%= m.approved? ? '' : 'nicht ' %>angenommen.
+<% end %>

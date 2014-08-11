@@ -1,0 +1,9 @@
+Sitzungsleitung: <%= minutes_minute.chairperson %>
+
+Protokoll: <%= minutes_minute.keeper_of_the_minutes %>
+
+Anwesend: <%= minutes_minute.fsr_attendants.join(", ") %>
+
+Beschlussfähig: <%= minutes_minute.has_quorum? ? t('views.yep') : t('views.nope') %>
+
+Gäste: <%= minutes_minute.guests %>

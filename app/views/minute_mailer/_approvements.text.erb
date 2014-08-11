@@ -1,0 +1,9 @@
+TOP 2. Genehmigung von Protokollen
+==================================
+
+<% if @minutes_minute.approvements = [] %>
+Es wurden keine Protokolle genehmigt.
+<% else %>
+<%= render partial: "minute_mailer/minute_approvements", collection: @minutes_minute.approvements, as: :a %>
+<% end %>
+
