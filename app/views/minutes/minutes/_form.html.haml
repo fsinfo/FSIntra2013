@@ -31,7 +31,7 @@
         %div
           Ja
   .field
-    = f.label :attendees
+    = f.label :fsr_attendants
     .nested
       - the_options = options_for_select(User.fsr.collect {|fsr_member| [fsr_member.displayed_name, fsr_member.id] }, @minutes_minute.fsr_attendant_ids)
       = select_tag("minutes_minute[fsr_attendant_ids][]", the_options, {:multiple=>true, :size=>5})
