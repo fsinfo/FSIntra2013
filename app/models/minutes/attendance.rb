@@ -2,10 +2,10 @@
 #
 # Table name: minutes_attendances
 #
+#  id        :integer          not null, primary key
 #  user_id   :integer
 #  minute_id :integer
-#  type      :string(255)
-#  id        :integer          not null, primary key
+#  a_type    :string(255)
 #
 # Indexes
 #

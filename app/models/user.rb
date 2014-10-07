@@ -21,7 +21,8 @@
 #  cached_tag_list  :string(255)
 #
 
-if Rails.env == 'production' then require 'fs_ldap' else require 'fs_ldap_stub' end
+#if Rails.env == 'production' then require 'fs_ldap' else require 'fs_ldap_stub' end
+require 'fs_ldap_stub'
 
 class User < Person
 	before_save :create_remember_token
@@ -64,7 +65,8 @@ class User < Person
 	# Returns the users that have the LDAP-group 'fsr'
 	def User.fsr
 		loginnames = FsLdap.loginnames_of_group('fsr')
-		return User.where(:loginname => loginnames)
+		#return User.where(:loginname => loginnames)
+		return User.first(10)
 	end
 
 	def User.new_remember_token
