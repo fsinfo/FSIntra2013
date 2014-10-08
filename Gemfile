@@ -26,17 +26,24 @@ gem 'whenever', require: false
 gem 'jbuilder', '~> 1.2'
 
 
-group :assets do
-  # Gems used only for assets and not required
-  # in production environments by default.
-  gem 'sass-rails', '~> 4.0.3'
-  gem 'coffee-rails', '~> 4.0.1'
-  gem 'compass-rails'
-  gem 'modular-scale'
-  gem 'modernizr-rails'
+### Assets ###
 
-  gem 'rails-assets-gumby'
-end
+# Gems used only for assets and not required
+# in production environments by default.
+gem 'sass-rails', '~> 4.0.3'
+gem 'coffee-rails', '~> 4.0.1'
+gem 'compass-rails'
+gem 'modular-scale', '= 1.0.6'
+#gem 'modernizr-rails'
+
+gem 'rails-assets-modernizr'
+gem 'rails-assets-gumby'
+gem 'rails-assets-gumby-sass'
+gem 'rails-assets-sifter'
+gem 'rails-assets-microplugin'
+gem 'rails-assets-selectize'
+
+
 
 
 group :test do
@@ -119,7 +126,7 @@ gem 'mini_magick'
 gem 'acts-as-taggable-on'
 
 # Ransack for better searches (+ easy sortable columns)
-# gem 'ransack' # Maybe wee still need this? @s_wolff
+gem 'ransack' # Maybe wee still need this? @s_wolff
 
 # CanCan
 gem 'cancan'

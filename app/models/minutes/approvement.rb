@@ -19,9 +19,10 @@
 #  index_minutes_approvements_on_minute_id           (minute_id)
 #
 
-class Minutes::Approvement < ActiveRecord::Base
-  belongs_to :minute
-  belongs_to :approved_minute, class_name: "Minutes::Minute"
+class Minutes::Approvement < ActiveRecord::Base # TODO rename approval
+  belongs_to :minute # minute in which this approval was decided
+  belongs_to :approved_minute, class_name: "Minutes::Minute" # previous minute which was approved
+  
   validate :vote_presence
 
   after_save :set_approved_date

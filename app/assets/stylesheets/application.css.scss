@@ -3,14 +3,12 @@
 @import "modular-scale";
 
 @import "compass";
-@import "compass/reset";
-@import "gumby/gumby";
+//@import "compass/reset";
+@import "gumby-sass/sass/gumby";
 
 @import "var/settings";
 @import "fonts";
 @import "custom";
-
-
 
 form .field > .slider label {
 	a.grey, input:checked ~ a.grey {

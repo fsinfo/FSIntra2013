@@ -15,8 +15,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require selectize.min
+//= require sifter
+//= require microplugin
+//= require selectize
 //= require selectnice
 //= require redactor_de
 //= require redactor.min
-//= require gumby.min
+//= require gumby

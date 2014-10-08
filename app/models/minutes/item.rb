@@ -18,7 +18,7 @@
 
 class Minutes::Item < ActiveRecord::Base
   belongs_to :minute, class_name: 'Minutes::Minute'
-  has_many :motions, class_name: 'Minutes::Motion', dependent: :destroy, order: 'created_at DESC'
+  has_many :motions, -> { order '"created_at" DESC' }, class_name: 'Minutes::Motion', dependent: :destroy
 
   validates_presence_of :order
   #validate :orders_must_be_sequence # TODO

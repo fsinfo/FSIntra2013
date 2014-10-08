@@ -7,6 +7,7 @@ class MinuteMailer < ActionMailer::Base
     @minutes_minute = minute
     mail(from: get_email_with_name(user), subject: "Protokoll der FSR-Sitzung vom #{l @minutes_minute.date} [ENTWURF]")
   end
+  
   def publish minute, user
     @minutes_minute = minute
     mail(from: get_email_with_name(user), subject: "Protokoll der FSR-Sitzung vom #{l @minutes_minute.date}")

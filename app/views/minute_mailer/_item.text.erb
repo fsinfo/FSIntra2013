@@ -1,11 +1,8 @@
 TOP <%= i.full_order %>. <%= i.title %>
 <%= '='*(6 + (i.order/10 + 1) + i.title.length) %>
-<%= ReverseMarkdown.parse i.content %>
+<%= ReverseMarkdown.convert i.content %>
 <% if i.motions.count > 0 %>
 Anträge zu diesem TOP
 ---------------------
 <%= render partial: "minute_mailer/motion", collection: i.motions, as: :m %>
 <% end %>
-
-
-

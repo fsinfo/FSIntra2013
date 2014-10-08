@@ -2,6 +2,8 @@
 #   resources :$deutschername, :as => "$englishname", :controller => "$englishname"
 Fsintra::Application.routes.draw do
 
+  resources :postings
+
   namespace :minutes do
     resources :motions
   end

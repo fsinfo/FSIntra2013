@@ -97,10 +97,13 @@ class Minutes::MinutesController < ApplicationController
     @minutes_minute.update_attributes({ draft_sent_date: Date.today })
 
     if @minutes_minute.type == "Minutes::PlenumMinute"
-      PlenumMinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+      m = PlenumMinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes)
     else
-      MinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes).deliver
+      ### DARUNTER
+      m = MinuteMailer.send_draft(@minutes_minute, @minutes_minute.keeper_of_the_minutes)
+      ### DARÜBER
     end
+    m.deliver
     
     respond_to do |format|
       format.html { redirect_to @minutes_minute, notice: 'Entwurf erfolgreich verschickt.' }
